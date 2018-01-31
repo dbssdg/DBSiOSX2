@@ -528,7 +528,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 var Grade = 8
                 var Class = "S"
                 var GradeString = UserInformation[3]
-                print(GradeString[1...1])
+                
                 //if let grade = UserDefaults
             
             if indexPath.row == 0{
