@@ -1,0 +1,290 @@
+//
+//  FeaturedPageViewController.swift
+//  DBS
+//
+//  Created by SDG on 9/10/2017.
+//  Copyright © 2017 DBSSDG. All rights reserved.
+//
+
+import UIKit
+import TwicketSegmentedControl
+import SystemConfiguration
+
+struct newsData : Decodable {
+    let title : [String]
+    let date : [String]
+}
+var circularViewURL = ""
+var newsIndex = Int()
+var newsTotal = Int()
+
+var circulars = [String : [String : String]]()
+var circularTimeArray = [String]()
+var circularTitleArray = [String]()
+var pinnedCircular = 2
+
+var news : newsData?
+var newsTitleArray = [String]()
+var newsDateArray = [String]()
+
+
+
+class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate, UISearchBarDelegate {
+    var selectedSegment = 0
+    
+    var isSearching = false
+    
+    /*
+    var circulars = [String : [String : String]]()
+    var circularTimeArray = [String]()
+    var circularTitleArray = [String]()
+    
+    var news : newsData?
+    var newsTitleArray = [String]()
+    var newsDateArray = [String]()
+    */
+    
+    var filteredCirculars = [String]()
+    var filteredNews = [String]()
+    
+    @IBOutlet weak var featuredTable: UITableView!
+    let featuredSearch = UISearchController(searchResultsController: nil)
+    
+    @IBAction func reloadPage(_ sender: Any) {
+        if isInternetAvailable() {
+            didSelect(0)
+        }
+        viewDidLoad()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        featuredTable.delegate = self
+        featuredTable.dataSource = self
+        featuredSearch.searchBar.delegate = self
+        featuredSearch.dimsBackgroundDuringPresentation = false
+        
+        let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
+        let circularsURL = URL(string: circularsJSONURL)
+        let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
+        
+        let newsURL = URL(string: newsJSONURL)
+        let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+        networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        if isInternetAvailable() && !circularTitleArray.isEmpty && !newsTitleArray.isEmpty{
+            URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
+                do {
+                    circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
+                    circularTitleArray=[]
+                    circularTimeArray=[]
+                    pinnedCircular = 2
+                    //The code works when it is reloaded but not when it first displayed. anyways to trigger the reload button by computer
+                    for i in 1...circulars.values.count {
+                        if circulars.count > circularTitleArray.count {
+                            let circularTimes = (circulars["\(i)"]!["time"]!).split(separator: " ")
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy"
+                            if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
+                                circularTimeArray += [""]
+                                print("86")
+                            } else {
+                                circularTimeArray += [(circulars["\(i)"]!["time"]!)]
+                            }
+                            circularTitleArray += [(circulars["\(i)"]!["title"]!)]
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        if circularTitleArray.count == 0 {
+                            print(circularTitleArray.count)
+                            self.present(networkAlert, animated: true)
+                        }
+                        self.featuredTable.reloadData()
+                        print("\(circularTitleArray.count)A")
+                    }
+                } catch {
+                    self.present(networkAlert, animated: true)
+                    print("ERROR")
+                }
+            }.resume()
+            URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
+                do {
+                    news = try JSONDecoder().decode(newsData.self, from: data!)
+                    for i in (news?.title)! {
+                        if (news?.title)!.count > newsTitleArray.count {
+                            newsTitleArray += [i]
+                        }
+                    }
+                    for i in (news?.date)! {
+                        var newsDate = String(describing: Date(timeIntervalSince1970: Double(i)!))
+                        newsDate.removeLast(15)
+                        let dateArr = newsDate.split(separator: "-")
+                        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+                        newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
+                    }
+                    DispatchQueue.main.async {
+                        if circularTitleArray.count == 0 {
+                            print(newsTitleArray.count)
+                            self.present(networkAlert, animated: true)
+                        }
+                        self.featuredTable.reloadData()
+                        print("\(newsTitleArray.count)A")
+                    }
+                }
+                catch {
+                    self.present(networkAlert, animated: true)
+                    print("ERROR")
+                }
+            }.resume()
+            
+        } else {
+            present(networkAlert, animated: true)
+        }
+        
+        
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = featuredSearch
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        setUpSegmentedControl()
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if selectedSegment == 0 {
+            if isSearching {
+                return filteredCirculars.count
+            }
+            return circularTitleArray.count
+        } else if selectedSegment == 1 {
+            if isSearching {
+                return filteredNews.count
+            }
+            return newsTitleArray.count
+        }
+        return 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if pinnedCircular > 0 {
+
+            //DispatchQueue.main.async {
+                pinnedCircular -= 1
+                print("\(pinnedCircular)th post")
+            //}
+            usleep(50000)
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
+        if selectedSegment == 0 {
+            if isSearching {
+                cell.textLabel?.text = circularTitleArray[indexPath.row]
+                cell.textLabel?.textColor = UIColor.red
+                cell.detailTextLabel?.text = ""
+            } else {
+                cell.textLabel?.text = circularTitleArray[indexPath.row]
+                cell.detailTextLabel?.text = circularTimeArray[indexPath.row]
+            }
+        } else if selectedSegment == 1 {
+            if isSearching {
+                cell.textLabel?.text = filteredNews[indexPath.row]
+                cell.detailTextLabel?.text = ""
+            } else {
+                cell.textLabel?.text = newsTitleArray[indexPath.row]
+                cell.detailTextLabel?.text = newsDateArray[indexPath.row]
+            }
+        }
+        cell.textLabel?.numberOfLines = 0
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if selectedSegment == 0 {
+            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            print(circularViewURL)
+            performSegue(withIdentifier: "Circular Segue", sender: self)
+        } else if selectedSegment == 1 {
+            newsIndex = indexPath.row
+            newsTotal = newsTitleArray.count
+            performSegue(withIdentifier: "News Segue", sender: self)
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.text! != "" {
+            isSearching = true
+        }
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        isSearching = false
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text? = ""
+        isSearching = false
+        featuredTable.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {        filteredCirculars = circularTitleArray.filter({ (text) -> Bool in
+            let tmp = text as NSString
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            return range.location != NSNotFound
+        })
+        filteredNews = newsTitleArray.filter({ (text) -> Bool in
+            let tmp = text as NSString
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            return range.location != NSNotFound
+        })
+        if filteredCirculars.count == 0 && filteredNews.count == 0 && searchBar.text! == "" {
+            isSearching = false
+        } else {
+            isSearching = true
+        }
+        featuredTable.reloadData()
+    }
+    
+    func didSelect(_ segmentIndex: Int) {
+        selectedSegment = segmentIndex
+        if isInternetAvailable() {
+            featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
+        }
+        featuredTable.reloadData()
+    }
+    
+    func setUpSegmentedControl() {
+        let titles = ["Circulars", "News"]
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
+        let segmentedControl = TwicketSegmentedControl(frame: frame)
+        segmentedControl.setSegmentItems(titles)
+        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+        segmentedControl.tag = 1
+        view.addSubview(segmentedControl)
+        
+    }
+    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
+    }
+
+    
+}
+
+    
+
