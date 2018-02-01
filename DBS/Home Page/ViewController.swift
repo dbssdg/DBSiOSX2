@@ -587,8 +587,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.isUserInteractionEnabled = false
             }
             }else{
-                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                tableView.addSubview(spinner)
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
                 setupSpinner(view: tableView)
             }
             
@@ -689,9 +689,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
             }
             }else{
-                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                spinner.frame = CGRect(x: tableView.frame.size.width * 0.5 - spinner.frame.width / 2, y: tableView.frame.size.height * 0.5 - spinner.frame.height / 2, width: 30, height: 30)
-                tableView.addSubview(spinner)
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
                 setupSpinner(view: tableView)
             }
             
@@ -728,9 +727,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
         }else{
-            let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-            tableView.addSubview(spinner)
+            
             setupSpinner(view: tableView)
+            tableView.separatorStyle = .none
+            cell.isUserInteractionEnabled = false
         }
         }
  
@@ -837,6 +837,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //spinner.frame.origin.y = spinner.frame.origin.y + 40
         //label.sizeToFit()
         view.addSubview(label)
+        
+        
     }
     
     
