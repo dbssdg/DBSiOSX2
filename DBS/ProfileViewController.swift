@@ -9,10 +9,11 @@
 import UIKit
 import SystemConfiguration
 import CryptoSwift
+import MessageUI
 
 var loginID = ""
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate ,MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var studentImage: UIImageView!
     @IBOutlet weak var userInfo: UITableView!
@@ -193,6 +194,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         func reportBug(action: UIAlertAction) {
+            
+            var toRecipents = ["dbssdg@gmail.com"]
+            var mc = MFMailComposeViewController()
+            mc.mailComposeDelegate = self
+            
+            self.present(mc, animated: true, completion: nil)
             
             
             

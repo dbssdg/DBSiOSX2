@@ -424,27 +424,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     
                 }
                 
-                func reloadTableData(){
-                    
-                    if EventsArray.isEmpty{
-                        self.ParseEvents()
-                    }
-                    
-                    self.ParseTimetable()
-                    
-                    if newsDateArray.isEmpty||circularTimeArray.isEmpty{
-                        self.ParseNewsCurriculars()
-                    }
-                    
-                    
-                    
-                    (self.scrollView.viewWithTag(i + 10000)! as! UITableView).reloadData()
-                }
+                
                 
                 var refresher = UIRefreshControl()
                 refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
-                
-                //refresher.addTarget(self, action: #selector(reloadTableData), for: UIControlEvents.valueChanged)
+                refresher.tag = i + 100000 + 50
+                refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
                 self.scrollView.viewWithTag(i + 10000)!.addSubview(refresher)
                 
                 
@@ -463,6 +448,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //usleep(20000)
         scrollView.reloadInputViews()
+        
+        
+    }
+    
+    func reloadTableData(_ refreshControl: UIRefreshControl){
+        
+        if EventsArray.isEmpty{
+            self.ParseEvents()
+        }
+        
+        self.ParseTimetable()
+        
+        if newsDateArray.isEmpty||circularTimeArray.isEmpty{
+            self.ParseNewsCurriculars()
+        }
+        
+        let tableTag = refreshControl.tag - 50
+        //let TableToReload = self.scrollView.viewWithTag(tableTag)! as! UITableView
+        //TableToReload.reloadData()
+        
         
         
     }

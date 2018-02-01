@@ -8,7 +8,7 @@
 
 import UIKit
 
-class photoViewerViewController: UIViewController {
+class photoViewerViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -29,6 +29,9 @@ class photoViewerViewController: UIViewController {
             scrollView.addSubview(imageView)
         }
         
+        scrollView.maximumZoomScale = 10
+        scrollView.minimumZoomScale = 0.5
+        
         print(photoSelected)
         print(self.view.frame.width * CGFloat(photoSelected))
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(photoSelected), y: 0), animated: false)
@@ -39,7 +42,12 @@ class photoViewerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        if scrollView.zoomScale < 1 {
+            navigationController?.popViewController(animated: false)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
