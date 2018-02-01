@@ -123,6 +123,9 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
                 out = "Activity Period   "
             }
             out.removeLast(3)
+            if out.count > 30{
+                
+            }
             cell.textLabel?.text = out
             
             out = ""
