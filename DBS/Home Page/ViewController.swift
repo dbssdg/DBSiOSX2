@@ -151,7 +151,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        if UserInformation[3] != ""{
+        if loginID != ""{
         var input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
