@@ -20,7 +20,7 @@ var UserInformation = [String]()
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
     
-    //Testing
+
   
     
     var eventsArray = [events]()
