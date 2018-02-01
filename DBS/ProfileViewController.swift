@@ -86,22 +86,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                         DispatchQueue.main.async {
-                            if self.teacherOrStudent() == "s" {
-                                self.studentImage.image = UIImage(named: "Student")
-                            } else {
-                                self.studentImage.image = UIImage(named: "TeacherBig")
-                            }
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
                         }
                         
                     } catch {
-                        print("ERROR")
+                        if self.teacherOrStudent() == "s" {
+                            self.studentImage.image = UIImage(named: "StudentBig")
+                        } else if self.teacherOrStudent() == "" {
+                            self.studentImage.image = UIImage(named: "TeacherBig")
+                        }
+                        if let x = UserDefaults.standard.array(forKey: "profileData") {
+                            self.profileData = x as! [String]
+                            self.userInfo.reloadData()
+                        }
                     }
                 }.resume()
                 
             } else {
+                if self.teacherOrStudent() == "s" {
+                    self.studentImage.image = UIImage(named: "StudentBig")
+                } else if self.teacherOrStudent() == "" {
+                    self.studentImage.image = UIImage(named: "TeacherBig")
+                }
                 if let x = UserDefaults.standard.array(forKey: "profileData") {
                     profileData = x as! [String]
                     userInfo.reloadData()
