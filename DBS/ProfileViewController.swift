@@ -86,22 +86,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                         DispatchQueue.main.async {
-                            if self.teacherOrStudent() == "s" {
-                                self.studentImage.image = UIImage(named: "Student")
-                            } else {
-                                self.studentImage.image = UIImage(named: "TeacherBig")
-                            }
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
                         }
                         
                     } catch {
-                        print("ERROR")
+                        if self.teacherOrStudent() == "s" {
+                            self.studentImage.image = UIImage(named: "StudentBig")
+                        } else if self.teacherOrStudent() == "" {
+                            self.studentImage.image = UIImage(named: "TeacherBig")
+                        }
+                        if let x = UserDefaults.standard.array(forKey: "profileData") {
+                            self.profileData = x as! [String]
+                            self.userInfo.reloadData()
+                        }
                     }
                 }.resume()
                 
             } else {
+                if self.teacherOrStudent() == "s" {
+                    self.studentImage.image = UIImage(named: "StudentBig")
+                } else if self.teacherOrStudent() == "" {
+                    self.studentImage.image = UIImage(named: "TeacherBig")
+                }
                 if let x = UserDefaults.standard.array(forKey: "profileData") {
                     profileData = x as! [String]
                     userInfo.reloadData()
@@ -194,21 +202,54 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         func reportBug(action: UIAlertAction) {
+            let mailAlert = UIAlertController(title: "ERROR", message: nil, preferredStyle : .alert)
+            mailAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
+            if !MFMailComposeViewController.canSendMail() {
+                print("Mail services are not available")
+                
+                mailAlert.message = "Mail services are not available."
+                present(mailAlert, animated: true)
+                return
+            }
             var toRecipents = ["dbssdg@gmail.com"]
             var mc = MFMailComposeViewController()
             mc.mailComposeDelegate = self
+            mc.setToRecipients(toRecipents)
             
             self.present(mc, animated: true, completion: nil)
             
-            
-            
-            
+            func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+                switch result.rawValue {
+                    
+                case MFMailComposeResult.cancelled.rawValue:
+                    print("Cancelled")
+                    mailAlert.message = "Your mail has been cancelled."
+                    
+                case MFMailComposeResult.failed.rawValue:
+                    print("Failed")
+                    mailAlert.message = "Your mail has been failed."
+                    
+                case MFMailComposeResult.saved.rawValue:
+                    print("Saved")
+                    mailAlert.message = "Your mail has been saved."
+                    
+                case MFMailComposeResult.sent.rawValue:
+                    print("Sent")
+                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
+                    mc.isEditing = false
+                    mailAlert.message = "Your mail has been sent."
+                    
+                default:
+                    break
+                }
+                self.dismiss(animated: true, completion: nil)
+                present(mailAlert, animated: true)
+            }
             
         }
         func downloadStudentImage(action: UIAlertAction) {
             let imageData = UIImagePNGRepresentation(studentImage.image!)
-            print("NO SIGABRT")
             let compressedImage = UIImage(data: imageData!)
             UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
             
@@ -227,7 +268,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         actionSheet.addAction(UIAlertAction(title: "Report A Bug", style: .default, handler: reportBug))
-        if teacherOrStudent() == "s" {
+        if isInternetAvailable() && studentImage != nil && teacherOrStudent() == "s" {
             actionSheet.addAction(UIAlertAction(title: "Download Student Image", style: .default, handler: downloadStudentImage))
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))

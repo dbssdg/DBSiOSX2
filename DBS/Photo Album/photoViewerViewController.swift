@@ -42,10 +42,22 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func down(_ sender: Any) {
+        if scrollView.zoomScale == 1 {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
+<<<<<<< HEAD
         if scrollView.zoomScale < 0.5 {
             navigationController?.popViewController(animated: false)
+=======
+        if scrollView.zoomScale == 1 {
+            navigationController?.popViewController(animated: true)
+>>>>>>> 1f91e2d66ff6ffd3b59f1545ad8de0e7c59e3355
         }
+        print("A")
     }
     
     /*

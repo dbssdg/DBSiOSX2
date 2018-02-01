@@ -51,7 +51,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     let featuredSearch = UISearchController(searchResultsController: nil)
     
     @IBAction func reloadPage(_ sender: Any) {
-        if isInternetAvailable() {
+        if isInternetAvailable() && news != nil {
             didSelect(0)
         }
         viewDidLoad()
@@ -226,7 +226,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
     }
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {        filteredCirculars = circularTitleArray.filter({ (text) -> Bool in
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) { filteredCirculars = circularTitleArray.filter({ (text) -> Bool in
             let tmp = text as NSString
             let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
@@ -246,7 +246,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func didSelect(_ segmentIndex: Int) {
         selectedSegment = segmentIndex
-        if isInternetAvailable() {
+        if isInternetAvailable() && news != nil {
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
         }
         featuredTable.reloadData()
