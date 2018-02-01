@@ -151,8 +151,22 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
+        if UserInformation[3] != ""{
+        var input = "\(UserInformation[3])"
         
-        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(8).json"
+        var GradeString = "\(input)"
+        GradeString.removeLast(4)
+        GradeString.removeFirst()
+        var GradeInt = Int(GradeString)!
+        
+        var ClassString1 = "\(input)"
+        ClassString1.removeLast(3)
+        var ClassString2 = ClassString1.index(before: ClassString1.endIndex)
+        
+        
+        
+        
+        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeInt).json"
         let url = URL(string: jsonURL)
         
         if isInternetAvailable(){
@@ -174,10 +188,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             //self.title? += " (\((self.timetable?.timetable.`class`[self.formSection.index(of: self.group)!].teacher)!))"
         })
         }
+        }
     }
     
     @objc func GoToTimetable(){
-        timetableChoice = "G8S"
+        
+        timetableChoice = "\(UserInformation[3])"
+        timetableChoice.removeLast(3)
         
         performSegue(withIdentifier: "Home to My Timetable", sender: self)
         
@@ -271,15 +288,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.backgroundColor = UIColor.init(red: 37.0/255.0, green: 44.0/255.0, blue: 110.0/255.0, alpha: 0)
         scrollView.frame.origin.y = self.view.frame.height * 0.4
         scrollView.frame.size.height = self.view.frame.height * 0.6 - (self.tabBarController?.tabBar.frame.size.height)!
+        scrollView.frame.size.width = self.view.frame.width
         scrollView.layer.zPosition = 50
         scrollView.decelerationRate = UIScrollViewDecelerationRateFast
+        let point = CGPoint(x: 0, y: 0)
+        scrollView.contentOffset = point
         
         
         
         //Welcome Label
         let WelcomeLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height * 0.125, width: self.view.frame.width*0.9, height: self.view.frame.height * 0.06))
-        if UserInformation.isEmpty{
-            WelcomeLabel.text = " Welcome to DBS! "
+        if loginID == ""{
+            WelcomeLabel.text = "Welcome to DBS!"
         }else{
             let Name = String(UserInformation[1].capitalized)!
             var ClassAndNumber = String(UserInformation[3])!
@@ -296,6 +316,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
         }
+        WelcomeLabel.reloadInputViews()
         WelcomeLabel.textColor = UIColor.white
         WelcomeLabel.font = UIFont(name: "Helvetica", size: 24)
         WelcomeLabel.font = UIFont.boldSystemFont(ofSize: 24)
@@ -420,6 +441,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     TableButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
                     //TableButton.target(forAction: #selector(GoToTimetable), withSender: self)
                     TableButton.addTarget(self, action: #selector(self.GoToTimetable),  for: .touchUpInside)
+                    TableButton.tag = 100000
                     self.scrollView.addSubview(TableButton)
                     
                 }
@@ -464,10 +486,27 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.ParseNewsCurriculars()
         }
         
+        if let x = UserDefaults.standard.string(forKey: "loginID") {
+            LoggedIn = x != ""
+        }
+        
+        var logInNumber = 0
+        if !LoggedIn{
+            logInNumber = 1
+        }else{
+            logInNumber = 0
+        }
         let tableTag = refreshControl.tag - 50
         //let TableToReload = self.scrollView.viewWithTag(tableTag)! as! UITableView
         //TableToReload.reloadData()
+        if let Table =  self.scrollView.viewWithTag(tableTag - logInNumber){
+            let TableToReload = Table as! UITableView
+            TableToReload.reloadData()
+        }
         
+        
+        
+        refreshControl.endRefreshing()
         
         
     }
@@ -532,7 +571,32 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             //Class
                 var Grade = 8
                 var Class = "S"
-                var GradeString = UserInformation[3]
+                
+                var input = "\(UserInformation[3])"
+                
+                var GradeString = "\(input)"
+                GradeString.removeLast(4)
+                GradeString.removeFirst()
+                var GradeInt = Int(GradeString)!
+                
+                var ClassString1 = "\(input)"
+                ClassString1.removeLast(3)
+                var ClassString2 = ClassString1.index(before: ClassString1.endIndex)
+                
+                if GradeInt != nil{
+                    Grade = GradeInt
+                }
+                
+                
+                
+                
+                Class = ClassString1
+                Class.removeFirst(2)
+                
+             //Elective
+                var isElective = false
+                
+                
                 
                 //if let grade = UserDefaults
             
@@ -555,45 +619,56 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
             
+                
             //Subject
             var out = ""
-            formSection = classArrayLow
+                if GradeInt >= 7 && GradeInt <= 9 {
+                    formSection = classArrayLow
+                } else if GradeInt >= 10 && GradeInt <= 12 {
+                    formSection = classArrayHigh
+                }
             
             if timetable != nil {
                 
-                for i in (timetable?.timetable.`class`[formSection.index(of: "S")!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
+                for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
                     out += "\(i.decodeUrl()) | "
                 }
-                if (timetable?.timetable.`class`[formSection.index(of: "S")!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: "S")!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
+                if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
                     out = "Activity Period   "
                 }
                 out.removeLast(3)
+                //out = out.capitalized
+                if out.count > 25{
+                    isElective = true
+                    out = "Elective"
+                }
+                
                 cell.textLabel?.text = out
                 cell.textLabel?.adjustsFontSizeToFitWidth = true
                 
                 out = ""
-                for i in (timetable?.timetable.`class`[formSection.index(of: "S")!].day[DayToDisplay].lesson[indexPath.row - 1].teacher)! {
+                for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].teacher)! {
                     out += "\(i.uppercased()) | "
                 }
                 out.removeLast(3)
                 
-                /*
-                if out != "D%T"{
-                    out = out.lowercased()
-                    //out = out.first
+                if isElective{
+                    out = ""
                 }
- */
-                
-                
                 
                 cell.detailTextLabel?.text = out
-                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: 12)
+                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: 11)
                 
-                cell.isUserInteractionEnabled = false
-            }
+                }
             }else{
-                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                tableView.addSubview(spinner)
+                
+                (self.scrollView.viewWithTag(100000)! as! UIButton).isUserInteractionEnabled = false
+                
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -694,9 +769,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
             }
             }else{
-                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                spinner.frame = CGRect(x: tableView.frame.size.width * 0.5 - spinner.frame.width / 2, y: tableView.frame.size.height * 0.5 - spinner.frame.height / 2, width: 30, height: 30)
-                tableView.addSubview(spinner)
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -733,8 +810,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
         }else{
-            let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-            tableView.addSubview(spinner)
+            
+            
+            tableView.separatorStyle = .none
+            cell.textLabel?.text = ""
+            cell.detailTextLabel?.text = ""
+            cell.isUserInteractionEnabled = false
+            tableView.reloadData()
             setupSpinner(view: tableView)
         }
         }
@@ -842,6 +924,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //spinner.frame.origin.y = spinner.frame.origin.y + 40
         //label.sizeToFit()
         view.addSubview(label)
+        
+        
     }
     
     

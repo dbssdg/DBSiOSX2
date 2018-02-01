@@ -112,6 +112,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         timetable.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
     
         
+        
     } 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
