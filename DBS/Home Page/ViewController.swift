@@ -464,10 +464,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.ParseNewsCurriculars()
         }
         
+        var logInNumber = 0
+        if !LoggedIn{
+            logInNumber = 1
+        }else{
+            logInNumber = 0
+        }
         let tableTag = refreshControl.tag - 50
         //let TableToReload = self.scrollView.viewWithTag(tableTag)! as! UITableView
         //TableToReload.reloadData()
-        
+        let TableToReload = self.scrollView.viewWithTag(tableTag - logInNumber)! as! UITableView
+        refreshControl.endRefreshing()
         
         
     }
