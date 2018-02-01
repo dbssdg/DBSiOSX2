@@ -198,7 +198,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             var toRecipents = ["dbssdg@gmail.com"]
             var mc = MFMailComposeViewController()
             mc.mailComposeDelegate = self
-            
+            mc.setToRecipients(toRecipents)
             self.present(mc, animated: true, completion: nil)
             
             
@@ -227,7 +227,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         actionSheet.addAction(UIAlertAction(title: "Report A Bug", style: .default, handler: reportBug))
-        if teacherOrStudent() == "s" {
+        if isInternetAvailable() && studentImage != nil && teacherOrStudent() == "s" {
             actionSheet.addAction(UIAlertAction(title: "Download Student Image", style: .default, handler: downloadStudentImage))
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))
