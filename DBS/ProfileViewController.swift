@@ -194,21 +194,54 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         func reportBug(action: UIAlertAction) {
+            let mailAlert = UIAlertController(title: "ERROR", message: nil, preferredStyle : .alert)
+            mailAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
+            if !MFMailComposeViewController.canSendMail() {
+                print("Mail services are not available")
+                
+                mailAlert.message = "Mail services are not available."
+                present(mailAlert, animated: true)
+                return
+            }
             var toRecipents = ["dbssdg@gmail.com"]
             var mc = MFMailComposeViewController()
             mc.mailComposeDelegate = self
             mc.setToRecipients(toRecipents)
+            
             self.present(mc, animated: true, completion: nil)
             
-            
-            
-            
+            func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+                switch result.rawValue {
+                    
+                case MFMailComposeResult.cancelled.rawValue:
+                    print("Cancelled")
+                    mailAlert.message = "Your mail has been cancelled."
+                    
+                case MFMailComposeResult.failed.rawValue:
+                    print("Failed")
+                    mailAlert.message = "Your mail has been failed."
+                    
+                case MFMailComposeResult.saved.rawValue:
+                    print("Saved")
+                    mailAlert.message = "Your mail has been saved."
+                    
+                case MFMailComposeResult.sent.rawValue:
+                    print("Sent")
+                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
+                    mc.isEditing = false
+                    mailAlert.message = "Your mail has been sent."
+                    
+                default:
+                    break
+                }
+                self.dismiss(animated: true, completion: nil)
+                present(mailAlert, animated: true)
+            }
             
         }
         func downloadStudentImage(action: UIAlertAction) {
             let imageData = UIImagePNGRepresentation(studentImage.image!)
-            print("NO SIGABRT")
             let compressedImage = UIImage(data: imageData!)
             UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
             
