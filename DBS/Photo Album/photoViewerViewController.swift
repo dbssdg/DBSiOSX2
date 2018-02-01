@@ -43,7 +43,9 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        navigationController?.popViewController(animated: false)
+        if scrollView.zoomScale < 1 {
+            navigationController?.popViewController(animated: false)
+        }
     }
     
     /*
