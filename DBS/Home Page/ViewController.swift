@@ -464,6 +464,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.ParseNewsCurriculars()
         }
         
+        if let x = UserDefaults.standard.string(forKey: "loginID") {
+            LoggedIn = x != ""
+        }
+        
         var logInNumber = 0
         if !LoggedIn{
             logInNumber = 1
@@ -473,7 +477,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let tableTag = refreshControl.tag - 50
         //let TableToReload = self.scrollView.viewWithTag(tableTag)! as! UITableView
         //TableToReload.reloadData()
-        let TableToReload = self.scrollView.viewWithTag(tableTag - logInNumber)! as! UITableView
+        if let Table =  self.scrollView.viewWithTag(tableTag - logInNumber){
+            let TableToReload = Table as! UITableView
+            TableToReload.reloadData()
+        }
+        
+        
+        
         refreshControl.endRefreshing()
         
         
@@ -539,7 +549,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             //Class
                 var Grade = 8
                 var Class = "S"
-                var GradeString = UserInformation[3]
+                var input = "\(UserInformation[3])"
+                var GradeString = "\(input.removeFirst())"
+                GradeString.removeLast(3)
+                
+                var ClassString = input.index(input.startIndex, offsetBy: 3)
+                
                 
                 //if let grade = UserDefaults
             
@@ -601,6 +616,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else{
                 tableView.separatorStyle = .none
                 cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -703,6 +721,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else{
                 tableView.separatorStyle = .none
                 cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -740,9 +761,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
         }else{
             
-            setupSpinner(view: tableView)
+            
             tableView.separatorStyle = .none
+            cell.textLabel?.text = ""
+            cell.detailTextLabel?.text = ""
             cell.isUserInteractionEnabled = false
+            tableView.reloadData()
+            setupSpinner(view: tableView)
         }
         }
  
