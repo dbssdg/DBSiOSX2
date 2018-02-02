@@ -74,7 +74,9 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
         segmentedControl.tag = 1
-        view.addSubview(segmentedControl)
+        if titles.count > 1 {
+            view.addSubview(segmentedControl)
+        }
         
     }
     
