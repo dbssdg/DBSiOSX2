@@ -128,10 +128,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 textField.isSecureTextEntry = true
             }
             
-            func changeTabBar(action: UIAlertAction) {
-                self.tabBarController?.selectedIndex = 0
+            func TAndC(action: UIAlertAction) {
+                performSegue(withIdentifier: "TAndC", sender: self)
             }
-            loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: changeTabBar))
+            loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
             
             func checkPassword(action: UIAlertAction) {
                 if (loginAlert.textFields![0].text!) == "" || (loginAlert.textFields![1].text!) == "" {
@@ -179,11 +179,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.present(networkAlert, animated: true)
                             print("ERROR")
                         }
-                    }.resume()
+                        }.resume()
                     
                 }
             }
             loginAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: checkPassword))
+            
+            func changeTabBar(action: UIAlertAction) {
+                self.tabBarController?.selectedIndex = 0
+            }
+            loginAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: changeTabBar))
+            
             present(loginAlert, animated: true)
         }
         
