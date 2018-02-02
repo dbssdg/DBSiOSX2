@@ -14,6 +14,7 @@ var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewView: UIView!
     @IBOutlet weak var calendar: UIButton!
     @IBOutlet weak var about: UIButton!
@@ -111,7 +112,8 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         timetable.clipsToBounds = true
         timetable.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
     
-        
+        scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: timetable.frame.origin.y + timetable.frame.size.height)
         
     } 
 
