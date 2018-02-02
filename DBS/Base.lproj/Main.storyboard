@@ -697,6 +697,11 @@
                         <outletCollection property="aboutDBSCollectionView" destination="AUT-ba-ULV" collectionClass="NSMutableArray" id="t48-Y9-pDT"/>
                         <outletCollection property="aboutDBSCollectionView" destination="kWf-WM-mTE" collectionClass="NSMutableArray" id="LWy-RA-0Sb"/>
                         <outletCollection property="aboutDBSCollectionView" destination="RuS-i3-cig" collectionClass="NSMutableArray" id="TWF-99-rbJ"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="l0Y-Z9-an4" collectionClass="NSMutableArray" id="0JF-J1-edd"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="IVW-nP-I8G" collectionClass="NSMutableArray" id="ixV-eW-YCq"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="LwF-EM-Gll" collectionClass="NSMutableArray" id="t4D-ik-jxo"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="Iut-10-BNS" collectionClass="NSMutableArray" id="dqc-hd-waa"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="AOa-wV-gjO" collectionClass="NSMutableArray" id="Zcr-H7-GGq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pgw-Rh-PSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
