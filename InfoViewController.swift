@@ -142,7 +142,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if functions[indexPath.row] == "Classmates" && !LoggedIn {
+        if functions[indexPath.row] == "Classmates" && loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Please login before you see your classmates.", preferredStyle: .alert)
             loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             func goToLoginPage(action: UIAlertAction) { self.tabBarController?.selectedIndex = 3 }
