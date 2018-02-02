@@ -92,6 +92,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
     }
 }
+        
+        usleep(10000)
         array = EventsArray
         DispatchQueue.main.async {
             for i in EventsArray{
@@ -349,10 +351,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         BandView.layer.zPosition = 1
         self.view.addSubview(BandView)
         
-            
-
-
-        //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.2), execute: {
+    
         
             var i = 0
             for data in arrayData{
@@ -675,12 +674,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Upcoming
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
             
-            
+            ParseEvents()
             
             array = EventsFromNow
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
                 
-                usleep(12000)
                 if indexPath.row < 4{
                     if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
                         
