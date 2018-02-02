@@ -108,7 +108,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         performSegue(withIdentifier: "Photo Viewer", sender: self)
     }
     
-    func getImage(_ urlString: String, _ imageView: UIImageView, _ int: Int){
+    func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int){
         let url : URL = URL(string: urlString)!
         let session = URLSession.shared
         let task = session.dataTask(with: url, completionHandler: {
@@ -118,7 +118,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if imageOut != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = imageOut
-                        imageArray[int] = imageOut
+                        imageArray[index] = imageOut
                     })
                 }
             } else {

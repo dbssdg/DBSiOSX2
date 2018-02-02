@@ -12,6 +12,7 @@ import CryptoSwift
 import MessageUI
 
 var loginID = ""
+var loginTextFieldSave = ["", ""]
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate ,MFMailComposeViewControllerDelegate {
     
@@ -121,14 +122,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let loginAlert = UIAlertController(title: "Login", message: "Your eClass Account", preferredStyle: .alert)
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "e-Class Login (starts with dbs)"
+                textField.text = loginTextFieldSave[0]
                 textField.autocapitalizationType = .none
             }
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "Password"
+                textField.text = loginTextFieldSave[1]
                 textField.isSecureTextEntry = true
             }
             
             func TAndC(action: UIAlertAction) {
+                loginTextFieldSave = [loginAlert.textFields![0].text!, loginAlert.textFields![1].text!]
                 performSegue(withIdentifier: "TAndC", sender: self)
             }
             loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
@@ -147,7 +151,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     loginID = (loginAlert.textFields![0].text!)
                     let startsWithdbs = loginID
                     loginID.removeFirst(3)
-                    let startsWith20 = "20\(loginID)"
                     
                     networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     
@@ -179,13 +182,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.present(networkAlert, animated: true)
                             print("ERROR")
                         }
-                        }.resume()
-                    
+                    }.resume()
                 }
             }
             loginAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: checkPassword))
             
             func changeTabBar(action: UIAlertAction) {
+                loginTextFieldSave = [loginAlert.textFields![0].text!, loginAlert.textFields![1].text!]
                 self.tabBarController?.selectedIndex = 0
             }
             loginAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: changeTabBar))
@@ -194,7 +197,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
@@ -263,8 +266,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(savedAlert, animated: true)
         }
+        
         func signOut(action: UIAlertAction) {
             loginID = ""
+            loginTextFieldSave = ["", ""]
             UserDefaults.standard.set("", forKey: "loginID")
             UserDefaults.standard.set(nil, forKey: "profileData")
             profileData.removeAll()

@@ -1,4 +1,4 @@
- //
+//
 //  AppDelegate.swift
 //  DBS
 //
@@ -6,10 +6,6 @@
 //  Copyright © 2017 DBSSDG. All rights reserved.
 //
  
- 
- 
- 
-
 import UIKit
 import AVFoundation
  
@@ -51,14 +47,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         if shortcutItem.type == "hk.edu.dbs.cl.DBS.timetable" {
-//            show(storyboard.instantiateViewController(withIdentifier: "Timetable"), sender: self)
-            print("TIMETABLE")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            root?.present(vc, animated: true, completion: { () -> Void in
+                completionHandler(true)
+            })
+            
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.calendar" {
-//            show(storyboard.instantiateViewController(withIdentifier: "Calendar"), sender: self)
-            print("CALENDAR")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            root?.present(vc, animated: true, completion: { () -> Void in
+                completionHandler(true)
+            })
+            
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.schoolrules" {
-//            show(storyboard.instantiateViewController(withIdentifier: "School Rules"), sender: self)
-            print("SCHOOL RULES")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            root?.present(vc, animated: true, completion: { () -> Void in
+                completionHandler(true)
+            })
+            
         }
     }
     

@@ -55,7 +55,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIApplicationShortcutItemIcon</key>
+	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
 			<key>UIApplicationShortcutItemType</key>
