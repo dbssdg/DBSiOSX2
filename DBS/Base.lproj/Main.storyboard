@@ -215,6 +215,7 @@
                         <outlet property="customizeButton" destination="lfj-vE-qd8" id="O6W-jg-hyO"/>
                         <outlet property="map" destination="tLK-JY-q6J" id="GfD-am-3wQ"/>
                         <outlet property="menuTable" destination="4nD-rj-vZ7" id="jhe-Iy-CxD"/>
+                        <outlet property="scrollView" destination="qtV-eM-Zc0" id="Kca-iT-0Pg"/>
                         <outlet property="scrollViewView" destination="kbk-mg-eYx" id="fQT-6Z-5i3"/>
                         <outlet property="timetable" destination="h1B-9m-qRf" id="32d-d0-ad8"/>
                         <segue destination="T4N-a4-izW" kind="show" identifier="School Hymn Segue" id="1Q5-7K-AE7"/>
@@ -301,25 +302,29 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
+<<<<<<< HEAD
                                                         <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+=======
+                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
+>>>>>>> 0f0b973ba13d2a3e3e886e72b6246c62771af5ed
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -696,6 +701,11 @@
                         <outletCollection property="aboutDBSCollectionView" destination="AUT-ba-ULV" collectionClass="NSMutableArray" id="t48-Y9-pDT"/>
                         <outletCollection property="aboutDBSCollectionView" destination="kWf-WM-mTE" collectionClass="NSMutableArray" id="LWy-RA-0Sb"/>
                         <outletCollection property="aboutDBSCollectionView" destination="RuS-i3-cig" collectionClass="NSMutableArray" id="TWF-99-rbJ"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="l0Y-Z9-an4" collectionClass="NSMutableArray" id="0JF-J1-edd"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="IVW-nP-I8G" collectionClass="NSMutableArray" id="ixV-eW-YCq"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="LwF-EM-Gll" collectionClass="NSMutableArray" id="t4D-ik-jxo"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="Iut-10-BNS" collectionClass="NSMutableArray" id="dqc-hd-waa"/>
+                        <outletCollection property="aboutDBSCollectionView" destination="AOa-wV-gjO" collectionClass="NSMutableArray" id="Zcr-H7-GGq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pgw-Rh-PSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1899,7 +1909,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qxb-Km-Yvs" id="S55-ni-myc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
