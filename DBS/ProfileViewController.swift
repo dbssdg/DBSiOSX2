@@ -214,7 +214,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if !MFMailComposeViewController.canSendMail() {
                 print("Mail services are not available")
                 
-                mailAlert.message = "Mail services are not available."
+                mailAlert.message = "Oops! Something went wrong..."
                 present(mailAlert, animated: true)
                 return
             }
