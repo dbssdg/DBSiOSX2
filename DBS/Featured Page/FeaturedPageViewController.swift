@@ -29,7 +29,7 @@ var newsDateArray = [String]()
 
 
 
-class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate, UISearchBarDelegate {
+class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate {
     var selectedSegment = 0
     
     var isSearching = false
@@ -95,15 +95,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         }
                     }
                     DispatchQueue.main.async {
-                        if circularTitleArray.count == 0 {
-                            print(circularTitleArray.count)
-                            self.present(networkAlert, animated: true)
-                        }
                         self.featuredTable.reloadData()
                         print("\(circularTitleArray.count)A")
                     }
                 } catch {
-                    self.present(networkAlert, animated: true)
                     print("ERROR")
                 }
             }.resume()
@@ -123,16 +118,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
                     }
                     DispatchQueue.main.async {
-                        if circularTitleArray.count == 0 {
-                            print(newsTitleArray.count)
-                            self.present(networkAlert, animated: true)
-                        }
                         self.featuredTable.reloadData()
                         print("\(newsTitleArray.count)A")
                     }
                 }
                 catch {
-                    self.present(networkAlert, animated: true)
                     print("ERROR")
                 }
             }.resume()
@@ -148,6 +138,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             navigationItem.hidesSearchBarWhenScrolling = true
         }
         setUpSegmentedControl()
+        registerForPreviewing(with: self, sourceView: featuredTable)
         
     }
     
@@ -208,6 +199,26 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             newsTotal = newsTitleArray.count
             performSegue(withIdentifier: "News Segue", sender: self)
         }
+    }
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = featuredTable.indexPathForRow(at: location) else {
+            return nil
+        }
+        if selectedSegment == 0 {
+            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
+            return detailViewController
+        } else if selectedSegment == 1 {
+            newsIndex = indexPath.row
+            newsTotal = newsTitleArray.count
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
+            return detailViewController
+        }
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
