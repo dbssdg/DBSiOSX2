@@ -51,10 +51,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     let featuredSearch = UISearchController(searchResultsController: nil)
     
     @IBAction func reloadPage(_ sender: Any) {
-        if isInternetAvailable() && news != nil {
-            didSelect(0)
-        }
         viewDidLoad()
+        didSelect(0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,7 +255,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func didSelect(_ segmentIndex: Int) {
         selectedSegment = segmentIndex
-        if isInternetAvailable() && news != nil {
+        if news != nil {
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
         }
         featuredTable.reloadData()

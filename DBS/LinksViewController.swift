@@ -108,7 +108,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func setUpSegmentedControl() {
         let titles = ["Links", "Contact", "Steps"]
-        let frame = CGRect(x: 0, y: self.view.frame.height * 0.8, width: self.view.frame.width, height: 40)
+        let frame = CGRect(x: 0, y: self.view.frame.height * 0.85, width: self.view.frame.width, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate

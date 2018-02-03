@@ -28,6 +28,7 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
             for i in 0..<arr.count {
                 var temp = "http\(arr[i])"
                 temp = temp.decodeUrl()
+                print(temp)
                 arr[i] = ""
 //                arr[i] = temp.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
                 for j in temp {
@@ -49,8 +50,10 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
             present(networkAlert, animated: true)
         }
         
+        circularWebView.scalesPageToFit = true
         setUpSegmentedControl()
         didSelect(0)
+        
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }

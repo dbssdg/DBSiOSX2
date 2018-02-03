@@ -308,19 +308,19 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="53.5" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1142,7 +1142,7 @@
                                 </connections>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JgS-Me-D55">
-                                <rect key="frame" x="0.0" y="72" width="375" height="470"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="491"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="H9n-ec-tTr">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1199,11 +1199,11 @@
                             <constraint firstAttribute="trailing" secondItem="fYa-lb-LAc" secondAttribute="trailing" id="129-15-v29"/>
                             <constraint firstItem="yKQ-vC-T1z" firstAttribute="top" secondItem="fYa-lb-LAc" secondAttribute="bottom" constant="55" id="9hp-XH-rt3"/>
                             <constraint firstItem="JgS-Me-D55" firstAttribute="leading" secondItem="DFt-22-glU" secondAttribute="leading" id="DzD-C1-3Dh"/>
-                            <constraint firstAttribute="bottom" secondItem="JgS-Me-D55" secondAttribute="bottom" constant="125" id="YgV-7e-qt8"/>
                             <constraint firstAttribute="trailing" secondItem="JgS-Me-D55" secondAttribute="trailing" id="aeo-EB-STf"/>
                             <constraint firstItem="JgS-Me-D55" firstAttribute="top" secondItem="iYj-LN-1MS" secondAttribute="bottom" constant="8" id="bF0-G5-bLc"/>
                             <constraint firstItem="fYa-lb-LAc" firstAttribute="leading" secondItem="DFt-22-glU" secondAttribute="leading" id="dpU-Q3-Rew"/>
                             <constraint firstItem="fYa-lb-LAc" firstAttribute="top" secondItem="iYj-LN-1MS" secondAttribute="bottom" id="e3X-vh-qaS"/>
+                            <constraint firstItem="JgS-Me-D55" firstAttribute="bottom" secondItem="fYa-lb-LAc" secondAttribute="bottom" id="h3g-FH-dcO"/>
                         </constraints>
                     </view>
                     <connections>
@@ -3096,7 +3096,7 @@ Title</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SLH-E1-IId"/>
-        <segue reference="ZX2-rL-u3a"/>
+        <segue reference="ZvZ-Pz-6g0"/>
         <segue reference="9mM-5a-2BY"/>
         <segue reference="eQw-7C-PZR"/>
         <segue reference="j2i-8h-aQ0"/>

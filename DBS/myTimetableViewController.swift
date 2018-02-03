@@ -142,7 +142,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.frame.height-250)/6
+        return (self.view.frame.height-40)/(6+2)
     }
     
     func didSelect(_ segmentIndex: Int) {
