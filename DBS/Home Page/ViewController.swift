@@ -471,7 +471,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //usleep(20000)
         scrollView.reloadInputViews()
         
-        
     }
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
@@ -956,6 +955,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
        */
  
+        if shortcutItemIdentifier == "upcoming" {
+            performSegue(withIdentifier: "Home to All Events", sender: self)
+            shortcutItemIdentifier = "false"
+        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
+            tabBarController?.selectedIndex = 2
+        }
         
     }
     

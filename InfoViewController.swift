@@ -79,6 +79,12 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         menuTable.reloadData()
         
+        if shortcutItemIdentifier == "timetable" {
+            performSegue(withIdentifier: "Timetable Segue", sender: self)
+        } else if shortcutItemIdentifier == "schoolrules" {
+            performSegue(withIdentifier: "School Rules Segue", sender: self)
+        }
+        shortcutItemIdentifier = "false"
     }
     
     

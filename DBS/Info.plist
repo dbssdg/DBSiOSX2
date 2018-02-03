@@ -27,6 +27,27 @@
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>The student image will be saved to your Photos.</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Timetable</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>hk.edu.dbs.cl.DBS.timetable</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Upcoming</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>hk.edu.dbs.cl.DBS.calendar</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>School Rules</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>hk.edu.dbs.cl.DBS.schoolrules</string>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -45,8 +66,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -54,27 +73,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemType</key>
-			<string>hk.edu.dbs.cl.DBS.timetable</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Timetable</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemType</key>
-			<string>hk.edu.dbs.cl.DBS.calendar</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Upcoming</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemType</key>
-			<string>hk.edu.dbs.cl.DBS.schoolrules</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>School Rules</string>
-		</dict>
 	</array>
 </dict>
 </plist>

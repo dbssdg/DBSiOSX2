@@ -9,7 +9,8 @@
 import UIKit
 import AVFoundation
  
- var EventsArray = [events]()
+var EventsArray = [events]()
+var shortcutItemIdentifier = "false"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,34 +47,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let root = UIApplication.shared.keyWindow?.rootViewController
+//        let vc = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
+        let firstVC = storyboard.instantiateInitialViewController()
+        root?.present(firstVC!, animated: false, completion: { () -> Void in
+            completionHandler(true)
+        })
+        
         if shortcutItem.type == "hk.edu.dbs.cl.DBS.timetable" {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
-            let root = UIApplication.shared.keyWindow?.rootViewController
-            root?.present(vc, animated: true, completion: { () -> Void in
-                completionHandler(true)
-            })
+            shortcutItemIdentifier = "timetable"
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.calendar" {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
-            let root = UIApplication.shared.keyWindow?.rootViewController
-            root?.present(vc, animated: true, completion: { () -> Void in
-                completionHandler(true)
-            })
+            shortcutItemIdentifier = "upcoming"
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.schoolrules" {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController
-            let root = UIApplication.shared.keyWindow?.rootViewController
-            root?.present(vc, animated: true, completion: { () -> Void in
-                completionHandler(true)
-            })
+            shortcutItemIdentifier = "schoolrules"
             
         }
+        print(shortcutItemIdentifier)
     }
     
 

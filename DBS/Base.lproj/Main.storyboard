@@ -154,7 +154,7 @@
                                                             <color key="titleColor" red="0.93210541033526861" green="0.78487261596203872" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="KNq-7M-NHv" kind="show" id="1iq-ad-Snf"/>
+                                                            <segue destination="KNq-7M-NHv" kind="show" identifier="Timetable Segue" id="1iq-ad-Snf"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g29-BI-jID">
@@ -302,31 +302,31 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1287,7 +1287,7 @@
         <!--Photo Viewer View Controller-->
         <scene sceneID="8lO-4P-xgL">
             <objects>
-                <viewController id="pEB-9r-1JB" customClass="photoViewerViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="pEB-9r-1JB" customClass="photoViewerViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="24N-O9-GAe"/>
                         <viewControllerLayoutGuide type="bottom" id="XRA-ga-d1y"/>
@@ -1297,10 +1297,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-nd-XCF">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <gestureRecognizers/>
                                 <connections>
+                                    <outlet property="delegate" destination="pEB-9r-1JB" id="fEd-ip-n1x"/>
                                     <outletCollection property="gestureRecognizers" destination="gjf-TV-EfO" appends="YES" id="0bR-o9-rtN"/>
+                                    <outletCollection property="gestureRecognizers" destination="992-QD-lkw" appends="YES" id="cXn-g1-Te8"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -1322,6 +1324,11 @@
                         <action selector="down:" destination="pEB-9r-1JB" id="tLW-2W-wwU"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="992-QD-lkw">
+                    <connections>
+                        <action selector="doubleTapped:" destination="pEB-9r-1JB" id="tyg-iY-pwH"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2703" y="4378"/>
         </scene>
@@ -2123,7 +2130,7 @@ Date of last revision: 30 January 2018.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rO-c5-1ax" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4300" y="-702.09895052473769"/>
+            <point key="canvasLocation" x="3726" y="-702"/>
         </scene>
         <!--School Badge-->
         <scene sceneID="WVj-BX-jZ3">
@@ -2318,7 +2325,7 @@ Date of last revision: 30 January 2018.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZZX-mh-N0M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3181.5999999999999" y="-702.09895052473769"/>
+            <point key="canvasLocation" x="2732" y="-702"/>
         </scene>
         <!--Home-->
         <scene sceneID="mke-Z4-qS2">
@@ -2465,7 +2472,7 @@ Date of last revision: 30 January 2018.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GyL-bZ-7xc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4652" y="259.52023988005999"/>
+            <point key="canvasLocation" x="4652" y="260"/>
         </scene>
         <!--Information-->
         <scene sceneID="eev-kx-3t5">
@@ -3089,9 +3096,9 @@ Title</string>
     <inferredMetricsTieBreakers>
         <segue reference="SLH-E1-IId"/>
         <segue reference="ZX2-rL-u3a"/>
-        <segue reference="225-9V-9cR"/>
+        <segue reference="9mM-5a-2BY"/>
         <segue reference="eQw-7C-PZR"/>
-        <segue reference="2fI-rG-aNj"/>
+        <segue reference="j2i-8h-aQ0"/>
         <segue reference="NGb-v2-BUs"/>
     </inferredMetricsTieBreakers>
 </document>

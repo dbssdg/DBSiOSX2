@@ -31,8 +31,8 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         
         scrollView.maximumZoomScale = 10
         scrollView.minimumZoomScale = 0.5
+        scrollView.isUserInteractionEnabled = true
         
-        print(photoSelected)
         print(self.view.frame.width * CGFloat(photoSelected))
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(photoSelected), y: 0), animated: false)
     }
@@ -42,18 +42,39 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+//    @IBAction func doubleTapped(_ sender: Any) {
+//
+//        func handleDoubleTap(recognizer: UITapGestureRecognizer) {
+//            if scrollView.zoomScale > 1 {
+//                scrollView.setZoomScale(1, animated: true)
+//                scrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(photoSelected), y: 0), animated: false)
+//            } else {
+//                scrollView.setZoomScale(5, animated: true)
+//            }
+//        }
+//        handleDoubleTap(recognizer: sender as! UITapGestureRecognizer)
+//    }
+
     @IBAction func down(_ sender: Any) {
         if scrollView.zoomScale == 1 {
             navigationController?.popViewController(animated: true)
         }
     }
-    
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        if scrollView.zoomScale < 0.5 {
-            navigationController?.popViewController(animated: false)
-        }
-        
-    }
+//
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        photoSelected = Int(scrollView.frame.minX / self.view.frame.width)
+//        viewForZooming(in: scrollView)
+//    }
+//
+//    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+//        viewForZooming(in: scrollView)
+//        if scrollView.zoomScale < 0.75 {
+//            navigationController?.popViewController(animated: true)
+//        }
+//    }
+//    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+//        return scrollView.subviews[photoSelected]
+//    }
     
     /*
     // MARK: - Navigation

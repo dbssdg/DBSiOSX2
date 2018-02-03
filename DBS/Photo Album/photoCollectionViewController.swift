@@ -103,9 +103,10 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        usleep(12000)
-        photoSelected = indexPath.row
-        performSegue(withIdentifier: "Photo Viewer", sender: self)
+        if imageArray[photoSelected] != nil {
+            photoSelected = indexPath.row
+            performSegue(withIdentifier: "Photo Viewer", sender: self)
+        }
     }
     
     func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int){
