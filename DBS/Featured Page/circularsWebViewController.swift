@@ -29,11 +29,14 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
                 var temp = "http\(arr[i])"
                 temp = temp.decodeUrl()
                 arr[i] = ""
+//                arr[i] = temp.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
                 for j in temp {
                     if j == " " || j == "+" {
                         arr[i] += "%20"
                     } else if j == "‐" {
                         arr[i] += "%E2%80%90"
+                    } else if j == "#" {
+                        arr[i] += "%23"
                     } else {
                         arr[i] += "\(j)"
                     }
