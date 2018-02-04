@@ -66,6 +66,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         print(form, group)
         
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(form).json"
+        print(jsonURL)
         let url = URL(string: jsonURL)
         
         if isInternetAvailable() {
