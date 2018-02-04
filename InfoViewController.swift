@@ -100,6 +100,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         ButtonView.frame = CGRect(x: 0, y: selfHeight * 0, width: selfWidth, height: selfWidth)
 
         menuTable.frame = CGRect(x: 0, y: ButtonView.frame.height , width: selfWidth, height: ButtonView.frame.height + self.view.frame.height * 0.1)
+        menuTable.sizeToFit()
         
         calendar.layer.cornerRadius = Radius
         calendar.clipsToBounds = true

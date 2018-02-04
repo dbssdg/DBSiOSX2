@@ -54,6 +54,9 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
         setUpSegmentedControl()
         didSelect(0)
         
+        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.shareCircular))
+        self.navigationItem.rightBarButtonItem = shareButton
+        
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
@@ -69,6 +72,19 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func shareCircular() {
+        let activityViewController = UIActivityViewController(
+            activityItems: [circularViewURL], applicationActivities: nil)
+//
+//        // This line is for the popover you need to show in iPad
+//        activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
+//        // This line remove the arrow of the popover to show in iPad
+//        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        activityViewController.excludedActivityTypes = []
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     func didSelect(_ segmentIndex: Int) {

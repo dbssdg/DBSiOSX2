@@ -35,11 +35,27 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         
         print(self.view.frame.width * CGFloat(photoSelected))
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(photoSelected), y: 0), animated: false)
+        
+        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.sharePhoto))
+        self.navigationItem.rightBarButtonItem = shareButton
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func sharePhoto() {
+        let activityViewController = UIActivityViewController(
+            activityItems: [scrollView.subviews[photoSelected]], applicationActivities: nil)
+        //
+        //        // This line is for the popover you need to show in iPad
+        //        activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
+        //        // This line remove the arrow of the popover to show in iPad
+        //        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        activityViewController.excludedActivityTypes = []
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
 //    @IBAction func doubleTapped(_ sender: Any) {
@@ -60,11 +76,12 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
             navigationController?.popViewController(animated: true)
         }
     }
-//
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        photoSelected = Int(scrollView.frame.minX / self.view.frame.width)
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        photoSelected = Int(scrollView.contentOffset.x / self.view.frame.width)
+        print(photoSelected)
 //        viewForZooming(in: scrollView)
-//    }
+    }
 //
 //    func scrollViewDidZoom(_ scrollView: UIScrollView) {
 //        viewForZooming(in: scrollView)
