@@ -180,7 +180,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
                         print("data is not nil")
                     }
-                    print(timetable)
+                    
                 } catch {
                     print("ERROR")
                 }
@@ -248,12 +248,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(UserDefaults.standard.string(forKey: "loginID"))
-        print(UserDefaults.standard.array(forKey: "profileData"))
         
-        if let x = UserDefaults.standard.string(forKey: "loginID") {
-            LoggedIn = x != ""
-        }
+        
         if let User = UserDefaults.standard.array(forKey: "profileData"){
             UserInformation = User as! [String]
         }
@@ -297,7 +293,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.frame.size.height = self.view.frame.height * 0.6 - (self.tabBarController?.tabBar.frame.size.height)!
         scrollView.frame.size.width = self.view.frame.width
         scrollView.layer.zPosition = 50
-        scrollView.decelerationRate = UIScrollViewDecelerationRateFast
+        //scrollView.decelerationRate = UIScrollViewDecelerationRateFast
+        scrollView.isPagingEnabled = true
         let point = CGPoint(x: 0, y: 0)
         scrollView.contentOffset = point
         
@@ -560,10 +557,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn == true && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
                 
-                DispatchQueue.main.async {
-                    self.ParseTimetable()
-                    print("Parsed")
-                }
+                removeSpinner(view: tableView)
                 
                 
             //Date
@@ -766,6 +760,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Circular
         else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
             if isInternetAvailable(){
+                removeSpinner(view: tableView)
             if indexPath.row < 4{
                 
                 if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
@@ -807,6 +802,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //News
         }else if tableView.tag == self.scrollView.viewWithTag(10003 - logInNumber)!.tag{
             if isInternetAvailable(){
+                removeSpinner(view: tableView)
             if indexPath.row < 4{
                 
                 if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
@@ -938,8 +934,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         spinner.activityIndicatorViewStyle = .gray
         spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
         spinner.startAnimating()
-        view.addSubview(spinner)
         spinner.hidesWhenStopped = true
+        spinner.tag = view.tag + 30
+        view.addSubview(spinner)
+        
         
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
         label.text = "Please check your Internet connectivity"
@@ -948,8 +946,29 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         label.textAlignment = .center
         //spinner.frame.origin.y = spinner.frame.origin.y + 40
         //label.sizeToFit()
+        label.tag = view.tag + 40
         view.addSubview(label)
         
+        
+        
+    }
+    
+    func removeSpinner(view: UITableView){
+        let tableTag = view.tag
+//        if view.viewWithTag(tableTag + 30) != nil{
+//            print(view.viewWithTag(tableTag + 30)!)
+//            view.viewWithTag(tableTag + 30)!.removeFromSuperview()
+//        }
+//        if view.viewWithTag(tableTag + 40) != nil{
+//            view.viewWithTag(tableTag + 40)!.removeFromSuperview()
+//        }
+//        //view.reloadData()
+        let subViews = view.subviews
+        for subview in subViews{
+            if subview.tag == tableTag + 30 || subview.tag == tableTag + 40{
+                subview.removeFromSuperview()
+            }
+        }
         
     }
     
