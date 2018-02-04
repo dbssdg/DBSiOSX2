@@ -15,7 +15,7 @@ struct ScrollViewDataStruct {
     let title : String?
 }
 var EventsFromNow = [events]()
-var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" && UserDefaults.standard.string(forKey: "loginID") != nil
+var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" //&& UserDefaults.standard.string(forKey: "loginID") != nil
 var UserInformation = [String]()
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
@@ -90,6 +90,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
 }
         
+       
+        usleep(10000)
         
     array = EventsArray
     DispatchQueue.main.async {
@@ -176,7 +178,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     if data != nil {
                         
                         timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
-                        print("data is not nil")
                     }
                     
                 } catch {
@@ -574,7 +575,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                     
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
-                        print("HI")
                         out += "\(i.decodeUrl()) | "
                     }
                     if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
@@ -586,8 +586,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         isElective = true
                         out = "Elective"
                     }
-                print("out")
-                
                 
                 cell.textLabel?.text = out
                 cell.textLabel?.adjustsFontSizeToFitWidth = true
@@ -807,7 +805,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             logInNumber = 1
         }
         
-        if tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+        if LoggedIn && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             self.GoToTimetable()
             
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
@@ -835,6 +833,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else{
                 
                 destinationFeature = 1
+                selectedSegment = 1
                 tabBarController?.selectedIndex = 1
             }
         }else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
@@ -844,7 +843,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     performSegue(withIdentifier: "Home to Circular Detailed", sender: self)
                 }
             }else{
-                
+                selectedSegment = 0
                 tabBarController?.selectedIndex = 1
             }
         }
