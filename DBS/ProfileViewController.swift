@@ -143,7 +143,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     present(noPassword, animated: true)
                 } else if !isInternetAvailable() {
                     present(networkAlert, animated: true)
-                } else if loginAlert.textFields![0].text!.count <= 4 {
+                } else if loginAlert.textFields![0].text!.count <= 4 || !(loginAlert.textFields![0].text?.hasPrefix("dbs"))! {
                     print("Username Failure")
                     present(wrongPassword, animated: true)
                 } else {
@@ -179,7 +179,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             }
                             
                         } catch {
-                            self.present(networkAlert, animated: true)
+                            self.present(wrongPassword, animated: true)
                             print("ERROR")
                         }
                     }.resume()

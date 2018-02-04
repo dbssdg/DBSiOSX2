@@ -15,7 +15,7 @@ struct ScrollViewDataStruct {
     let title : String?
 }
 var EventsFromNow = [events]()
-var LoggedIn = UserDefaults.standard.string(forKey: "loginID")! != ""
+var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" && UserDefaults.standard.string(forKey: "loginID") != nil
 var UserInformation = [String]()
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
