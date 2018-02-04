@@ -73,7 +73,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         if isInternetAvailable() && !circularTitleArray.isEmpty && !newsTitleArray.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
-                    circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
+                    if data != nil {
+                        circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
+                    }
                     circularTitleArray=[]
                     circularTimeArray=[]
                     pinnedCircular = 2
@@ -102,7 +104,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
-                    news = try JSONDecoder().decode(newsData.self, from: data!)
+                    if data != nil {
+                        news = try JSONDecoder().decode(newsData.self, from: data!)
+                    }
                     for i in (news?.title)! {
                         if (news?.title)!.count > newsTitleArray.count {
                             newsTitleArray += [i]
@@ -255,6 +259,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func didSelect(_ segmentIndex: Int) {
         selectedSegment = segmentIndex
+        print(news)
         if news != nil {
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
         }
