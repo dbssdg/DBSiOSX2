@@ -15,7 +15,7 @@ struct ScrollViewDataStruct {
     let title : String?
 }
 var EventsFromNow = [events]()
-var LoggedIn = false
+var LoggedIn = UserDefaults.standard.string(forKey: "loginID")! != ""
 var UserInformation = [String]()
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
@@ -93,7 +93,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
 }
         
-        usleep(10000)
+        //usleep(10000)
         array = EventsArray
         DispatchQueue.main.async {
             for i in EventsArray{
@@ -153,7 +153,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        if loginID != ""{
+        if LoggedIn{
         var input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
@@ -168,29 +168,31 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         
         
-        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeInt).json"
+        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable8.json"
         let url = URL(string: jsonURL)
         
         if isInternetAvailable(){
         
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
-                    timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
+                    if data != nil {
+                        
+                        timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
+                        print("data is not nil")
+                    }
+                    print(timetable)
                 } catch {
                     print("ERROR")
                 }
                 }.resume()
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.15), execute: {
-            if timetable?.timetable.`class`.count == 0 {
-                //self.present(networkAlert, animated: true)
+            
             }
-            //self.timetableTable.reloadData()
-            //self.title? += " (\((self.timetable?.timetable.`class`[self.formSection.index(of: self.group)!].teacher)!))"
-        })
+            
         }
-        }
+            
+        usleep(10000)
     }
     
     @objc func GoToTimetable(){
@@ -246,6 +248,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(UserDefaults.standard.string(forKey: "loginID"))
+        print(UserDefaults.standard.array(forKey: "profileData"))
+        
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             LoggedIn = x != ""
         }
@@ -286,7 +291,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.isHidden = false
         scrollView.reloadInputViews()
         scrollView.contentSize.width = self.scrollView.frame.width * CGFloat(arrayData.count)
-        scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        //scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         scrollView.backgroundColor = UIColor.init(red: 37.0/255.0, green: 44.0/255.0, blue: 110.0/255.0, alpha: 0)
         scrollView.frame.origin.y = self.view.frame.height * 0.4
         scrollView.frame.size.height = self.view.frame.height * 0.6 - (self.tabBarController?.tabBar.frame.size.height)!
@@ -300,7 +305,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Welcome Label
         let WelcomeLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height * 0.125, width: self.view.frame.width*0.9, height: self.view.frame.height * 0.06))
-        if loginID == ""{
+        if !LoggedIn{
             WelcomeLabel.text = "Welcome to DBS!"
         }else{
             let Name = String(UserInformation[1].capitalized)!
@@ -338,9 +343,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         HomeLogoView.contentMode = .scaleAspectFit
         
         
-        //HomeLogo?.size
-        //let HomeLogoY = NSLayoutConstraint(item: HomeLogoView, attribute:.topMargin, relatedBy: .equal, toItem: WelcomeLabel, attribute: .bottomMargin, multiplier: 1.0, constant: self.view.frame.height * 0.03)
-        //NSLayoutConstraint.activate([HomeLogoY])
         
         self.view.addSubview(HomeLogoView)
         
@@ -461,7 +463,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
     
         if ViewTimesLoaded == 1{
-            //viewDidLoad()
+            
             scrollViewDidScroll(scrollView)
         }
         
@@ -478,10 +480,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.ParseEvents()
         }
         
-        self.ParseTimetable()
+        
         
         if newsDateArray.isEmpty||circularTimeArray.isEmpty{
             self.ParseNewsCurriculars()
+        }
+        
+        if timetable == nil{
+            self.ParseTimetable()
         }
         
         if let x = UserDefaults.standard.string(forKey: "loginID") {
@@ -553,6 +559,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Timetable
         if LoggedIn == true && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
+                
+                DispatchQueue.main.async {
+                    self.ParseTimetable()
+                    print("Parsed")
+                }
+                
+                
             //Date
             var DayToDisplay = 0
             var calendar = Calendar(identifier: .gregorian)
@@ -562,7 +575,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             var CurrentTime = calendar.component(.hour, from: Date())
             
             DayToDisplay = CurrentDay
-            if DayToDisplay == 5 || DayToDisplay == -1 {
+            if DayToDisplay == 5 || DayToDisplay == -1 || DayToDisplay == 6{
                 DayToDisplay = 0
             }
             
@@ -570,6 +583,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 var Grade = 8
                 var Class = "S"
                 
+                
+                //if UserInformation != nil{
                 var input = "\(UserInformation[3])"
                 
                 var GradeString = "\(input)"
@@ -584,12 +599,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 if GradeInt != nil{
                     Grade = GradeInt
                 }
-                
+                    
+ 
                 
                 
                 
                 Class = ClassString1
                 Class.removeFirst(2)
+ 
+                
                 
              //Elective
                 var isElective = false
@@ -626,33 +644,43 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     formSection = classArrayHigh
                 }
             
+               
+                
             if timetable != nil {
                 
-                for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
-                    out += "\(i.decodeUrl()) | "
-                }
-                if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
-                    out = "Activity Period   "
-                }
-                out.removeLast(3)
-                //out = out.capitalized
-                if out.count > 25{
-                    isElective = true
-                    out = "Elective"
-                }
+                    
+                    for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
+                        print("HI")
+                        out += "\(i.decodeUrl()) | "
+                    }
+                    if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
+                        out = "Activity Period   "
+                    }
+                    out.removeLast(3)
+                    //out = out.capitalized
+                    if out.count > 25{
+                        isElective = true
+                        out = "Elective"
+                    }
+                print("out")
+                
                 
                 cell.textLabel?.text = out
                 cell.textLabel?.adjustsFontSizeToFitWidth = true
                 
                 out = ""
-                for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].teacher)! {
-                    out += "\(i.uppercased()) | "
-                }
-                out.removeLast(3)
                 
-                if isElective{
-                    out = ""
-                }
+                
+                    for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].teacher)! {
+                        out += "\(i.uppercased()) | "
+                    }
+                    out.removeLast(3)
+                    
+                    if isElective{
+                        out = ""
+                    }
+                
+                
                 
                 cell.detailTextLabel?.text = out
                 cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: 11)
@@ -932,7 +960,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         DispatchQueue.main.async {
             self.viewDidLoad()
-            self.scrollView.viewWithTag(10000)!.reloadInputViews()
+            //self.scrollView.viewWithTag(10000)!.reloadInputViews()
         }
         
         /*
@@ -968,17 +996,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         var apple = 0
         if scrollView == scrollView{
             for i in 0..<scrollViewLoggedInData.count{
+                
                 /*
-                let label = scrollView.viewWithTag(i + LabelTagValue) as! UILabel
-                let view = scrollView.viewWithTag(i + viewTagValue) as! HomeCustomView
-                let labelBackground = scrollView.viewWithTag(i + LabelBackgroundTagValue) as! UIView
-                
-                var scrollContentOffset = scrollView.contentOffset.x + self.scrollView.frame.width
-                var viewOffset = view.center.x - scrollView.bounds.width / 4 - scrollContentOffset
-                
-                //label.center.x =  scrollContentOffset - ((scrollView.bounds.width / 4 - viewOffset) / 2 )
-               // labelBackground.center.x =  scrollContentOffset - ((scrollView.bounds.width / 4 - viewOffset) / 2 )
-                */
+                DispatchQueue.main.async {
+                    if timetable == nil{
+                        self.ParseTimetable()
+                    }
+                    let TableView = self.scrollView.viewWithTag(10000)! as! UITableView
+                    TableView.reloadData()
+                }
+ */
                 
                 
                 DispatchQueue.main.async {
@@ -1000,6 +1027,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         }
                     }
                 }
+ 
             }
         }
     }
