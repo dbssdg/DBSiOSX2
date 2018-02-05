@@ -15,7 +15,8 @@ struct ScrollViewDataStruct {
     let title : String?
 }
 var EventsFromNow = [events]()
-var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil || (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!)
+//var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil || !(UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!)
+var LoggedIn = Bool()
 var UserInformation = [String]()
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
@@ -898,7 +899,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil || (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!)
+        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
         
         DispatchQueue.main.async {
             self.viewDidLoad()

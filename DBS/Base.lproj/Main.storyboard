@@ -300,11 +300,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-<<<<<<< HEAD
+
                                                         <rect key="frame" x="107" y="0.0" width="54" height="20.5"/>
-=======
+
                                                         <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
->>>>>>> e3261f45560039a1f51363eeca1c2e86b6058562
+
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
