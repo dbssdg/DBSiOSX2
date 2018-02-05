@@ -62,7 +62,7 @@ class AllEventsTableViewController: UITableViewController {
         
         
         if !EventsFromNow.isEmpty{
-            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: true)
+            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
         }
     }
     
@@ -89,28 +89,28 @@ class AllEventsTableViewController: UITableViewController {
         let CellEvent = EventsArray[indexPath.row]
         
         if !EventsArray.isEmpty{
-        //Title
-        cell.title.text = CellEvent.Title
-        cell.title.adjustsFontSizeToFitWidth = true
-        
-        //Subtitle
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d/M/yy"
-        if CellEvent.StartDate == CellEvent.EndDate{
-            cell.dateTitle.text = formatter.string(from: CellEvent.StartDate)
-        }else{
-            cell.dateTitle.text = "\(formatter.string(from: CellEvent.StartDate)) - \(formatter.string(from: CellEvent.EndDate))"
-        }
-        
-        //Event Type Bar
-        switch CellEvent.EventType {
-        case .PH:
-            cell.EventTypeBar.backgroundColor = UIColor.red
-        case .SE:
-            cell.EventTypeBar.backgroundColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
-        case .SH:
-            cell.EventTypeBar.backgroundColor = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
-        }
+            //Title
+            cell.title.text = CellEvent.Title
+            cell.title.adjustsFontSizeToFitWidth = true
+            
+            //Subtitle
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d/M/yy"
+            if CellEvent.StartDate == CellEvent.EndDate{
+                cell.dateTitle.text = formatter.string(from: CellEvent.StartDate)
+            }else{
+                cell.dateTitle.text = "\(formatter.string(from: CellEvent.StartDate)) - \(formatter.string(from: CellEvent.EndDate))"
+            }
+            
+            //Event Type Bar
+            switch CellEvent.EventType {
+            case .PH:
+                cell.EventTypeBar.backgroundColor = UIColor.red
+            case .SE:
+                cell.EventTypeBar.backgroundColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
+            case .SH:
+                cell.EventTypeBar.backgroundColor = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
+            }
         }
         
         return cell

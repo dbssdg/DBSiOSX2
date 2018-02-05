@@ -47,7 +47,7 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
     
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
-            activityItems: [scrollView.subviews[photoSelected]], applicationActivities: nil)
+            activityItems: [scrollView.subviews[photoSelected].asImage()], applicationActivities: nil)
         //
         //        // This line is for the popover you need to show in iPad
         //        activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
@@ -58,7 +58,7 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         self.present(activityViewController, animated: true, completion: nil)
     }
     
-//    @IBAction func doubleTapped(_ sender: Any) {
+    @IBAction func doubleTapped(_ sender: Any) {
 //
 //        func handleDoubleTap(recognizer: UITapGestureRecognizer) {
 //            if scrollView.zoomScale > 1 {
@@ -69,7 +69,7 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
 //            }
 //        }
 //        handleDoubleTap(recognizer: sender as! UITapGestureRecognizer)
-//    }
+    }
 
     @IBAction func down(_ sender: Any) {
         if scrollView.zoomScale == 1 {
@@ -103,4 +103,13 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
     }
     */
 
+}
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
 }
