@@ -94,11 +94,6 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
         getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
-        if cell.image.image != nil {
-            
-        }
- //       print(cell.image.image)
-//        For some reasons, cell.image.image always equals to nil. So I can't help it :D
         return cell
     }
     
