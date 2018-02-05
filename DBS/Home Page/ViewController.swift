@@ -156,7 +156,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        if LoggedIn{
+        if LoggedIn && teacherOrStudent() == "s"{
         var input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
@@ -266,7 +266,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var arrayData = scrollViewLoggedInData
         
-        if LoggedIn{
+        if LoggedIn && teacherOrStudent() == "s"{
             arrayData = scrollViewLoggedInData
         }else{
             arrayData = scrollViewData
@@ -441,7 +441,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         var logInNumber = 0
-        if !LoggedIn{
+        if !LoggedIn && teacherOrStudent() == "s"{
             logInNumber = 1
         }else{
             logInNumber = 0
@@ -463,7 +463,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if LoggedIn{
+        if LoggedIn && teacherOrStudent() == "s"{
             if tableView.tag == 10000{
                 return 7
             }else{
@@ -476,6 +476,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var BigFont : CGFloat = 18
+        var SmallFont : CGFloat = 13
+        /*
+        if UIScreen.main.bounds.width < 700{
+            BigFont = 14
+            SmallFont = 11
+        }else if UIScreen.main.bounds.width <= 750{
+            BigFont = 17
+            SmallFont = 13
+        }
+ */
         
         DispatchQueue.main.async {
             self.array = self.eventsArray
@@ -485,14 +496,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: nil)
         
         var logInNumber = 0
-        if !LoggedIn{
+        if !LoggedIn || teacherOrStudent() == ""{
             logInNumber = 1
         }else{
             logInNumber = 0
         }
         
         //Timetable
-        if LoggedIn == true && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+        if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
                 
                 removeSpinner(view: tableView)
@@ -554,8 +565,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.textLabel?.text = "Monday's Timetable"
                 }
                 
-                cell.textLabel?.font = UIFont(name: "Helvetica", size: 18)
-                cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+                cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)
+                cell.textLabel?.font = UIFont.boldSystemFont(ofSize: BigFont)
                 cell.textLabel?.textAlignment = .center
                 return cell
             }
@@ -588,6 +599,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         out = "Elective"
                     }
                 
+                out = out.capitalized
+                
                 cell.textLabel?.text = out
                 cell.textLabel?.adjustsFontSizeToFitWidth = true
                 
@@ -606,7 +619,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                 
                 cell.detailTextLabel?.text = out
-                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: 11)
+                cell.detailTextLabel?.textColor = UIColor.gray
+                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
                 
                 }
             }else{
@@ -639,11 +653,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             cell.textLabel!.text = array[indexPath.row].Title
                             cell.textLabel!.adjustsFontSizeToFitWidth = true
                             cell.textLabel!.numberOfLines = 2
-                            cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+                            cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                             
                             //Subtitle
                             cell.detailTextLabel!.textColor = UIColor.gray
-                            cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: 13)
+                            cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
                             cell.detailTextLabel!.numberOfLines = 0
                             let formatter = DateFormatter()
                             formatter.dateFormat = "d/M/yy"
@@ -677,7 +691,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }else{
                     
                     cell.textLabel!.text = "    See More..."
-                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
+                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                 }
             }
             
@@ -693,14 +707,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     
                     //Title
                     cell.textLabel!.text = circularTitleArray[indexPath.row]
-                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                     cell.textLabel?.numberOfLines = 2
                     cell.textLabel!.adjustsFontSizeToFitWidth = true
                     
                     //Subtitle
                     cell.detailTextLabel!.text = circularTimeArray[indexPath.row]
                     cell.detailTextLabel!.textColor = UIColor.gray
-                    cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: 13)
+                    cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
                     
                     //Accessory Type
                     cell.accessoryType = .disclosureIndicator
@@ -717,7 +731,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }else{
                 cell.textLabel!.text = "    See More..."
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
             }
             }else{
                 tableView.separatorStyle = .none
@@ -734,19 +748,19 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }else if tableView.tag == self.scrollView.viewWithTag(10003 - logInNumber)!.tag{
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
-            if indexPath.row < 4{
-                
-                if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
+                if indexPath.row < 4{
+                    
+                    if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
                 //Title
                 cell.textLabel!.text = newsTitleArray[indexPath.row]
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                 cell.textLabel!.adjustsFontSizeToFitWidth = true
                 cell.textLabel?.numberOfLines = 2
                 
                 //Subtitle
                 cell.detailTextLabel!.text = newsDateArray[indexPath.row]
                 cell.detailTextLabel!.textColor = UIColor.gray
-                cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: 13)
+                cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
                 
                 //Accessory Type
                 cell.accessoryType = .disclosureIndicator
@@ -763,7 +777,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }else{
                 cell.textLabel!.text = "    See More..."
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 16)
+                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
             }
             
         }else{
@@ -783,7 +797,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if LoggedIn && tableView.tag == 10000{
+        if LoggedIn && teacherOrStudent() == "s" && tableView.tag == 10000{
             if indexPath.row == 0{
                 return 30
             }else{
@@ -802,11 +816,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var logInNumber = 0
-        if !LoggedIn{
+        if !LoggedIn || teacherOrStudent() == ""{
             logInNumber = 1
         }
         
-        if LoggedIn && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+        if LoggedIn && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             self.GoToTimetable()
             
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
@@ -894,6 +908,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
         
+    }
+    
+    func teacherOrStudent() -> String {
+        if LoggedIn{
+        if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
+            return "s"
+        }
+        return ""
+        }else{
+            return "error"
+        }
     }
     
     
