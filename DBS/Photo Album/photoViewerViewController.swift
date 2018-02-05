@@ -48,11 +48,11 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
             activityItems: [scrollView.subviews[photoSelected].asImage()], applicationActivities: nil)
-        //
-        //        // This line is for the popover you need to show in iPad
-        //        activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
-        //        // This line remove the arrow of the popover to show in iPad
-        //        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection
+        
+////              This line is for the popover you need to show in iPad
+//                activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
+////              This line remove the arrow of the popover to show in iPad
+//                activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection
         activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
         activityViewController.excludedActivityTypes = []
         self.present(activityViewController, animated: true, completion: nil)
@@ -63,7 +63,6 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
 //        func handleDoubleTap(recognizer: UITapGestureRecognizer) {
 //            if scrollView.zoomScale > 1 {
 //                scrollView.setZoomScale(1, animated: true)
-//                scrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(photoSelected), y: 0), animated: false)
 //            } else {
 //                scrollView.setZoomScale(5, animated: true)
 //            }
@@ -82,6 +81,10 @@ class photoViewerViewController: UIViewController, UIScrollViewDelegate {
         print(photoSelected)
 //        viewForZooming(in: scrollView)
     }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+    }
+    
 //
 //    func scrollViewDidZoom(_ scrollView: UIScrollView) {
 //        viewForZooming(in: scrollView)
