@@ -27,10 +27,10 @@ var news : newsData?
 var newsTitleArray = [String]()
 var newsDateArray = [String]()
 
-
+var selectedSegment = 0
 
 class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate {
-    var selectedSegment = 0
+    
     
     var isSearching = false
     
@@ -273,6 +273,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
         segmentedControl.tag = 1
+        segmentedControl.move(to: selectedSegment)
         view.addSubview(segmentedControl)
         
     }
@@ -297,6 +298,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         return (isReachable && !needsConnection)
     }
 
+    
+    
     
 }
 

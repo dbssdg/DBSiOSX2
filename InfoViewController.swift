@@ -99,7 +99,9 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         ButtonView.frame = CGRect(x: 0, y: selfHeight * 0, width: selfWidth, height: selfWidth)
 
-        menuTable.frame = CGRect(x: 0, y: ButtonView.frame.height , width: selfWidth, height: ButtonView.frame.height + self.view.frame.height * 0.1)
+//        menuTable.frame = CGRect(x: 0, y: ButtonView.frame.height , width: selfWidth, height: ButtonView.frame.height + self.view.frame.height * 0.1)
+        menuTable.frame.origin = CGPoint(x: 0, y: ButtonView.frame.height)
+        menuTable.frame.size.width = selfWidth
         menuTable.sizeToFit()
         
         calendar.layer.cornerRadius = Radius
@@ -120,7 +122,9 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         timetable.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
     
         scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: timetable.frame.origin.y + timetable.frame.size.height)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: menuTable.frame.origin.y + menuTable.frame.size.height)
+        
+        scrollViewView.frame.size.height = scrollView.frame.height
         
     } 
 

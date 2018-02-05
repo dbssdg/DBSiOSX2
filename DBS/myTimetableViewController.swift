@@ -160,6 +160,22 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
 //        segmentedControl.move(to: 1)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+        
+        //Init Day
+        var DayToDisplay = 0
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = -1
+        
+        let CurrentDay = calendar.component(.weekday, from: Date()) - 1
+        let CurrentTime = calendar.component(.hour, from: Date())
+        
+        DayToDisplay = CurrentDay
+        if DayToDisplay == 5 || DayToDisplay == -1 || DayToDisplay == 6{
+            DayToDisplay = 0
+        }
+        
+        
+        segmentedControl.move(to: DayToDisplay)
         view.addSubview(segmentedControl)
         
     }
