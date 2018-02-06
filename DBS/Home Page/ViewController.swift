@@ -19,9 +19,31 @@ var EventsFromNow = [events]()
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
-class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
+class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout{
     
-
+    
+    /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.presentedViewController.invalidateLayout()
+            
+            if self.pageControl.currentPage == 0 {
+                self.collectionView?.contentOffset = .zero
+                
+            } else {
+                let indexPath = indexPath(item: self.pageControl.currentPage, section : 0)
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                
+            } { (_) in
+ 
+            }
+        })
+        
+        
+        
+    }*/ 
+    
+    
     var eventsArray = [events]()
     var array = EventsArray
     var EventsAreLoaded = false
@@ -92,10 +114,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
 }
         
        
-        usleep(10000)
         
-    array = EventsArray
-    DispatchQueue.main.async {
+        
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        self.array = EventsArray
         for i in EventsArray{
             if i.EndDate > Date(){
                 EventsFromNow += [i]
@@ -171,25 +194,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable8.json"
         let url = URL(string: jsonURL)
-        
-        if isInternetAvailable(){
-        
-            URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                do {
-                    if data != nil {
-                        
-                        timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
-                    }
+            DispatchQueue.main.async {
+                if self.isInternetAvailable(){
                     
-                } catch {
-                    print("ERROR")
+                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                        do {
+                            if data != nil {
+                                
+                                timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
+                                
+                            }
+                            
+                        } catch {
+                            print("ERROR")
+                        }
+                    }.resume()
                 }
-                }.resume()
+                
             }
-            
         }
-            
-        usleep(10000)
+        
     }
     
     @objc func GoToTimetable(){
@@ -506,6 +530,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
                 
+                ParseTimetable()
+                
                 removeSpinner(view: tableView)
                 
                 
@@ -636,7 +662,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Upcoming
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
             
+            if EventsArray.isEmpty{
             ParseEvents()
+            }
             
             array = EventsFromNow
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
@@ -694,6 +722,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                 }
             }
+            scrollViewDidScroll(scrollView)
             
         }
         

@@ -52,7 +52,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func reloadPage(_ sender: Any) {
         viewDidLoad()
-        didSelect(0)
+        featuredTable.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +73,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         if isInternetAvailable() && !circularTitleArray.isEmpty && !newsTitleArray.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
+                    DispatchQueue.main.async {
+                        self.featuredTable.reloadData()
+                        print("\(circularTitleArray.count)A")
+                    }
                     if data != nil {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
                     }
@@ -82,15 +86,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     //The code works when it is reloaded but not when it first displayed. anyways to trigger the reload button by computer
                     for i in 1...circulars.values.count {
                         if circulars.count > circularTitleArray.count {
-                            let circularTimes = (circulars["\(i)"]!["time"]!).split(separator: " ")
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy"
-                            if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
-                                circularTimeArray += [""]
-                                print("86")
-                            } else {
-                                circularTimeArray += [(circulars["\(i)"]!["time"]!)]
-                            }
+                            circularTimeArray += [(circulars["\(i)"]!["time"]!)]
                             circularTitleArray += [(circulars["\(i)"]!["title"]!)]
                         }
                     }
@@ -104,6 +100,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
+                    DispatchQueue.main.async {
+                        self.featuredTable.reloadData()
+                        print("\(newsTitleArray.count)A")
+                    }
                     if data != nil {
                         news = try JSONDecoder().decode(newsData.self, from: data!)
                     }
@@ -160,22 +160,27 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if pinnedCircular > 0 {
-
-            //DispatchQueue.main.async {
-                pinnedCircular -= 1
-                print("\(pinnedCircular)th post")
-            //}
-            usleep(50000)
+            pinnedCircular -= 1
+            print("\(pinnedCircular)th post")
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
         if selectedSegment == 0 {
             if isSearching {
-                cell.textLabel?.text = circularTitleArray[indexPath.row]
-                cell.textLabel?.textColor = UIColor.red
+                cell.textLabel?.text = filteredCirculars[indexPath.row]
                 cell.detailTextLabel?.text = ""
             } else {
-                cell.textLabel?.text = circularTitleArray[indexPath.row]
-                cell.detailTextLabel?.text = circularTimeArray[indexPath.row]
+                if circulars.count <= circularTitleArray.count {
+                    let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy"
+                    if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
+                        cell.detailTextLabel?.text = ""
+                    } else {
+                        cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
+                    }
+                    cell.textLabel?.text = circularTitleArray[indexPath.row]
+                }
+                
             }
         } else if selectedSegment == 1 {
             if isSearching {
@@ -258,12 +263,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func didSelect(_ segmentIndex: Int) {
-        selectedSegment = segmentIndex
-        print(news)
-        if news != nil {
+        if tableView(featuredTable, numberOfRowsInSection: 1) == 0 {
+            selectedSegment = segmentIndex
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
+            featuredTable.reloadData()
         }
-        featuredTable.reloadData()
     }
     
     func setUpSegmentedControl() {
