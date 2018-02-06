@@ -179,7 +179,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        if LoggedIn && teacherOrStudent() == "s"{
+        if LoggedIn && teacherOrStudent() == "s" && timetable == nil{
         var input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
@@ -213,6 +213,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
             }
         }
+        print("Parse Timetable")
         
     }
     
@@ -269,7 +270,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print("view did load")
         
         if let User = UserDefaults.standard.array(forKey: "profileData"){
             UserInformation = User as! [String]
@@ -282,7 +283,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         DispatchQueue.main.async {
             self.ParseEvents()
             self.ParseNewsCurriculars()
-            self.ParseTimetable()
         }
         
         
@@ -419,6 +419,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                 
                 //Table View
+                let IndentValue : CGFloat = 2
+                
                 let TableView = HomeEventTableView(frame: view.frame, style: .plain)
                 TableView.delegate = self
                 TableView.dataSource = self
@@ -426,6 +428,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 TableView.layer.cornerRadius = view.layer.cornerRadius
                 TableView.clipsToBounds = true
                 TableView.frame = view.frame
+                //sTableView.frame.origin.y = view.frame.origin.y + IndentValue
+                //TableView.frame.size.height = view.frame.height - IndentValue - IndentValue
                 TableView.isScrollEnabled = true
                 
                 TableView.tag = i + 10000
@@ -462,6 +466,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         if timetable == nil{
             self.ParseTimetable()
+            
         }
         
         var logInNumber = 0
@@ -512,6 +517,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
  */
         
+        if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375{
+            BigFont = 14
+            SmallFont = 11
+        }
+        
         DispatchQueue.main.async {
             self.array = self.eventsArray
         }
@@ -530,7 +540,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
                 
-                ParseTimetable()
+                if timetable == nil{
+                    ParseTimetable()
+                }
                 
                 removeSpinner(view: tableView)
                 
@@ -649,6 +661,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
                 
                 }
+                
             }else{
                 
                 tableView.separatorStyle = .none
@@ -722,7 +735,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                 }
             }
+            if indexPath.row == 4{
             scrollViewDidScroll(scrollView)
+            }
+            
             
         }
         
@@ -829,6 +845,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn && teacherOrStudent() == "s" && tableView.tag == 10000{
             if indexPath.row == 0{
                 return 30
+            }else if indexPath.row == 6{
+                return self.scrollView.viewWithTag(11)!.frame.size.height / 6 - 5
             }else{
                 return self.scrollView.viewWithTag(11)!.frame.size.height / 6 - 5
             }
@@ -940,24 +958,27 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
+        
         if LoggedIn && loginID != ""{
-        if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
-            return "s"
+            var ID = loginID
+            ID.removeFirst(3)
+            if "\(ID.first!)" >= "0" && "\(ID.first!)" <= "9" {
+                return "s"
+            }
+            
         }
         return ""
-        }else{
-            return ""
-        }
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
-        
-        DispatchQueue.main.async {
-            self.viewDidLoad()
+        if let x = UserDefaults.standard.string(forKey: "loginID") {
+            loginID = x
         }
+        //let teacherOrStudent = "\(self.teacherOrStudent())"
+        
         
  
         if shortcutItemIdentifier == "upcoming" {
@@ -971,32 +992,40 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var apple = 0
+        if EventsArray.isEmpty || timetable == nil{
+            if EventsArray.isEmpty{
+                print("Events")
+            }else if timetable == nil{
+                print("timetable")
+            }
+            DispatchQueue.main.async {
+                self.array = self.eventsArray
+                
+                if !self.EventsAreLoaded{
+                    DispatchQueue.main.async {
+                        apple += 1
+                        for event in EventsArray{
+                            if event.EndDate >= Date(){
+                                EventsFromNow += [event]
+                            }
+                        }
+                        self.viewDidLoad()
+                        print("did scroll")
+                        let TableView = self.scrollView.viewWithTag(10001)! as! UITableView
+                        TableView.reloadData()
+                    }
+                }
+            }
+            
+        }
+        /*
         if scrollView == scrollView{
             for i in 0..<scrollViewLoggedInData.count{
                 
                 
-                DispatchQueue.main.async {
-                    self.array = self.eventsArray
-                    
-                    if !self.EventsAreLoaded && i < 10{
-                        DispatchQueue.main.async {
-                            apple += 1
-                            for event in EventsArray{
-                                if event.EndDate >= Date(){
-                                    
-                                    EventsFromNow += [event]
-                                    
-                                }
-                            }
-                            self.viewDidLoad()
-                            let TableView = self.scrollView.viewWithTag(10001)! as! UITableView
-                            TableView.reloadData()
-                        }
-                    }
-                }
- 
             }
         }
+ */
     }
     
 }
