@@ -137,7 +137,8 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             cell.detailTextLabel?.text = out
         }
         
-        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.numberOfLines = Int((self.view.frame.height-40)/(6+2)/30)
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.selectionStyle = .none
         return cell

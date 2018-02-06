@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SystemConfiguration
 
 class AllEventsTableViewController: UITableViewController {
     
@@ -17,8 +17,13 @@ class AllEventsTableViewController: UITableViewController {
     func WillAddCalendar(){
         let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
         let url = URL(string: StringURL)
-        
+        if isInternetAvailable(){
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }else{
+            let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+            networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(networkAlert, animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -62,8 +67,28 @@ class AllEventsTableViewController: UITableViewController {
         
         
         if !EventsFromNow.isEmpty{
-            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: true)
+            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
         }
+    }
+    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
     
     override func didReceiveMemoryWarning() {
@@ -89,28 +114,28 @@ class AllEventsTableViewController: UITableViewController {
         let CellEvent = EventsArray[indexPath.row]
         
         if !EventsArray.isEmpty{
-        //Title
-        cell.title.text = CellEvent.Title
-        cell.title.adjustsFontSizeToFitWidth = true
-        
-        //Subtitle
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d/M/yy"
-        if CellEvent.StartDate == CellEvent.EndDate{
-            cell.dateTitle.text = formatter.string(from: CellEvent.StartDate)
-        }else{
-            cell.dateTitle.text = "\(formatter.string(from: CellEvent.StartDate)) - \(formatter.string(from: CellEvent.EndDate))"
-        }
-        
-        //Event Type Bar
-        switch CellEvent.EventType {
-        case .PH:
-            cell.EventTypeBar.backgroundColor = UIColor.red
-        case .SE:
-            cell.EventTypeBar.backgroundColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
-        case .SH:
-            cell.EventTypeBar.backgroundColor = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
-        }
+            //Title
+            cell.title.text = CellEvent.Title
+            cell.title.adjustsFontSizeToFitWidth = true
+            
+            //Subtitle
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d/M/yy"
+            if CellEvent.StartDate == CellEvent.EndDate{
+                cell.dateTitle.text = formatter.string(from: CellEvent.StartDate)
+            }else{
+                cell.dateTitle.text = "\(formatter.string(from: CellEvent.StartDate)) - \(formatter.string(from: CellEvent.EndDate))"
+            }
+            
+            //Event Type Bar
+            switch CellEvent.EventType {
+            case .PH:
+                cell.EventTypeBar.backgroundColor = UIColor.red
+            case .SE:
+                cell.EventTypeBar.backgroundColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
+            case .SH:
+                cell.EventTypeBar.backgroundColor = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
+            }
         }
         
         return cell
@@ -124,49 +149,6 @@ class AllEventsTableViewController: UITableViewController {
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
 }

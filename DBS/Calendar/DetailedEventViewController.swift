@@ -38,7 +38,8 @@ class DetailedEventViewController: UIViewController {
         default:
             EventTitle.textColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
         }
-        //EventTitle.adjustsFontSizeToFitWidth = true
+        EventTitle.numberOfLines = 3
+        EventTitle.adjustsFontSizeToFitWidth = true
         EventType.numberOfLines = 0
         
         //Event Type

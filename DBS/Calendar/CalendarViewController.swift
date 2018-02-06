@@ -49,6 +49,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var CalendarView: JTAppleCalendarView!
     @IBOutlet weak var CalendarStackView: UIStackView!
     @IBOutlet weak var EventsTableView: UITableView!
+    @IBOutlet weak var StackView: UIStackView!
     
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
@@ -107,17 +108,25 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         month.frame = CGRect(x: 16, y: year.frame.origin.y + year.frame.size.height, width: self.view.frame.width, height: 30)
         
+        CalendarView.frame.size.width = self.view.frame.width
+        CalendarView.frame.size.height = self.view.frame.height * 0.425
+        CalendarView.sizeToFit()
+        
         CalendarStackView.frame.origin.y = self.view.frame.height * 0.25
         CalendarStackView.frame.origin.x = 0
         CalendarStackView.frame.size.width = self.view.frame.width
-        CalendarStackView.sizeToFit()
+        CalendarStackView.frame.size.height = DaysStack.frame.height + CalendarView.frame.height
+        
+        
+        StackView.frame = CalendarStackView.frame
+        
         
         EventsTableView.frame.origin.y = CalendarStackView.frame.origin.y + CalendarStackView.frame.size.height
         EventsTableView.frame.origin.x = 0
-        EventsTableView.frame.size.width = self.view.frame.height
+        EventsTableView.frame.size.width = self.view.frame.width
         
         let EventsTableViewBottomConstraint = NSLayoutConstraint(item: EventsTableView, attribute: .bottomMargin, relatedBy: .equal, toItem: self.view, attribute: .bottomMargin, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([EventsTableViewBottomConstraint])
+        //NSLayoutConstraint.activate([EventsTableViewBottomConstraint])
         
         
         if #available(iOS 11.0, *) {
@@ -130,17 +139,13 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         CalendarView.scrollToDate(Date())
         CalendarView.selectDates([Date()])
-        CalendarView.layer.borderWidth = 0
         
         
         
-        CalendarStackView.layer.borderWidth = 5
-        
-        
-        
-        
-        
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func ParseCSV (){
@@ -382,6 +387,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Title
         cell.textLabel?.adjustsFontSizeToFitWidth = true
+        
         cell.textLabel?.text = String(describing: CurrentDayEventsArray[indexPath.row].1.Title)
    
         //Subtitle

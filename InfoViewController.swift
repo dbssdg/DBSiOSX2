@@ -62,7 +62,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         customizeButton.setTitle("Customize", for: .normal)
         self.UISetup()
-        
         menuTable.dataSource = self
         menuTable.delegate = self
         if #available(iOS 11.0, *) {
@@ -85,6 +84,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             performSegue(withIdentifier: "School Rules Segue", sender: self)
         }
         shortcutItemIdentifier = "false"
+        
     }
     
     
