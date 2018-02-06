@@ -911,13 +911,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
-        if LoggedIn{
+        if LoggedIn && loginID != ""{
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
             return "s"
         }
         return ""
         }else{
-            return "error"
+            return ""
         }
     }
     
