@@ -52,7 +52,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func reloadPage(_ sender: Any) {
         viewDidLoad()
-        featuredTable.reloadData()
+        didSelect(0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,7 +263,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func didSelect(_ segmentIndex: Int) {
-        if tableView(featuredTable, numberOfRowsInSection: 1) == 0 {
+        if tableView(featuredTable, numberOfRowsInSection: 1) > 0 {
             selectedSegment = segmentIndex
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
             featuredTable.reloadData()
