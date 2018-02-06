@@ -18,9 +18,31 @@ var EventsFromNow = [events]()
 var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil || (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!)
 var UserInformation = [String]()
 
-class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource{
+class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout{
     
-
+    
+    /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.presentedViewController.invalidateLayout()
+            
+            if self.pageControl.currentPage == 0 {
+                self.collectionView?.contentOffset = .zero
+                
+            } else {
+                let indexPath = indexPath(item: self.pageControl.currentPage, section : 0)
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                
+            } { (_) in
+ 
+            }
+        })
+        
+        
+        
+    }*/ 
+    
+    
     var eventsArray = [events]()
     var array = EventsArray
     var EventsAreLoaded = false
