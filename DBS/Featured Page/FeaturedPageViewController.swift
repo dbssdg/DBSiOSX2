@@ -52,7 +52,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func reloadPage(_ sender: Any) {
         viewDidLoad()
-        didSelect(0)
+        featuredTable.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,12 +166,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
         if selectedSegment == 0 {
             if isSearching {
-                cell.textLabel?.text = circularTitleArray[indexPath.row]
+                cell.textLabel?.text = filteredCirculars[indexPath.row]
                 cell.detailTextLabel?.text = ""
             } else {
                 if circulars.count <= circularTitleArray.count {
                     let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
-                    print(circularTimes)
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy"
                     if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
@@ -264,12 +263,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func didSelect(_ segmentIndex: Int) {
-        selectedSegment = segmentIndex
-        print(news)
-        if news != nil {
+        if tableView(featuredTable, numberOfRowsInSection: 1) == 0 {
+            selectedSegment = segmentIndex
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
+            featuredTable.reloadData()
         }
-        featuredTable.reloadData()
     }
     
     func setUpSegmentedControl() {

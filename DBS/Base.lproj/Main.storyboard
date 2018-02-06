@@ -1315,9 +1315,6 @@
                             <constraint firstItem="XRA-ga-d1y" firstAttribute="top" secondItem="dLg-nd-XCF" secondAttribute="bottom" id="gK6-Ai-oaw"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="scrollView" destination="dLg-nd-XCF" id="HmH-af-8hP"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Nr-id-ilO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="down" id="gjf-TV-EfO">
@@ -1325,11 +1322,7 @@
                         <action selector="down:" destination="pEB-9r-1JB" id="tLW-2W-wwU"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="992-QD-lkw">
-                    <connections>
-                        <action selector="doubleTapped:" destination="pEB-9r-1JB" id="tyg-iY-pwH"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="992-QD-lkw"/>
             </objects>
             <point key="canvasLocation" x="2703" y="4378"/>
         </scene>
