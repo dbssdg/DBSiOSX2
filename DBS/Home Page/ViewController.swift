@@ -424,8 +424,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 TableView.layer.cornerRadius = view.layer.cornerRadius
                 TableView.clipsToBounds = true
                 TableView.frame = view.frame
-                //sTableView.frame.origin.y = view.frame.origin.y + IndentValue
-                //TableView.frame.size.height = view.frame.height - IndentValue - IndentValue
+                TableView.frame.origin.y += IndentValue
+                TableView.frame.size.height -= IndentValue * 2
                 TableView.isScrollEnabled = true
                 
                 TableView.tag = i + 10000
@@ -755,7 +755,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.textLabel!.text = circularTitleArray[indexPath.row]
                     cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                     cell.textLabel?.numberOfLines = 2
-                    cell.textLabel!.adjustsFontSizeToFitWidth = true
+                    //cell.textLabel!.adjustsFontSizeToFitWidth = true
                     
                     //Subtitle
                     let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
@@ -807,7 +807,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 //Title
                 cell.textLabel!.text = newsTitleArray[indexPath.row]
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
-                cell.textLabel!.adjustsFontSizeToFitWidth = true
+                //cell.textLabel!.adjustsFontSizeToFitWidth = true
                 cell.textLabel?.numberOfLines = 2
                 
                 //Subtitle
@@ -854,15 +854,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             if indexPath.row == 0{
                 return 30
             }else if indexPath.row == 6{
-                return self.scrollView.viewWithTag(11)!.frame.size.height / 6 - 5
+                return self.scrollView.viewWithTag(10001)!.frame.size.height / 6 - 5
             }else{
-                return self.scrollView.viewWithTag(11)!.frame.size.height / 6 - 5
+                return self.scrollView.viewWithTag(10001)!.frame.size.height / 6 - 5
             }
             
             
         }else{
             if indexPath.row < 4{
-                return self.scrollView.viewWithTag(11)!.frame.size.height / 4 - 6
+                return self.scrollView.viewWithTag(10001)!.frame.size.height / 4 - 6
             }else{
                 return 24
             }

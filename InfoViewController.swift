@@ -8,7 +8,7 @@
 
 import UIKit
 
-var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Credits"]
+var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgement"]
 var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -98,7 +98,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         let selfHeight = self.view.frame.height
         
         
-        let ButtonSize = selfWidth/CGFloat(buttonGapRatio)*20
+        let ButtonSize = selfWidth/CGFloat(buttonGapRatio) * 20
         let ButtonGap = selfWidth/CGFloat(buttonGapRatio)
         let Radius = ButtonSize * 0.075
         
@@ -172,10 +172,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == 6{
-            print("credits")
-        }
         
         
         if functions[indexPath.row] == "Classmates" && loginID == "" {
