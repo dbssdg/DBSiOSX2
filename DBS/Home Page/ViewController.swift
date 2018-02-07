@@ -762,7 +762,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.textLabel!.adjustsFontSizeToFitWidth = true
                     
                     //Subtitle
-                    cell.detailTextLabel!.text = circularTimeArray[indexPath.row]
+                    let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy"
+                    if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
+                        cell.detailTextLabel?.text = ""
+                    } else {
+                        cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
+                    }
                     cell.detailTextLabel!.textColor = UIColor.gray
                     cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
                     

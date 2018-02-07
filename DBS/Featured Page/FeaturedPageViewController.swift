@@ -80,8 +80,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     if data != nil {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
                     }
-                    circularTitleArray=[]
-                    circularTimeArray=[]
+                    circularTitleArray = []
+                    circularTimeArray = []
                     pinnedCircular = 2
                     //The code works when it is reloaded but not when it first displayed. anyways to trigger the reload button by computer
                     for i in 1...circulars.values.count {

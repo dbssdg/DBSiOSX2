@@ -87,6 +87,11 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     
     func UISetup() {
         let selfWidth = self.view.frame.width
@@ -103,6 +108,8 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuTable.frame.origin = CGPoint(x: 0, y: ButtonView.frame.height)
         menuTable.frame.size.width = selfWidth
         menuTable.sizeToFit()
+        menuTable.layer.zPosition = 100
+        
         
         calendar.layer.cornerRadius = Radius
         calendar.clipsToBounds = true
@@ -124,7 +131,8 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: menuTable.frame.origin.y + menuTable.frame.size.height)
         
-        scrollViewView.frame.size.height = scrollView.frame.height
+        
+        scrollViewView.frame.size.height = scrollView.contentSize.height
         
     } 
 
@@ -137,6 +145,15 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.textLabel?.text = functions[indexPath.row]
         cell.imageView?.image = UIImage(named: "\(functionIcon[indexPath.row])")
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell.isUserInteractionEnabled = true
+        
+        if indexPath.row == 6{
+            print(cell.isUserInteractionEnabled)
+            cell.isSelected = true
+        }
+        
+        
+        
         return cell
     }
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -155,6 +172,12 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 6{
+            print("credits")
+        }
+        
+        
         if functions[indexPath.row] == "Classmates" && loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Please login before you see your classmates.", preferredStyle: .alert)
             loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))

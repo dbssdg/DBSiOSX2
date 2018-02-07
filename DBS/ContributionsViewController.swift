@@ -26,8 +26,8 @@ Ng Ching Wang Kelvin
 APP DEVELOPERS
 Louie Chi To
 Ieung Ho Kwan
-Chan Yuen Ho
 Lau Cheuk Hang
+Chan Yuen Ho
 
 """ as NSString
         let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24.0)])
