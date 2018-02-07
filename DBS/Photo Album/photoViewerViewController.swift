@@ -10,7 +10,7 @@ import UIKit
 
 class photoViewerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     
-    var myCollectionView: UICollectionView!
+    var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,17 +25,17 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         
-        myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        myCollectionView.delegate = self
-        myCollectionView.dataSource = self
-        myCollectionView.register(ImagePreviewFullViewCell.self, forCellWithReuseIdentifier: "viewerCell")
-        myCollectionView.isPagingEnabled = true
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(ImagePreviewFullViewCell.self, forCellWithReuseIdentifier: "viewerCell")
+        collectionView.isPagingEnabled = true
         
-        self.view.addSubview(myCollectionView)
+        self.view.addSubview(collectionView)
         
-        myCollectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+        collectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
         DispatchQueue.main.async {
-            self.myCollectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
+            self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
         }
         
         let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.sharePhoto))
@@ -53,37 +53,37 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        photoSelected = (myCollectionView.indexPath(for: myCollectionView.visibleCells[0])?.item)!
+        photoSelected = (collectionView.indexPath(for: collectionView.visibleCells[0])?.item)!
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        guard let flowLayout = myCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        flowLayout.itemSize = myCollectionView.frame.size
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        flowLayout.itemSize = collectionView.frame.size
         flowLayout.invalidateLayout()
-        myCollectionView.collectionViewLayout.invalidateLayout()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        let offset = myCollectionView.contentOffset
-        let width  = myCollectionView.bounds.size.width
+        let offset = collectionView.contentOffset
+        let width  = collectionView.bounds.size.width
         
         let index = round(offset.x / width)
         let newOffset = CGPoint(x: index * size.width, y: offset.y)
         
-        myCollectionView.setContentOffset(newOffset, animated: false)
+        collectionView.setContentOffset(newOffset, animated: false)
         
         coordinator.animate(alongsideTransition: { (context) in
-            self.myCollectionView.reloadData()
-            self.myCollectionView.setContentOffset(newOffset, animated: false)
+            self.collectionView.reloadData()
+            self.collectionView.setContentOffset(newOffset, animated: false)
         }, completion: nil)
     }
     
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
-            activityItems: [myCollectionView.cellForItem(at: [0, photoSelected])?.asImage()], applicationActivities: nil)
+            activityItems: [collectionView.cellForItem(at: [0, photoSelected])?.asImage()], applicationActivities: nil)
         
 ////              This line is for the popover you need to show in iPad
 //                activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem

@@ -27,7 +27,7 @@ class timetableViewController: UIViewController {
             i.isEnabled = false
         }
         for i in classButtons {
-            i.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 169/255, alpha: 1), for: .normal)
+            i.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
             i.isEnabled = true
         }
         if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
@@ -58,7 +58,7 @@ class timetableViewController: UIViewController {
                 i.isEnabled = false
             }
             for i in classButtons {
-                i.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 169/255, alpha: 1), for: .normal)
+                i.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
                 i.isEnabled = true
             }
             if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
@@ -73,9 +73,10 @@ class timetableViewController: UIViewController {
             viewDidLoad()
         }
     }
-    @IBAction func viewClassmates(_ sender: Any) {
+    @IBAction func viewTimetable(_ sender: Any) {
         timetableChoice = classDisplay.text!
         print(timetableChoice)
+        performSegue(withIdentifier: "My Timetable", sender: self)
         viewDidLoad()
     }
     

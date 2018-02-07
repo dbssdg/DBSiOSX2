@@ -49,26 +49,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let root = UIApplication.shared.keyWindow?.rootViewController
-//        let vc = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
-        let firstVC = storyboard.instantiateInitialViewController()
-        root?.present(firstVC!, animated: false, completion: { () -> Void in
-            completionHandler(true)
-        })
+        var initialVC = UIViewController()
         
         if shortcutItem.type == "hk.edu.dbs.cl.DBS.timetable" {
-            shortcutItemIdentifier = "timetable"
+            initialVC = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.calendar" {
-            shortcutItemIdentifier = "upcoming"
+            initialVC = storyboard.instantiateViewController(withIdentifier: "All Events") as! AllEventsTableViewController
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.schoolrules" {
-            shortcutItemIdentifier = "schoolrules"
+            initialVC = storyboard.instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController
             
         }
+        let navigationC = UINavigationController(rootViewController: initialVC)
+        initialVC.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back To Home", style: .plain, target: self, action: #selector(self.homePage))
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = navigationC
+        self.window?.makeKeyAndVisible()
+        
+//        let root = UIApplication.shared.keyWindow?.rootViewController
+//        let firstVC = storyboard.instantiateInitialViewController()
+//        root?.present(firstVC!, animated: false, completion: { () -> Void in
+//            completionHandler(true)
+//        })
+        
+        
         print(shortcutItemIdentifier)
     }
-    
 
+    func homePage() {
+        UIApplication.shared.keyWindow?.rootViewController?.present(UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!, animated: true)
+    }
+    
 }
 
