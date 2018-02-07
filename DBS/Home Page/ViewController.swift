@@ -989,12 +989,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         
  
-        if shortcutItemIdentifier == "upcoming" {
-            performSegue(withIdentifier: "Home to All Events", sender: self)
-            shortcutItemIdentifier = "false"
-        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
-            tabBarController?.selectedIndex = 2
-        }
+//        if shortcutItemIdentifier == "upcoming" {
+//            performSegue(withIdentifier: "Home to All Events", sender: self)
+//            shortcutItemIdentifier = "false"
+//        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
+//            tabBarController?.selectedIndex = 2
+//        }
         
         DispatchQueue.main.async {
             self.viewDidLoad()
