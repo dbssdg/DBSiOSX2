@@ -63,13 +63,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }) { $0 }.onFinish { (importedRecords) in
             for record in importedRecords {
                 
-                var formatter = DateFormatter()
+                let formatter = DateFormatter()
                 formatter.dateFormat = "d/M/yyyy"
-                var EventStartDate = formatter.date(from: record["Start Date"]!)
-                var EventEndDate = formatter.date(from: record["End Date"]!)
+                let EventStartDate = formatter.date(from: record["Start Date"]!)
+                let EventEndDate = formatter.date(from: record["End Date"]!)
                 
                 let string = record["Title"]!
-                var input = string
+                let input = string
                 var output = ""
                 var didColon = false
                 for i in input{
@@ -180,17 +180,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func ParseTimetable (){
         if LoggedIn && teacherOrStudent() == "s" && timetable == nil{
-        var input = "\(UserInformation[3])"
+            let input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
         GradeString.removeLast(4)
         GradeString.removeFirst()
-        var GradeInt = Int(GradeString)!
+            _ = Int(GradeString)!
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
-        var ClassString2 = ClassString1.index(before: ClassString1.endIndex)
-        
         
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable8.json"
         let url = URL(string: jsonURL)
@@ -213,8 +211,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
             }
         }
-        print("Parse Timetable")
-        
     }
     
     @objc func GoToTimetable(){
@@ -436,7 +432,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 self.scrollView.addSubview(TableView)
                 
                 
-                var refresher = UIRefreshControl()
+                let refresher = UIRefreshControl()
                 refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
                 refresher.tag = i + 100000 + 50
                 refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
@@ -1007,32 +1003,23 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var apple = 0
+        
         if EventsArray.isEmpty || timetable == nil{
-            if EventsArray.isEmpty{
-                print("Events")
-            }else if timetable == nil{
-                print("timetable")
-            }
             DispatchQueue.main.async {
                 self.array = self.eventsArray
-                
                 if !self.EventsAreLoaded{
                     DispatchQueue.main.async {
-                        apple += 1
                         for event in EventsArray{
                             if event.EndDate >= Date(){
                                 EventsFromNow += [event]
                             }
                         }
                         self.viewDidLoad()
-                        print("did scroll")
                         let TableView = self.scrollView.viewWithTag(10001)! as! UITableView
                         TableView.reloadData()
                     }
                 }
             }
-            
         }
         /*
         if scrollView == scrollView{
