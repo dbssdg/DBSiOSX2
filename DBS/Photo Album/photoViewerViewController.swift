@@ -132,6 +132,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         imgView.image = UIImage(named: "user3")
         scrollImg.addSubview(imgView!)
         imgView.contentMode = .scaleAspectFit
+        imgView.clipsToBounds = true
     }
     
     @objc func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {

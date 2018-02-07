@@ -157,7 +157,6 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         let titles = ["Mon", "Tue", "Wed", "Thur", "Fri"]
         let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
-//        segmentedControl.move(to: 1)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
         
@@ -176,6 +175,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         segmentedControl.move(to: DayToDisplay)
+        selectedSegment = DayToDisplay
         view.addSubview(segmentedControl)
         
     }

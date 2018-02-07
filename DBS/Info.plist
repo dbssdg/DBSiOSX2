@@ -26,7 +26,7 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>The student image will be saved to your Photos.</string>
+	<string>The image will be saved to your Photos.</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
