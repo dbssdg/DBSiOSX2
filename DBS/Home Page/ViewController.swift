@@ -988,6 +988,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             tabBarController?.selectedIndex = 2
         }
         
+        DispatchQueue.main.async {
+            self.viewDidLoad()
+        }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
