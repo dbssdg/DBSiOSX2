@@ -51,8 +51,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     let featuredSearch = UISearchController(searchResultsController: nil)
     
     @IBAction func reloadPage(_ sender: Any) {
-        viewDidLoad()
         didSelect(0)
+        viewDidLoad()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -197,6 +197,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchBarCancelButtonClicked(featuredSearch.searchBar)
+        searchBarTextDidEndEditing(featuredSearch.searchBar)
+        featuredSearch.isActive = false
         if selectedSegment == 0 {
             circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
             print(circularViewURL)
@@ -264,6 +267,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func didSelect(_ segmentIndex: Int) {
         if tableView(featuredTable, numberOfRowsInSection: 1) > 0 {
+            print(true)
             selectedSegment = segmentIndex
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
             featuredTable.reloadData()
