@@ -305,7 +305,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             arr.remove(at: 2)
             cell.descriptionText.text = "\(arr[indexPath.row])"
         } else {
-            cell.descriptionText.text = "\(profileData[indexPath.row])"
+            cell.descriptionText.text = ""
+            if !profileData.isEmpty {
+                cell.descriptionText.text = "\(self.profileData[indexPath.row])"
+            }
         }
         cell.descriptionText.textAlignment = .center
         cell.selectionStyle = .none

@@ -129,7 +129,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         self.addSubview(scrollImg)
         
         imgView = UIImageView()
-        imgView.image = UIImage(named: "user3")
+        imgView.image = #imageLiteral(resourceName: "Home Logo")
         scrollImg.addSubview(imgView!)
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
@@ -155,6 +155,11 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imgView
+    }
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        if scrollView.zoomScale < 0.8 {
+            
+        }
     }
     
     override func layoutSubviews() {
