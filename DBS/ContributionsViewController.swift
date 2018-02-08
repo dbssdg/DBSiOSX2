@@ -14,7 +14,7 @@ class ContributionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Acknowledgement"
+        self.title = "Acknowledgements"
         
         let string = """
 TEACHER-IN-CHARGE

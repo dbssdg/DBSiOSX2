@@ -268,22 +268,29 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         print("view did load")
         
-        if let User = UserDefaults.standard.array(forKey: "profileData"){
-            UserInformation = User as! [String]
-        }
-        
-        
         
         ViewTimesLoaded += 1
         
         DispatchQueue.main.async {
             self.ParseEvents()
             self.ParseNewsCurriculars()
+            if let User = UserDefaults.standard.array(forKey: "profileData"){
+                UserInformation = User as! [String]
+            }
         }
         
         
         scrollView.delegate = self
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.UISetup()
+        }
+        
+        
+        
+    }
+    
+    func UISetup(){
         var arrayData = scrollViewLoggedInData
         
         if LoggedIn && teacherOrStudent() == "s"{
@@ -291,7 +298,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }else{
             arrayData = scrollViewData
         }
-    
+        
         //Scroll View
         let subViews = self.scrollView.subviews
         for subview in subViews{
@@ -363,92 +370,120 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         BandView.tag = 20
         self.view.addSubview(BandView)
         
-    
         
-            var i = 0
-            for data in arrayData{
+        
+        var i = 0
+        for data in arrayData{
+            
+            let DistanceBetweenTableViewAndBand = self.view.frame.height * 0.0125
+            let a = DistanceBetweenTableViewAndBand
+            
+            
+            let view = HomeCustomView(frame: CGRect(x: self.scrollView.frame.width * (CGFloat(i) + 0.05), y: DistanceBetweenTableViewAndBand + BandView.frame.height, width: self.view.frame.width * 0.9, height: (self.scrollView.frame.height - BandView.frame.height - a * 3)))
+            
+            view.backgroundColor = UIColor.red
+            view.layer.cornerRadius = view.frame.width * 0.1
+            view.clipsToBounds = true
+            
+            view.tag = i + self.viewTagValue
+            self.scrollView.addSubview(view)
+            
+            
+            
+            
+            //Label
+            let label = UILabel(frame: CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: CGSize.init(width: 150, height: 100)))
+            label.text = data.title
+            label.font = UIFont.boldSystemFont(ofSize: 32)
+            label.font = UIFont(name: "Helvetica", size: 32)
+            label.textAlignment = .center
+            label.textColor = UIColor.white
+            label.backgroundColor = self.view.backgroundColor
+            label.sizeToFit()
+            label.layer.zPosition = 100
+            label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.15
+            
+            
+            
+            label.tag = i + self.LabelTagValue
+            
+            
+            let LabelBackgroundView = UIView(frame: CGRect(x: label.frame.origin.x - 10 , y: 0, width: label.frame.width + 20, height: BandView.frame.height))
+            LabelBackgroundView.tag = i + self.LabelBackgroundTagValue
+            LabelBackgroundView.backgroundColor = self.view.backgroundColor
+            
+            label.frame.origin.y = (BandView.frame.height - label.frame.height) / 2
+            
+            self.scrollView.addSubview(LabelBackgroundView)
+            self.scrollView.addSubview(label)
+            self.scrollView.bringSubview(toFront: label)
+            if i == 0{
                 
-                let DistanceBetweenTableViewAndBand = self.view.frame.height * 0.0125
-                let a = DistanceBetweenTableViewAndBand
-                
-                
-                let view = HomeCustomView(frame: CGRect(x: self.scrollView.frame.width * (CGFloat(i) + 0.05), y: DistanceBetweenTableViewAndBand + BandView.frame.height, width: self.view.frame.width * 0.9, height: (self.scrollView.frame.height - BandView.frame.height - a * 2)))
-                
-                view.backgroundColor = UIColor.red
-                view.layer.cornerRadius = view.frame.width * 0.1
-                view.clipsToBounds = true
-                
-                view.tag = i + self.viewTagValue
-                self.scrollView.addSubview(view)
-                
-                
-                
-                
-                //Label
-                let label = UILabel(frame: CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: CGSize.init(width: 150, height: 100)))
-                label.text = data.title
-                label.font = UIFont.boldSystemFont(ofSize: 32)
-                label.font = UIFont(name: "Helvetica", size: 32)
-                label.textAlignment = .center
-                label.textColor = UIColor.white
-                label.backgroundColor = self.view.backgroundColor
-                label.sizeToFit()
-                label.layer.zPosition = 100
-                label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.15
-             
- 
-                
-                label.tag = i + self.LabelTagValue
-                
-                
-                let LabelBackgroundView = UIView(frame: CGRect(x: label.frame.origin.x - 10 , y: 0, width: label.frame.width + 20, height: BandView.frame.height))
-                LabelBackgroundView.tag = i + self.LabelBackgroundTagValue
-                LabelBackgroundView.backgroundColor = self.view.backgroundColor
-                
-                label.frame.origin.y = (BandView.frame.height - label.frame.height) / 2
-                
-                self.scrollView.addSubview(LabelBackgroundView)
-                self.scrollView.addSubview(label)
-                self.scrollView.bringSubview(toFront: label)
-                if i == 0{
-                    
-                }
-                
-                
-                //Table View
-                let IndentValue : CGFloat = 2
-                
-                let TableView = HomeEventTableView(frame: view.frame, style: .plain)
-                TableView.delegate = self
-                TableView.dataSource = self
-                TableView.Events = EventsArray
-                TableView.layer.cornerRadius = view.layer.cornerRadius
-                TableView.clipsToBounds = true
-                TableView.frame = view.frame
-                TableView.frame.origin.y += IndentValue
-                TableView.frame.size.height -= IndentValue * 2
-                TableView.isScrollEnabled = true
-                
-                TableView.tag = i + 10000
-                self.scrollView.addSubview(TableView)
-                
-                
-                let refresher = UIRefreshControl()
-                refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
-                refresher.tag = i + 100000 + 50
-                refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
-                self.scrollView.viewWithTag(i + 10000)!.addSubview(refresher)
-                
-                
-                i += 1
             }
-    
+            
+            
+            //Table View
+            let IndentValue : CGFloat = 2
+            
+            let TableView = HomeEventTableView(frame: view.frame, style: .plain)
+            TableView.delegate = self
+            TableView.dataSource = self
+            TableView.Events = EventsArray
+            TableView.layer.cornerRadius = view.layer.cornerRadius
+            TableView.clipsToBounds = true
+            TableView.frame = view.frame
+            TableView.frame.origin.y += IndentValue
+            TableView.frame.size.height -= IndentValue * 2
+            TableView.isScrollEnabled = true
+            
+            TableView.tag = i + 10000
+            self.scrollView.addSubview(TableView)
+            
+            
+            let refresher = UIRefreshControl()
+            refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
+            refresher.tag = i + 100000 + 50
+            refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
+            self.scrollView.viewWithTag(i + 10000)!.addSubview(refresher)
+            
+            
+            i += 1
+        }
+        
         if ViewTimesLoaded == 1{
             scrollViewDidScroll(scrollView)
         }
+        if let pageControl = self.view.viewWithTag(200){
+            pageControl.removeFromSuperview()
+        }
         
-        scrollView.reloadInputViews()
+        //Page Control
+        let PageControl = UIPageControl(frame: CGRect(x: 0, y: self.view.frame.height * 0.5, width: 200, height: 50))
+        var numberOfPages = 0
+        numberOfPages = arrayData.count
+        PageControl.removeFromSuperview()
+        PageControl.numberOfPages = numberOfPages
+        print(PageControl.numberOfPages)
+        PageControl.reloadInputViews()
+        PageControl.currentPage = 0
+        PageControl.pageIndicatorTintColor = UIColor.gray
+        PageControl.currentPageIndicatorTintColor = UIColor.white
         
+        PageControl.layer.zPosition = 1000
+        PageControl.sizeToFit()
+        PageControl.frame.origin.x = (self.view.frame.width - PageControl.frame.width) / 2
+        PageControl.frame.origin.y = self.scrollView.frame.origin.y + (self.scrollView.viewWithTag(10)!.frame.origin.y + self.scrollView.viewWithTag(10)!.frame.height) - PageControl.frame.height * 0.3
+        PageControl.tag = 200
+        PageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
+        self.view.addSubview(PageControl)
+        
+        
+        
+        //scrollView.reloadInputViews()
+    }
+    func changePage(sender: AnyObject) -> () {
+        let x = CGFloat((self.view.viewWithTag(200)! as! UIPageControl).currentPage) * self.view.frame.size.width
+        self.scrollView.setContentOffset(CGPoint(x: x,y :0), animated: true)
     }
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
@@ -544,10 +579,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             if isInternetAvailable(){
                 
-                if timetable == nil{
-                    ParseTimetable()
+                DispatchQueue.main.async {
+                    if timetable == nil{
+                        self.ParseTimetable()
+                    }
                 }
-                
                 removeSpinner(view: tableView)
                 
                 
@@ -748,6 +784,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Circular
         else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
+            DispatchQueue.main.async{
+                if circulars == nil{
+                    self.ParseNewsCurriculars()
+                }
+            }
+            
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
             if indexPath.row < 4{
@@ -794,7 +836,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.isUserInteractionEnabled = false
                 cell.textLabel?.text = ""
                 cell.detailTextLabel?.text = ""
-                tableView.reloadData()
+                //tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -802,10 +844,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //News
         }else if tableView.tag == self.scrollView.viewWithTag(10003 - logInNumber)!.tag{
+            DispatchQueue.main.async{
+                if news == nil{
+                    self.ParseNewsCurriculars()
+                }
+            }
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
                 if indexPath.row < 4{
-                    
+                   
                     if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
                 //Title
                 cell.textLabel!.text = newsTitleArray[indexPath.row]
@@ -842,7 +889,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = ""
             cell.isUserInteractionEnabled = false
-            tableView.reloadData()
+            //tableView.reloadData()
             setupSpinner(view: tableView)
         }
         }
@@ -999,11 +1046,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
 //            tabBarController?.selectedIndex = 2
 //        }
         
-        DispatchQueue.main.async {
-            self.viewDidLoad()
-        }
+        
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.viewDidLoad()
+            }
+        }
+        
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -1032,6 +1085,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
  */
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
     }
     
 }
