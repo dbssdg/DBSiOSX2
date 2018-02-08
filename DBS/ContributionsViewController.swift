@@ -20,7 +20,7 @@ class ContributionsViewController: UIViewController {
 TEACHER-IN-CHARGE
 Mr. Chris Lee
 
-SOFTWARE DEVELOPMENT GROUP (SDG)
+SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
 Ng Ching Wang Kelvin
 
 APP DEVELOPERS
@@ -32,7 +32,7 @@ Chan Yuen Ho
 """ as NSString
         let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24.0)])
         let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0)]
-        let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG)", "APP DEVELOPERS"]
+        let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }

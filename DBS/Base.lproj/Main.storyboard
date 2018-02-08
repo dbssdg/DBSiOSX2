@@ -208,7 +208,7 @@
                         <segue destination="QBH-iv-tNT" kind="show" identifier="School Rules Segue" id="XEN-r1-H9x"/>
                         <segue destination="pTo-Q4-ldU" kind="show" identifier="Teachers Segue" id="vu0-uF-M9o"/>
                         <segue destination="3RO-Xm-ERx" kind="show" identifier="Photo Album Segue" id="tWt-b9-sA8"/>
-                        <segue destination="2m3-pH-F3Z" kind="show" identifier="Acknowledgement Segue" id="9gC-Ja-56a"/>
+                        <segue destination="2m3-pH-F3Z" kind="show" identifier="Acknowledgements Segue" id="9gC-Ja-56a"/>
                         <segue destination="byZ-wL-izR" kind="show" identifier="Links, Contact &amp; Steps Segue" id="EWp-nx-Ms8"/>
                         <segue destination="4db-rW-aWf" kind="show" identifier="Classmates Segue" id="RFJ-Lb-TEZ"/>
                     </connections>
@@ -312,19 +312,19 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-                                                        <rect key="frame" x="267.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-jf-STC">
-                                                        <rect key="frame" x="321" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="321.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1326,10 +1326,10 @@
             </objects>
             <point key="canvasLocation" x="2703" y="4378"/>
         </scene>
-        <!--Credits-->
+        <!--Acknowledgements-->
         <scene sceneID="Wfk-kS-9fR">
             <objects>
-                <viewController title="Credits" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Acknowledgements" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FJz-zR-KRt"/>
                         <viewControllerLayoutGuide type="bottom" id="5sk-uT-Kkh"/>

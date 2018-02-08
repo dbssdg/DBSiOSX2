@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
  
 var EventsArray = [events]()
-var shortcutItemIdentifier = "false"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -62,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         let navigationC = UINavigationController(rootViewController: initialVC)
-        initialVC.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back To Home", style: .plain, target: self, action: #selector(self.homePage))
+        initialVC.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "HomeButtonIcon8"), style: .plain, target: self, action: #selector(self.homePage))
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navigationC
@@ -73,9 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        root?.present(firstVC!, animated: false, completion: { () -> Void in
 //            completionHandler(true)
 //        })
-        
-        
-        print(shortcutItemIdentifier)
     }
 
     func homePage() {

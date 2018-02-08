@@ -8,7 +8,7 @@
 
 import UIKit
 
-var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgement"]
+var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgements"]
 var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
