@@ -271,9 +271,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if let User = UserDefaults.standard.array(forKey: "profileData"){
             UserInformation = User as! [String]
         }
-        
-        
-        
         ViewTimesLoaded += 1
         
         DispatchQueue.main.async {
