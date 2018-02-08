@@ -120,7 +120,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             for i in (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)! {
                 out += "\(i.decodeUrl()) | "
             }
-            if (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)![0] == "" {
+            if (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].isActivityPeriod)! == true || ((timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)![0] == "" && indexPath.row != 5){
                 out = "Activity Period   "
             }
             out.removeLast(3)
