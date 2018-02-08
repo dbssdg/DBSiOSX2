@@ -38,6 +38,7 @@ Chan Yuen Ho
         }
         
         credits.attributedText = attributedString
+        credits.isEditable = false
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false

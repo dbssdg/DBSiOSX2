@@ -364,6 +364,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let BandView = UIImageView(frame: CGRect(x: 0, y: self.scrollView.frame.origin.y, width: self.view.frame.height, height: (Band?.size.height)!))
         BandView.image = Band
         BandView.layer.zPosition = 1
+        BandView.tag = 20
         self.view.addSubview(BandView)
         
     
@@ -493,6 +494,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         for subview in subViews{
             subview.removeFromSuperview()
         }
+        
+        (self.view.viewWithTag(20)! as! UIImageView).removeFromSuperview()
     }
     
     
