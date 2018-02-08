@@ -217,7 +217,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if !MFMailComposeViewController.canSendMail() {
                 print("Mail services are not available")
                 
-                mailAlert.message = "Oops! Something went wrong..."
+                mailAlert.message = "Mail services are not available."
                 present(mailAlert, animated: true)
                 return
             }
@@ -262,9 +262,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let compressedImage = UIImage(data: imageData!)
             UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
             
-            let savedAlert = UIAlertController(title: "Saved", message: "Your student image has been saved to Photos.", preferredStyle: .alert)
-            savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(savedAlert, animated: true)
+//            let savedAlert = UIAlertController(title: "Saved", message: "Your student image has been saved to Photos.", preferredStyle: .alert)
+//            savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(savedAlert, animated: true)
         }
         
         func signOut(action: UIAlertAction) {
