@@ -572,6 +572,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         removeSpinner(view: tableView)
+        tableView.separatorStyle = .singleLine
         
         DispatchQueue.main.async {
             self.array = self.eventsArray
