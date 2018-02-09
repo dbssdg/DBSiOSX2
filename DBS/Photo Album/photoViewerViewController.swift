@@ -14,10 +14,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
-        
-        self.view.backgroundColor = UIColor.white
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -83,7 +80,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
-            activityItems: [collectionView.cellForItem(at: [0, photoSelected])?.asImage()], applicationActivities: nil)
+            activityItems: [(collectionView.cellForItem(at: [0, photoSelected]) as! ImagePreviewFullViewCell).imgView.image], applicationActivities: nil)
         
 ////              This line is for the popover you need to show in iPad
 //                activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
@@ -112,6 +109,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = UIColor.white
         scrollImg = UIScrollView()
         scrollImg.delegate = self
         scrollImg.alwaysBounceVertical = false

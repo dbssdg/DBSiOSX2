@@ -18,10 +18,12 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         
         
         self.title = "Maps"
+        self.view.backgroundColor = UIColor.white
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
         ScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        MapImage.frame = ScrollView.frame
         
         ScrollView.maximumZoomScale = 10.0
         ScrollView.minimumZoomScale = 1.0

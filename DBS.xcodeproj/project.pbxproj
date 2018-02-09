@@ -216,9 +216,9 @@
 				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
 				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
 				6A1515C42010627800BBF15C /* Photo Album */,
+				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
 				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
 				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
-				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6A429C2E2016F95600758515 /* LoadingViewController.swift */,
@@ -331,7 +331,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		6A324356A75D16974C899034 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -363,7 +363,7 @@
 		};
 		9870D1772E766978AE7F7ADE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -382,7 +382,7 @@
 		};
 		B1E90866B7A5A51B551FA6F8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -567,6 +567,7 @@
 			baseConfigurationReference = ED54315CE742F2B1255387B6 /* Pods-DBS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DBS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -581,6 +582,7 @@
 			baseConfigurationReference = 7741C02F0309986E00D96E46 /* Pods-DBS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DBS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

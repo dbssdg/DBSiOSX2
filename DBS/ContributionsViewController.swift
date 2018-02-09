@@ -14,7 +14,13 @@ class ContributionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Acknowledgements"
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        label.backgroundColor = .clear
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 14.0)
+        label.text = "Acknowledgements"
+        self.navigationItem.titleView = label
         
         let string = """
 TEACHER-IN-CHARGE
