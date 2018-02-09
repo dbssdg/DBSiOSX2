@@ -19,8 +19,9 @@ var EventsFromNow = [events]()
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
-class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout{
+class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
+    var CurrentTableIndex = 0
     
     /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
@@ -51,7 +52,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     var destinationFeature = 0
     
     func ParseEvents(){
-        
+        if EventsArray.isEmpty{
         //Parse Events
         DispatchQueue.main.async {
             if EventsArray.isEmpty{
@@ -110,6 +111,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
+    }
     }
 }
         
@@ -288,7 +290,24 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
             self.UISetup()
+            var logInNumber = 0
+            if !LoggedIn && self.teacherOrStudent() == "s"{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+//            for i in (10001 - logInNumber)...(10004 - logInNumber) {
+//                let View = self.scrollView.viewWithTag(i)
+//                if let TableView = View {
+//                    self.registerForPreviewing(with: self, sourceView: TableView as! UITableView)
+//                }
+//
+//            }
+            
+            
         }
+        
         
         
         
@@ -445,6 +464,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             TableView.frame.origin.y += IndentValue
             TableView.frame.size.height -= IndentValue * 2
             TableView.isScrollEnabled = true
+            self.registerForPreviewing(with: self, sourceView: TableView)
             
             TableView.tag = i + 10000
             self.scrollView.addSubview(TableView)
@@ -493,6 +513,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     func changePage(sender: AnyObject) -> () {
         let x = CGFloat((self.view.viewWithTag(200)! as! UIPageControl).currentPage) * self.view.frame.size.width
+        CurrentTableIndex = (self.view.viewWithTag(200)! as! UIPageControl).currentPage
         self.scrollView.setContentOffset(CGPoint(x: x,y :0), animated: true)
     }
     
@@ -1115,6 +1136,130 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         print(circularTimeArray)
     }
     
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        print("3D Touch")
+        
+        CurrentTableIndex = Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
+        print("Current:", CurrentTableIndex)
+        
+        var logInNumber = 0
+        if !LoggedIn || teacherOrStudent() == ""{
+            logInNumber = 1
+        }else{
+            logInNumber = 0
+        }
+        var indexPath : IndexPath? = nil
+        
+        if let x = (self.scrollView.viewWithTag(10000 + CurrentTableIndex)! as! UITableView).indexPathForRow(at: location){
+            indexPath = x
+        }
+        
+            /*
+            if let x = (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+            
+                indexPath = x
+            }
+            if let y = (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = y
+            }
+            if let z = (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = z
+            }
+            if let a = (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = a
+            }
+ */
+        
+        
+            if indexPath != nil{
+                
+                let RealIndexPath = (indexPath?.row)!
+                print("Real Index Path:", RealIndexPath)
+                
+                if CurrentTableIndex == 0 - logInNumber{
+                    
+                    if isInternetAvailable() && timetable != nil{
+                    timetableChoice = "\(UserInformation[3])"
+                    timetableChoice.removeLast(3)
+                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "My Timetable") as! myTimetableViewController
+                    return destViewController
+                    }else{
+                        return nil
+                    }
+                    
+                }else if CurrentTableIndex == 1 - logInNumber{
+                    
+                    if !EventsArray.isEmpty{
+                    if RealIndexPath < 4{
+                        let event = EventsFromNow[RealIndexPath]
+                        PassingEvent = (event.Title, event.StartDate, event.EndDate, event.EventType)
+                        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
+                        return destViewController
+                    }else{
+                        return nil
+                    }
+                    }else{
+                        return nil
+                    }
+                    
+                }else if CurrentTableIndex == 2 - logInNumber{
+                    
+                    if isInternetAvailable() && !circulars.isEmpty{
+                    if RealIndexPath < 4{
+                        circularViewURL = (circulars["\(RealIndexPath+1)"]!["attach_url"]!)
+                        let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
+                        return detailViewController
+                    }else{
+                        return nil
+                    }
+                }else{
+                    return nil
+                }
+                }else if CurrentTableIndex == 3 - logInNumber{
+                    
+                    if isInternetAvailable() && !newsTitleArray.isEmpty{
+                    if RealIndexPath < 4{
+                        newsIndex = RealIndexPath
+                        newsTotal = newsTitleArray.count
+                        let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
+                        return detailViewController
+                    }else{
+                        return nil
+                    }
+                    }else{
+                        return nil
+                    }
+                }
+                
+            }else{
+                return nil
+            }
+        /*if selectedSegment == 0 {
+            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
+            return detailViewController
+        } else if selectedSegment == 1 {
+            newsIndex = indexPath.row
+            newsTotal = newsTitleArray.count
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
+            return detailViewController
+        }
+ */
+        
+ 
+ 
+        
+        
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
+    
+    
     func reloadAllTables(){
         let tablesArray = [UITableView]()
         for i in 10000...10002{
@@ -1169,6 +1314,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        CurrentTableIndex = Int(pageNumber)
         (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
     }
     
