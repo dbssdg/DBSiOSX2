@@ -137,7 +137,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
         if isInternetAvailable(){
-            if circulars == nil{
+            if circulars == nil || circulars.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -155,7 +155,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }.resume()
             }
             
-            if news == nil{
+            if news == nil || newsTitleArray.isEmpty{
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
                     if data != nil{
