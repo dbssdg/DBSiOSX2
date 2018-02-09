@@ -135,7 +135,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         imgView.clipsToBounds = true
     }
     
-    @objc func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
+    func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
         if scrollImg.zoomScale <= 1 {
             scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
         } else {
@@ -156,6 +156,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imgView
     }
+    
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView.zoomScale < 0.8 {
             
@@ -164,8 +165,14 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+//        let imgHeight = (imgView.image?.size.height)! * (self.bounds.width / (imgView.image?.size.width)!)
+//        scrollImg.frame = CGRect(x: 0, y: 187.5, width: self.bounds.width, height: imgHeight)
+//        imgView.frame = scrollImg.frame
+        
         scrollImg.frame = self.bounds
         imgView.frame = self.bounds
+        print(scrollImg.frame, imgView.frame, (imgView.image?.size)!, self.bounds)
     }
     
     override func prepareForReuse() {
