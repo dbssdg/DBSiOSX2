@@ -619,7 +619,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         self.ParseTimetable()
                     }
                 }
-                removeSpinner(view: tableView)
                 
               
             //Date
@@ -628,12 +627,31 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             calendar.firstWeekday = -1
             
             let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-            let CurrentTime = calendar.component(.hour, from: Date())
+            let TimeBoundString = "16:00"
+            let formatter : DateFormatter = {
+                let dateFormatter  = DateFormatter()
+                dateFormatter.timeZone = Calendar.current.timeZone
+                dateFormatter.locale = Calendar.current.locale
+                dateFormatter.dateFormat = "HH:mm"
+                return dateFormatter
+            }()
+            let TimeBound = formatter.date(from: TimeBoundString)
             
             DayToDisplay = CurrentDay
-            if DayToDisplay == 5 || DayToDisplay == -1 || DayToDisplay == 6{
-                DayToDisplay = 0
+                
+            if Date() < TimeBound!{
+                print("Before 1600")
+                if DayToDisplay == 5 || DayToDisplay == 6{
+                    DayToDisplay = 0
+                }
+            }else{
+                print("After 1600")
+                DayToDisplay += 1
+                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
+                    DayToDisplay = 0
+                }
             }
+            
             
             //Class
                 var Grade = 8
