@@ -137,7 +137,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
         if isInternetAvailable(){
-        
+            if circulars == nil{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -153,6 +153,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     print("ERROR")
                 }
                 }.resume()
+            }
+            
+            if news == nil{
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -175,6 +178,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     print("ERROR")
                 }
                 }.resume()
+            }
         }
     }
     
@@ -291,6 +295,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func UISetup(){
+        
+        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
+        if let x = UserDefaults.standard.string(forKey: "loginID") {
+            loginID = x
+        }
+        
         var arrayData = scrollViewLoggedInData
         
         if LoggedIn && teacherOrStudent() == "s"{
@@ -561,6 +571,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             SmallFont = 11
         }
         
+        removeSpinner(view: tableView)
+        
         DispatchQueue.main.async {
             self.array = self.eventsArray
         }
@@ -577,6 +589,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Timetable
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+            tableView.separatorStyle = .singleLine
             if isInternetAvailable(){
                 
                 DispatchQueue.main.async {
@@ -586,7 +599,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
                 removeSpinner(view: tableView)
                 
-                
+              
             //Date
             var DayToDisplay = 0
             var calendar = Calendar(identifier: .gregorian)
@@ -700,6 +713,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.detailTextLabel?.textColor = UIColor.gray
                 cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
                 
+            }else{
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
+                setupSpinner(view: tableView)
+                ParseTimetable()
+                tableView.reloadData()
                 }
                 
             }else{
@@ -765,10 +787,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             }
                             
                         }else{
-                            cell.textLabel!.text = "empty event array"
-                            
+                        tableView.separatorStyle = .none
+                        cell.isUserInteractionEnabled = false
+                        cell.textLabel?.text = ""
+                        cell.detailTextLabel?.text = ""
+                        tableView.reloadData()
+                        self.setupSpinner(view: tableView)
+                        self.ParseTimetable()
+                        tableView.reloadData()
                         }
-                    }
+                        }
+                    
                 }else{
                     
                     cell.textLabel!.text = "    See More..."
@@ -817,19 +846,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     //Accessory Type
                     cell.accessoryType = .disclosureIndicator
                 }else{
-                    tableView.reloadData()
-                    if !circularTimeArray.isEmpty && !circularTimeArray.isEmpty{
                         tableView.separatorStyle = .none
                         cell.isUserInteractionEnabled = false
                         cell.textLabel?.text = ""
                         cell.detailTextLabel?.text = ""
                         tableView.reloadData()
-                        self.setupSpinner(view: tableView)
+                        setupSpinner(view: tableView)
+                        ParseTimetable()
+                        tableView.reloadData()
                     }
-                }
+                
+                
             }else{
                 cell.textLabel!.text = "    See More..."
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+            
             }
             }else{
                 tableView.separatorStyle = .none
@@ -851,9 +882,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
+                if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
                 if indexPath.row < 4{
                    
-                    if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
+                
                 //Title
                 cell.textLabel!.text = newsTitleArray[indexPath.row]
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
@@ -868,20 +900,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 //Accessory Type
                 cell.accessoryType = .disclosureIndicator
                 }else{
-                    tableView.reloadData()
-                    if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
-                        tableView.separatorStyle = .none
-                        cell.isUserInteractionEnabled = false
-                        cell.textLabel?.text = ""
-                        cell.detailTextLabel?.text = ""
-                        tableView.reloadData()
-                        self.setupSpinner(view: tableView)
+                    cell.textLabel!.text = "    See More..."
+                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                    
                     }
-                }
-            }else{
-                cell.textLabel!.text = "    See More..."
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                }else{
+                    tableView.separatorStyle = .none
+                    cell.isUserInteractionEnabled = false
+                    cell.textLabel?.text = ""
+                    cell.detailTextLabel?.text = ""
+                    tableView.reloadData()
+                    setupSpinner(view: tableView)
+                    ParseTimetable()
+                    tableView.reloadData()
             }
+            
             
         }else{
             
@@ -1045,9 +1078,56 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
 //        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
 //            tabBarController?.selectedIndex = 2
 //        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+            var logInNumber = 0
+            if !LoggedIn || self.teacherOrStudent() == ""{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+            if LoggedIn && timetable == nil{
+                DispatchQueue.main.async{
+                    self.ParseTimetable()
+                    (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if EventsArray.isEmpty{
+                DispatchQueue.main.async{
+                    self.ParseEvents()
+                    (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if circulars == nil{
+                DispatchQueue.main.async{
+                    self.ParseNewsCurriculars()
+                    (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if news == nil{
+                DispatchQueue.main.async{
+                    self.ParseNewsCurriculars()
+                    (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
+                }
+            }
+        }
         
         
         
+        print(circularTimeArray)
+    }
+    
+    func reloadAllTables(){
+        let tablesArray = [UITableView]()
+        for i in 10000...10002{
+            let table = self.scrollView.viewWithTag(i)! as! UITableView
+            
+            var logInNumber = 0
+            if !LoggedIn || self.teacherOrStudent() == ""{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+            (self.scrollView.viewWithTag(i)! as! UITableView).reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -1059,7 +1139,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         if EventsArray.isEmpty || timetable == nil{
             DispatchQueue.main.async {
                 self.array = self.eventsArray
@@ -1070,7 +1149,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                 EventsFromNow += [event]
                             }
                         }
-                        self.viewDidLoad()
+                        self.reloadAllTables()
+                        //self.viewDidLoad()
                         let TableView = self.scrollView.viewWithTag(10001)! as! UITableView
                         TableView.reloadData()
                     }
