@@ -197,10 +197,10 @@
 			children = (
 				6AA819451F71FE8300FCA420 /* AppDelegate.swift */,
 				3E8DFAE81FF3B35E00E5F412 /* Home Page */,
-				3E440D081FFB2E630067E8DE /* Calendar */,
 				6A1515C720106B2300BBF15C /* Featured Page */,
 				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
+				3E440D081FFB2E630067E8DE /* Calendar */,
 				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				6A85E8011F96CDDA001836CD /* aboutDBSViewController.swift */,
