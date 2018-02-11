@@ -140,7 +140,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CalendarView.scrollToDate(Date())
         CalendarView.selectDates([Date()])
         
-        
+        TodayButton(self)
         
     }
     

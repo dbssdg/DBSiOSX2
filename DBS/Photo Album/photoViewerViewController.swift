@@ -170,7 +170,9 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         
         scrollImg.frame = self.bounds
         imgView.frame = self.bounds
-        print(scrollImg.frame, imgView.frame, (imgView.image?.size)!, self.bounds)
+        print(scrollImg.contentSize)
+        
+//        print(scrollImg.frame, imgView.frame, (imgView.image?.size)!, self.bounds)
     }
     
     override func prepareForReuse() {
