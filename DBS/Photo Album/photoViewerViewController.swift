@@ -14,10 +14,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
-        
-        self.view.backgroundColor = UIColor.white
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -83,7 +80,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
-            activityItems: [collectionView.cellForItem(at: [0, photoSelected])?.asImage()], applicationActivities: nil)
+            activityItems: [(collectionView.cellForItem(at: [0, photoSelected]) as! ImagePreviewFullViewCell).imgView.image], applicationActivities: nil)
         
 ////              This line is for the popover you need to show in iPad
 //                activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
@@ -112,6 +109,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = UIColor.white
         scrollImg = UIScrollView()
         scrollImg.delegate = self
         scrollImg.alwaysBounceVertical = false
@@ -135,7 +133,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         imgView.clipsToBounds = true
     }
     
-    @objc func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
+    func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
         if scrollImg.zoomScale <= 1 {
             scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
         } else {
@@ -156,6 +154,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imgView
     }
+    
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView.zoomScale < 0.8 {
             
@@ -164,8 +163,16 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+//        let imgHeight = (imgView.image?.size.height)! * (self.bounds.width / (imgView.image?.size.width)!)
+//        scrollImg.frame = CGRect(x: 0, y: 187.5, width: self.bounds.width, height: imgHeight)
+//        imgView.frame = scrollImg.frame
+        
         scrollImg.frame = self.bounds
         imgView.frame = self.bounds
+        print(scrollImg.contentSize)
+        
+//        print(scrollImg.frame, imgView.frame, (imgView.image?.size)!, self.bounds)
     }
     
     override func prepareForReuse() {

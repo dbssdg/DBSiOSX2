@@ -140,7 +140,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CalendarView.scrollToDate(Date())
         CalendarView.selectDates([Date()])
         
-        
+        TodayButton(self)
         
     }
     
@@ -511,8 +511,8 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         
-        calendar.deselectAllDates()
-        
+        //calendar.deselectAllDates()
+        //calendar.selectDates([date])
         handleCellTextColor(view: cell, cellState: cellState)
         handleCellSelected(view: cell, cellState: cellState)
         LoadEvents(view: cell, cellState: cellState)
@@ -523,7 +523,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellTextColor(view: cell, cellState: cellState)
         handleCellSelected(view: cell, cellState: cellState)
-        
+        //calendar.deselect(dates: [date])
         
     }
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

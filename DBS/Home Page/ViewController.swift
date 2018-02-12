@@ -19,8 +19,9 @@ var EventsFromNow = [events]()
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
-class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout{
+class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
+    var CurrentTableIndex = 0
     
     /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
@@ -51,7 +52,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     var destinationFeature = 0
     
     func ParseEvents(){
-        
+        if EventsArray.isEmpty{
         //Parse Events
         DispatchQueue.main.async {
             if EventsArray.isEmpty{
@@ -111,6 +112,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
     }
+    }
 }
         
        
@@ -137,7 +139,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
         if isInternetAvailable(){
-        
+            if circulars == nil || circulars.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -153,6 +155,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     print("ERROR")
                 }
                 }.resume()
+            }
+            
+            if news == nil || newsTitleArray.isEmpty{
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -175,6 +180,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     print("ERROR")
                 }
                 }.resume()
+            }
         }
     }
     
@@ -268,21 +274,51 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         print("view did load")
         
-        if let User = UserDefaults.standard.array(forKey: "profileData"){
-            UserInformation = User as! [String]
-        }
-        
-        
         
         ViewTimesLoaded += 1
         
         DispatchQueue.main.async {
             self.ParseEvents()
             self.ParseNewsCurriculars()
+            if let User = UserDefaults.standard.array(forKey: "profileData"){
+                UserInformation = User as! [String]
+            }
         }
         
         
         scrollView.delegate = self
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.UISetup()
+            var logInNumber = 0
+            if !LoggedIn && self.teacherOrStudent() == "s"{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+//            for i in (10001 - logInNumber)...(10004 - logInNumber) {
+//                let View = self.scrollView.viewWithTag(i)
+//                if let TableView = View {
+//                    self.registerForPreviewing(with: self, sourceView: TableView as! UITableView)
+//                }
+//
+//            }
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
+    func UISetup(){
+        
+        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
+        if let x = UserDefaults.standard.string(forKey: "loginID") {
+            loginID = x
+        }
         
         var arrayData = scrollViewLoggedInData
         
@@ -291,7 +327,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }else{
             arrayData = scrollViewData
         }
-    
+        
         //Scroll View
         let subViews = self.scrollView.subviews
         for subview in subViews{
@@ -363,92 +399,122 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         BandView.tag = 20
         self.view.addSubview(BandView)
         
-    
         
-            var i = 0
-            for data in arrayData{
+        
+        var i = 0
+        for data in arrayData{
+            
+            let DistanceBetweenTableViewAndBand = self.view.frame.height * 0.0125
+            let a = DistanceBetweenTableViewAndBand
+            
+            
+            let view = HomeCustomView(frame: CGRect(x: self.scrollView.frame.width * (CGFloat(i) + 0.05), y: DistanceBetweenTableViewAndBand + BandView.frame.height, width: self.view.frame.width * 0.9, height: (self.scrollView.frame.height - BandView.frame.height - a * 3)))
+            
+            view.backgroundColor = UIColor.red
+            view.layer.cornerRadius = view.frame.width * 0.1
+            view.clipsToBounds = true
+            
+            view.tag = i + self.viewTagValue
+            self.scrollView.addSubview(view)
+            
+            
+            
+            
+            //Label
+            let label = UILabel(frame: CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: CGSize.init(width: 150, height: 100)))
+            label.text = data.title
+            label.font = UIFont.boldSystemFont(ofSize: 32)
+            label.font = UIFont(name: "Helvetica", size: 32)
+            label.textAlignment = .center
+            label.textColor = UIColor.white
+            label.backgroundColor = self.view.backgroundColor
+            label.sizeToFit()
+            label.layer.zPosition = 100
+            label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.15
+            
+            
+            
+            label.tag = i + self.LabelTagValue
+            
+            
+            let LabelBackgroundView = UIView(frame: CGRect(x: label.frame.origin.x - 10 , y: 0, width: label.frame.width + 20, height: BandView.frame.height))
+            LabelBackgroundView.tag = i + self.LabelBackgroundTagValue
+            LabelBackgroundView.backgroundColor = self.view.backgroundColor
+            
+            label.frame.origin.y = (BandView.frame.height - label.frame.height) / 2
+            
+            self.scrollView.addSubview(LabelBackgroundView)
+            self.scrollView.addSubview(label)
+            self.scrollView.bringSubview(toFront: label)
+            if i == 0{
                 
-                let DistanceBetweenTableViewAndBand = self.view.frame.height * 0.0125
-                let a = DistanceBetweenTableViewAndBand
-                
-                
-                let view = HomeCustomView(frame: CGRect(x: self.scrollView.frame.width * (CGFloat(i) + 0.05), y: DistanceBetweenTableViewAndBand + BandView.frame.height, width: self.view.frame.width * 0.9, height: (self.scrollView.frame.height - BandView.frame.height - a * 2)))
-                
-                view.backgroundColor = UIColor.red
-                view.layer.cornerRadius = view.frame.width * 0.1
-                view.clipsToBounds = true
-                
-                view.tag = i + self.viewTagValue
-                self.scrollView.addSubview(view)
-                
-                
-                
-                
-                //Label
-                let label = UILabel(frame: CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: CGSize.init(width: 150, height: 100)))
-                label.text = data.title
-                label.font = UIFont.boldSystemFont(ofSize: 32)
-                label.font = UIFont(name: "Helvetica", size: 32)
-                label.textAlignment = .center
-                label.textColor = UIColor.white
-                label.backgroundColor = self.view.backgroundColor
-                label.sizeToFit()
-                label.layer.zPosition = 100
-                label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.15
-             
- 
-                
-                label.tag = i + self.LabelTagValue
-                
-                
-                let LabelBackgroundView = UIView(frame: CGRect(x: label.frame.origin.x - 10 , y: 0, width: label.frame.width + 20, height: BandView.frame.height))
-                LabelBackgroundView.tag = i + self.LabelBackgroundTagValue
-                LabelBackgroundView.backgroundColor = self.view.backgroundColor
-                
-                label.frame.origin.y = (BandView.frame.height - label.frame.height) / 2
-                
-                self.scrollView.addSubview(LabelBackgroundView)
-                self.scrollView.addSubview(label)
-                self.scrollView.bringSubview(toFront: label)
-                if i == 0{
-                    
-                }
-                
-                
-                //Table View
-                let IndentValue : CGFloat = 2
-                
-                let TableView = HomeEventTableView(frame: view.frame, style: .plain)
-                TableView.delegate = self
-                TableView.dataSource = self
-                TableView.Events = EventsArray
-                TableView.layer.cornerRadius = view.layer.cornerRadius
-                TableView.clipsToBounds = true
-                TableView.frame = view.frame
-                TableView.frame.origin.y += IndentValue
-                TableView.frame.size.height -= IndentValue * 2
-                TableView.isScrollEnabled = true
-                
-                TableView.tag = i + 10000
-                self.scrollView.addSubview(TableView)
-                
-                
-                let refresher = UIRefreshControl()
-                refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
-                refresher.tag = i + 100000 + 50
-                refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
-                self.scrollView.viewWithTag(i + 10000)!.addSubview(refresher)
-                
-                
-                i += 1
             }
-    
+            
+            
+            //Table View
+            let IndentValue : CGFloat = 2
+            
+            let TableView = HomeEventTableView(frame: view.frame, style: .plain)
+            TableView.delegate = self
+            TableView.dataSource = self
+            TableView.Events = EventsArray
+            TableView.layer.cornerRadius = view.layer.cornerRadius
+            TableView.clipsToBounds = true
+            TableView.frame = view.frame
+            TableView.frame.origin.y += IndentValue
+            TableView.frame.size.height -= IndentValue * 2
+            TableView.isScrollEnabled = true
+            self.registerForPreviewing(with: self, sourceView: TableView)
+            
+            TableView.tag = i + 10000
+            self.scrollView.addSubview(TableView)
+            
+            
+            let refresher = UIRefreshControl()
+            refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
+            refresher.tag = i + 100000 + 50
+            refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
+            self.scrollView.viewWithTag(i + 10000)!.addSubview(refresher)
+            
+            
+            i += 1
+        }
+        
         if ViewTimesLoaded == 1{
             scrollViewDidScroll(scrollView)
         }
+        if let pageControl = self.view.viewWithTag(200){
+            pageControl.removeFromSuperview()
+        }
         
-        scrollView.reloadInputViews()
+        //Page Control
+        let PageControl = UIPageControl(frame: CGRect(x: 0, y: self.view.frame.height * 0.5, width: 200, height: 50))
+        var numberOfPages = 0
+        numberOfPages = arrayData.count
+        PageControl.removeFromSuperview()
+        PageControl.numberOfPages = numberOfPages
+        print(PageControl.numberOfPages)
+        PageControl.reloadInputViews()
+        PageControl.currentPage = 0
+        PageControl.pageIndicatorTintColor = UIColor.gray
+        PageControl.currentPageIndicatorTintColor = UIColor.white
         
+        PageControl.layer.zPosition = 1000
+        PageControl.sizeToFit()
+        PageControl.frame.origin.x = (self.view.frame.width - PageControl.frame.width) / 2
+        PageControl.frame.origin.y = self.scrollView.frame.origin.y + (self.scrollView.viewWithTag(10)!.frame.origin.y + self.scrollView.viewWithTag(10)!.frame.height) - PageControl.frame.height * 0.3
+        PageControl.tag = 200
+        PageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
+        self.view.addSubview(PageControl)
+        
+        
+        
+        //scrollView.reloadInputViews()
+    }
+    func changePage(sender: AnyObject) -> () {
+        let x = CGFloat((self.view.viewWithTag(200)! as! UIPageControl).currentPage) * self.view.frame.size.width
+        CurrentTableIndex = (self.view.viewWithTag(200)! as! UIPageControl).currentPage
+        self.scrollView.setContentOffset(CGPoint(x: x,y :0), animated: true)
     }
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
@@ -526,6 +592,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             SmallFont = 11
         }
         
+        removeSpinner(view: tableView)
+        tableView.separatorStyle = .singleLine
+        
         DispatchQueue.main.async {
             self.array = self.eventsArray
         }
@@ -542,27 +611,47 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Timetable
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+            tableView.separatorStyle = .singleLine
             if isInternetAvailable(){
                 
-                if timetable == nil{
-                    ParseTimetable()
+                DispatchQueue.main.async {
+                    if timetable == nil{
+                        self.ParseTimetable()
+                    }
                 }
                 
-                removeSpinner(view: tableView)
-                
-                
+              
             //Date
             var DayToDisplay = 0
             var calendar = Calendar(identifier: .gregorian)
             calendar.firstWeekday = -1
             
             let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-            let CurrentTime = calendar.component(.hour, from: Date())
+            let TimeBoundString = "16:00"
+            let formatter : DateFormatter = {
+                let dateFormatter  = DateFormatter()
+                dateFormatter.timeZone = Calendar.current.timeZone
+                dateFormatter.locale = Calendar.current.locale
+                dateFormatter.dateFormat = "HH:mm"
+                return dateFormatter
+            }()
+            let TimeBound = formatter.date(from: TimeBoundString)
             
             DayToDisplay = CurrentDay
-            if DayToDisplay == 5 || DayToDisplay == -1 || DayToDisplay == 6{
-                DayToDisplay = 0
+                
+            if Date() < TimeBound!{
+                print("Before 1600")
+                if DayToDisplay == 5 || DayToDisplay == 6{
+                    DayToDisplay = 0
+                }
+            }else{
+                print("After 1600")
+                DayToDisplay += 1
+                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
+                    DayToDisplay = 0
+                }
             }
+            
             
             //Class
                 var Grade = 8
@@ -631,7 +720,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
                         out += "\(i.decodeUrl()) | "
                     }
-                    if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" {
+                    if (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].isActivityPeriod)! == true || ((timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)![0] == "" && indexPath.row-1 != 5){
                         out = "Activity Period   "
                     }
                     out.removeLast(3)
@@ -664,6 +753,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 cell.detailTextLabel?.textColor = UIColor.gray
                 cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
                 
+            }else{
+                tableView.separatorStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                tableView.reloadData()
+                setupSpinner(view: tableView)
+                ParseTimetable()
+                tableView.reloadData()
                 }
                 
             }else{
@@ -729,10 +827,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             }
                             
                         }else{
-                            cell.textLabel!.text = "empty event array"
-                            
+                        tableView.separatorStyle = .none
+                        cell.isUserInteractionEnabled = false
+                        cell.textLabel?.text = ""
+                        cell.detailTextLabel?.text = ""
+                        tableView.reloadData()
+                        self.setupSpinner(view: tableView)
+                        self.ParseTimetable()
+                        tableView.reloadData()
                         }
-                    }
+                        }
+                    
                 }else{
                     
                     cell.textLabel!.text = "    See More..."
@@ -748,6 +853,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Circular
         else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
+            DispatchQueue.main.async{
+                if circulars == nil{
+                    self.ParseNewsCurriculars()
+                }
+            }
+            
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
             if indexPath.row < 4{
@@ -775,26 +886,28 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     //Accessory Type
                     cell.accessoryType = .disclosureIndicator
                 }else{
-                    tableView.reloadData()
-                    if !circularTimeArray.isEmpty && !circularTimeArray.isEmpty{
                         tableView.separatorStyle = .none
                         cell.isUserInteractionEnabled = false
                         cell.textLabel?.text = ""
                         cell.detailTextLabel?.text = ""
                         tableView.reloadData()
-                        self.setupSpinner(view: tableView)
+                        setupSpinner(view: tableView)
+                        ParseTimetable()
+                        tableView.reloadData()
                     }
-                }
+                
+                
             }else{
                 cell.textLabel!.text = "    See More..."
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+            
             }
             }else{
                 tableView.separatorStyle = .none
                 cell.isUserInteractionEnabled = false
                 cell.textLabel?.text = ""
                 cell.detailTextLabel?.text = ""
-                tableView.reloadData()
+                //tableView.reloadData()
                 setupSpinner(view: tableView)
             }
             
@@ -802,11 +915,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //News
         }else if tableView.tag == self.scrollView.viewWithTag(10003 - logInNumber)!.tag{
+            DispatchQueue.main.async{
+                if news == nil{
+                    self.ParseNewsCurriculars()
+                }
+            }
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
+                if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
                 if indexPath.row < 4{
-                    
-                    if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
+                   
+                
                 //Title
                 cell.textLabel!.text = newsTitleArray[indexPath.row]
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
@@ -821,20 +940,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 //Accessory Type
                 cell.accessoryType = .disclosureIndicator
                 }else{
-                    tableView.reloadData()
-                    if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
-                        tableView.separatorStyle = .none
-                        cell.isUserInteractionEnabled = false
-                        cell.textLabel?.text = ""
-                        cell.detailTextLabel?.text = ""
-                        tableView.reloadData()
-                        self.setupSpinner(view: tableView)
+                    cell.textLabel!.text = "    See More..."
+                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                    
                     }
-                }
-            }else{
-                cell.textLabel!.text = "    See More..."
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                }else{
+                    tableView.separatorStyle = .none
+                    cell.isUserInteractionEnabled = false
+                    cell.textLabel?.text = ""
+                    cell.detailTextLabel?.text = ""
+                    tableView.reloadData()
+                    setupSpinner(view: tableView)
+                    ParseTimetable()
+                    tableView.reloadData()
             }
+            
             
         }else{
             
@@ -842,7 +962,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = ""
             cell.isUserInteractionEnabled = false
-            tableView.reloadData()
+            //tableView.reloadData()
             setupSpinner(view: tableView)
         }
         }
@@ -998,15 +1118,191 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
 //        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
 //            tabBarController?.selectedIndex = 2
 //        }
-        
-        DispatchQueue.main.async {
-            self.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+            var logInNumber = 0
+            if !LoggedIn || self.teacherOrStudent() == ""{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+            if LoggedIn && timetable == nil{
+                DispatchQueue.main.async{
+                    self.ParseTimetable()
+                    (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if EventsArray.isEmpty{
+                DispatchQueue.main.async{
+                    self.ParseEvents()
+                    (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if circulars == nil{
+                DispatchQueue.main.async{
+                    self.ParseNewsCurriculars()
+                    (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
+                }
+            }else if news == nil{
+                DispatchQueue.main.async{
+                    self.ParseNewsCurriculars()
+                    (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
+                }
+            }
         }
         
+        
+        
+        print(circularTimeArray)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
+        print("3D Touch")
+        
+        CurrentTableIndex = Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
+        print("Current:", CurrentTableIndex)
+        
+        var logInNumber = 0
+        if !LoggedIn || teacherOrStudent() == ""{
+            logInNumber = 1
+        }else{
+            logInNumber = 0
+        }
+        var indexPath : IndexPath? = nil
+        
+        if let x = (self.scrollView.viewWithTag(10000 + CurrentTableIndex)! as! UITableView).indexPathForRow(at: location){
+            indexPath = x
+        }
+        
+            /*
+            if let x = (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+            
+                indexPath = x
+            }
+            if let y = (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = y
+            }
+            if let z = (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = z
+            }
+            if let a = (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).indexPathForRow(at: location){
+                indexPath = a
+            }
+ */
+        
+        
+            if indexPath != nil{
+                
+                let RealIndexPath = (indexPath?.row)!
+                print("Real Index Path:", RealIndexPath)
+                
+                if CurrentTableIndex == 0 - logInNumber{
+                    
+                    if isInternetAvailable() && timetable != nil{
+                    timetableChoice = "\(UserInformation[3])"
+                    timetableChoice.removeLast(3)
+                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "My Timetable") as! myTimetableViewController
+                    return destViewController
+                    }else{
+                        return nil
+                    }
+                    
+                }else if CurrentTableIndex == 1 - logInNumber{
+                    
+                    if !EventsArray.isEmpty{
+                    if RealIndexPath < 4{
+                        let event = EventsFromNow[RealIndexPath]
+                        PassingEvent = (event.Title, event.StartDate, event.EndDate, event.EventType)
+                        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
+                        return destViewController
+                    }else{
+                        return nil
+                    }
+                    }else{
+                        return nil
+                    }
+                    
+                }else if CurrentTableIndex == 2 - logInNumber{
+                    
+                    if isInternetAvailable() && !circulars.isEmpty{
+                    if RealIndexPath < 4{
+                        circularViewURL = (circulars["\(RealIndexPath+1)"]!["attach_url"]!)
+                        let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
+                        return detailViewController
+                    }else{
+                        return nil
+                    }
+                }else{
+                    return nil
+                }
+                }else if CurrentTableIndex == 3 - logInNumber{
+                    
+                    if isInternetAvailable() && !newsTitleArray.isEmpty{
+                    if RealIndexPath < 4{
+                        newsIndex = RealIndexPath
+                        newsTotal = newsTitleArray.count
+                        let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
+                        return detailViewController
+                    }else{
+                        return nil
+                    }
+                    }else{
+                        return nil
+                    }
+                }
+                
+            }else{
+                return nil
+            }
+        /*if selectedSegment == 0 {
+            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
+            return detailViewController
+        } else if selectedSegment == 1 {
+            newsIndex = indexPath.row
+            newsTotal = newsTitleArray.count
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
+            return detailViewController
+        }
+ */
+        
+ 
+ 
+        
+        
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
+    
+    
+    func reloadAllTables(){
+        let tablesArray = [UITableView]()
+        for i in 10000...10002{
+            let table = self.scrollView.viewWithTag(i)! as! UITableView
+            
+            var logInNumber = 0
+            if !LoggedIn || self.teacherOrStudent() == ""{
+                logInNumber = 1
+            }else{
+                logInNumber = 0
+            }
+            
+            (self.scrollView.viewWithTag(i)! as! UITableView).reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.viewDidLoad()
+            }
+        }
+        
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if EventsArray.isEmpty || timetable == nil{
             DispatchQueue.main.async {
                 self.array = self.eventsArray
@@ -1017,7 +1313,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                 EventsFromNow += [event]
                             }
                         }
-                        self.viewDidLoad()
+                        self.reloadAllTables()
+                        //self.viewDidLoad()
                         let TableView = self.scrollView.viewWithTag(10001)! as! UITableView
                         TableView.reloadData()
                     }
@@ -1032,6 +1329,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
  */
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        CurrentTableIndex = Int(pageNumber)
+        (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
     }
     
 }

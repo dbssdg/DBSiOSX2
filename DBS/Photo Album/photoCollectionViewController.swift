@@ -82,8 +82,6 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if photoAlbum?.data == nil {
             return 0
@@ -103,6 +101,25 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             performSegue(withIdentifier: "Photo Viewer", sender: self)
         }
     }
+    
+//    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+//        guard let indexPath = photoCollection.indexPathForItem(at: location) else {
+//            return nil
+//        }
+//        let detailViewController = ViewController()
+//        let imageView = UIImageView()
+//        if let x = (photoCollection.cellForItem(at: indexPath) as! photoCollectionViewCell).image.image {
+//            imageView.image = x
+//        } else {
+//            photoCollection.reloadData()
+//        }
+//        imageView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
+//        detailViewController.view.addSubview(imageView)
+//        return detailViewController
+//    }
+//    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+//        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+//    }
     
     func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int){
         let url : URL = URL(string: urlString)!

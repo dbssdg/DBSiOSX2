@@ -120,7 +120,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             for i in (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)! {
                 out += "\(i.decodeUrl()) | "
             }
-            if (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].isActivityPeriod)! == true || (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)![0] == "" {
+            if (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].isActivityPeriod)! == true || ((timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)![0] == "" && indexPath.row != 5){
                 out = "Activity Period   "
             }
             out.removeLast(3)
@@ -166,11 +166,29 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         calendar.firstWeekday = -1
         
         let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-        let CurrentTime = calendar.component(.hour, from: Date())
+        let TimeBoundString = "16:00"
+        let formatter : DateFormatter = {
+            let dateFormatter  = DateFormatter()
+            dateFormatter.timeZone = Calendar.current.timeZone
+            dateFormatter.locale = Calendar.current.locale
+            dateFormatter.dateFormat = "HH:mm"
+            return dateFormatter
+        }()
+        let TimeBound = formatter.date(from: TimeBoundString)
         
         DayToDisplay = CurrentDay
-        if DayToDisplay == 5 || DayToDisplay == -1 || DayToDisplay == 6{
-            DayToDisplay = 0
+        
+        if Date() < TimeBound!{
+            print("Before 1600")
+            if DayToDisplay == 5 || DayToDisplay == 6{
+                DayToDisplay = 0
+            }
+        }else{
+            print("After 1600")
+            DayToDisplay += 1
+            if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
+                DayToDisplay = 0
+            }
         }
         
         
