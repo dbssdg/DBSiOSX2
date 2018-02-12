@@ -50,6 +50,7 @@ class AllEventsTableViewController: UITableViewController {
                 }
                 count += 1
             }
+            self.viewDidAppear(true)
         }
         }
         
