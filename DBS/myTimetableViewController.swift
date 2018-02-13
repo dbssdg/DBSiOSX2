@@ -174,18 +174,20 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter
         }()
-        let TimeBound = formatter.date(from: TimeBoundString)
-        
+        //let TimeBound = formatter.date(from: TimeBoundString)
+        //let CurrentTime = calendar.dateComponents([.hour], from: Date())
+        let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
         DayToDisplay = CurrentDay
+        print(DayToDisplay)
         
-        if Date() < TimeBound!{
-            print("Before 1600")
-            if DayToDisplay == 5 || DayToDisplay == 6{
+        if Date() < TimeBoundary!{
+            print("Before")
+            DayToDisplay -= 1
+            if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
                 DayToDisplay = 0
             }
         }else{
-            print("After 1600")
-            DayToDisplay += 1
+            print("After")
             if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
                 DayToDisplay = 0
             }
