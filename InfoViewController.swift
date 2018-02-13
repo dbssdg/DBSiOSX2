@@ -68,7 +68,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         menuTable.isScrollEnabled = false
-        self.registerForPreviewing(with: self, sourceView: menuTable)
         
         if let x = UserDefaults.standard.object(forKey: "functionsCustomization") as? [String] {
             functions = x
@@ -110,24 +109,28 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuTable.frame.size.width = selfWidth
         menuTable.sizeToFit()
         menuTable.layer.zPosition = 100
-        
+        self.registerForPreviewing(with: self, sourceView: menuTable)
         
         calendar.layer.cornerRadius = Radius
         calendar.clipsToBounds = true
         calendar.layer.frame = CGRect(x: ButtonGap  , y: ButtonGap, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: calendar)
         
         about.layer.cornerRadius = Radius
         about.clipsToBounds = true
         about.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize  , y: ButtonGap, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: about)
         
         map.layer.cornerRadius = Radius
         map.clipsToBounds = true
         map.layer.frame = CGRect(x: ButtonGap , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: map)
         
         
         timetable.layer.cornerRadius = Radius
         timetable.clipsToBounds = true
         timetable.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: timetable)
     
         scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: menuTable.frame.origin.y + menuTable.frame.size.height)
@@ -187,40 +190,56 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = menuTable.indexPathForRow(at: location) else {
-            return nil
-        }
-        
-        let Row = indexPath.row
-        switch Row {
-        case 0:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Links View Controller") as! LinksViewController
-            return destViewController
-        case 1:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "School Hymn View Controller") as! SchoolHymnViewController
-            return destViewController
-        case 2:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController
-            return destViewController
-        case 3:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Teachers") as! TeachersViewController
-            return destViewController
-        case 4:
-            if loginID == ""{
+    
+        if previewingContext.sourceView == menuTable{
+            guard let indexPath = menuTable.indexPathForRow(at: location) else {
                 return nil
-            }else{
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Classmates") as! classmatesViewController
-                return destViewController
             }
-        case 5:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Photo Album") as! albumViewController
-            return destViewController
-        case 6:
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Acknowledgemnts") as! ContributionsViewController
-            return destViewController
             
-        default:
-            return nil
+            let Row = indexPath.row
+            
+            switch functions[Row] {
+            case "Links, Contact & Steps":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! LinksViewController
+                return destViewController
+            case "School Hymn":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolHymnViewController
+                return destViewController
+            case "School Rules":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolRulesViewController
+                return destViewController
+            case "Teachers":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! TeachersViewController
+                return destViewController
+            case "Classmates":
+                if loginID == ""{
+                    return nil
+                }else{
+                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! classmatesViewController
+                    return destViewController
+                }
+            case "Photo Album":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! albumViewController
+                return destViewController
+            case "Acknowledgements":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! ContributionsViewController
+                return destViewController
+                
+            default:
+                return nil
+            }
+        }else if previewingContext.sourceView == calendar{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
+            return destViewController
+        }else if previewingContext.sourceView == about{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About DBS") as! aboutDBSViewController
+            return destViewController
+        }else if previewingContext.sourceView == map{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! MapsViewController
+            return destViewController
+        }else if previewingContext.sourceView == timetable{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
+            return destViewController
         }
         
         return nil

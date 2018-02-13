@@ -529,7 +529,7 @@
         <!--AboutDBS View Controller-->
         <scene sceneID="4oP-WS-hEj">
             <objects>
-                <viewController id="Vte-9o-Zqt" customClass="aboutDBSViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="About DBS" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vte-9o-Zqt" customClass="aboutDBSViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HSo-Lm-8IY"/>
                         <viewControllerLayoutGuide type="bottom" id="ChO-MS-5rF"/>
@@ -753,7 +753,7 @@
         <!--Maps View Controller-->
         <scene sceneID="8MW-Rb-p3u">
             <objects>
-                <viewController wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" id="bwQ-mz-9cq" customClass="MapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwQ-mz-9cq" customClass="MapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0ZN-bG-MZb"/>
                         <viewControllerLayoutGuide type="bottom" id="VPc-Is-v5C"/>
@@ -1329,7 +1329,7 @@
         <!--Acknowledgements-->
         <scene sceneID="Wfk-kS-9fR">
             <objects>
-                <viewController storyboardIdentifier="Acknowledgemnts" title="Acknowledgements" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Acknowledgements" title="Acknowledgements" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FJz-zR-KRt"/>
                         <viewControllerLayoutGuide type="bottom" id="5sk-uT-Kkh"/>
@@ -1889,7 +1889,7 @@
         <!--Links View Controller-->
         <scene sceneID="YAP-Ha-HrW">
             <objects>
-                <viewController storyboardIdentifier="Links View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="byZ-wL-izR" customClass="LinksViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Links, Contact &amp; Steps" useStoryboardIdentifierAsRestorationIdentifier="YES" id="byZ-wL-izR" customClass="LinksViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GjN-dD-ELL"/>
                         <viewControllerLayoutGuide type="bottom" id="was-yX-iNb"/>
@@ -1936,7 +1936,7 @@
         <!--School Hymn View Controller-->
         <scene sceneID="ui9-yC-tZc">
             <objects>
-                <viewController storyboardIdentifier="School Hymn View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="T4N-a4-izW" customClass="SchoolHymnViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="School Hymn" useStoryboardIdentifierAsRestorationIdentifier="YES" id="T4N-a4-izW" customClass="SchoolHymnViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oaq-d5-4S7"/>
                         <viewControllerLayoutGuide type="bottom" id="MQb-Af-lvG"/>
@@ -3098,7 +3098,7 @@ Title</string>
         <segue reference="ZvZ-Pz-6g0"/>
         <segue reference="225-9V-9cR"/>
         <segue reference="kVF-5A-evd"/>
-        <segue reference="j2i-8h-aQ0"/>
+        <segue reference="2fI-rG-aNj"/>
         <segue reference="NGb-v2-BUs"/>
     </inferredMetricsTieBreakers>
 </document>
