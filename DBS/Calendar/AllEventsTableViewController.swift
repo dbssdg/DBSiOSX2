@@ -9,7 +9,7 @@
 import UIKit
 import SystemConfiguration
 
-class AllEventsTableViewController: UITableViewController {
+class AllEventsTableViewController: UITableViewController, UIViewControllerPreviewingDelegate {
     
     var NextEvent = events(Title: "", StartDate: Date(), EndDate: Date(), EventType: .SH )
     var NextEventindexPath = IndexPath(row: 0, section: 0)
@@ -60,6 +60,8 @@ class AllEventsTableViewController: UITableViewController {
         //let AddCalendar = UIBarButtonItem(image: UIImage(named: "imagename"), style: .plain, target: self, action: Selector("action")) // action:#selector(Class.MethodName) for swift 3
         let AddCalendar = UIBarButtonItem(title: "Add Calendar", style: .plain, target: self, action: #selector(WillAddCalendar))
         self.navigationItem.rightBarButtonItem  = AddCalendar
+        
+        self.registerForPreviewing(with: self, sourceView: tableView)
         
     }
 
@@ -149,7 +151,22 @@ class AllEventsTableViewController: UITableViewController {
         performSegue(withIdentifier: "All Events to Detail Event", sender: self)
     }
     
-
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location) else {
+            return nil
+        }
+        
+        let SelectedEvent = EventsArray[indexPath.row]
+        PassingEvent = (SelectedEvent.Title, SelectedEvent.StartDate, SelectedEvent.EndDate, SelectedEvent.EventType)
+        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
+        return destViewController
+        
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
    
 
 }

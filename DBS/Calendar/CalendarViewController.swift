@@ -44,7 +44,7 @@ extension Array where Element:Equatable {
     }
 }
 
-class CalendarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CalendarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     
     @IBOutlet weak var CalendarView: JTAppleCalendarView!
     @IBOutlet weak var CalendarStackView: UIStackView!
@@ -124,8 +124,11 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         EventsTableView.frame.origin.y = CalendarStackView.frame.origin.y + CalendarStackView.frame.size.height
         EventsTableView.frame.origin.x = 0
         EventsTableView.frame.size.width = self.view.frame.width
+        EventsTableView.frame.size.height = self.view.frame.height - EventsTableView.frame.origin.y
+        EventsTableView.isScrollEnabled = true
+        self.registerForPreviewing(with: self, sourceView: EventsTableView)
         
-        let EventsTableViewBottomConstraint = NSLayoutConstraint(item: EventsTableView, attribute: .bottomMargin, relatedBy: .equal, toItem: self.view, attribute: .bottomMargin, multiplier: 1, constant: 0)
+        //let EventsTableViewBottomConstraint = NSLayoutConstraint(item: EventsTableView, attribute: .bottomMargin, relatedBy: .equal, toItem: self.view, attribute: .bottomMargin, multiplier: 1, constant: 0)
         //NSLayoutConstraint.activate([EventsTableViewBottomConstraint])
         
         
@@ -420,6 +423,24 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     */
+    
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = EventsTableView.indexPathForRow(at: location) else {
+            return nil
+        }
+        
+        let index = indexPath.row
+        PassingEvent = (CurrentDayEventsArray[index].1.Title, CurrentDayEventsArray[index].1.StartDate, CurrentDayEventsArray[index].1.EndDate, CurrentDayEventsArray[index].1.EventType)
+        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
+        return destViewController
+        
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
     
 }
 

@@ -38,7 +38,7 @@ class DetailedEventViewController: UIViewController {
         default:
             EventTitle.textColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
         }
-        EventTitle.numberOfLines = 3
+        EventTitle.numberOfLines = 2
         EventTitle.adjustsFontSizeToFitWidth = true
         EventType.numberOfLines = 0
         
@@ -98,6 +98,8 @@ class DetailedEventViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    
     
 
 }
