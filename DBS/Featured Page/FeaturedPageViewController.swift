@@ -197,17 +197,37 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchBarCancelButtonClicked(featuredSearch.searchBar)
-        searchBarTextDidEndEditing(featuredSearch.searchBar)
-        featuredSearch.isActive = false
         if selectedSegment == 0 {
-            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            
+            if isSearching {
+               let indexInNonFiltered = circularTitleArray.index(of: filteredCirculars[indexPath.row])
+                circularViewURL = (circulars["\(indexInNonFiltered!+1)"]!["attach_url"]!)
+            } else {
+                circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
+            }
             print(circularViewURL)
+            
+            searchBarCancelButtonClicked(featuredSearch.searchBar)
+            searchBarTextDidEndEditing(featuredSearch.searchBar)
+            featuredSearch.isActive = false
+            
             performSegue(withIdentifier: "Circular Segue", sender: self)
+            
         } else if selectedSegment == 1 {
-            newsIndex = indexPath.row
+            
+            if isSearching {
+                let indexInNonFiltered = newsTitleArray.index(of: filteredNews[indexPath.row])
+                newsIndex = indexInNonFiltered!
+            } else {
+                newsIndex = indexPath.row
+            }
+            
             newsTotal = newsTitleArray.count
+            searchBarCancelButtonClicked(featuredSearch.searchBar)
+            searchBarTextDidEndEditing(featuredSearch.searchBar)
+            featuredSearch.isActive = false
             performSegue(withIdentifier: "News Segue", sender: self)
+        
         }
     }
     
