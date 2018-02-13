@@ -205,7 +205,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
             }
-            print(circularViewURL)
             
             searchBarCancelButtonClicked(featuredSearch.searchBar)
             searchBarTextDidEndEditing(featuredSearch.searchBar)

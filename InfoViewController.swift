@@ -11,7 +11,7 @@ import UIKit
 var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgements"]
 var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
 
-class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
     
     @IBOutlet var scrollView: UIScrollView!
@@ -68,6 +68,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         menuTable.isScrollEnabled = false
+        self.registerForPreviewing(with: self, sourceView: menuTable)
         
         if let x = UserDefaults.standard.object(forKey: "functionsCustomization") as? [String] {
             functions = x
@@ -185,6 +186,48 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = menuTable.indexPathForRow(at: location) else {
+            return nil
+        }
+        
+        let Row = indexPath.row
+        switch Row {
+        case 0:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Links View Controller") as! LinksViewController
+            return destViewController
+        case 1:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "School Hymn View Controller") as! SchoolHymnViewController
+            return destViewController
+        case 2:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController
+            return destViewController
+        case 3:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Teachers") as! TeachersViewController
+            return destViewController
+        case 4:
+            if loginID == ""{
+                return nil
+            }else{
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Classmates") as! classmatesViewController
+                return destViewController
+            }
+        case 5:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Photo Album") as! albumViewController
+            return destViewController
+        case 6:
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Acknowledgemnts") as! ContributionsViewController
+            return destViewController
+            
+        default:
+            return nil
+        }
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
     
     
 }

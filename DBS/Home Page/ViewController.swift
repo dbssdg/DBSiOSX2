@@ -272,9 +272,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("view did load")
-        
-        
         ViewTimesLoaded += 1
         
         DispatchQueue.main.async {
@@ -493,7 +490,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         numberOfPages = arrayData.count
         PageControl.removeFromSuperview()
         PageControl.numberOfPages = numberOfPages
-        print(PageControl.numberOfPages)
         PageControl.reloadInputViews()
         PageControl.currentPage = 0
         PageControl.pageIndicatorTintColor = UIColor.gray
@@ -639,23 +635,19 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             //let CurrentTime = calendar.dateComponents([.hour], from: Date())
             let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
             DayToDisplay = CurrentDay
-            print(DayToDisplay)
                 
             if Date() < TimeBoundary!{
-                print("Before")
+                
                 DayToDisplay -= 1
                 if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
                     DayToDisplay = 0
                 }
             }else{
-                print("After")
+                
                 if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
                     DayToDisplay = 0
                 }
             }
-                
-                print(DayToDisplay)
-            
             
             //Class
                 var Grade = 8
@@ -1153,18 +1145,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
         
-        
-        
-        print(circularTimeArray)
     }
     
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        print("3D Touch")
         
         CurrentTableIndex = Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
-        print("Current:", CurrentTableIndex)
         
         var logInNumber = 0
         if !LoggedIn || teacherOrStudent() == ""{
@@ -1177,28 +1164,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if let x = (self.scrollView.viewWithTag(10000 + CurrentTableIndex)! as! UITableView).indexPathForRow(at: location){
             indexPath = x
         }
-        
-            /*
-            if let x = (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).indexPathForRow(at: location){
-            
-                indexPath = x
-            }
-            if let y = (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).indexPathForRow(at: location){
-                indexPath = y
-            }
-            if let z = (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).indexPathForRow(at: location){
-                indexPath = z
-            }
-            if let a = (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).indexPathForRow(at: location){
-                indexPath = a
-            }
- */
-        
-        
             if indexPath != nil{
                 
                 let RealIndexPath = (indexPath?.row)!
-                print("Real Index Path:", RealIndexPath)
+                
                 
                 if CurrentTableIndex == 0 - logInNumber{
                     
@@ -1258,22 +1227,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else{
                 return nil
             }
-        /*if selectedSegment == 0 {
-            circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
-            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
-            return detailViewController
-        } else if selectedSegment == 1 {
-            newsIndex = indexPath.row
-            newsTotal = newsTitleArray.count
-            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "News Detail") as! newsDetailViewController
-            return detailViewController
-        }
- */
-        
- 
- 
-        
-        
         
         return nil
     }
@@ -1302,8 +1255,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.viewDidLoad()
-            }
         }
+        }
+        
         
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

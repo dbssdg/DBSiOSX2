@@ -288,25 +288,25 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1088,7 +1088,7 @@
         <!--Photo Album-->
         <scene sceneID="NlX-Ac-MLw">
             <objects>
-                <viewController title="Photo Album" id="3RO-Xm-ERx" customClass="albumViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Photo Album" title="Photo Album" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3RO-Xm-ERx" customClass="albumViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iYj-LN-1MS"/>
                         <viewControllerLayoutGuide type="bottom" id="yKQ-vC-T1z"/>
@@ -1329,7 +1329,7 @@
         <!--Acknowledgements-->
         <scene sceneID="Wfk-kS-9fR">
             <objects>
-                <viewController title="Acknowledgements" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Acknowledgemnts" title="Acknowledgements" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2m3-pH-F3Z" customClass="ContributionsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FJz-zR-KRt"/>
                         <viewControllerLayoutGuide type="bottom" id="5sk-uT-Kkh"/>
@@ -1442,7 +1442,7 @@
         <!--Teachers View Controller-->
         <scene sceneID="8Xk-PV-ond">
             <objects>
-                <viewController id="pTo-Q4-ldU" customClass="TeachersViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Teachers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pTo-Q4-ldU" customClass="TeachersViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fuW-hs-sQG"/>
                         <viewControllerLayoutGuide type="bottom" id="i2e-xW-nEN"/>
@@ -1514,7 +1514,7 @@
         <!--Classmates-->
         <scene sceneID="rSF-wq-thY">
             <objects>
-                <viewController title="Classmates" id="4db-rW-aWf" customClass="classmatesViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Classmates" title="Classmates" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4db-rW-aWf" customClass="classmatesViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZeO-C9-idY"/>
                         <viewControllerLayoutGuide type="bottom" id="lMj-hs-NN6"/>
@@ -1889,7 +1889,7 @@
         <!--Links View Controller-->
         <scene sceneID="YAP-Ha-HrW">
             <objects>
-                <viewController id="byZ-wL-izR" customClass="LinksViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Links View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="byZ-wL-izR" customClass="LinksViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GjN-dD-ELL"/>
                         <viewControllerLayoutGuide type="bottom" id="was-yX-iNb"/>
@@ -1936,7 +1936,7 @@
         <!--School Hymn View Controller-->
         <scene sceneID="ui9-yC-tZc">
             <objects>
-                <viewController id="T4N-a4-izW" customClass="SchoolHymnViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="School Hymn View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="T4N-a4-izW" customClass="SchoolHymnViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oaq-d5-4S7"/>
                         <viewControllerLayoutGuide type="bottom" id="MQb-Af-lvG"/>

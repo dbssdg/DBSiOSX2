@@ -33,8 +33,6 @@ class SchoolHymnViewController : UIViewController {
             }
         }
         playPause.setTitle("Pause", for: .normal)
-        audioPlayer.play()
-        audioPlayer.numberOfLoops = -1
         
         
         audioLyrics.frame = CGRect(x: 0, y: self.view.frame.height * 0.15, width: self.view.frame.width, height: self.view.frame.height * 0.6)
@@ -60,6 +58,12 @@ class SchoolHymnViewController : UIViewController {
     
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        audioPlayer.play()
+        audioPlayer.numberOfLoops = -1
+    }
     
     @IBAction func playPause(_ sender: Any) {
         if audioPlayer.isPlaying {
