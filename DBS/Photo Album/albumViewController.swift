@@ -62,6 +62,10 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        albumSelected = 0
+        photoToken = ""
+        albumAlbum = nil
+        
         if isInternetAvailable() {
         
             if let url = URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt") {
@@ -160,7 +164,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        imageArray.removeAll()
+//        imageArray.removeAll()
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
