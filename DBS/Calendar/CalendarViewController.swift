@@ -73,6 +73,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     var CurrentDayEventsArray = [(Date, events)] ()
+    var DayEvents = [(Date, events)] ()
     
     var SEBlue = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
     var SHOrange = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
@@ -350,8 +351,13 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        DayEvents = CurrentDayEventsArray
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarEventCell")! as UITableViewCell
+        
         cell.isUserInteractionEnabled = true
+        
+        
         if CurrentDayEventsArray.isEmpty{
             cell.textLabel?.text = "No events"
             cell.textLabel?.textAlignment = .center
@@ -411,7 +417,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         index = indexPath.row
-        PassingEvent = (CurrentDayEventsArray[index].1.Title, CurrentDayEventsArray[index].1.StartDate, CurrentDayEventsArray[index].1.EndDate, CurrentDayEventsArray[index].1.EventType)
+        PassingEvent = (DayEvents[index].1.Title, DayEvents[index].1.StartDate, DayEvents[index].1.EndDate, DayEvents[index].1.EventType)
         print("did select row")
         performSegue(withIdentifier: "Detail Event", sender: self)
         
@@ -431,7 +437,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         let index = indexPath.row
-        PassingEvent = (CurrentDayEventsArray[index].1.Title, CurrentDayEventsArray[index].1.StartDate, CurrentDayEventsArray[index].1.EndDate, CurrentDayEventsArray[index].1.EventType)
+        PassingEvent = (DayEvents[index].1.Title, DayEvents[index].1.StartDate, DayEvents[index].1.EndDate, DayEvents[index].1.EventType)
         let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
         return destViewController
         
