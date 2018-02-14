@@ -285,11 +285,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func didSelect(_ segmentIndex: Int) {
+        selectedSegment = segmentIndex
+        featuredTable.reloadData()
         if tableView(featuredTable, numberOfRowsInSection: 1) > 0 {
-            print(true)
-            selectedSegment = segmentIndex
             featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
-            featuredTable.reloadData()
         }
     }
     
