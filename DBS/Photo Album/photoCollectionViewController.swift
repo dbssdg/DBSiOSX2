@@ -25,6 +25,8 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        imageArray.removeAll()
+        photoSelected = 0
         print(imageArray.isEmpty)
 //        if !imageArray.isEmpty {
 //            imageArray.removeAll()
@@ -55,7 +57,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                     }
                     
                 } catch {
-                    
+                    print("ERROR")
                 }
             }.resume()
             

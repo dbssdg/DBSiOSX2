@@ -203,9 +203,7 @@
 				3E440D081FFB2E630067E8DE /* Calendar */,
 				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
-				6A85E8011F96CDDA001836CD /* aboutDBSViewController.swift */,
-				F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */,
-				6A3C861C1FC2C4AC002472E9 /* badgeViewController.swift */,
+				F83A08202034191F00F9E034 /* About DBS */,
 				6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */,
 				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
 				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
@@ -247,6 +245,16 @@
 				FC66BA87AEEFBAEC8A7014D2 /* Pods_DBS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F83A08202034191F00F9E034 /* About DBS */ = {
+			isa = PBXGroup;
+			children = (
+				6A85E8011F96CDDA001836CD /* aboutDBSViewController.swift */,
+				F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */,
+				6A3C861C1FC2C4AC002472E9 /* badgeViewController.swift */,
+			);
+			path = "About DBS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

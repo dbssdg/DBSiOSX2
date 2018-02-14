@@ -353,15 +353,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             let Name = String(UserInformation[1].capitalized)!
             var ClassAndNumber = String(UserInformation[3])!
             ClassAndNumber.removeFirst()
-            var Out = ""
-            for char in ClassAndNumber{
-                if char == "-"{
-                    Out += " "
-                }else{
-                    Out += "\(char)"
-                }
-            }
-            swap(&ClassAndNumber, &Out)
+            ClassAndNumber = ClassAndNumber.replacingOccurrences(of: "-", with: " ")
+//            var Out = ""
+//            for char in ClassAndNumber{
+//                if char == "-"{
+//                    Out += " "
+//                }else{
+//                    Out += "\(char)"
+//                }
+//            }
+//            swap(&ClassAndNumber, &Out)
             
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
         }

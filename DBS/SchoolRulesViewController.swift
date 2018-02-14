@@ -176,22 +176,20 @@ class SchoolRulesViewController: UIViewController {
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.attributedText = attributedText({"""
         Summer
-        Grey trousers
-        White shirt
-        White, grey, black or dark blue socks
-        (Ankles must be covered)
-        Black or dark brown leather shoes
-        Black or dark brown leather belt
+        \u{2022} Grey trousers
+        \u{2022} White shirt
+        \u{2022} White, grey, black or dark blue socks (Ankles must be covered)
+        \u{2022} Black or dark brown leather shoes
+        \u{2022} Black or dark brown leather belt
 
         Winter
-        Grey trousers
-        White shirt
-        School tie
-        Dark blue blazer with school badge on the pocket
-        White, grey, black or dark blue socks
-        (Ankles must be covered)
-        Black or dark brown leather shoes
-        Black or dark brown leather belt
+        \u{2022} Grey trousers
+        \u{2022} White shirt
+        \u{2022} School tie
+        \u{2022} Dark blue blazer with school badge on the pocket
+        \u{2022} White, grey, black or dark blue socks (Ankles must be covered)
+        \u{2022} Black or dark brown leather shoes
+        \u{2022} Black or dark brown leather belt
 
         Guidelines on Uniform
         Shirt: Plain white. Sports or coloured shirts are not allowed. Shirts are to be worn inside trousers.
@@ -221,11 +219,11 @@ class SchoolRulesViewController: UIViewController {
         Each student is eligible to apply for one individual locker.
 
         2. Use of Lockers:
-        Lockers are not installed with any locks. Users should bring along their own padlocks to safeguard their belongings deposited in the lockers. (Number lock is not recommended).
-        Students must take full responsibility for the items stored in the lockers.
-        Students are advised not to store any money or valuables in their lockers.
-        Storage of any items that are of illegal nature, or would cause or be likely to cause a health hazard, security risk, physical danger or a nuisance to the environment or other members of the school is prohibited.
-        In case of any loss or damage, students must report to their Form Teacher or any one of the Discipline Teachers immediately. Students are responsible to pay for the repair if the damages are caused by themselves.
+        \u{2022} Lockers are not installed with any locks. Users should bring along their own padlocks to safeguard their belongings deposited in the lockers. (Number lock is not recommended).
+        \u{2022} Students must take full responsibility for the items stored in the lockers.
+        \u{2022} Students are advised not to store any money or valuables in their lockers.
+        \u{2022} Storage of any items that are of illegal nature, or would cause or be likely to cause a health hazard, security risk, physical danger or a nuisance to the environment or other members of the school is prohibited.
+        \u{2022} In case of any loss or damage, students must report to their Form Teacher or any one of the Discipline Teachers immediately. Students are responsible to pay for the repair if the damages are caused by themselves.
 
         3. Unauthorized Use of Lockers:
         Unauthorized use of unoccupied or other people’s lockers is strictly forbidden. School Discipline Committee shall have the authority to open such lockers and dispose of all property found therein.
