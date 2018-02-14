@@ -34,18 +34,24 @@
 			<string>Timetable</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>hk.edu.dbs.cl.DBS.timetable</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>timetableB&amp;W</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Upcoming</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>hk.edu.dbs.cl.DBS.calendar</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>upcomingB&amp;W</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>School Rules</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>hk.edu.dbs.cl.DBS.schoolrules</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>schoolRulesB&amp;W</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
