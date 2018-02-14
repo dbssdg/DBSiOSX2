@@ -78,14 +78,8 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         URLSession.shared.dataTask(with: self.photoTokenURL) { (data, response, error) in
                             do {
                                 self.token = try JSONDecoder().decode(Token?.self, from: data!)
-                                let temp = String(describing: self.token!.access_token)
-                                for i in temp {
-                                    if i == "|" {
-                                        photoToken += "%7C"
-                                    } else {
-                                        photoToken += "\(i)"
-                                    }
-                                }
+                                photoToken = String(describing: self.token!.access_token)
+                                photoToken = photoToken.replacingOccurrences(of: "|", with: "%7C")
                                 
                                 DispatchQueue.main.async {
                                     URLSession.shared.dataTask(with: URL(string: "\(self.base!)?access_token=\(photoToken)")!) { (data, response, error) in
@@ -203,7 +197,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoCell") as! videoTableViewCell
-        getImage((self.videoCollection?.items[indexPath.row].snippet.thumbnails["high"]?.url)!, cell.thumbnail)
+        getImage((self.videoCollection?.items[indexPath.row].snippet.thumbnails["medium"]?.url)!, cell.thumbnail)
         cell.videoTitle?.text = self.videoCollection?.items[indexPath.row].snippet.title
         cell.videoTitle?.adjustsFontSizeToFitWidth = true
         cell.accessoryType = .disclosureIndicator
