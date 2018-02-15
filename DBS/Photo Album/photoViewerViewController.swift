@@ -30,6 +30,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         
         self.view.addSubview(collectionView)
         
+        collectionView.backgroundColor = UIColor.white
         collectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)

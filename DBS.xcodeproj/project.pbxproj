@@ -204,7 +204,6 @@
 				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				F83A08202034191F00F9E034 /* About DBS */,
-				6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */,
 				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
 				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
@@ -253,6 +252,7 @@
 				6A85E8011F96CDDA001836CD /* aboutDBSViewController.swift */,
 				F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */,
 				6A3C861C1FC2C4AC002472E9 /* badgeViewController.swift */,
+				6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */,
 			);
 			path = "About DBS";
 			sourceTree = "<group>";
@@ -582,6 +582,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hk.edu.dbs.cl.DBS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -597,6 +598,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hk.edu.dbs.cl.DBS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

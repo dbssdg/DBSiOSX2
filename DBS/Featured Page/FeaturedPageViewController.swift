@@ -294,7 +294,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func setUpSegmentedControl() {
         let titles = ["Circulars", "News"]
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
