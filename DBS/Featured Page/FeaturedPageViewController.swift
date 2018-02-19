@@ -54,14 +54,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         didSelect(0)
         viewDidLoad()
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        featuredTable.delegate = self
-        featuredTable.dataSource = self
-        featuredSearch.searchBar.delegate = self
-        featuredSearch.dimsBackgroundDuringPresentation = false
-        
+    
+    func ParseJSON(){
         let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
         let circularsURL = URL(string: circularsJSONURL)
         let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
@@ -97,7 +91,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 } catch {
                     print("ERROR")
                 }
-            }.resume()
+                }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
                     DispatchQueue.main.async {
@@ -127,12 +121,30 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 catch {
                     print("ERROR")
                 }
-            }.resume()
+                }.resume()
             
         } else {
-            present(networkAlert, animated: true)
+            //present(networkAlert, animated: true)
+            if newsDateArray.isEmpty{
+                featuredTable.reloadData()
+                removeSpinner(view: featuredTable)
+                setupSpinner(view: featuredTable)
+            }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        print("view did load")
+        
+        featuredTable.delegate = self
+        featuredTable.dataSource = self
+        featuredSearch.searchBar.delegate = self
+        featuredSearch.dimsBackgroundDuringPresentation = false
+        
+        
+        ParseJSON()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -140,11 +152,25 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             navigationItem.hidesSearchBarWhenScrolling = true
         }
         setUpSegmentedControl()
+        
+        //Refresher
+        let refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
+        refresher.tag = 10000
+        refresher.addTarget(self, action: #selector(reloadTableData(_:)), for: UIControlEvents.valueChanged)
+        featuredTable.addSubview(refresher)
+        
+        
         registerForPreviewing(with: self, sourceView: featuredTable)
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isInternetAvailable() && !circularTimeArray.isEmpty{
+            removeSpinner(view: featuredTable)
+        }
+        
         if selectedSegment == 0 {
             if isSearching {
                 return filteredCirculars.count
@@ -164,6 +190,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             print("\(pinnedCircular)th post")
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
+        if !circularTimeArray.isEmpty{
         if selectedSegment == 0 {
             if isSearching {
                 cell.textLabel?.text = filteredCirculars[indexPath.row]
@@ -190,6 +217,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 cell.textLabel?.text = newsTitleArray[indexPath.row]
                 cell.detailTextLabel?.text = newsDateArray[indexPath.row]
             }
+        }
+        }else{
+            setupSpinner(view: featuredTable)
         }
         cell.textLabel?.numberOfLines = 0
         cell.selectionStyle = .none
@@ -302,6 +332,45 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         segmentedControl.move(to: selectedSegment)
         view.addSubview(segmentedControl)
         
+    }
+    
+    func setupSpinner(view: UITableView){
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        spinner.tag = 1000
+        featuredTable.addSubview(spinner)
+        
+        
+        let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
+        label.text = "Please check your Internet connectivity"
+        label.textColor = spinner.color
+        label.font = UIFont(name: "Helvetica", size: 14)
+        label.textAlignment = .center
+        label.tag = 2000
+        featuredTable.addSubview(label)
+        
+        
+        featuredTable.separatorStyle = .none
+        
+    }
+    
+    func removeSpinner(view: UITableView){
+        for subview in featuredTable.subviews{
+            if subview.tag == 1000 || subview.tag == 2000{
+                subview.removeFromSuperview()
+            }
+        }
+        featuredTable.separatorStyle = .singleLine
+    }
+    
+    func reloadTableData(_ refreshControl: UIRefreshControl){
+        didSelect(0)
+        ParseJSON()
+        featuredTable.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func isInternetAvailable() -> Bool {
