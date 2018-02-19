@@ -30,6 +30,16 @@ class SchoolRulesViewController: UIViewController {
         schoolRulesTextView.isUserInteractionEnabled = true
         schoolRulesTextView.frame = CGRect(x: 10, y: self.view.frame.width * 0.4, width: self.view.frame.width-20, height: self.view.frame.height * 0.8)
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        
+        self.title = nil
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 15.0)
+        label.text = ""
+        self.navigationItem.titleView = label
+        
         // Do any additional setup after loading the view.
     }
     
@@ -41,7 +51,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func forbiddenButton(_ sender: Any) {
         hideButtons()
-        self.title = "Forbidden"
+        (self.navigationItem.titleView as! UILabel).text = "Forbidden"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = { """
         a. Fighting and/or Bullying.
@@ -75,7 +85,7 @@ class SchoolRulesViewController: UIViewController {
     }
     @IBAction func outofboundsButton(_ sender: Any) {
         hideButtons()
-        self.title = "Out of Bounds"
+        (self.navigationItem.titleView as! UILabel).text = "Out of Bounds"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = { """
         a. The Teacher’s Common Room.
@@ -103,7 +113,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func thehallButton(_ sender: Any) {
         hideButtons()
-        self.title = "The Hall"
+        (self.navigationItem.titleView as! UILabel).text = "The Hall"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = { """
         An air of dignity should be maintained in the Hall at all times. No meetings / activities should be held without permission. There must also be no eating, drinking, or misbehaving inside the Hall.
@@ -113,7 +123,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func physicaleducationButton(_ sender: Any) {
         hideButtons()
-        self.title = "Physical Education"
+        (self.navigationItem.titleView as! UILabel).text = "Physical Education"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = { """
         a. Boys can only be excused from P.E. if they bring a letter from parents, guardians or doctors requesting leave off. This letter must be initialed by the Headmaster and shown to the P.E. master.
@@ -125,7 +135,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func latenessButton(_ sender: Any) {
         hideButtons()
-        self.title = "Lateness"
+        (self.navigationItem.titleView as! UILabel).text = "Lateness"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = {"""
         Form teacher / Subject teacher will take a.m. roll-call at 8:05 a.m. and p.m. roll-call at 1:55 p.m.
@@ -138,7 +148,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func absenceearlyleaveButton(_ sender: Any) {
         hideButtons()
-        self.title = "Absence / Early leave from School"
+        (self.navigationItem.titleView as! UILabel).text = "Absence / Early leave from School"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = {"""
         a. Boys who want to obtain an early-leave from the School due to sickness must report to the Nursing Assistant. A sick-leave acknowledgement will be issued. With such acknowledgement, the boy can obtain the Early Leave slip from the General Office. Nursing Assistant may decline the request for early-leave of boys.
@@ -153,7 +163,7 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func prefectsButton(_ sender: Any) {
         hideButtons()
-        self.title = "Prefects"
+        (self.navigationItem.titleView as! UILabel).text = "Prefects"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = {"""
         Prefects are leaders of students. They are acting under the Headmaster’s instructions and with his authority to keep the order in the School. Prefects have the authority to punish offenders by an initial imposition of not more than 100 lines. They are required to report more serious offences to the Headmaster. The Headmaster will not excuse any boy who disregards a proper order from a prefect or speaks insolently to him or in any way obstructs him in carrying out his duties. Appeals against punishment given by a prefect can be made through the discipline masters if valid reasons exist. However, no complaint will be entertained if the boy concerned has not treated the prefect with proper respect.
@@ -162,17 +172,17 @@ class SchoolRulesViewController: UIViewController {
     
     @IBAction func usingmobilephoneButton(_ sender: Any) {
         hideButtons()
-        self.title = ""
+        (self.navigationItem.titleView as! UILabel).text = "Rules of using Mobile Phone in School Campus"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = {"""
-        - Students should not display or use mobile phones during school hours (8:00a.m-3:45p.m).
-        - Students should TURN OFF their mobile phones during school hours to avoid disrupting lesson.
-        - Students should take proper care of their mobile phones. The school shall accept no responsibility for any loss or damage of a mobile phone.
+        \u{2022} Students should not display or use mobile phones during school hours (8:00a.m-3:45p.m).
+        \u{2022} Students should TURN OFF their mobile phones during school hours to avoid disrupting lesson.
+        \u{2022} Students should take proper care of their mobile phones. The school shall accept no responsibility for any loss or damage of a mobile phone.
         """}()
     }
     @IBAction func uniformButton(_ sender: Any) {
         hideButtons()
-        self.title = "Uniform"
+        (self.navigationItem.titleView as! UILabel).text = "Uniform"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.attributedText = attributedText({"""
         Summer
@@ -212,7 +222,7 @@ class SchoolRulesViewController: UIViewController {
     }
     @IBAction func lockerrulesButton(_ sender: Any) {
         hideButtons()
-        self.title = "Rules for Using Lockers"
+        (self.navigationItem.titleView as! UILabel).text = "Rules for Using Lockers"
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.attributedText = attributedText({"""
         1. Eligible Users:
