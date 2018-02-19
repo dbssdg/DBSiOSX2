@@ -66,13 +66,7 @@
                             <constraint firstItem="QCe-H5-Q3t" firstAttribute="leading" secondItem="kXn-RE-az7" secondAttribute="leading" id="iPl-2t-ufJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Featured" id="0Ni-EG-LFc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="LX2-aA-DAc">
-                            <connections>
-                                <action selector="reloadPage:" destination="xsW-na-rIk" id="pVf-Z3-uDD"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Featured" id="0Ni-EG-LFc"/>
                     <connections>
                         <outlet property="featuredTable" destination="QCe-H5-Q3t" id="om7-1O-3Md"/>
                         <segue destination="ig2-g4-ehx" kind="show" identifier="Circular Segue" id="ZX2-rL-u3a"/>
@@ -3095,7 +3089,7 @@ Title</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SLH-E1-IId"/>
-        <segue reference="ZvZ-Pz-6g0"/>
+        <segue reference="ZX2-rL-u3a"/>
         <segue reference="225-9V-9cR"/>
         <segue reference="kVF-5A-evd"/>
         <segue reference="2fI-rG-aNj"/>
