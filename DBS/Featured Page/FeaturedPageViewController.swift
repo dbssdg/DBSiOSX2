@@ -367,7 +367,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
-        didSelect(0)
         ParseJSON()
         featuredTable.reloadData()
         refreshControl.endRefreshing()
