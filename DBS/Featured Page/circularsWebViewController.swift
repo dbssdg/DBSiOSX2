@@ -97,12 +97,13 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
     
     func setUpSegmentedControl() {
         var titles = [String]()
+
         if arr.count != 0 {
             for i in 1...arr.count {
                 titles += ["#\(i)"]
-            }
         }
-        let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
+
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
