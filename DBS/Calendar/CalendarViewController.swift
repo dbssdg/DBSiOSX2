@@ -73,7 +73,11 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     var CurrentDayEventsArray = [(Date, events)] ()
+
+    var CurrentDay = Date()
+
     var DayEvents = [(Date, events)] ()
+
     
     var SEBlue = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
     var SHOrange = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
@@ -514,6 +518,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
                 CalendarCell.SchoolHolidayBar.isHidden = true
                 CalendarCell.EventCircle.backgroundColor = SHOrange
                 CalendarCell.EventCircle.isHidden = false
+                break
             }else if i.1.EventType == .PH{
                 CalendarCell.datelabel.textColor = UIColor.red
             }else if i.1.EventType == .SE{
@@ -537,7 +542,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        
+        CurrentDay = date
         //calendar.deselectAllDates()
         //calendar.selectDates([date])
         handleCellTextColor(view: cell, cellState: cellState)

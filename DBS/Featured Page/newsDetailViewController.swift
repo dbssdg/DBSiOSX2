@@ -58,33 +58,43 @@ class newsDetailViewController: UIViewController {
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToFeaturedPage))
         
         if isInternetAvailable() {
+            
+            let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            spinner.activityIndicatorViewStyle = .gray
+            spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+            spinner.startAnimating()
+            spinner.hidesWhenStopped = true
+            self.view.addSubview(spinner)
+            
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
                     self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
                     DispatchQueue.main.async {
-                        if self.news == nil {
-                            self.present(networkAlert, animated: true)
-                        } else {
+                        spinner.stopAnimating()
+                        
+//                        if self.news == nil {
+//                            self.present(networkAlert, animated: true)
+//                        } else {
                             self.newsTitle.text? = self.news!.title[newsIndex]
-                            
+                        
                             var newsDate = String(describing: Date(timeIntervalSince1970: Double(self.news!.date[newsIndex])!))
                             newsDate.removeLast(15)
                             let dateArr = newsDate.split(separator: "-")
                             let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
                             self.newsDate.text = "\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"
-                            
+                        
                             self.newsImage.image = UIImage(named: "newsImage")
                             if self.news!.image[newsIndex] != nil {
                                 self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
                             } else {
                                 self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex])", self.newsImage)
                             }
-                            
+                        
                             let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
                             let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                             self.newsContent.attributedText = attributedString
                             self.newsContent.font = UIFont(name: "Helvetica", size: 16)
-                        }
+//                        }
                     }
                     
                 }

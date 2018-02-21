@@ -190,35 +190,35 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             print("\(pinnedCircular)th post")
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
-        if !circularTimeArray.isEmpty{
-        if selectedSegment == 0 {
-            if isSearching {
-                cell.textLabel?.text = filteredCirculars[indexPath.row]
-                cell.detailTextLabel?.text = ""
-            } else {
-                if circulars.count <= circularTitleArray.count {
-                    let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy"
-                    if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
-                        cell.detailTextLabel?.text = ""
-                    } else {
-                        cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
+        if !circularTimeArray.isEmpty {
+            if selectedSegment == 0 {
+                if isSearching {
+                    cell.textLabel?.text = filteredCirculars[indexPath.row]
+                    cell.detailTextLabel?.text = ""
+                } else {
+                    if circulars.count <= circularTitleArray.count {
+                        let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy"
+                        if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
+                            cell.detailTextLabel?.text = ""
+                        } else {
+                            cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
+                        }
+                        cell.textLabel?.text = circularTitleArray[indexPath.row]
                     }
-                    cell.textLabel?.text = circularTitleArray[indexPath.row]
+                    
                 }
-                
+            } else if selectedSegment == 1 {
+                if isSearching {
+                    cell.textLabel?.text = filteredNews[indexPath.row]
+                    cell.detailTextLabel?.text = ""
+                } else {
+                    cell.textLabel?.text = newsTitleArray[indexPath.row]
+                    cell.detailTextLabel?.text = newsDateArray[indexPath.row]
+                }
             }
-        } else if selectedSegment == 1 {
-            if isSearching {
-                cell.textLabel?.text = filteredNews[indexPath.row]
-                cell.detailTextLabel?.text = ""
-            } else {
-                cell.textLabel?.text = newsTitleArray[indexPath.row]
-                cell.detailTextLabel?.text = newsDateArray[indexPath.row]
-            }
-        }
-        }else{
+        } else {
             setupSpinner(view: featuredTable)
         }
         cell.textLabel?.numberOfLines = 0
@@ -334,7 +334,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    func setupSpinner(view: UITableView){
+    func setupSpinner(view: UITableView) {
+        
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
         spinner.activityIndicatorViewStyle = .gray
         spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
@@ -359,7 +360,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func removeSpinner(view: UITableView){
         for subview in featuredTable.subviews{
-            if subview.tag == 1000 || subview.tag == 2000{
+            if subview.tag == 1000 || subview.tag == 2000 {
                 subview.removeFromSuperview()
             }
         }
@@ -368,6 +369,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
         ParseJSON()
+//        didSelect(0)
         featuredTable.reloadData()
         refreshControl.endRefreshing()
     }

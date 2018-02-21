@@ -92,6 +92,10 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
         
         self.registerForPreviewing(with: self, sourceView: tableView)
         
+        if !EventsFromNow.isEmpty{
+            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
+        }
+        
     }
 
     
