@@ -62,6 +62,10 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        albumSelected = 0
+        photoToken = ""
+        albumAlbum = nil
+        
         if isInternetAvailable() {
         
             if let url = URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt") {
@@ -74,14 +78,8 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         URLSession.shared.dataTask(with: self.photoTokenURL) { (data, response, error) in
                             do {
                                 self.token = try JSONDecoder().decode(Token?.self, from: data!)
-                                let temp = String(describing: self.token!.access_token)
-                                for i in temp {
-                                    if i == "|" {
-                                        photoToken += "%7C"
-                                    } else {
-                                        photoToken += "\(i)"
-                                    }
-                                }
+                                photoToken = String(describing: self.token!.access_token)
+                                photoToken = photoToken.replacingOccurrences(of: "|", with: "%7C")
                                 
                                 DispatchQueue.main.async {
                                     URLSession.shared.dataTask(with: URL(string: "\(self.base!)?access_token=\(photoToken)")!) { (data, response, error) in
@@ -160,7 +158,10 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        imageArray.removeAll()
+//        imageArray.removeAll()
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -196,7 +197,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoCell") as! videoTableViewCell
-        getImage((self.videoCollection?.items[indexPath.row].snippet.thumbnails["high"]?.url)!, cell.thumbnail)
+        getImage((self.videoCollection?.items[indexPath.row].snippet.thumbnails["medium"]?.url)!, cell.thumbnail)
         cell.videoTitle?.text = self.videoCollection?.items[indexPath.row].snippet.title
         cell.videoTitle?.adjustsFontSizeToFitWidth = true
         cell.accessoryType = .disclosureIndicator
@@ -249,7 +250,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setUpSegmentedControl() {
         let titles = ["Photos", "Videos"]
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate

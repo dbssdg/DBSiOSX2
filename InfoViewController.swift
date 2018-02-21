@@ -11,7 +11,7 @@ import UIKit
 var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgements"]
 var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
 
-class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
     
     @IBOutlet var scrollView: UIScrollView!
@@ -109,24 +109,28 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuTable.frame.size.width = selfWidth
         menuTable.sizeToFit()
         menuTable.layer.zPosition = 100
-        
+        self.registerForPreviewing(with: self, sourceView: menuTable)
         
         calendar.layer.cornerRadius = Radius
         calendar.clipsToBounds = true
         calendar.layer.frame = CGRect(x: ButtonGap  , y: ButtonGap, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: calendar)
         
         about.layer.cornerRadius = Radius
         about.clipsToBounds = true
         about.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize  , y: ButtonGap, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: about)
         
         map.layer.cornerRadius = Radius
         map.clipsToBounds = true
         map.layer.frame = CGRect(x: ButtonGap , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: map)
         
         
         timetable.layer.cornerRadius = Radius
         timetable.clipsToBounds = true
         timetable.layer.frame = CGRect(x: selfWidth - ButtonGap - ButtonSize , y: selfWidth - ButtonGap - ButtonSize, width: ButtonSize, height: ButtonSize)
+        self.registerForPreviewing(with: self, sourceView: timetable)
     
         scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: menuTable.frame.origin.y + menuTable.frame.size.height)
@@ -183,6 +187,65 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             performSegue(withIdentifier: "\(functions[indexPath.row]) Segue", sender: self)
         }
+    }
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    
+        if previewingContext.sourceView == menuTable{
+            guard let indexPath = menuTable.indexPathForRow(at: location) else {
+                return nil
+            }
+            
+            let Row = indexPath.row
+            
+            switch functions[Row] {
+            case "Links, Contact & Steps":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! LinksViewController
+                return destViewController
+            case "School Hymn":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolHymnViewController
+                return destViewController
+            case "School Rules":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolRulesViewController
+                return destViewController
+            case "Teachers":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! TeachersViewController
+                return destViewController
+            case "Classmates":
+                if loginID == ""{
+                    return nil
+                }else{
+                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! classmatesViewController
+                    return destViewController
+                }
+            case "Photo Album":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! albumViewController
+                return destViewController
+            case "Acknowledgements":
+                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! ContributionsViewController
+                return destViewController
+                
+            default:
+                return nil
+            }
+        }else if previewingContext.sourceView == calendar{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
+            return destViewController
+        }else if previewingContext.sourceView == about{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About DBS") as! aboutDBSViewController
+            return destViewController
+        }else if previewingContext.sourceView == map{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! MapsViewController
+            return destViewController
+        }else if previewingContext.sourceView == timetable{
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
+            return destViewController
+        }
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
     
     

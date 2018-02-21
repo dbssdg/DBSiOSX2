@@ -14,11 +14,12 @@ class ContributionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         label.backgroundColor = .clear
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14.0)
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         label.text = "Acknowledgements"
         self.navigationItem.titleView = label
         
@@ -30,15 +31,18 @@ SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
 Ng Ching Wang Kelvin
 
 APP DEVELOPERS
-Louie Chi To
 Ieung Ho Kwan
+Louie Chi To
 Lau Cheuk Hang
 Chan Yuen Ho
 
+ICONS
+https://www.flaticon.com
+https://icons8.com
 """ as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24.0)])
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16.5)])
         let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0)]
-        let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS"]
+        let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS", "ICONS"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }

@@ -9,16 +9,19 @@
 import UIKit
 import SystemConfiguration
 
-class AllEventsTableViewController: UITableViewController {
+class AllEventsTableViewController: UITableViewController, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
     
     var NextEvent = events(Title: "", StartDate: Date(), EndDate: Date(), EventType: .SH )
     var NextEventindexPath = IndexPath(row: 0, section: 0)
     
-    func WillAddCalendar(){
+    var filteredEvents = [events]()
+    let EventsSearch = UISearchController(searchResultsController: nil)
+    
+    func WillAddCalendar(acrion: UIAlertAction){
         let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
-        let url = URL(string: StringURL)
+        let url = URL(string: StringURL)!
         if isInternetAvailable(){
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }else{
             let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
             networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -26,8 +29,31 @@ class AllEventsTableViewController: UITableViewController {
         }
     }
     
+    func ShareCalendar(action: UIAlertAction){
+        let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
+        let url = URL(string: StringURL)!
+        let ActivityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(ActivityController, animated: true, completion: nil)
+    }
+    func ActionSheetFunc(){
+        //Actions
+        let AddCalendarAction = UIAlertAction(title: "Add Calendar to Phone", style: .default, handler: WillAddCalendar)
+        let ShareAction = UIAlertAction(title: "Share Calendar", style: .default, handler: ShareCalendar)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        
+        //Action Sheet
+        let ActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ActionSheet.addAction(AddCalendarAction)
+        ActionSheet.addAction(ShareAction)
+        ActionSheet.addAction(CancelAction)
+        present(ActionSheet, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        EventsSearch.searchBar.delegate = self
         
         for event in EventsArray{
             if event.EndDate >= Date(){
@@ -56,10 +82,15 @@ class AllEventsTableViewController: UITableViewController {
         
         
         
+        
+        
         //let AddCalendar = UIBarButtonItem(
         //let AddCalendar = UIBarButtonItem(image: UIImage(named: "imagename"), style: .plain, target: self, action: Selector("action")) // action:#selector(Class.MethodName) for swift 3
-        let AddCalendar = UIBarButtonItem(title: "Add Calendar", style: .plain, target: self, action: #selector(WillAddCalendar))
-        self.navigationItem.rightBarButtonItem  = AddCalendar
+        //let AddCalendar = UIBarButtonItem(title: "Add Calendar", style: .plain, target: self, action: #selector(ActionSheetFunc))
+        let AddCalendar = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ActionSheetFunc))
+        self.navigationItem.rightBarButtonItem = AddCalendar
+        
+        self.registerForPreviewing(with: self, sourceView: tableView)
         
         if !EventsFromNow.isEmpty{
             tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
@@ -67,6 +98,8 @@ class AllEventsTableViewController: UITableViewController {
         
     }
 
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         
@@ -153,7 +186,22 @@ class AllEventsTableViewController: UITableViewController {
         performSegue(withIdentifier: "All Events to Detail Event", sender: self)
     }
     
-
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location) else {
+            return nil
+        }
+        
+        let SelectedEvent = EventsArray[indexPath.row]
+        PassingEvent = (SelectedEvent.Title, SelectedEvent.StartDate, SelectedEvent.EndDate, SelectedEvent.EventType)
+        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController
+        return destViewController
+        
+        
+        return nil
+    }
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
    
 
 }

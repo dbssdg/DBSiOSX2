@@ -30,6 +30,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         
         self.view.addSubview(collectionView)
         
+        collectionView.backgroundColor = UIColor.white
         collectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
@@ -46,7 +47,19 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewerCell", for: indexPath) as! ImagePreviewFullViewCell
         cell.imgView.image = imageArray[indexPath.row]
+        
+        let downGest = UISwipeGestureRecognizer(target: self, action: #selector(back(recognizer:)))
+        downGest.direction = .down
+        cell.addGestureRecognizer(downGest)
+        let shrinkGest = UIPinchGestureRecognizer(target: self, action: #selector(back(recognizer:)))
+        shrinkGest.scale = 0.8
+        cell.addGestureRecognizer(shrinkGest)
+        
         return cell
+    }
+    
+    func back(recognizer: UIGestureRecognizer) {
+        navigationController?.popViewController(animated: false)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -92,7 +105,9 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         self.present(activityViewController, animated: true, completion: nil)
     }
     
+    
     @IBAction func down(_ sender: Any) {
+//        print("@IBAction func down")
 //        if scrollView.zoomScale == 1 {
 //            self.navigationController?.popViewController(animated: true)
 //        }

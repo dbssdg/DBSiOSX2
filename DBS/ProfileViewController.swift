@@ -316,10 +316,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func teacherOrStudent() -> String {
-        if isInternetAvailable(){
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
             return "s"
-        }
         }
         return ""
     }

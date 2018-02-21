@@ -38,7 +38,7 @@ class DetailedEventViewController: UIViewController {
         default:
             EventTitle.textColor = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
         }
-        EventTitle.numberOfLines = 3
+        EventTitle.numberOfLines = 2
         EventTitle.adjustsFontSizeToFitWidth = true
         EventType.numberOfLines = 0
         
@@ -69,19 +69,22 @@ class DetailedEventViewController: UIViewController {
         
         
         //Days to Go
-        var WeeksFromNow = Calendar.current.dateComponents([.weekOfYear], from: Date(), to: Event.StartDate)
-        var DaysFromNow = Calendar.current.dateComponents([.day], from: Date(), to: Event.StartDate)
+        var WeeksFromNow = Calendar.current.dateComponents([.weekOfYear], from: Date(), to: Event.StartDate).weekOfYear! + 1
+        var DaysFromNow = Calendar.current.dateComponents([.day], from: Date(), to: Event.StartDate).day! + 1
+        print(DaysFromNow, "Days from now")
+        var calendar = Calendar(identifier: .gregorian)
+        //let Today = calendar.da
         
-        if Event.EndDate < Date(){
+        if Event.EndDate < Date() && !calendar.isDateInToday(Event.EndDate){
             DaysToGo.text = "\(Event.Title) is over"
-        }else if Event.StartDate <= Date() && Event.EndDate >= Date(){
+        }else if (Event.StartDate <= Date() && Event.EndDate >= Date()) || DaysFromNow == 0{
             DaysToGo.text = "It is now \(Event.Title)"
-        }else if DaysFromNow.day! == 1{
+        }else if DaysFromNow == 1{
             DaysToGo.text = "1 more day before \(Event.Title)"
-        }else if DaysFromNow.day! < 14 {
-            DaysToGo.text = "\(Event.Title) is in \(DaysFromNow.day!) days"
+        }else if DaysFromNow < 14 {
+            DaysToGo.text = "\(Event.Title) is in \(DaysFromNow) days"
         }else{
-            DaysToGo.text = "\(Event.Title) is in \(WeeksFromNow.weekOfYear!) weeks"
+            DaysToGo.text = "\(Event.Title) is in \(WeeksFromNow) weeks"
         }
         DaysToGo.numberOfLines = 0
         
@@ -96,6 +99,8 @@ class DetailedEventViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    
     
 
 }

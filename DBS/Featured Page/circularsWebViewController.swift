@@ -26,22 +26,24 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
             arr = string.components(separatedBy: "http")
             arr.removeFirst(2)
             for i in 0..<arr.count {
-                var temp = "http\(arr[i])"
-                temp = temp.decodeUrl()
-                print(temp)
-                arr[i] = ""
-//                arr[i] = temp.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-                for j in temp {
-                    if j == " " || j == "+" {
-                        arr[i] += "%20"
-                    } else if j == "‐" {
-                        arr[i] += "%E2%80%90"
-                    } else if j == "#" {
-                        arr[i] += "%23"
-                    } else {
-                        arr[i] += "\(j)"
-                    }
-                }
+//                var temp = "http\(arr[i])"
+//                temp = temp.decodeUrl()
+                arr[i] = "http\(arr[i])".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+                arr[i] = arr[i].replacingOccurrences(of: "%25", with: "%")
+                arr[i] = arr[i].replacingOccurrences(of: "%3A", with: ":")
+                arr[i] = arr[i].replacingOccurrences(of: "%2F", with: "/")
+                arr[i] = arr[i].replacingOccurrences(of: "+", with: "%20")
+//                for j in temp {
+//                    if j == " " || j == "+" {
+//                        arr[i] += "%20"
+//                    } else if j == "‐" {
+//                        arr[i] += "%E2%80%90"
+//                    } else if j == "#" {
+//                        arr[i] += "%23"
+//                    } else {
+//                        arr[i] += "\(j)"
+//                    }
+//                }
             }
             print(arr)
         } else {
@@ -95,10 +97,14 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
     
     func setUpSegmentedControl() {
         var titles = [String]()
-        for i in 1...arr.count {
-            titles += ["#\(i)"]
+
+        if arr.count != 0 {
+            for i in 1...arr.count {
+                titles += ["#\(i)"]
+            }
         }
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.93, width: self.view.frame.width * 0.9, height: 40)
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
+
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
