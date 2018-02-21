@@ -61,6 +61,10 @@ class AllEventsTableViewController: UITableViewController {
         let AddCalendar = UIBarButtonItem(title: "Add Calendar", style: .plain, target: self, action: #selector(WillAddCalendar))
         self.navigationItem.rightBarButtonItem  = AddCalendar
         
+        if !EventsFromNow.isEmpty{
+            tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
+        }
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
