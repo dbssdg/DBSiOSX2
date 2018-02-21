@@ -218,7 +218,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 cell.detailTextLabel?.text = newsDateArray[indexPath.row]
             }
         }
-        }else{
+        } else {
             setupSpinner(view: featuredTable)
         }
         cell.textLabel?.numberOfLines = 0
@@ -359,7 +359,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func removeSpinner(view: UITableView){
         for subview in featuredTable.subviews{
-            if subview.tag == 1000 || subview.tag == 2000{
+            if subview.tag == 1000 || subview.tag == 2000 {
                 subview.removeFromSuperview()
             }
         }
@@ -367,8 +367,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func reloadTableData(_ refreshControl: UIRefreshControl){
-        didSelect(0)
         ParseJSON()
+//        didSelect(0)
         featuredTable.reloadData()
         refreshControl.endRefreshing()
     }
