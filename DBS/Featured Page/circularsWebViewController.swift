@@ -56,7 +56,7 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
         setUpSegmentedControl()
         didSelect(0)
         
-        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.shareCircular))
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCircular))
         self.navigationItem.rightBarButtonItem = shareButton
         
         if #available(iOS 11.0, *) {
