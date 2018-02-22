@@ -31,12 +31,52 @@ class newsDetailViewController: UIViewController {
     
     @IBAction func previousNews(_ sender: Any) {
         newsIndex -= 1
-        viewDidLoad()
+        updateData()
         
     }
     @IBAction func nextNews(_ sender: Any) {
         newsIndex += 1
-        viewDidLoad()
+        updateData()
+    }
+    
+    func updateData() {
+        
+        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController?.navigationBar.frame.height)! - 18)
+        scrollView.setContentOffset(desiredOffset, animated: false)
+        self.title = "\(newsIndex+1) of \(newsTotal)"
+        self.newsTitle.text? = self.news!.title[newsIndex]
+        
+        var newsDate = String(describing: Date(timeIntervalSince1970: Double(self.news!.date[newsIndex])!))
+        newsDate.removeLast(15)
+        let dateArr = newsDate.split(separator: "-")
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        self.newsDate.text = "\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"
+        
+        self.newsImage.image = UIImage(named: "newsImage")
+        if self.news!.image[newsIndex] != nil {
+            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+        } else {
+            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex])", self.newsImage)
+        }
+        
+        let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
+        let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+        self.newsContent.attributedText = attributedString
+        self.newsContent.font = UIFont(name: "Helvetica", size: 16)
+        
+        if newsIndex+1 <= 1 {
+            previousNews.tintColor = UIColor.lightGray
+            previousNews.isEnabled = false
+        } else if newsIndex+1 >= newsTotal {
+            nextNews.tintColor = UIColor.lightGray
+            nextNews.isEnabled = false
+        } else {
+            previousNews.tintColor = UIColor.orange
+            previousNews.isEnabled = true
+            nextNews.tintColor = UIColor.black
+            nextNews.isEnabled = true
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -68,32 +108,16 @@ class newsDetailViewController: UIViewController {
             
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
+                    let startLoadTime = Date()
                     self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
+                    
                     DispatchQueue.main.async {
                         spinner.stopAnimating()
-                        
+                        print(Date(), startLoadTime)
 //                        if self.news == nil {
 //                            self.present(networkAlert, animated: true)
 //                        } else {
-                            self.newsTitle.text? = self.news!.title[newsIndex]
-                        
-                            var newsDate = String(describing: Date(timeIntervalSince1970: Double(self.news!.date[newsIndex])!))
-                            newsDate.removeLast(15)
-                            let dateArr = newsDate.split(separator: "-")
-                            let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-                            self.newsDate.text = "\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"
-                        
-                            self.newsImage.image = UIImage(named: "newsImage")
-                            if self.news!.image[newsIndex] != nil {
-                                self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-                            } else {
-                                self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex])", self.newsImage)
-                            }
-                        
-                            let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
-                            let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
-                            self.newsContent.attributedText = attributedString
-                            self.newsContent.font = UIFont(name: "Helvetica", size: 16)
+                            self.updateData()
 //                        }
                     }
                     
@@ -120,8 +144,6 @@ class newsDetailViewController: UIViewController {
             nextNews.tintColor = UIColor.black
             nextNews.isEnabled = true
         }
-        
-//        scrollView.contentSize = CGSize(width: self.view.frame.width, height: newsTitle.frame.size.height + newsDate.frame.size.height + newsImage.frame.size.height + newsContent.frame.size.height + 64)
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false

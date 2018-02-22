@@ -344,7 +344,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         spinner.tag = 1000
         featuredTable.addSubview(spinner)
         
-        
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
         label.text = "Please check your Internet connectivity"
         label.textColor = spinner.color
@@ -367,7 +366,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         featuredTable.separatorStyle = .singleLine
     }
     
-    func reloadTableData(_ refreshControl: UIRefreshControl){
+    func reloadTableData(_ refreshControl: UIRefreshControl) {
         ParseJSON()
 //        didSelect(0)
         featuredTable.reloadData()

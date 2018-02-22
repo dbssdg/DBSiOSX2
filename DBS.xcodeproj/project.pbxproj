@@ -128,6 +128,7 @@
 				3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */,
 				3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */,
 				3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */,
+				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -198,13 +199,12 @@
 				6AA819451F71FE8300FCA420 /* AppDelegate.swift */,
 				3E8DFAE81FF3B35E00E5F412 /* Home Page */,
 				6A1515C720106B2300BBF15C /* Featured Page */,
-				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
 				3E440D081FFB2E630067E8DE /* Calendar */,
-				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
-				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				F83A08202034191F00F9E034 /* About DBS */,
+				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
+				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
 				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
