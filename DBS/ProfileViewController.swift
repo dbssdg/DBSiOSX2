@@ -59,6 +59,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let url = URL(string: jsonURL)
             
             if isInternetAvailable() {
+                
+                if self.teacherOrStudent() == "s" {
+                    self.studentImage.image = UIImage(named: "StudentBig")
+                } else if self.teacherOrStudent() == "" {
+                    self.studentImage.image = UIImage(named: "TeacherBig")
+                }
                 URLSession.shared.dataTask(with: url!) { (data, response, error) in
                     do {
                         
@@ -86,11 +92,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.profileData += [self.houses[Int("\(loginID.last!)")!-1].uppercased()]
                         }
                         
-                        if self.teacherOrStudent() == "s" {
-                            self.studentImage.image = UIImage(named: "StudentBig")
-                        } else if self.teacherOrStudent() == "" {
-                            self.studentImage.image = UIImage(named: "TeacherBig")
-                        }
                         DispatchQueue.main.async {
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
