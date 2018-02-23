@@ -136,7 +136,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 textField.placeholder = "Password"
                 textField.text = loginTextFieldSave[1]
                 textField.isSecureTextEntry = true
-                textField.returnKeyType = .done
+                textField.returnKeyType = .default
             }
             
             func TAndC(action: UIAlertAction) {
