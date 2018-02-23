@@ -14,7 +14,7 @@ import MessageUI
 var loginID = ""
 var loginTextFieldSave = ["", ""]
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate ,MFMailComposeViewControllerDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var studentImage: UIImageView!
     @IBOutlet weak var userInfo: UITableView!
@@ -126,14 +126,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         } else {
             let loginAlert = UIAlertController(title: "Login", message: "Your eClass Account", preferredStyle: .alert)
             loginAlert.addTextField { (textField) in
-                textField.placeholder = "e-Class Login (starts with dbs)"
+                textField.placeholder = "eClass Login (starts with dbs)"
                 textField.text = loginTextFieldSave[0]
                 textField.autocapitalizationType = .none
+                textField.returnKeyType = .next
             }
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "Password"
                 textField.text = loginTextFieldSave[1]
                 textField.isSecureTextEntry = true
+                textField.returnKeyType = .default
             }
             
             func TAndC(action: UIAlertAction) {
