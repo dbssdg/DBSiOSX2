@@ -57,7 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3E5C76BE20411261008EF546 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TermsViewController.swift; path = /Users/anson/Desktop/DBSiOSX2/DBS/TermsViewController.swift; sourceTree = "<absolute>"; };
+		3E5C76BE20411261008EF546 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TermsViewController.swift; path = /Users/anson/Desktop/DBSiOSX2/DBS/Profile/TermsViewController.swift; sourceTree = "<absolute>"; };
 		3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventsTableViewController.swift; sourceTree = "<group>"; };
 		3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		6AA8194F1F71FE8300FCA420 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6AA819511F71FE8300FCA420 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AA926BC200703160044FBDB /* albumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = albumViewController.swift; sourceTree = "<group>"; };
-		6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoViewController.swift; path = ../InfoViewController.swift; sourceTree = "<group>"; };
+		6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		6AAE5CBA1F971D00009CD6F8 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myTimetableViewController.swift; sourceTree = "<group>"; };
 		6AB55F521FC696E9000A2A3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -133,6 +133,38 @@
 				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		3E5C76C020411483008EF546 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
+				6A85E8031F96F444001836CD /* MapsViewController.swift */,
+				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
+				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
+				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
+				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
+				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
+				6A9A505B1F8C407F005E1211 /* SchoolRulesViewController.swift */,
+				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
+				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
+				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
+				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
+				F83A08202034191F00F9E034 /* About DBS */,
+				3E440D081FFB2E630067E8DE /* Calendar */,
+				6A1515C42010627800BBF15C /* Photo Album */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		3E5C76C1204114FE008EF546 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
+				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
+				3E5C76BE20411261008EF546 /* TermsViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		3E8DFAE81FF3B35E00E5F412 /* Home Page */ = {
@@ -201,24 +233,8 @@
 				6AA819451F71FE8300FCA420 /* AppDelegate.swift */,
 				3E8DFAE81FF3B35E00E5F412 /* Home Page */,
 				6A1515C720106B2300BBF15C /* Featured Page */,
-				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
-				3E440D081FFB2E630067E8DE /* Calendar */,
-				F83A08202034191F00F9E034 /* About DBS */,
-				6A85E8031F96F444001836CD /* MapsViewController.swift */,
-				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
-				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
-				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
-				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
-				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
-				6A9A505B1F8C407F005E1211 /* SchoolRulesViewController.swift */,
-				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
-				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
-				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
-				6A1515C42010627800BBF15C /* Photo Album */,
-				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
-				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
-				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
-				3E5C76BE20411261008EF546 /* TermsViewController.swift */,
+				3E5C76C020411483008EF546 /* Info */,
+				3E5C76C1204114FE008EF546 /* Profile */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6A429C2E2016F95600758515 /* LoadingViewController.swift */,
