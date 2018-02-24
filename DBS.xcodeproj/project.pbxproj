@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E5C76BF20411262008EF546 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C76BE20411261008EF546 /* TermsViewController.swift */; };
 		3EEA13741FF3D363004AFC3C /* DetailedEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */; };
 		3EEA13761FF4843C004AFC3C /* AllEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */; };
 		3EEA13781FF489B0004AFC3C /* AllEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */; };
@@ -52,12 +51,12 @@
 		F8331F7D1FEE5C610050479C /* newsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */; };
 		F8343B8D1FE8AFDB00A03047 /* classmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */; };
 		F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */; };
+		F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E87422041AD3300E20E04 /* TAndCViewController.swift */; };
 		F8D40BC91FE9148600C0FBD5 /* myClassmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */; };
 		F8D40BCB1FE92CDC00C0FBD5 /* timetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3E5C76BE20411261008EF546 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TermsViewController.swift; path = /Users/anson/Desktop/DBSiOSX2/DBS/Profile/TermsViewController.swift; sourceTree = "<absolute>"; };
 		3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventsTableViewController.swift; sourceTree = "<group>"; };
 		3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newsDetailViewController.swift; sourceTree = "<group>"; };
 		F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classmatesViewController.swift; sourceTree = "<group>"; };
 		F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = housesSystemViewController.swift; sourceTree = "<group>"; };
+		F83E87422041AD3300E20E04 /* TAndCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAndCViewController.swift; sourceTree = "<group>"; };
 		F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClassmatesViewController.swift; sourceTree = "<group>"; };
 		F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableViewController.swift; sourceTree = "<group>"; };
 		FC66BA87AEEFBAEC8A7014D2 /* Pods_DBS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DBS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,9 +139,10 @@
 			isa = PBXGroup;
 			children = (
 				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
+				3E440D081FFB2E630067E8DE /* Calendar */,
+				F83A08202034191F00F9E034 /* About DBS */,
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
-				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
 				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
@@ -149,10 +150,8 @@
 				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
 				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
 				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
-				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
-				F83A08202034191F00F9E034 /* About DBS */,
-				3E440D081FFB2E630067E8DE /* Calendar */,
 				6A1515C42010627800BBF15C /* Photo Album */,
+				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -161,8 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
+				F83E87422041AD3300E20E04 /* TAndCViewController.swift */,
 				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
-				3E5C76BE20411261008EF546 /* TermsViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -235,6 +234,7 @@
 				6A1515C720106B2300BBF15C /* Featured Page */,
 				3E5C76C020411483008EF546 /* Info */,
 				3E5C76C1204114FE008EF546 /* Profile */,
+				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6A429C2E2016F95600758515 /* LoadingViewController.swift */,
@@ -443,7 +443,6 @@
 				6ACBB7401F7B69D60086916E /* SchoolHymnViewController.swift in Sources */,
 				F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */,
 				6A3C861B1FC2C43D002472E9 /* badgeTableViewCell.swift in Sources */,
-				3E5C76BF20411262008EF546 /* TermsViewController.swift in Sources */,
 				6A107DC11F8B3CC90032041D /* FeaturedPageViewController.swift in Sources */,
 				6A1515C32010626500BBF15C /* albumCollectionViewCell.swift in Sources */,
 				6A429C2B2015D4FC00758515 /* photoCollectionViewCell.swift in Sources */,
@@ -451,6 +450,7 @@
 				6ACB2006201AA6FF00DB75FC /* BugReportViewController.swift in Sources */,
 				6A3C861D1FC2C4AC002472E9 /* badgeViewController.swift in Sources */,
 				3EEA137C1FF94CDA004AFC3C /* HomeEventTableView.swift in Sources */,
+				F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */,
 				6A429C292015D49C00758515 /* photoCollectionViewController.swift in Sources */,
 				F82F00E91FEC9D0E00A19A61 /* descriptionsTableViewCell.swift in Sources */,
 				6A9A505C1F8C407F005E1211 /* SchoolRulesViewController.swift in Sources */,

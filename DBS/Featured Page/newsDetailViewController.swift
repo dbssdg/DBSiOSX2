@@ -41,7 +41,7 @@ class newsDetailViewController: UIViewController {
     
     func updateData() {
         
-        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController?.navigationBar.frame.height)! - 18)
+        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
         scrollView.setContentOffset(desiredOffset, animated: false)
         self.title = "\(newsIndex+1) of \(newsTotal)"
         self.newsTitle.text? = self.news!.title[newsIndex]
@@ -67,7 +67,11 @@ class newsDetailViewController: UIViewController {
         if newsIndex+1 <= 1 {
             previousNews.tintColor = UIColor.lightGray
             previousNews.isEnabled = false
+            nextNews.tintColor = UIColor.black
+            nextNews.isEnabled = true
         } else if newsIndex+1 >= newsTotal {
+            previousNews.tintColor = UIColor.orange
+            previousNews.isEnabled = true
             nextNews.tintColor = UIColor.lightGray
             nextNews.isEnabled = false
         } else {
@@ -132,18 +136,10 @@ class newsDetailViewController: UIViewController {
             present(networkAlert, animated: true)
         }
         
-        if newsIndex+1 <= 1 {
-            previousNews.tintColor = UIColor.lightGray
-            previousNews.isEnabled = false
-        } else if newsIndex+1 >= newsTotal {
-            nextNews.tintColor = UIColor.lightGray
-            nextNews.isEnabled = false
-        } else {
-            previousNews.tintColor = UIColor.orange
-            previousNews.isEnabled = true
-            nextNews.tintColor = UIColor.black
-            nextNews.isEnabled = true
-        }
+        previousNews.tintColor = UIColor.lightGray
+        previousNews.isEnabled = false
+        nextNews.tintColor = UIColor.lightGray
+        nextNews.isEnabled = false
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false

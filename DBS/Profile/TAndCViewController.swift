@@ -1,21 +1,22 @@
-
-
 //
-//  TermsViewController.swift
-//  
+//  TAndCViewController.swift
+//  DBS
 //
-//  Created by Anson Ieung on 24/2/2018.
+//  Created by Ben Lou on 24/2/2018.
+//  Copyright © 2018 DBSSDG. All rights reserved.
 //
 
 import UIKit
 
-class TermsViewController: UIViewController {
+class TAndCViewController: UIViewController {
 
-    @IBOutlet weak var TextView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TextView.scrollsToTop = true
+        // Do any additional setup after loading the view.
+        
+        textView.scrollsToTop = true
     }
 
     override func didReceiveMemoryWarning() {
