@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/anson/Desktop/DBSiOSX2/DBS/TermsViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:DBS.xcodeproj">
    </FileRef>
    <FileRef
