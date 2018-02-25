@@ -191,44 +191,45 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
     
-        if previewingContext.sourceView == menuTable{
-            guard let indexPath = menuTable.indexPathForRow(at: location) else {
-                return nil
-            }
-            
-            let Row = indexPath.row
-            
-            switch functions[Row] {
-            case "Links, Contact & Steps":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! LinksViewController
-                return destViewController
-            case "School Hymn":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolHymnViewController
-                return destViewController
-            case "School Rules":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolRulesViewController
-                return destViewController
-            case "Teachers":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! TeachersViewController
-                return destViewController
-            case "Classmates":
-                if loginID == ""{
-                    return nil
-                }else{
-                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! classmatesViewController
-                    return destViewController
-                }
-            case "Photo Album":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! albumViewController
-                return destViewController
-            case "Acknowledgements":
-                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! ContributionsViewController
-                return destViewController
-                
-            default:
-                return nil
-            }
-        }else if previewingContext.sourceView == calendar{
+//        if previewingContext.sourceView == menuTable{
+//            guard let indexPath = menuTable.indexPathForRow(at: location) else {
+//                return nil
+//            }
+//
+//            let Row = indexPath.row
+//
+//            switch functions[Row] {
+//            case "Links, Contact & Steps":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! LinksViewController
+//                return destViewController
+//            case "School Hymn":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolHymnViewController
+//                return destViewController
+//            case "School Rules":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! SchoolRulesViewController
+//                return destViewController
+//            case "Teachers":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! TeachersViewController
+//                return destViewController
+//            case "Classmates":
+//                if loginID == ""{
+//                    return nil
+//                }else{
+//                    let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! classmatesViewController
+//                    return destViewController
+//                }
+//            case "Photo Album":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! albumViewController
+//                return destViewController
+//            case "Acknowledgements":
+//                let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: functions[Row]) as! ContributionsViewController
+//                return destViewController
+//
+//            default:
+//                return nil
+//            }
+//        }else
+            if previewingContext.sourceView == calendar{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
             return destViewController
         }else if previewingContext.sourceView == about{

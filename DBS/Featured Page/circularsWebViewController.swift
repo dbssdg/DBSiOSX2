@@ -56,7 +56,7 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
         setUpSegmentedControl()
         didSelect(0)
         
-        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.shareCircular))
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCircular))
         self.navigationItem.rightBarButtonItem = shareButton
         
         if #available(iOS 11.0, *) {
@@ -103,8 +103,7 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
                 titles += ["#\(i)"]
             }
         }
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
-
+        let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate

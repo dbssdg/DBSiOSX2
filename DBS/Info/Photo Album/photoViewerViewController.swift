@@ -36,7 +36,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
             self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
         }
         
-        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share-arrow"), style: .plain, target: self, action: #selector(self.sharePhoto))
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.sharePhoto))
         self.navigationItem.rightBarButtonItem = shareButton
     }
     

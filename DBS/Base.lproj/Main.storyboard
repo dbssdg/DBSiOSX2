@@ -294,25 +294,25 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-                                                        <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="267.5" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2069,7 +2069,7 @@ And love to all men 'neath the sun.</string>
         <!--Terms and Conditions-->
         <scene sceneID="Au5-Bz-dM3">
             <objects>
-                <viewController title="Terms and Conditions" id="ti4-De-4DD" sceneMemberID="viewController">
+                <viewController title="Terms and Conditions" id="ti4-De-4DD" customClass="TAndCViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gZP-eP-SHY"/>
                         <viewControllerLayoutGuide type="bottom" id="6DS-Hr-hPC"/>
@@ -2115,6 +2115,9 @@ Date of last revision: 30 January 2018.</string>
                             <constraint firstItem="i7x-ev-TIU" firstAttribute="top" secondItem="gZP-eP-SHY" secondAttribute="bottom" constant="8" id="lHI-1p-0Y7"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="fkd-kq-9bA" id="bvU-zP-gDx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rO-c5-1ax" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

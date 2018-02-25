@@ -51,6 +51,7 @@
 		F8331F7D1FEE5C610050479C /* newsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */; };
 		F8343B8D1FE8AFDB00A03047 /* classmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */; };
 		F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */; };
+		F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E87422041AD3300E20E04 /* TAndCViewController.swift */; };
 		F8D40BC91FE9148600C0FBD5 /* myClassmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */; };
 		F8D40BCB1FE92CDC00C0FBD5 /* timetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -87,7 +88,7 @@
 		6AA8194F1F71FE8300FCA420 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6AA819511F71FE8300FCA420 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AA926BC200703160044FBDB /* albumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = albumViewController.swift; sourceTree = "<group>"; };
-		6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoViewController.swift; path = ../InfoViewController.swift; sourceTree = "<group>"; };
+		6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		6AAE5CBA1F971D00009CD6F8 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myTimetableViewController.swift; sourceTree = "<group>"; };
 		6AB55F521FC696E9000A2A3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 		F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newsDetailViewController.swift; sourceTree = "<group>"; };
 		F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classmatesViewController.swift; sourceTree = "<group>"; };
 		F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = housesSystemViewController.swift; sourceTree = "<group>"; };
+		F83E87422041AD3300E20E04 /* TAndCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAndCViewController.swift; sourceTree = "<group>"; };
 		F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClassmatesViewController.swift; sourceTree = "<group>"; };
 		F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableViewController.swift; sourceTree = "<group>"; };
 		FC66BA87AEEFBAEC8A7014D2 /* Pods_DBS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DBS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,8 +130,40 @@
 				3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */,
 				3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */,
 				3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */,
+				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		3E5C76C020411483008EF546 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
+				3E440D081FFB2E630067E8DE /* Calendar */,
+				F83A08202034191F00F9E034 /* About DBS */,
+				6A85E8031F96F444001836CD /* MapsViewController.swift */,
+				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
+				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
+				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
+				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
+				6A9A505B1F8C407F005E1211 /* SchoolRulesViewController.swift */,
+				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
+				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
+				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
+				6A1515C42010627800BBF15C /* Photo Album */,
+				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		3E5C76C1204114FE008EF546 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
+				F83E87422041AD3300E20E04 /* TAndCViewController.swift */,
+				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		3E8DFAE81FF3B35E00E5F412 /* Home Page */ = {
@@ -198,24 +232,9 @@
 				6AA819451F71FE8300FCA420 /* AppDelegate.swift */,
 				3E8DFAE81FF3B35E00E5F412 /* Home Page */,
 				6A1515C720106B2300BBF15C /* Featured Page */,
+				3E5C76C020411483008EF546 /* Info */,
+				3E5C76C1204114FE008EF546 /* Profile */,
 				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
-				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
-				3E440D081FFB2E630067E8DE /* Calendar */,
-				6A53100C1FA1D1DF00531489 /* CustomCell.swift */,
-				6A85E8031F96F444001836CD /* MapsViewController.swift */,
-				F83A08202034191F00F9E034 /* About DBS */,
-				F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */,
-				6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */,
-				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
-				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
-				6A9A505B1F8C407F005E1211 /* SchoolRulesViewController.swift */,
-				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
-				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
-				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
-				6A1515C42010627800BBF15C /* Photo Album */,
-				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
-				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
-				6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6A429C2E2016F95600758515 /* LoadingViewController.swift */,
@@ -431,6 +450,7 @@
 				6ACB2006201AA6FF00DB75FC /* BugReportViewController.swift in Sources */,
 				6A3C861D1FC2C4AC002472E9 /* badgeViewController.swift in Sources */,
 				3EEA137C1FF94CDA004AFC3C /* HomeEventTableView.swift in Sources */,
+				F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */,
 				6A429C292015D49C00758515 /* photoCollectionViewController.swift in Sources */,
 				F82F00E91FEC9D0E00A19A61 /* descriptionsTableViewCell.swift in Sources */,
 				6A9A505C1F8C407F005E1211 /* SchoolRulesViewController.swift in Sources */,
