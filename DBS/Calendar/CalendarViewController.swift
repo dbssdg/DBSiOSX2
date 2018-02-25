@@ -73,11 +73,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     var CurrentDayEventsArray = [(Date, events)] ()
-<<<<<<< HEAD
     var CurrentDay = Date()
-=======
     var DayEvents = [(Date, events)] ()
->>>>>>> 46831e26edde840d2543fe0299bd2d5ba057750e
     
     var SEBlue = UIColor(red: 97.0/255.0, green: 142.0/255.0, blue: 249.0/255.0, alpha: 1)
     var SHOrange = UIColor(red: 1, green: 142.0/255.0, blue: 80.0/255.0, alpha: 1)
