@@ -154,50 +154,61 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func setUpSegmentedControl() {
-        let titles = ["Mon", "Tue", "Wed", "Thur", "Fri"]
-        let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - ( (tabBarController?.tabBar.frame.height == nil) ? 15 : (tabBarController?.tabBar.frame.height)! ) - 40, width: self.view.frame.width * 0.9, height: 40)
-        let segmentedControl = TwicketSegmentedControl(frame: frame)
-        segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
         
-        //Init Day
-        var DayToDisplay = 0
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.firstWeekday = -1
-        
-        let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-        let TimeBoundString = "16:00"
-        let formatter : DateFormatter = {
-            let dateFormatter  = DateFormatter()
-            dateFormatter.timeZone = Calendar.current.timeZone
-            dateFormatter.locale = Calendar.current.locale
-            dateFormatter.dateFormat = "HH:mm"
-            return dateFormatter
-        }()
-        //let TimeBound = formatter.date(from: TimeBoundString)
-        //let CurrentTime = calendar.dateComponents([.hour], from: Date())
-        let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
-        DayToDisplay = CurrentDay
-        print(DayToDisplay)
-        
-        if Date() < TimeBoundary!{
-            print("Before")
-            DayToDisplay -= 1
-            if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
-                DayToDisplay = 0
-            }
-        }else{
-            print("After")
-            if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
-                DayToDisplay = 0
+        //Check if there is segmented Control
+        var hasSegmentedControl = false
+        let subviews = self.view.subviews
+        for subview in subviews{
+            if subview.tag == 100{
+                hasSegmentedControl = true
             }
         }
         
-        
-        segmentedControl.move(to: DayToDisplay)
-        selectedSegment = DayToDisplay
-        view.addSubview(segmentedControl)
-        
+        if hasSegmentedControl == false{
+            let titles = ["Mon", "Tue", "Wed", "Thur", "Fri"]
+            let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - ( (tabBarController?.tabBar.frame.height == nil) ? 15 : (tabBarController?.tabBar.frame.height)! ) - 40, width: self.view.frame.width * 0.9, height: 40)
+            let segmentedControl = TwicketSegmentedControl(frame: frame)
+            segmentedControl.setSegmentItems(titles)
+            segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+            
+            //Init Day
+            var DayToDisplay = 0
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.firstWeekday = -1
+            
+            let CurrentDay = calendar.component(.weekday, from: Date()) - 1
+            let TimeBoundString = "16:00"
+            let formatter : DateFormatter = {
+                let dateFormatter  = DateFormatter()
+                dateFormatter.timeZone = Calendar.current.timeZone
+                dateFormatter.locale = Calendar.current.locale
+                dateFormatter.dateFormat = "HH:mm"
+                return dateFormatter
+            }()
+            //let TimeBound = formatter.date(from: TimeBoundString)
+            //let CurrentTime = calendar.dateComponents([.hour], from: Date())
+            let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
+            DayToDisplay = CurrentDay
+            print(DayToDisplay)
+            
+            if Date() < TimeBoundary!{
+                print("Before")
+                DayToDisplay -= 1
+                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
+                    DayToDisplay = 0
+                }
+            }else{
+                print("After")
+                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
+                    DayToDisplay = 0
+                }
+            }
+            
+            
+            segmentedControl.move(to: DayToDisplay)
+            selectedSegment = DayToDisplay
+            view.addSubview(segmentedControl)
+        }
     }
     func isInternetAvailable() -> Bool {
         var zeroAddress = sockaddr_in()

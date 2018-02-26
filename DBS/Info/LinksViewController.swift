@@ -107,12 +107,24 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     func setUpSegmentedControl() {
-        let titles = ["Links", "Contact", "Steps"]
-        let frame = CGRect(x: 0, y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width, height: 40)
-        let segmentedControl = TwicketSegmentedControl(frame: frame)
-        segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
-        view.addSubview(segmentedControl)
+        //Check if there is segmented Control
+        var hasSegmentedControl = false
+        let subviews = self.view.subviews
+        for subview in subviews{
+            if subview.tag == 100{
+                hasSegmentedControl = true
+            }
+        }
+        
+        if hasSegmentedControl == false{
+            let titles = ["Links", "Contact", "Steps"]
+            let frame = CGRect(x: 0, y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width, height: 40)
+            let segmentedControl = TwicketSegmentedControl(frame: frame)
+            segmentedControl.setSegmentItems(titles)
+            segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+            segmentedControl.tag = 100
+            view.addSubview(segmentedControl)
+        }
     }
     func contactSelected(_ section: Int, _ row: Int) {
         switch section {

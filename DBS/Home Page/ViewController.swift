@@ -185,7 +185,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        if LoggedIn && teacherOrStudent() == "s" && timetable == nil{
+        var CurrentClass = UserInformation[3]
+        CurrentClass.removeFirst()
+        CurrentClass.removeLast(3)
+        
+        if LoggedIn && teacherOrStudent() == "s" && (timetable == nil || timetableChoice != CurrentClass){
+            
             let input = "\(UserInformation[3])"
         
         var GradeString = "\(input)"
@@ -196,7 +201,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
         
-        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable8.json"
+        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
         let url = URL(string: jsonURL)
             DispatchQueue.main.async {
                 if self.isInternetAvailable(){
@@ -1256,6 +1261,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.viewDidLoad()
+            self.ParseTimetable()
         }
         }
         
