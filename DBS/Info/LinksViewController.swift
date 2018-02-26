@@ -145,13 +145,15 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             mapItem.openInMaps(launchOptions: options)
             
         case 1:
-            if let url = URL(string: "tel://\(phone[row])") {
+            if let url = URL(string: "tel://\(phone[row].replacingOccurrences(of: " ", with: ""))") {
+                print(url)
                 if #available(iOS 10, *) { UIApplication.shared.open(url) }
                 else { UIApplication.shared.openURL(url) }
             }
             
         case 2:
-            if let url = URL(string: "tel://\(fax[row])") {
+            if let url = URL(string: "tel://\(fax[row].replacingOccurrences(of: " ", with: ""))") {
+                print(url)
                 if #available(iOS 10, *) { UIApplication.shared.open(url) }
                 else { UIApplication.shared.openURL(url) }
             }
