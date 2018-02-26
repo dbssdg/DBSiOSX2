@@ -11,7 +11,7 @@ import WebKit
 import TwicketSegmentedControl
 import SystemConfiguration
 
-class circularsWebViewController: UIViewController, TwicketSegmentedControlDelegate {
+class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSegmentedControlDelegate {
 
     @IBOutlet weak var circularWebView: UIWebView!
     var selectedSegment = 0
@@ -74,6 +74,13 @@ class circularsWebViewController: UIViewController, TwicketSegmentedControlDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        
+    }
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        
     }
     
     func shareCircular() {
