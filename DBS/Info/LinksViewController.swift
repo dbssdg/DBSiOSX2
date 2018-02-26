@@ -118,7 +118,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if hasSegmentedControl == false{
             let titles = ["Links", "Contact", "Steps"]
-            let frame = CGRect(x: 0, y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width, height: 40)
+            let frame = CGRect(x: 0, y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width, height: 40)
             let segmentedControl = TwicketSegmentedControl(frame: frame)
             segmentedControl.setSegmentItems(titles)
             segmentedControl.delegate = self as? TwicketSegmentedControlDelegate

@@ -1214,7 +1214,7 @@
         <!--Photo Collection View Controller-->
         <scene sceneID="XYR-Mi-EfI">
             <objects>
-                <viewController storyboardIdentifier="PhotoCollectionView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="To8-02-8xx" customClass="photoCollectionViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="To8-02-8xx" customClass="photoCollectionViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="biX-LG-TzN"/>
                         <viewControllerLayoutGuide type="bottom" id="dHO-Xi-Iqp"/>
@@ -1282,7 +1282,7 @@
         <!--Photo Viewer View Controller-->
         <scene sceneID="8lO-4P-xgL">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="pEB-9r-1JB" customClass="photoViewerViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="photoCollectionView" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pEB-9r-1JB" customClass="photoViewerViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="24N-O9-GAe"/>
                         <viewControllerLayoutGuide type="bottom" id="XRA-ga-d1y"/>
