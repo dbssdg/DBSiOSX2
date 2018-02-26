@@ -92,6 +92,7 @@
 		6AAE5CBA1F971D00009CD6F8 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		6AB1839D1FFF1CFC004DFEB4 /* myTimetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myTimetableViewController.swift; sourceTree = "<group>"; };
 		6AB55F521FC696E9000A2A3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6AC659B12043A77900D519E0 /* DBS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DBS.entitlements; sourceTree = "<group>"; };
 		6ACB2005201AA6FF00DB75FC /* BugReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolHymnViewController.swift; sourceTree = "<group>"; };
 		6ACBB7471F7CC3B30086916E /* hymn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hymn.mp3; sourceTree = "<group>"; };
@@ -229,6 +230,7 @@
 		6AA819441F71FE8300FCA420 /* DBS */ = {
 			isa = PBXGroup;
 			children = (
+				6AC659B12043A77900D519E0 /* DBS.entitlements */,
 				6AA819451F71FE8300FCA420 /* AppDelegate.swift */,
 				3E8DFAE81FF3B35E00E5F412 /* Home Page */,
 				6A1515C720106B2300BBF15C /* Featured Page */,
@@ -316,6 +318,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.NearFieldCommunicationTagReading = {
+								enabled = 0;
 							};
 						};
 					};

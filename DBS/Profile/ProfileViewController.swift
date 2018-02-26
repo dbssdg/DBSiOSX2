@@ -229,7 +229,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 present(mailAlert, animated: true)
                 return
             }
-            var toRecipents = ["dbssdg@gmail.com"]
+            var toRecipents = ["dbssdg@gmail.com, kevinlau01dbs@icloud.com"]
             var mc = MFMailComposeViewController()
             mc.mailComposeDelegate = self
             mc.setToRecipients(toRecipents)
