@@ -11,7 +11,7 @@ import TwicketSegmentedControl
 import MapKit
 import MessageUI
 
-class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate {
+class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate, TwicketSegmentedControlDelegate {
     
     var selectedSegment = 0
     
@@ -133,13 +133,13 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             mapItem.openInMaps(launchOptions: options)
             
         case 1:
-            if let url = URL(string: "tel://\(phone[row])"), UIApplication.shared.canOpenURL(url) {
+            if let url = URL(string: "tel://\(phone[row])") {
                 if #available(iOS 10, *) { UIApplication.shared.open(url) }
                 else { UIApplication.shared.openURL(url) }
             }
             
         case 2:
-            if let url = URL(string: "tel://\(fax[row])"), UIApplication.shared.canOpenURL(url) {
+            if let url = URL(string: "tel://\(fax[row])") {
                 if #available(iOS 10, *) { UIApplication.shared.open(url) }
                 else { UIApplication.shared.openURL(url) }
             }
@@ -151,7 +151,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 present(cannotSendAlert, animated: true)
             } else {
                 let composeVC = MFMailComposeViewController()
-                composeVC.mailComposeDelegate = self as! MFMailComposeViewControllerDelegate
+                composeVC.mailComposeDelegate = self
                 composeVC.setToRecipients(["address@example.com"])
                 composeVC.setSubject("Hello!")
                 composeVC.setMessageBody("Hello from California!", isHTML: false)
@@ -161,6 +161,10 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         default: break
         }
     }
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
     /* func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     } */
