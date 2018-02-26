@@ -159,7 +159,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         if imageArray[photoSelected] != nil {
             photoSelected = indexPath.row
-            return imageArray[photoSelected]!
+            //return imageArray[photoSelected]!
         }
         
         
