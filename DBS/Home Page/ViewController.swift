@@ -1126,7 +1126,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             if LoggedIn && timetable == nil{
                 DispatchQueue.main.async{
                     self.ParseTimetable()
-                    (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).reloadData()
+                    if self.scrollView.viewWithTag(10000 - logInNumber) != nil{
+                        (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }else if EventsArray.isEmpty{
                 DispatchQueue.main.async{

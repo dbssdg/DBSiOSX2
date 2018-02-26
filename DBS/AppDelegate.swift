@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initialVC.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "HomeButtonIcon8"), style: .plain, target: self, action: #selector(self.homePage))
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = storyboard.instantiateInitialViewController()
         self.window?.rootViewController = navigationC
         self.window?.makeKeyAndVisible()
         

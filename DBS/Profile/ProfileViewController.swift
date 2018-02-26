@@ -229,7 +229,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 present(mailAlert, animated: true)
                 return
             }
-            var toRecipents = ["dbssdg@gmail.com, kevinlau01dbs@icloud.com"]
+            var toRecipents = ["dbssdg@gmail.com"]
             var subject = "Report A Bug"
             var mc = MFMailComposeViewController()
             mc.mailComposeDelegate = self
@@ -238,7 +238,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             self.present(mc, animated: true, completion: nil)
             
+            
+            
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+                
+                print("did finish")
                 switch result.rawValue {
                     
                 case MFMailComposeResult.cancelled.rawValue:
@@ -255,11 +259,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     
                 case MFMailComposeResult.sent.rawValue:
                     print("Sent")
-                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
+//                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
                     mc.isEditing = false
                     mailAlert.message = "Your mail has been sent."
                     
                 default:
+                    print("uh oh")
                     break
                 }
                 self.dismiss(animated: true, completion: nil)
@@ -267,6 +272,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             
         }
+        
+        
+        
         func downloadStudentImage(action: UIAlertAction) {
             let imageData = UIImagePNGRepresentation(studentImage.image!)
             let compressedImage = UIImage(data: imageData!)

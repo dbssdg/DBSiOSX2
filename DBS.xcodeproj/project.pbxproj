@@ -24,6 +24,7 @@
 		6A429C2D2015DECA00758515 /* photoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A429C2C2015DECA00758515 /* photoViewerViewController.swift */; };
 		6A429C2F2016F95600758515 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A429C2E2016F95600758515 /* LoadingViewController.swift */; };
 		6A53100D1FA1D1DF00531489 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A53100C1FA1D1DF00531489 /* CustomCell.swift */; };
+		6A63293A2043F75E00740578 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6329392043F75E00740578 /* NetworkExtension.framework */; };
 		6A7B445A1F837BDC00227545 /* LinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B44591F837BDC00227545 /* LinksViewController.swift */; };
 		6A7B445C1F86F9AD00227545 /* school.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7B445B1F86F9A500227545 /* school.wav */; };
 		6A7B445E1F87499000227545 /* TeachersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B445D1F87499000227545 /* TeachersViewController.swift */; };
@@ -74,6 +75,7 @@
 		6A429C2C2015DECA00758515 /* photoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoViewerViewController.swift; sourceTree = "<group>"; };
 		6A429C2E2016F95600758515 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		6A53100C1FA1D1DF00531489 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		6A6329392043F75E00740578 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		6A7B44591F837BDC00227545 /* LinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksViewController.swift; sourceTree = "<group>"; };
 		6A7B445B1F86F9A500227545 /* school.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = school.wav; sourceTree = "<group>"; };
 		6A7B445D1F87499000227545 /* TeachersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F82F00EB1FECC78400A19A61 /* WebKit.framework in Frameworks */,
+				6A63293A2043F75E00740578 /* NetworkExtension.framework in Frameworks */,
 				AB35C1D300DF9BEF094E5351 /* Pods_DBS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,6 +264,7 @@
 		7CFCDDE4DD779DB1A6A4A25A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A6329392043F75E00740578 /* NetworkExtension.framework */,
 				F82F00EA1FECC78400A19A61 /* WebKit.framework */,
 				FC66BA87AEEFBAEC8A7014D2 /* Pods_DBS.framework */,
 			);
@@ -321,6 +325,9 @@
 							};
 							com.apple.NearFieldCommunicationTagReading = {
 								enabled = 0;
+							};
+							com.apple.NetworkExtensions.iOS = {
+								enabled = 1;
 							};
 						};
 					};
@@ -601,6 +608,7 @@
 			baseConfigurationReference = ED54315CE742F2B1255387B6 /* Pods-DBS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DBS/DBS.entitlements;
 				DEVELOPMENT_TEAM = JBEFD6PZUS;
 				INFOPLIST_FILE = DBS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -617,6 +625,7 @@
 			baseConfigurationReference = 7741C02F0309986E00D96E46 /* Pods-DBS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DBS/DBS.entitlements;
 				DEVELOPMENT_TEAM = JBEFD6PZUS;
 				INFOPLIST_FILE = DBS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
