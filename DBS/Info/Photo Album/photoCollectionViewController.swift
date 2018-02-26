@@ -16,7 +16,10 @@ struct PhotoCollection : Decodable {
 var photoSelected = 0
 var imageArray = [UIImage?]()
 
-class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UIViewControllerPreviewingDelegate{
+   
+    
+    
 
     @IBOutlet weak var photoCollection: UICollectionView!
     var photoAlbum : PhotoCollection?
@@ -94,6 +97,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
         getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
+        self.registerForPreviewing(with: self, sourceView: cell)
         return cell
     }
     
@@ -144,6 +148,31 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             }
         })
         task.resume()
+    }
+    
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = photoCollection.indexPathForItem(at: location) else{
+             return nil
+        }
+        
+        
+        
+        if imageArray[photoSelected] != nil {
+            photoSelected = indexPath.row
+            
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
+            //previewingContext.sourceRect = destViewController.collectionView.frame
+            previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - (imageArray[photoSelected]?.size.height)! * 0.5), size: (imageArray[photoSelected]?.size)!)
+            return destViewController
+            
+        }
+        
+       return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
     
     func isInternetAvailable() -> Bool {
