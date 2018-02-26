@@ -146,15 +146,15 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
         case 3:
             if !MFMailComposeViewController.canSendMail() {
-                let cannotSendAlert = UIAlertController(title: "Mail services are not available.", message: "", preferredStyle: .alert)
+                let cannotSendAlert = UIAlertController(title: "ERROR", message: "Mail services are not available.", preferredStyle: .alert)
                 cannotSendAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 present(cannotSendAlert, animated: true)
             } else {
                 let composeVC = MFMailComposeViewController()
                 composeVC.mailComposeDelegate = self
-                composeVC.setToRecipients(["address@example.com"])
+                composeVC.setToRecipients(["\(email[row])"])
                 composeVC.setSubject("Hello!")
-                composeVC.setMessageBody("Hello from California!", isHTML: false)
+                composeVC.setMessageBody("\n", isHTML: false)
                 self.present(composeVC, animated: true, completion: nil)
             }
             
