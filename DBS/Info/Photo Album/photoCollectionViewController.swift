@@ -16,7 +16,10 @@ struct PhotoCollection : Decodable {
 var photoSelected = 0
 var imageArray = [UIImage?]()
 
-class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UIViewControllerPreviewingDelegate{
+   
+    
+    
 
     @IBOutlet weak var photoCollection: UICollectionView!
     var photoAlbum : PhotoCollection?
@@ -144,6 +147,29 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             }
         })
         task.resume()
+    }
+    
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = photoCollection.indexPathForItem(at: location) else{
+             return nil
+        }
+        
+        
+        
+        if imageArray[photoSelected] != nil {
+            photoSelected = indexPath.row
+            return imageArray[photoSelected]!
+        }
+        
+        
+        let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! ContributionsViewController
+    
+        return destViewController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        <#code#>
     }
     
     func isInternetAvailable() -> Bool {
