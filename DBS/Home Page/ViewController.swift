@@ -19,6 +19,8 @@ var EventsFromNow = [events]()
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
+var OldClass = ""
+
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
     var CurrentTableIndex = 0
@@ -185,13 +187,24 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseTimetable (){
-        var CurrentClass = UserInformation[3]
-        CurrentClass.removeFirst()
-        CurrentClass.removeLast(3)
         
-        if LoggedIn && teacherOrStudent() == "s" && (timetable == nil || timetableChoice != CurrentClass){
+        if let User = UserDefaults.standard.array(forKey: "profileData"){
+            UserInformation = User as! [String]
+        }
+        
+        if LoggedIn && teacherOrStudent() == "s"{
+            var CurrentClass = UserInformation[3]
+            CurrentClass.removeFirst()
+            CurrentClass.removeLast(3)
             
-            let input = "\(UserInformation[3])"
+            
+            
+        if timetable == nil || (timetableChoice != CurrentClass) || OldClass != UserInformation[3]{
+        
+        timetableChoice = CurrentClass
+            
+        let input = "\(UserInformation[3])"
+        OldClass = UserInformation[3]
         
         var GradeString = "\(input)"
         GradeString.removeLast(4)
@@ -200,6 +213,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
+                
+        print(timetableChoice)
         
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
         let url = URL(string: jsonURL)
@@ -222,6 +237,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
             }
         }
+    }
     }
     
     @objc func GoToTimetable(){
@@ -345,8 +361,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.layer.zPosition = 50
         scrollView.decelerationRate = UIScrollViewDecelerationRateFast
         scrollView.isPagingEnabled = true
-        let point = CGPoint(x: 0, y: 0)
-        scrollView.contentOffset = point
         
         
         
@@ -354,22 +368,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let WelcomeLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height * 0.125, width: self.view.frame.width*0.9, height: self.view.frame.height * 0.06))
         if !LoggedIn || UserInformation.isEmpty {
             WelcomeLabel.text = "Welcome to DBS!"
-        }else{
+        }else if teacherOrStudent() == "s"{
             let Name = String(UserInformation[1].capitalized)!
             var ClassAndNumber = String(UserInformation[3])!
             ClassAndNumber.removeFirst()
             ClassAndNumber = ClassAndNumber.replacingOccurrences(of: "-", with: " ")
-//            var Out = ""
-//            for char in ClassAndNumber{
-//                if char == "-"{
-//                    Out += " "
-//                }else{
-//                    Out += "\(char)"
-//                }
-//            }
-//            swap(&ClassAndNumber, &Out)
-            
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
+        }else if teacherOrStudent() == ""{
+            let Name = String(UserInformation[1].capitalized)!
+            WelcomeLabel.text = " Hi! \(Name) "
         }
         WelcomeLabel.reloadInputViews()
         WelcomeLabel.textColor = UIColor.white
@@ -1092,10 +1099,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func teacherOrStudent() -> String {
         
-        if LoggedIn && loginID != ""{
-            var ID = loginID
-            ID.removeFirst(3)
-            if "\(ID.first!)" >= "0" && "\(ID.first!)" <= "9" {
+        if LoggedIn && loginID != "" {
+            if UserInformation.count == 5{
                 return "s"
             }
             
@@ -1110,7 +1115,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
         }
-        //let teacherOrStudent = "\(self.teacherOrStudent())"
+        //let teacherOrStudent() = "\(self.teacherOrStudent())"
         
         
  
@@ -1162,7 +1167,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         CurrentTableIndex = Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
         
         var logInNumber = 0
-        if !LoggedIn || teacherOrStudent() == ""{
+        if !LoggedIn || teacherOrStudent() == "" {
             logInNumber = 1
         }else{
             logInNumber = 0

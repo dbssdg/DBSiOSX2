@@ -35,6 +35,8 @@ var formSection = [String]()
 let classArrayLow = ["D", "S", "G", "P", "M", "L", "A", "J", "T"]
 let classArrayHigh = ["D", "S", "P", "M", "J", "T"]
 
+
+
 class myTimetableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate {
     
     @IBOutlet weak var timetableTable: UITableView!
@@ -43,10 +45,8 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
     var group = ""
     var form = ""
     
-    
-    
-    
     var selectedSegment = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

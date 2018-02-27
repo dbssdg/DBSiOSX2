@@ -11,11 +11,9 @@ import TwicketSegmentedControl
 import MapKit
 import MessageUI
 
-<<<<<<< HEAD
-class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TwicketSegmentedControlDelegate, MFMailComposeViewControllerDelegate {
-=======
+
 class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate, TwicketSegmentedControlDelegate {
->>>>>>> aaeb7008d45018b25d41b95b4497f3c74e5c321d
+
     
     var selectedSegment = 0
     
@@ -149,7 +147,6 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             mapItem.openInMaps(launchOptions: options)
             
         case 1:
-<<<<<<< HEAD
             if let url = URL(string: "tel://\(phone[row])"), UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10, *) {
                     UIApplication.shared.open(url)
@@ -166,43 +163,18 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 else {
                     UIApplication.shared.openURL(url)
                 }
-=======
-            if let url = URL(string: "tel://\(phone[row].replacingOccurrences(of: " ", with: ""))") {
-                print(url)
-                if #available(iOS 10, *) { UIApplication.shared.open(url) }
-                else { UIApplication.shared.openURL(url) }
-            }
-            
-        case 2:
-            if let url = URL(string: "tel://\(fax[row].replacingOccurrences(of: " ", with: ""))") {
-                print(url)
-                if #available(iOS 10, *) { UIApplication.shared.open(url) }
-                else { UIApplication.shared.openURL(url) }
->>>>>>> aaeb7008d45018b25d41b95b4497f3c74e5c321d
             }
             
         case 3:
-            if !MFMailComposeViewController.canSendMail() {
-<<<<<<< HEAD
-                let cannotSendAlert = UIAlertController(title: "Mail services are not available.", message: nil, preferredStyle: .alert)
-=======
-                let cannotSendAlert = UIAlertController(title: "ERROR", message: "Mail services are not available.", preferredStyle: .alert)
->>>>>>> aaeb7008d45018b25d41b95b4497f3c74e5c321d
+            if !MFMailComposeViewController.canSendMail() {let cannotSendAlert = UIAlertController(title: "ERROR", message: "Mail services are not available.", preferredStyle: .alert)
                 cannotSendAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 present(cannotSendAlert, animated: true)
             } else {
                 let composeVC = MFMailComposeViewController()
-<<<<<<< HEAD
-                composeVC.mailComposeDelegate = self as? MFMailComposeViewControllerDelegate
-                composeVC.setToRecipients(["\(email[row])"])
-                composeVC.setSubject("Hello!")
-                composeVC.setMessageBody("", isHTML: false)
-=======
                 composeVC.mailComposeDelegate = self
                 composeVC.setToRecipients(["\(email[row])"])
                 composeVC.setSubject("Hello!")
                 composeVC.setMessageBody("\n", isHTML: false)
->>>>>>> aaeb7008d45018b25d41b95b4497f3c74e5c321d
                 self.present(composeVC, animated: true, completion: nil)
             }
             

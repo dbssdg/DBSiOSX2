@@ -222,6 +222,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let mailAlert = UIAlertController(title: "ERROR", message: nil, preferredStyle : .alert)
             mailAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
+            
+            
             if !MFMailComposeViewController.canSendMail() {
                 print("Mail services are not available")
                 
@@ -229,16 +231,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 present(mailAlert, animated: true)
                 return
             }
-            var toRecipents = ["dbssdg@gmail.com"]
+            var toRecipients = ["dbssdg@gmail.com"]
+            var toRecipients2 = ["ansonieung1086@gmail.com"]
             var subject = "Report A Bug"
             var mc = MFMailComposeViewController()
+        
             mc.mailComposeDelegate = self
-            mc.setToRecipients(toRecipents)
+            mc.setToRecipients(toRecipients)
+            mc.setCcRecipients(toRecipients2)
             mc.setSubject(subject)
             
             self.present(mc, animated: true, completion: nil)
-            
-            
             
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
                 
@@ -260,14 +263,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 case MFMailComposeResult.sent.rawValue:
                     print("Sent")
 //                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
-                    mc.isEditing = false
+                    //mc.isEditing = false
                     mailAlert.message = "Your mail has been sent."
                     
                 default:
                     print("uh oh")
                     break
                 }
-                self.dismiss(animated: true, completion: nil)
+                controller.dismiss(animated: true, completion: nil)
                 present(mailAlert, animated: true)
             }
             
@@ -335,8 +338,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.selectionStyle = .none
         return cell
     }
-    
+
     func teacherOrStudent() -> String {
+
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
             return "s"
         }
