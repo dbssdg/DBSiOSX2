@@ -93,35 +93,34 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return cell
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var teacherMail = String()
-        if isSearching { teacherMail = filteredTeachers[indexPath.row] }
-        else { teacherMail = teacherArray[indexPath.row] }
-        teacherMail.removeLast()
-        while teacherMail.count > 3  { teacherMail.removeFirst() }
-        if "\(teacherMail.first!)" == "(" { teacherMail.removeFirst() }
-        teacherMail = "dbs\(teacherMail.lowercased())@dbs.edu.hk"
-        
-        func configureMailController() -> MFMailComposeViewController {
-            let mailComposerViewController = MFMailComposeViewController()
-            mailComposerViewController.mailComposeDelegate = self
-            mailComposerViewController.setToRecipients([teacherMail])
-            mailComposerViewController.setSubject("")
-            mailComposerViewController.setMessageBody("Dear", isHTML: false)
-            return mailComposerViewController
-        }
-        func sendMail() {
-            let mailComposeViewController = configureMailController()
-            if MFMailComposeViewController.canSendMail() {
-                present(mailComposeViewController, animated: true, completion: nil)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let email = UITableViewRowAction(style: .normal, title: "Email") { action, index in
+            var teacherMail = String()
+            if self.isSearching { teacherMail = self.filteredTeachers[indexPath.row] }
+            else { teacherMail = self.teacherArray[indexPath.row] }
+            teacherMail.removeLast()
+            while teacherMail.count > 3  { teacherMail.removeFirst() }
+            if "\(teacherMail.first!)" == "(" { teacherMail.removeFirst() }
+            teacherMail = "dbs\(teacherMail.lowercased())@dbs.edu.hk"
+            
+            if !MFMailComposeViewController.canSendMail() {
+                let cannotSendAlert = UIAlertController(title: "ERROR", message: "Mail services are not available.", preferredStyle: .alert)
+                cannotSendAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(cannotSendAlert, animated: true)
             } else {
-                let networkAlert = UIAlertController(title: "ERROR", message: "Please check your mail availability.", preferredStyle: .alert)
-                networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                present(networkAlert, animated: true)
-                print("CAN'T SEND EMAIL")
+                let composeVC = MFMailComposeViewController()
+                composeVC.mailComposeDelegate = self
+                composeVC.setToRecipients([teacherMail])
+                composeVC.setSubject("")
+                composeVC.setMessageBody("Dear ", isHTML: false)
+                self.present(composeVC, animated: true, completion: nil)
             }
         }
-        print(teacherMail)
+        email.backgroundColor = UIColor(red: 67/255, green: 132/255, blue: 247/255, alpha: 1)
+        return [email]
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

@@ -42,7 +42,7 @@ var albumSelected = 0
 var photoToken = String()
 var albumAlbum : AlbumCollection?
 
-class albumViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, TwicketSegmentedControlDelegate {
+class albumViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerPreviewingDelegate, TwicketSegmentedControlDelegate {
 
     var selectedSegment = 0
     @IBOutlet weak var videoTable: UITableView!
@@ -147,6 +147,9 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         layout.minimumLineSpacing = 0
         albumCollection!.collectionViewLayout = layout
         
+        self.registerForPreviewing(with: self, sourceView: albumCollection)
+        self.registerForPreviewing(with: self, sourceView: videoTable)
+        
         didSelect(0)
         setUpSegmentedControl()
         if #available(iOS 11.0, *) {
@@ -204,7 +207,6 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")
         if let url = NSURL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/") {
             print(url)
             UIApplication.shared.openURL(url as URL)
@@ -213,6 +215,36 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoCell") as! videoTableViewCell
         return cell.thumbnail.frame.height + 16
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if previewingContext.sourceView == albumCollection {
+            guard let indexPath = videoTable.indexPathForRow(at: location) else {
+                return nil
+            }
+            albumSelected = indexPath.row
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Photo Collection") as! photoCollectionViewController
+            return destViewController
+        } else if previewingContext.sourceView == videoTable {
+            guard let indexPath = videoTable.indexPathForRow(at: location) else {
+                return nil
+            }
+            let url = NSURL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")
+            let webView = UIWebView()
+            let webVC = UIViewController()
+            webVC.view.frame = self.view.frame
+            webView.frame = webVC.view.frame
+            webView.scalesPageToFit = true
+            webView.loadRequest(URLRequest(url: url as! URL))
+            webVC.view.addSubview(webView)
+            return webVC
+        }
+        return nil
+    }
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        if previewingContext.sourceView == albumCollection {
+            navigationController?.pushViewController(viewControllerToCommit, animated: true)
+        }
     }
     
     func didSelect(_ segmentIndex: Int) {
@@ -250,7 +282,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setUpSegmentedControl() {
         let titles = ["Photos", "Videos"]
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height - (tabBarController?.tabBar.frame.height)! - 40, width: self.view.frame.width * 0.9, height: 40)
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.9, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
