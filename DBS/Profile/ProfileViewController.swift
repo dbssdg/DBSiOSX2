@@ -232,7 +232,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 return
             }
             var toRecipients = ["dbssdg@gmail.com"]
-            var toRecipients2 = ["ansonieung1086@gmail.com"]
+            var toRecipients2 = ["kevinlauofficial01@gmail.com"]
             var subject = "Report A Bug"
             var mc = MFMailComposeViewController()
         
@@ -242,10 +242,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             mc.setSubject(subject)
             
             self.present(mc, animated: true, completion: nil)
-            
+        
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
-                
-                
                 controller.dismiss(animated: true, completion: nil)
                 present(mailAlert, animated: true)
             }

@@ -802,7 +802,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                 if indexPath.row < 4 {
                     print(logInNumber)
-                    if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
+                    if tableView.tag == 10001 - logInNumber{
                         
                         if !array.isEmpty{
                             self.EventsAreLoaded = true
