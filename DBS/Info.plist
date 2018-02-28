@@ -41,7 +41,7 @@
 			<key>UIApplicationShortcutItemIconFile</key>
 			<string>upcomingB&amp;W</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Upcoming</string>
+			<string>Calendar</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>hk.edu.dbs.cl.DBS.calendar</string>
 		</dict>

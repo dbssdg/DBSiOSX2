@@ -9,6 +9,7 @@
 import UIKit
 import JTAppleCalendar
 import CSVImporter
+import SystemConfiguration
 
 enum EventTypes{
     case SE,PH,SH
@@ -95,6 +96,43 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var DaysStack: UIStackView!
     
+    func WillAddCalendar(acrion: UIAlertAction){
+        let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
+        let url = URL(string: StringURL)!
+        if isInternetAvailable(){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }else{
+            let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+            networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(networkAlert, animated: true)
+        }
+    }
+    
+    func ShareCalendar(action: UIAlertAction){
+        let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
+        let url = URL(string: StringURL)!
+        let ActivityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(ActivityController, animated: true, completion: nil)
+    }
+    func ActionSheetFunc(){
+        //Actions
+        let AddCalendarAction = UIAlertAction(title: "Add Calendar to Phone", style: .default, handler: WillAddCalendar)
+        let ShareAction = UIAlertAction(title: "Share Calendar", style: .default, handler: ShareCalendar)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        
+        //Action Sheet
+        let ActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ActionSheet.addAction(AddCalendarAction)
+        ActionSheet.addAction(ShareAction)
+        ActionSheet.addAction(CancelAction)
+        present(ActionSheet, animated: true)
+    }
+    
+    func AllEvents(){
+        performSegue(withIdentifier: "Calendar to All Events", sender: self)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,6 +185,12 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CalendarView.selectDates([Date()])
         
         TodayButton(self)
+        
+        let AddCalendar = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ActionSheetFunc))
+        
+        let AllEvents = UIBarButtonItem(title: "All Events", style: .plain, target: self, action: #selector(self.AllEvents))
+        
+        self.navigationItem.rightBarButtonItems = [AddCalendar, AllEvents]
         
     }
     
@@ -448,6 +492,28 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     }
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
+    
+    
+    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
     
 }

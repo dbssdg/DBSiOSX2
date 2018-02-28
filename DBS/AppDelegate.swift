@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initialVC = storyboard.instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.calendar" {
-            initialVC = storyboard.instantiateViewController(withIdentifier: "All Events") as! AllEventsTableViewController as UIViewController
+            initialVC = storyboard.instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
             
         } else if shortcutItem.type == "hk.edu.dbs.cl.DBS.schoolrules" {
             initialVC = storyboard.instantiateViewController(withIdentifier: "School Rules") as! SchoolRulesViewController

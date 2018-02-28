@@ -245,31 +245,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
                 
-                print("did finish")
-                switch result.rawValue {
-                    
-                case MFMailComposeResult.cancelled.rawValue:
-                    print("Cancelled")
-                    mailAlert.message = "Your mail has been cancelled."
-                    
-                case MFMailComposeResult.failed.rawValue:
-                    print("Failed")
-                    mailAlert.message = "Your mail has been failed."
-                    
-                case MFMailComposeResult.saved.rawValue:
-                    print("Saved")
-                    mailAlert.message = "Your mail has been saved."
-                    
-                case MFMailComposeResult.sent.rawValue:
-                    print("Sent")
-//                    mc.setMessageBody("\(UserDefaults.standard.array(forKey: "profileData")![0...2])", isHTML: false)
-                    //mc.isEditing = false
-                    mailAlert.message = "Your mail has been sent."
-                    
-                default:
-                    print("uh oh")
-                    break
-                }
+                
                 controller.dismiss(animated: true, completion: nil)
                 present(mailAlert, animated: true)
             }

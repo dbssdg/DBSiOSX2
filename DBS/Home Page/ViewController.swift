@@ -410,6 +410,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         self.view.addSubview(BandView)
         
         
+        //Arrows
+        //Left Arrow
+        
+        
+        //Right Arrow
+        
+        
         
         var i = 0
         for data in arrayData{
@@ -440,7 +447,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             label.backgroundColor = self.view.backgroundColor
             label.sizeToFit()
             label.layer.zPosition = 100
-            label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.15
+            label.frame.origin.x = self.scrollView.viewWithTag(i + self.viewTagValue)!.frame.origin.x + self.view.frame.width * 0.2
             
             
             
@@ -793,7 +800,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             array = EventsFromNow
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
                 
-                if indexPath.row < 4{
+                if indexPath.row < 4 {
+                    print(logInNumber)
                     if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
                         
                         if !array.isEmpty{
@@ -1098,9 +1106,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
-        
+        print(LoggedIn, loginID, UserInformation)
         if LoggedIn && loginID != "" {
-            if UserInformation.count == 5{
+            if UserInformation.count >= 5 {
                 return "s"
             }
             
@@ -1111,6 +1119,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
+        print(teacherOrStudent() == "" ? "Teacher" : "Student")
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x

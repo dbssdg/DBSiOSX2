@@ -414,9 +414,6 @@
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="All Events"/>
-                                <connections>
-                                    <segue destination="d5R-mF-2dh" kind="show" id="225-9V-9cR"/>
-                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -430,6 +427,7 @@
                         <outlet property="todayButton" destination="dIH-cu-ApL" id="bg4-lr-8h3"/>
                         <outlet property="year" destination="P9t-cH-JZs" id="tUN-PT-Yac"/>
                         <segue destination="GKf-43-pr9" kind="show" identifier="Detail Event" id="2fI-rG-aNj"/>
+                        <segue destination="d5R-mF-2dh" kind="show" identifier="Calendar to All Events" id="9mC-AT-bKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O1e-xg-Egb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3093,7 +3091,7 @@ Title</string>
     <inferredMetricsTieBreakers>
         <segue reference="SLH-E1-IId"/>
         <segue reference="ZX2-rL-u3a"/>
-        <segue reference="225-9V-9cR"/>
+        <segue reference="9mC-AT-bKI"/>
         <segue reference="kVF-5A-evd"/>
         <segue reference="2fI-rG-aNj"/>
         <segue reference="NGb-v2-BUs"/>
