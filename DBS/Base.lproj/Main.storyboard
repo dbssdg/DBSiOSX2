@@ -1318,6 +1318,42 @@
             </objects>
             <point key="canvasLocation" x="2703" y="4378"/>
         </scene>
+        <!--Adoption of Timetable-->
+        <scene sceneID="Y55-XV-8aC">
+            <objects>
+                <viewController title="Adoption of Timetable" id="dwX-Ke-dgq" customClass="timetableNoticeViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="djH-Am-0c6"/>
+                        <viewControllerLayoutGuide type="bottom" id="LPW-JT-kuF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d5W-GZ-mab">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="x8u-Ef-T04">
+                                <rect key="frame" x="16" y="64" width="343" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="x8u-Ef-T04" firstAttribute="leading" secondItem="d5W-GZ-mab" secondAttribute="leadingMargin" id="1wk-EJ-rde"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="x8u-Ef-T04" secondAttribute="trailing" id="Gud-en-czt"/>
+                            <constraint firstItem="x8u-Ef-T04" firstAttribute="top" secondItem="djH-Am-0c6" secondAttribute="bottom" id="ehi-Pe-8qv"/>
+                            <constraint firstItem="LPW-JT-kuF" firstAttribute="top" secondItem="x8u-Ef-T04" secondAttribute="bottom" id="qKY-Ab-Rnf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="x8u-Ef-T04" id="Ex7-5r-s5R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dFL-yM-VeM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4652" y="3654"/>
+        </scene>
         <!--Acknowledgements-->
         <scene sceneID="Wfk-kS-9fR">
             <objects>
@@ -2058,6 +2094,7 @@ And love to all men 'neath the sun.</string>
                     </view>
                     <connections>
                         <outlet property="timetableTable" destination="xiW-UD-ou4" id="f8S-ra-vh3"/>
+                        <segue destination="dwX-Ke-dgq" kind="show" identifier="Timetable Notice" id="Yrl-N3-dAe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQg-rj-wFn" userLabel="First Responder" sceneMemberID="firstResponder"/>

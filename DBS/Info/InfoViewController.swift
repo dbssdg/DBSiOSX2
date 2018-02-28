@@ -151,12 +151,10 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.isUserInteractionEnabled = true
         
-        if indexPath.row == 6{
+        if indexPath.row == 6 {
             print(cell.isUserInteractionEnabled)
             cell.isSelected = true
         }
-        
-        
         
         return cell
     }
@@ -177,7 +175,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
         if functions[indexPath.row] == "Classmates" && loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Please login before you see your classmates.", preferredStyle: .alert)
             loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -187,6 +184,9 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             performSegue(withIdentifier: "\(functions[indexPath.row]) Segue", sender: self)
         }
+        
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .default
     }
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {

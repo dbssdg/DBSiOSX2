@@ -258,6 +258,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             performSegue(withIdentifier: "News Segue", sender: self)
         
         }
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .default
     }
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {

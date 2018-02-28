@@ -52,11 +52,24 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         setUpSegmentedControl()
         self.title = timetableChoice
+        timetableTable.separatorColor = UIColor.gray
+        timetableTable.separatorStyle = .singleLineEtched
+        
 //        selectedSegment = 1
         
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
         func backToInfoPage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToInfoPage))
+        
+        let noticeButton = UIBarButtonItem(title: "Notice", style: .plain, target: self, action: #selector(notice))
+        self.navigationItem.rightBarButtonItem = noticeButton
+        
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        self.view.addSubview(spinner)
         
         group = "\(timetableChoice.last!)"
         form = timetableChoice
@@ -73,10 +86,12 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
                     if data != nil {
-                    timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
+                        timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
                     }
                     
                     DispatchQueue.main.async {
+                        spinner.stopAnimating()
+                        
                         if timetable?.timetable.`class`.count == 0 {
                             self.present(networkAlert, animated: true)
                         }
@@ -97,6 +112,16 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    func notice() {
+        performSegue(withIdentifier: "Timetable Notice", sender: self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
