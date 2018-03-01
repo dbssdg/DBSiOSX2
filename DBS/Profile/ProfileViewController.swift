@@ -53,10 +53,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             userInfo.dataSource = self
             userInfo.delegate = self
+            profileData.removeAll()
             
             let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
             print(jsonURL)
             let url = URL(string: jsonURL)
+            
             
             if isInternetAvailable() {
                 
@@ -172,6 +174,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             print(userInfo["hash"]!!)
                             
                             DispatchQueue.main.async {
+                                UserInformation.removeAll()
                                 let first = "\(loginAlert.textFields![0].text!)"
                                 let second = "\(loginAlert.textFields![1].text!)"
                                 if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG" {
@@ -274,7 +277,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         actionSheet.addAction(UIAlertAction(title: "Report A Bug", style: .default, handler: reportBug))
-        if isInternetAvailable() && studentImage != nil && teacherOrStudent() == "s" {
+        if isInternetAvailable() && studentImage?.image != UIImage(named: "StudentBig") && teacherOrStudent() == "s" {
             actionSheet.addAction(UIAlertAction(title: "Download Student Image", style: .default, handler: downloadStudentImage))
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))

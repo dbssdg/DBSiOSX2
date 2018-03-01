@@ -331,6 +331,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
     }
     
+    func ScrollLeft(){
+        if self.scrollView.contentOffset.x != 0{
+            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x - self.view.frame.width,y :0), animated: true)
+        }
+    }
+    
+    func ScrollRight(){
+        if self.scrollView.contentOffset.x != self.scrollView.contentSize.width - self.view.frame.width{
+            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x + self.view.frame.width,y :0), animated: true)
+        }
+    }
+    
     func UISetup(){
         
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
@@ -412,11 +424,52 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Arrows
         //Left Arrow
+        let LeftArrrowImage = #imageLiteral(resourceName: "Arrow")
+        let LeftArrowImageView = UIImageView()
+        LeftArrowImageView.image = LeftArrrowImage
+        
+        let LeftArrow = UIButton()
+        
+        LeftArrow.frame.size.height = BandView.frame.height
+        LeftArrow.frame.size.width = LeftArrow.frame.height / 2
+        LeftArrow.frame.origin.y = BandView.frame.origin.y
+        LeftArrow.frame.origin.x = 0
+        
+        LeftArrow.layer.zPosition = 100000
+        LeftArrow.backgroundColor = self.view.backgroundColor
+        
+        var tintableImage = LeftArrrowImage.withRenderingMode(.alwaysTemplate)
+        LeftArrow.setImage(tintableImage, for: .normal)
+        LeftArrow.imageView?.tintColor = UIColor.white
+        //LeftArrow.imageView?.tintColor
+        LeftArrow.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi))
+        
+        LeftArrow.addTarget(self, action: #selector(ScrollLeft), for: .touchUpInside)
+        
+        self.view.addSubview(LeftArrow)
         
         
         //Right Arrow
+        let RightArrowImage = #imageLiteral(resourceName: "Arrow")
+        let RightArrowImageView = UIImageView()
+        RightArrowImageView.image = RightArrowImage
         
         
+        let RightArrow = UIButton()
+        
+        RightArrow.frame.size.height = BandView.frame.height
+        RightArrow.frame.size.width = RightArrow.frame.height / 2
+        RightArrow.frame.origin.y = BandView.frame.origin.y
+        RightArrow.frame.origin.x = self.view.frame.width - RightArrow.frame.width
+        
+        RightArrow.layer.zPosition = 100000
+        RightArrow.backgroundColor = self.view.backgroundColor
+        
+        tintableImage = RightArrowImage.withRenderingMode(.alwaysTemplate)
+        RightArrow.setImage(tintableImage, for: .normal)
+        RightArrow.imageView?.tintColor = UIColor.white
+        
+        self.view.addSubview(RightArrow)
         
         var i = 0
         for data in arrayData{
