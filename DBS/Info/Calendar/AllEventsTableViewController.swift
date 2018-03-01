@@ -24,8 +24,18 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
 
         EventsSearch.searchBar.delegate = self
         
+        let calendar = Calendar(identifier: .gregorian)
+        
+        tableView.frame = self.view.frame
+        
+        if let y = self.navigationController?.navigationBar{
+            tableView.frame.origin.y = y.frame.height
+        }else{
+            tableView.frame.origin.y = self.view.frame.height * 0.1
+        }
+        
         for event in EventsArray{
-            if event.EndDate >= Date(){
+            if event.EndDate >= Date() || (calendar.isDateInToday(event.EndDate)){
                 EventsFromNow += [event]
             }
             
@@ -61,7 +71,11 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
         self.registerForPreviewing(with: self, sourceView: tableView)
         
         if !EventsFromNow.isEmpty{
+            if NextEventindexPath != [0,0]{
+            tableView.scrollToRow(at: [NextEventindexPath.row - 1, 0], at: .top, animated: false)
+            }else{
             tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
+            }
         }
         
     }

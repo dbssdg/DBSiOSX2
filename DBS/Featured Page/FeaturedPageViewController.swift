@@ -201,7 +201,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy"
                         if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
-                            cell.detailTextLabel?.text = ""
+                            cell.detailTextLabel?.text = "Pinned"
+                            cell.detailTextLabel?.textColor = UIColor.orange
                         } else {
                             cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
                         }

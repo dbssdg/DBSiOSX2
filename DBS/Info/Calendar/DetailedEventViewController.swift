@@ -69,15 +69,15 @@ class DetailedEventViewController: UIViewController {
         
         
         //Days to Go
-        var WeeksFromNow = Calendar.current.dateComponents([.weekOfYear], from: Date(), to: Event.StartDate).weekOfYear! + 1
-        var DaysFromNow = Calendar.current.dateComponents([.day], from: Date(), to: Event.StartDate).day! + 1
+        let WeeksFromNow = Calendar.current.dateComponents([.weekOfYear], from: Date(), to: Event.StartDate).weekOfYear! + 1
+        let DaysFromNow = Calendar.current.dateComponents([.day], from: Date(), to: Event.StartDate).day! + 1
         print(DaysFromNow, "Days from now")
-        var calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar(identifier: .gregorian)
         //let Today = calendar.da
-        
+        print(calendar.isDateInToday(Event.EndDate))
         if Event.EndDate < Date() && !calendar.isDateInToday(Event.EndDate){
             DaysToGo.text = "\(Event.Title) is over"
-        }else if (Event.StartDate <= Date() && Event.EndDate >= Date()) || DaysFromNow == 0{
+        }else if (Event.StartDate <= Date() && Event.EndDate >= Date()) || DaysFromNow == 0 || calendar.isDateInToday(Event.StartDate) || calendar.isDateInToday(Event.EndDate){
             DaysToGo.text = "It is now \(Event.Title)"
         }else if DaysFromNow == 1{
             DaysToGo.text = "1 more day before \(Event.Title)"

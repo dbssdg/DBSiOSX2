@@ -213,8 +213,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
-                
-        print(timetableChoice)
         
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
         let url = URL(string: jsonURL)
@@ -740,13 +738,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         out = "Activity Period   "
                     }
                     out.removeLast(3)
-                    //out = out.capitalized
                     if out.count > 25{
                         isElective = true
                         out = "Elective"
                     }
+                let UpperCaseArray = ["FIS", "MACO", "MAM1", "MAM2", "BAFS", "D&T", "I&D", "ICT"]
                 
-                out = out.capitalized
+                if !UpperCaseArray.contains(out){
+                    out = out.capitalized
+                }
                 
                 cell.textLabel?.text = out
                 cell.textLabel?.adjustsFontSizeToFitWidth = true
@@ -801,7 +801,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
                 
                 if indexPath.row < 4 {
-                    print(logInNumber)
                     if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
                         
                         if !array.isEmpty{
@@ -1106,9 +1105,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
-        print(LoggedIn, loginID, UserInformation)
         if LoggedIn && loginID != "" {
-            if UserInformation.count >= 5 {
+            if UserInformation.count >= 5 && UserInformation.count % 3 != 0{
                 return "s"
             }
             
@@ -1119,7 +1117,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        print(teacherOrStudent() == "" ? "Teacher" : "Student")
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
@@ -1284,6 +1281,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        CurrentTableIndex = Int(pageNumber)
+        (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
+        
         if EventsArray.isEmpty || timetable == nil{
             DispatchQueue.main.async {
                 self.array = self.eventsArray
