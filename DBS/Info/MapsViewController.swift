@@ -27,7 +27,33 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         
         ScrollView.maximumZoomScale = 10.0
         ScrollView.minimumZoomScale = 1.0
+        
+        //Double Tap
+        let doubleTapGest = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapScrollView(recognizer:)))
+        doubleTapGest.numberOfTapsRequired = 2
+        ScrollView.addGestureRecognizer(doubleTapGest)
+        
+        
     }
+    
+    func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
+        if ScrollView.zoomScale <= 1 {
+            ScrollView.zoom(to: zoomRectForScale(scale: ScrollView.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
+        } else {
+            ScrollView.setZoomScale(1, animated: true)
+        }
+    }
+    
+    func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
+        var zoomRect = CGRect.zero
+        zoomRect.size.height = MapImage.frame.size.height / scale
+        zoomRect.size.width  = MapImage.frame.size.width  / scale
+        let newCenter = MapImage.convert(center, from: ScrollView)
+        zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2.0)
+        zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2.0)
+        return zoomRect
+    }
+    
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         var zoomRect = CGRect()
