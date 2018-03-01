@@ -213,9 +213,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
-                
-        print(timetableChoice)
-        
+            
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
         let url = URL(string: jsonURL)
             DispatchQueue.main.async {
@@ -332,14 +330,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ScrollLeft(){
-        if self.scrollView.contentOffset.x != 0{
-            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x - self.view.frame.width,y :0), animated: true)
+        if self.scrollView.contentOffset.x >= self.view.frame.width{
+            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x - self.view.frame.width,y :0), animated: false)
         }
     }
     
     func ScrollRight(){
-        if self.scrollView.contentOffset.x != self.scrollView.contentSize.width - self.view.frame.width{
-            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x + self.view.frame.width,y :0), animated: true)
+        if self.scrollView.contentOffset.x < self.scrollView.contentSize.width - self.view.frame.width{
+            self.scrollView.setContentOffset(CGPoint(x: self.scrollView.contentOffset.x + self.view.frame.width,y :0), animated: false)
         }
     }
     
@@ -440,14 +438,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var tintableImage = LeftArrrowImage.withRenderingMode(.alwaysTemplate)
         LeftArrow.setImage(tintableImage, for: .normal)
-        LeftArrow.imageView?.tintColor = UIColor.white
-        //LeftArrow.imageView?.tintColor
+        LeftArrow.imageView?.tintColor = UIColor.white.withAlphaComponent(0.6)
         LeftArrow.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi))
         
         LeftArrow.addTarget(self, action: #selector(ScrollLeft), for: .touchUpInside)
         
-        self.view.addSubview(LeftArrow)
+        LeftArrow.tag = 50000
         
+        self.view.addSubview(LeftArrow)
+        print(LeftArrow.imageView?.tintColor)
         
         //Right Arrow
         let RightArrowImage = #imageLiteral(resourceName: "Arrow")
@@ -467,7 +466,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         tintableImage = RightArrowImage.withRenderingMode(.alwaysTemplate)
         RightArrow.setImage(tintableImage, for: .normal)
-        RightArrow.imageView?.tintColor = UIColor.white
+        RightArrow.imageView?.tintColor = UIColor.white.withAlphaComponent(0.6)
+        
+        RightArrow.tag = 60000
+        
+        RightArrow.addTarget(self, action: #selector(ScrollRight), for: .touchUpInside)
         
         self.view.addSubview(RightArrow)
         
@@ -853,9 +856,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             array = EventsFromNow
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
                 
-                if indexPath.row < 4 {
-                    print(logInNumber)
-                    if tableView.tag == 10001 - logInNumber{
+                if indexPath.row < 4 {                    if tableView.tag == 10001 - logInNumber{
                         
                         if !array.isEmpty{
                             self.EventsAreLoaded = true
@@ -1159,7 +1160,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
-        print(LoggedIn, loginID, UserInformation)
+        
         if LoggedIn && loginID != "" {
             if UserInformation.count >= 5 {
                 return "s"
@@ -1172,7 +1173,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        print(teacherOrStudent() == "" ? "Teacher" : "Student")
+        
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
@@ -1355,19 +1356,45 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
-        /*
-        if scrollView == scrollView{
-            for i in 0..<scrollViewLoggedInData.count{
-                
-                
+        
+        
+        
+        if scrollView.contentOffset.x >= scrollView.contentSize.width - self.view.frame.height{
+            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = false
+            (self.view.viewWithTag(60000)! as! UIButton).isHidden = true
+            for i in self.view.subviews{
+                if i.tag == 60000{
+                    i.isHidden = true
+                }
             }
+        }else{
+            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
         }
- */
+        
+        if scrollView.contentOffset.x <= self.view.frame.width{
+            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
+            (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
+            for i in self.view.subviews{
+                if i.tag == 50000{
+                    i.isHidden = true
+                }
+            }
+        }else{
+            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+        }
+        
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)
         (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
+        
+        
+       
     }
     
 }
