@@ -1380,36 +1380,38 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         
-        
-        if scrollView.contentOffset.x >= scrollView.contentSize.width - self.view.frame.height{
-            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = false
-            (self.view.viewWithTag(60000)! as! UIButton).isHidden = true
-            for i in self.view.subviews{
-                if i.tag == 60000{
-                    i.isHidden = true
+        if scrollView == self.scrollView{
+            if scrollView.contentOffset.x >= scrollView.contentSize.width - self.view.frame.height{
+                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = false
+                (self.view.viewWithTag(60000)! as! UIButton).isHidden = true
+                for i in self.view.subviews{
+                    if i.tag == 60000{
+                        i.isHidden = true
+                    }
                 }
+            }else{
+                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
+                (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
+                (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
             }
-        }else{
-            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
-            (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
-            (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
-        }
-        
-        if scrollView.contentOffset.x < self.view.frame.width{
-            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
-            (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
-            for i in self.view.subviews{
-                if i.tag == 50000{
-                    i.isHidden = true
+            
+            if scrollView.contentOffset.x < self.view.frame.width{
+                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
+                (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
+                for i in self.view.subviews{
+                    if i.tag == 50000{
+                        i.isHidden = true
+                    }
                 }
+            }else{
+                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
+                (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
+                (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
             }
-        }else{
-            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
-            (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
-            (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
         }
-        
     }
+    
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)

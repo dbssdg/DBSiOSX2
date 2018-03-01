@@ -217,6 +217,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .portrait }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
     @IBAction func options(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -232,22 +236,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 mailAlert.message = "Mail services are not available."
                 present(mailAlert, animated: true)
-                return
-            }
-            var toRecipients = ["dbssdg@gmail.com"]
-            var toRecipients2 = ["kevinlauofficial01@gmail.com"]
-            var subject = "Report A Bug"
-            var mc = MFMailComposeViewController()
-        
-            mc.mailComposeDelegate = self
-            mc.setToRecipients(toRecipients)
-            mc.setCcRecipients(toRecipients2)
-            mc.setSubject(subject)
-            
-            self.present(mc, animated: true, completion: nil)
-        
-            func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
-                controller.dismiss(animated: true, completion: nil)
+                
+            }else{
+                let toRecipients = ["dbssdg@gmail.com"]
+                let toRecipients2 = ["kevinlauofficial01@gmail.com"]
+                let subject = "Report A Bug"
+                let mc = MFMailComposeViewController()
+                let reportMessage = ""
+                mc.mailComposeDelegate = self
+                mc.setToRecipients(toRecipients)
+                mc.setCcRecipients(toRecipients2)
+                mc.setMessageBody(reportMessage, isHTML: false)
+                mc.setSubject(subject)
+                
+                self.present(mc, animated: true, completion: nil)
             }
             
         }
