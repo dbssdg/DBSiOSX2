@@ -22,8 +22,13 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
+        
+        MapImage.frame.size.width = self.view.frame.width
+        MapImage.frame.size.height = #imageLiteral(resourceName: "Classroom Map").size.height / (#imageLiteral(resourceName: "Classroom Map").size.width / self.view.frame.width)
+        MapImage.center = self.view.center
+        MapImage.sizeThatFits(self.view.frame.size)
+        
         ScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        MapImage.frame = ScrollView.frame
         
         ScrollView.maximumZoomScale = 10.0
         ScrollView.minimumZoomScale = 1.0
