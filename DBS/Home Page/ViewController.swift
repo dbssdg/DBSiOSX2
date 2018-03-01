@@ -213,11 +213,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
-<<<<<<< HEAD
-        
-=======
             
->>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
         let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
         let url = URL(string: jsonURL)
             DispatchQueue.main.async {
@@ -450,7 +446,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         LeftArrow.tag = 50000
         
         self.view.addSubview(LeftArrow)
-        print(LeftArrow.imageView?.tintColor)
         
         //Right Arrow
         let RightArrowImage = #imageLiteral(resourceName: "Arrow")
@@ -703,8 +698,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             calendar.firstWeekday = -1
             
             let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-            let TimeBoundString = "16:00"
-            let formatter : DateFormatter = {
+                let _ : DateFormatter = {
                 let dateFormatter  = DateFormatter()
                 dateFormatter.timeZone = Calendar.current.timeZone
                 dateFormatter.locale = Calendar.current.locale
@@ -861,13 +855,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             array = EventsFromNow
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                
-<<<<<<< HEAD
+
                 if indexPath.row < 4 {
-                    if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
-=======
-                if indexPath.row < 4 {                    if tableView.tag == 10001 - logInNumber{
->>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
+                if tableView.tag == 10001 - logInNumber{
                         
                         if !array.isEmpty{
                             self.EventsAreLoaded = true
@@ -1171,10 +1161,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func teacherOrStudent() -> String {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
         if LoggedIn && loginID != "" {
             if UserInformation.count >= 5 && UserInformation.count % 3 != 0{
                 return "s"
@@ -1187,10 +1173,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-<<<<<<< HEAD
-=======
-        
->>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
         LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
@@ -1395,7 +1377,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
         }
         
-        if scrollView.contentOffset.x <= self.view.frame.width{
+        if scrollView.contentOffset.x < self.view.frame.width{
             (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
             (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
             for i in self.view.subviews{

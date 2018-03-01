@@ -284,11 +284,9 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setUpSegmentedControl() {
         let titles = ["Photos", "Videos"]
-<<<<<<< HEAD
+
         let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
-=======
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width * 0.9, height: 40)
->>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
+        
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
