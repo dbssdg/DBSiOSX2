@@ -248,7 +248,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
                 controller.dismiss(animated: true, completion: nil)
-                present(mailAlert, animated: true)
             }
             
         }
