@@ -266,6 +266,18 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func getImage(_ urlString: String, _ imageView: UIImageView) {
+        
+        let spinner = UIActivityIndicatorView()
+        spinner.frame = imageView.frame
+        spinner.activityIndicatorViewStyle = .white
+        spinner.center = CGPoint(x: imageView.frame.size.width / 2, y: imageView.frame.size.height / 2)
+        spinner.backgroundColor = UIColor.gray
+        spinner.layer.cornerRadius = 10
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        spinner.layer.zPosition = 100000
+        imageView.addSubview(spinner)
+        
         let url : URL = URL(string: urlString)!
         let session = URLSession.shared
         let task = session.dataTask(with: url, completionHandler: {
@@ -275,6 +287,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 if image != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = image
+                        spinner.stopAnimating()
                     })
                 }
             }
