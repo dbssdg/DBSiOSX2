@@ -252,6 +252,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
+            self.ParseAdoptionTimetable()
+            
             for i in TodayEvent{
                 self.CurrentDayEventsArray += [(Date(), i)]
             }
@@ -261,6 +263,27 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         
+    }
+    
+    func ParseAdoptionTimetable(){
+//        if let url = URL(string: "http://www.dbs.edu.hk/index.php?section=calendar&listall=1") {
+//            do {
+//                let html = try String(contentsOf: url)
+//                for i in html.split(separator: ">") {
+//                    if i.components(separatedBy: " adopts ").count  == 2 {
+//                        let String = (i.split(separator: "<")[0])
+//                        print(String)
+//                        //events(Title: i.split(separator: "<")[0], StartDate: <#T##Date#>, EndDate: <#T##Date#>, EventType: <#T##EventTypes#>)
+//                    }
+//                }
+//            }catch{
+//                print("ERROR")
+//            }
+//        }
+        let Formatter = DateFormatter()
+        Formatter.dateFormat = "dd MM yyyy"
+        
+        EventsArray += [events(Title: "30/4 Mon Adopts Tue Timetable", StartDate: Formatter.date(from: "30 04 2018")!, EndDate: Formatter.date(from: "30 04 2018")!, EventType: .SE), events(Title: "14/5 Mon Adopts Fri Timetable", StartDate: Formatter.date(from: "14 05 2018")!, EndDate: Formatter.date(from: "14 05 2018")!, EventType: .SE)]
     }
     
     func setUpCalendarView(){
