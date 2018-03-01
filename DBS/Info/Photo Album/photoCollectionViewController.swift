@@ -161,7 +161,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
             //previewingContext.sourceRect = destViewController.collectionView.frame
-            previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - (imageArray[photoSelected]?.size.height)! * 0.5), size: (imageArray[photoSelected]?.size)!)
+            let scale = (imageArray[photoSelected]?.size.width)! / self.view.frame.width
+            previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), size: CGSize(width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
+
             return destViewController
             
         }

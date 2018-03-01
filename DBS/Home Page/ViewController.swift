@@ -816,7 +816,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         isElective = true
                         out = "Elective"
                     }
-                let UpperCaseArray = ["FIS", "MACO", "MAM1", "MAM2", "BAFS", "D&T", "I&D", "ICT"]
+                let UpperCaseArray = ["FIS", "MACO", "MAM1", "MAM2", "BAFS", "D&T", "I&D", "ICT", "SCHD"]
                 
                 if !UpperCaseArray.contains(out){
                     out = out.capitalized
