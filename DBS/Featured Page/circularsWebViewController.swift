@@ -92,6 +92,7 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
         spinner.stopAnimating()
+        webView.isUserInteractionEnabled = true
     }
     
     func shareCircular() {
