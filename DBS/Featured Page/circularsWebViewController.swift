@@ -53,6 +53,7 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
         }
         
         circularWebView.scalesPageToFit = true
+        circularWebView.delegate = self
         setUpSegmentedControl()
         didSelect(0)
         
@@ -76,11 +77,21 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
         // Dispose of any resources that can be recreated.
     }
     
+    let spinner = UIActivityIndicatorView()
     func webViewDidStartLoad(_ webView: UIWebView) {
-        
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.activityIndicatorViewStyle = .white
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.backgroundColor = UIColor.gray
+        spinner.layer.cornerRadius = 10
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        spinner.layer.zPosition = 100000
+        self.view.addSubview(spinner)
+        webView.isUserInteractionEnabled = false
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        
+        spinner.stopAnimating()
     }
     
     func shareCircular() {

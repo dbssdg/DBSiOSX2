@@ -17,7 +17,7 @@ struct newsDetails : Decodable {
     let image : [String?]
 }
 
-class newsDetailViewController: UIViewController {
+class newsDetailViewController: UIViewController, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
 
     var news : newsDetails?
     
@@ -112,12 +112,9 @@ class newsDetailViewController: UIViewController {
             
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
-                    let startLoadTime = Date()
                     self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
-                    
                     DispatchQueue.main.async {
                         spinner.stopAnimating()
-                        print(Date(), startLoadTime)
 //                        if self.news == nil {
 //                            self.present(networkAlert, animated: true)
 //                        } else {
@@ -156,6 +153,27 @@ class newsDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    let progressView = UIProgressView()
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        print("ERROR")
+    }
+    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+        print("URL Session")
+        let uploadProgress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
+        progressView.frame = CGRect(x: 0, y: self.view.frame.height/2, width: self.view.frame.width, height: 10)
+        progressView.center = self.view.center
+        progressView.progress = 0
+        progressView.progress = uploadProgress
+        progressView.layer.borderWidth = 10
+        progressView.layer.zPosition = 100000
+        progressView.layer.borderColor = UIColor.black as! CGColor
+        self.view.addSubview(progressView)
+    }
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        progressView.isHidden = true
     }
     
     func getImage(_ urlStringOriginal: String, _ imageView: UIImageView) {
