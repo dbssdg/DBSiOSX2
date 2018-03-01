@@ -92,6 +92,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "linksCell")! as UITableViewCell
         cell.textLabel?.text = sectionData[indexPath.section]?[indexPath.row]
+        cell.textLabel?.numberOfLines = 0
         if selectedSegment == 2 {
             cell.selectionStyle = .none
         }
@@ -101,13 +102,31 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         switch selectedSegment {
         case 0:
             if let url = NSURL(string: "http://\(hyperlinks[indexPath.row])/") {
-                UIApplication.shared.openURL(url as URL)
+                UIApplication.shared.open(url as URL)
             }
         case 1:
             contactSelected(indexPath.section, indexPath.row)
         default: break
         }
+        if selectedSegment != 2 {
+            tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+            tableView.cellForRow(at: indexPath)?.selectionStyle = .default
+        }
     }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        if (indexPath.section == 1 || indexPath.section == 2) && selectedSegment == 1 {
+            let copy = UITableViewRowAction(style: .normal, title: "Copy") { action, index in
+                UIPasteboard.general.string = self.sectionData[indexPath.section]?[indexPath.row]
+            }
+            copy.backgroundColor = UIColor.gray
+            return [copy]
+        }
+        return []
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     func setUpSegmentedControl() {
         //Check if there is segmented Control
         var hasSegmentedControl = false
@@ -123,7 +142,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let frame = CGRect(x: 0, y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width, height: 40)
             let segmentedControl = TwicketSegmentedControl(frame: frame)
             segmentedControl.setSegmentItems(titles)
-            segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+            segmentedControl.delegate = self
             segmentedControl.tag = 100
             view.addSubview(segmentedControl)
         }

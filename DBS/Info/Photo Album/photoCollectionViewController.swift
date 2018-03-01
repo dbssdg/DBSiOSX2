@@ -155,11 +155,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         guard let indexPath = photoCollection.indexPathForItem(at: location) else{
              return nil
         }
-        
-        
-        
+        photoSelected = indexPath.row
+        print(location, indexPath)
         if imageArray[photoSelected] != nil {
-            photoSelected = indexPath.row
             
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
             //previewingContext.sourceRect = destViewController.collectionView.frame

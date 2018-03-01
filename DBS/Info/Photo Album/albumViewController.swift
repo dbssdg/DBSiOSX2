@@ -209,8 +209,10 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = NSURL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/") {
             print(url)
-            UIApplication.shared.openURL(url as URL)
+            UIApplication.shared.open(url as URL)
         }
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .default
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoCell") as! videoTableViewCell
@@ -282,7 +284,11 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setUpSegmentedControl() {
         let titles = ["Photos", "Videos"]
+<<<<<<< HEAD
         let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
+=======
+        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width * 0.9, height: 40)
+>>>>>>> 14b00ca11805b7477ac0cdda434024b8b076f930
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
         segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
