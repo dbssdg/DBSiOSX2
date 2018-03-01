@@ -202,7 +202,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         dateFormatter.dateFormat = "yyyy"
                         if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
                             cell.detailTextLabel?.text = "Pinned"
-                            cell.detailTextLabel?.textColor = UIColor.orange
                         } else {
                             cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
                         }
@@ -225,6 +224,12 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         cell.textLabel?.numberOfLines = 0
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
+        cell.detailTextLabel?.textColor = .black
+        
+        if cell.detailTextLabel?.text == "Pinned"{
+            cell.detailTextLabel?.textColor = UIColor.orange
+        }
+        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

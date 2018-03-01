@@ -234,6 +234,16 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
             
+            let CalendarCalendar = Calendar(identifier: .gregorian)
+            formatter.dateFormat = "dd MM yyyy"
+            
+            if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
+                DayToDisplay = 1
+            }
+            if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!){
+                DayToDisplay = 4
+            }
+            
             
             segmentedControl.move(to: DayToDisplay)
             selectedSegment = DayToDisplay
