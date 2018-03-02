@@ -97,7 +97,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
         getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
-        self.registerForPreviewing(with: self, sourceView: cell)
+        self.registerForPreviewing(with: self, sourceView: cell.contentView)
         return cell
     }
     
@@ -162,7 +162,13 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
             //previewingContext.sourceRect = destViewController.collectionView.frame
             let scale = (imageArray[photoSelected]?.size.width)! / self.view.frame.width
-            previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), size: CGSize(width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
+            //previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), size: CGSize(width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
+            previewingContext.sourceRect = CGRect(x: 0, y: (self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale)
+            let frame = CGRect(x: 0, y: 100, width: 100, height: 100)
+            previewingContext.sourceRect = frame
+            previewingContext.sourceRect = photoCollection.cellForItem(at: indexPath)!.frame
+            print(previewingContext.sourceRect, "Souce rect")
+            
 
             return destViewController
             

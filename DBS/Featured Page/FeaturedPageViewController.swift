@@ -226,7 +226,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         cell.accessoryType = .disclosureIndicator
         cell.detailTextLabel?.textColor = .black
         
-        if cell.detailTextLabel?.text == "Pinned"{
+        if cell.detailTextLabel?.text! == "Pinned"{
             cell.detailTextLabel?.textColor = UIColor.orange
         }
         

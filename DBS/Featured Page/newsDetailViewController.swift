@@ -110,7 +110,17 @@ class newsDetailViewController: UIViewController, URLSessionDelegate, URLSession
             spinner.hidesWhenStopped = true
             self.view.addSubview(spinner)
             
-            URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            let request = NSMutableURLRequest(url: url!)
+            request.httpMethod = "POST"
+            request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
+            
+            let configuration = URLSessionConfiguration.default
+            let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.main)
+//            session.setValue("Keep-Alive", forKey: "Connection")
+            
+//            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+            
+            session.dataTask(with: url!) { (data, response, error) in
                 do {
                     self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
                     DispatchQueue.main.async {
