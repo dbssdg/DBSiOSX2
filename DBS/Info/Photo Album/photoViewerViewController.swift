@@ -40,6 +40,13 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         self.navigationItem.rightBarButtonItem = shareButton
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
     }

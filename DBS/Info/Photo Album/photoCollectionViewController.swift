@@ -54,7 +54,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
 //                        for i in 0..<(self.photoAlbum?.data)!.count {
 //                            imageArray += [(self.photoCollection.cellForItem(at: [0, i]) as! photoCollectionViewCell).image.image!]
 //                        }
-                        for i in (self.photoAlbum?.data)! {
+                        for _ in (self.photoAlbum?.data)! {
                             imageArray += [nil]
                         }
                     }
@@ -108,24 +108,6 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
     }
     
-//    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-//        guard let indexPath = photoCollection.indexPathForItem(at: location) else {
-//            return nil
-//        }
-//        let detailViewController = ViewController()
-//        let imageView = UIImageView()
-//        if let x = (photoCollection.cellForItem(at: indexPath) as! photoCollectionViewCell).image.image {
-//            imageView.image = x
-//        } else {
-//            photoCollection.reloadData()
-//        }
-//        imageView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
-//        detailViewController.view.addSubview(imageView)
-//        return detailViewController
-//    }
-//    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-//        navigationController?.pushViewController(viewControllerToCommit, animated: true)
-//    }
     
     func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int){
         let url : URL = URL(string: urlString)!
@@ -160,18 +142,22 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         if imageArray[photoSelected] != nil {
             
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
-            //previewingContext.sourceRect = destViewController.collectionView.frame
-            let scale = (imageArray[photoSelected]?.size.width)! / self.view.frame.width
-            //previewingContext.sourceRect = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), size: CGSize(width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
-            previewingContext.sourceRect = CGRect(x: 0, y: (self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale)
-            let frame = CGRect(x: 0, y: 100, width: 100, height: 100)
-            previewingContext.sourceRect = frame
-            previewingContext.sourceRect = photoCollection.cellForItem(at: indexPath)!.frame
-            print(previewingContext.sourceRect, "Souce rect")
             
+            let scale = (imageArray[photoSelected]?.size.width)! / self.view.frame.width
+            //previewingContext.sourceRect = CGRect(x: 0, y: (self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
+            
+            destViewController.preferredContentSize = CGSize(width: 0.0, height: (imageArray[photoSelected]?.size.height)! / scale)
+            
+            //destViewController.collectionView!.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
+            
+            if let collection = destViewController.collectionView{
+                DispatchQueue.main.async {
+                    collection.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
+                }
+                print("scrolled to item")
+            }
 
             return destViewController
-            
         }
         
        return nil
