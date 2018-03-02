@@ -280,7 +280,6 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         spinner.activityIndicatorViewStyle = .white
         spinner.center = CGPoint(x: imageView.frame.size.width / 2, y: imageView.frame.size.height / 2)
         spinner.backgroundColor = UIColor.gray
-        spinner.layer.cornerRadius = 10
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         spinner.layer.zPosition = 100000

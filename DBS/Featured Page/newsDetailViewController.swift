@@ -17,7 +17,7 @@ struct newsDetails : Decodable {
     let image : [String?]
 }
 
-class newsDetailViewController: UIViewController, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
+class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSessionDataDelegate {
 
     var news : newsDetails?
     
@@ -55,8 +55,6 @@ class newsDetailViewController: UIViewController, URLSessionDelegate, URLSession
         self.newsImage.image = UIImage(named: "newsImage")
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-        } else {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex])", self.newsImage)
         }
         
         let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
@@ -114,8 +112,7 @@ class newsDetailViewController: UIViewController, URLSessionDelegate, URLSession
             request.httpMethod = "POST"
             request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
             
-            let configuration = URLSessionConfiguration.default
-            let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.main)
+            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
 //            session.setValue("Keep-Alive", forKey: "Connection")
             
 //            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
@@ -171,7 +168,7 @@ class newsDetailViewController: UIViewController, URLSessionDelegate, URLSession
         print("ERROR")
     }
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-        print("URL Session")
+        print("Did Send Body Data")
         let uploadProgress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
         progressView.frame = CGRect(x: 0, y: self.view.frame.height/2, width: self.view.frame.width, height: 10)
         progressView.center = self.view.center
@@ -183,6 +180,7 @@ class newsDetailViewController: UIViewController, URLSessionDelegate, URLSession
         self.view.addSubview(progressView)
     }
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        print("Did Receive Response")
         progressView.isHidden = true
     }
     
