@@ -61,9 +61,6 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         func backToInfoPage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToInfoPage))
         
-        let noticeButton = UIBarButtonItem(title: "Notice", style: .plain, target: self, action: #selector(notice))
-        self.navigationItem.rightBarButtonItem = noticeButton
-        
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         spinner.activityIndicatorViewStyle = .gray
         spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
@@ -114,10 +111,11 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let noticeButton = UIBarButtonItem(title: "Notice", style: .plain, target: self, action: #selector(notice))
+        self.navigationItem.rightBarButtonItem = noticeButton
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()

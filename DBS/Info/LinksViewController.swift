@@ -21,8 +21,8 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let contactSections = ["Address", "Phone", "Fax", "Email"]
     let stepsSections = ["Weekdays", "Saturdays", "Sundays"]
     
-    let links = ["DBS Homepage", "eClass", "qClass", "DBS Facebook", "Boarding School", "Software Development Group", "SDG Facebook"]
-    let hyperlinks = ["www.dbs.edu.hk", "eclass.dbs.edu.hk", "qclass.dbs.edu.hk", "zh-hk.facebook.com/hkdbs", "sites.google.com/site/dbsboarding/", "cl.dbs.edu.hk", "www.facebook.com/DBSSDG"]
+    let links = ["DBS Homepage", "eClass", "qClass", "DBS Facebook", "Boarding School", "SDG Facebook"]
+    let hyperlinks = ["www.dbs.edu.hk", "eclass.dbs.edu.hk", "qclass.dbs.edu.hk", "zh-hk.facebook.com/hkdbs", "sites.google.com/site/dbsboarding/", "www.facebook.com/DBSSDG"]
     
     let address = ["131 Argyle Street, Mong Kok, Kowloon"]
     let phone = ["2711 5191", "2711 5192"]
@@ -63,7 +63,10 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.title = "Links"
         case 1:
             sectionData = [0: address, 1: phone, 2: fax, 3: email]
-            self.title = "Contact"
+            self.title = "Swipe to the left to Copy."
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.title = "Contact"
+            })
         case 2:
             sectionData = [0: weekdays, 1: saturdays, 2: sundays]
             self.title = "Steps Opening Hours"
@@ -93,7 +96,9 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "linksCell")! as UITableViewCell
         cell.textLabel?.text = sectionData[indexPath.section]?[indexPath.row]
         cell.textLabel?.numberOfLines = 0
+        cell.accessoryType = .disclosureIndicator
         if selectedSegment == 2 {
+            cell.accessoryType = .none
             cell.selectionStyle = .none
         }
         return cell
@@ -114,7 +119,7 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if (indexPath.section == 1 || indexPath.section == 2) && selectedSegment == 1 {
+        if selectedSegment == 1 {
             let copy = UITableViewRowAction(style: .normal, title: "Copy") { action, index in
                 UIPasteboard.general.string = self.sectionData[indexPath.section]?[indexPath.row]
             }

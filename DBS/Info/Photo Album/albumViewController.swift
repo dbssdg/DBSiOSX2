@@ -66,6 +66,13 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         photoToken = ""
         albumAlbum = nil
         
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        self.view.addSubview(spinner)
+        
         if isInternetAvailable() {
         
             if let url = URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt") {
@@ -93,6 +100,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                                             
                                             DispatchQueue.main.async {
                                                 self.albumCollection.reloadData()
+                                                spinner.stopAnimating()
                                             }
                                             
                                         } catch {

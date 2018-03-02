@@ -77,6 +77,14 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
         teacherSearch.searchBar.placeholder = "Search for initials or names"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.title = "Swipe to the left to Email."
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.title = "Teachers"
+        })
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
             return filteredTeachers.count
