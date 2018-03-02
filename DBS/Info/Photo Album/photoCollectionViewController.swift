@@ -80,6 +80,8 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 1
         photoCollection!.collectionViewLayout = layout
+        
+        self.registerForPreviewing(with: self, sourceView: photoCollection!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,7 +99,6 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
         getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
-        self.registerForPreviewing(with: self, sourceView: cell.contentView)
         return cell
     }
     
@@ -143,12 +144,10 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "photoCollectionView") as! photoViewerViewController
             
-            let scale = (imageArray[photoSelected]?.size.width)! / self.view.frame.width
+            let scale = (imageArray[photoSelected]?.size.width)! / photoCollection!.frame.width
             //previewingContext.sourceRect = CGRect(x: 0, y: (self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
             
             destViewController.preferredContentSize = CGSize(width: 0.0, height: (imageArray[photoSelected]?.size.height)! / scale)
-            
-            //destViewController.collectionView!.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
             
             if let collection = destViewController.collectionView{
                 DispatchQueue.main.async {
