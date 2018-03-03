@@ -56,6 +56,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var month: UILabel!
     @IBOutlet weak var todayButton: UIButton!
     
+    var didScroll = false
+    
     @IBAction func TodayButton(_ sender: Any) {
         CalendarView.scrollToDate(Date())
         CalendarView.deselectAllDates()
@@ -182,7 +184,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CurrentDayEventsArray = [(Date, events)]()
         
         CalendarView.scrollToDate(Date())
-        CalendarView.selectDates([Date()])
+        
         
         TodayButton(self)
         
@@ -194,8 +196,9 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        CalendarView.selectDates([Date()])
     }
     
     func ParseCSV (){
@@ -660,7 +663,8 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
     }
    
     func calendarDidScroll(_ calendar: JTAppleCalendarView) {
-        //EventsTableView.reloadData()
+        didScroll = true
+        
         
     }
     
