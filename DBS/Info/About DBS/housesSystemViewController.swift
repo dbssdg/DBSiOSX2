@@ -134,6 +134,7 @@ Mr. Keith Lowcock
         }
         
         housesSystem.attributedText = attributedString
+        housesSystem.textAlignment = .justified
     }
 
     override func didReceiveMemoryWarning() {

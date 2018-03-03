@@ -29,7 +29,8 @@ class SchoolRulesViewController: UIViewController {
         schoolRulesTextView.isEditable = false
         schoolRulesTextView.isUserInteractionEnabled = true
         schoolRulesTextView.frame = CGRect(x: 10, y: self.view.frame.width * 0.4, width: self.view.frame.width-20, height: self.view.frame.height * 0.8)
-    schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        schoolRulesTextView.textAlignment = .justified
+        schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         
         self.title = nil
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
