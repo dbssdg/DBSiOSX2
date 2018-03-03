@@ -147,7 +147,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             let scale = (imageArray[photoSelected]?.size.width)! / photoCollection!.frame.width
             //previewingContext.sourceRect = CGRect(x: 0, y: (self.view.frame.height * 0.5 - ((imageArray[photoSelected]?.size.height)! / scale) * 0.5), width: self.view.frame.width, height: (imageArray[photoSelected]?.size.height)! / scale))
             
-            destViewController.preferredContentSize = CGSize(width: 0.0, height: (imageArray[photoSelected]?.size.height)! / scale)
+            destViewController.preferredContentSize = CGSize(width: 0.0, height: (imageArray[photoSelected]?.size.height)! / scale * 0.9)
             
             if let collection = destViewController.collectionView{
                 DispatchQueue.main.async {
