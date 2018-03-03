@@ -632,6 +632,13 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        
+        if didScroll{
+            calendar.deselect(dates: [CurrentDay])
+            didScroll = false
+            print("deselect", CurrentDay)
+        }
+        
         CurrentDay = date
         //calendar.deselectAllDates()
         //calendar.selectDates([date])
