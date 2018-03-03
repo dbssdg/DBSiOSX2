@@ -16,7 +16,7 @@ struct PhotoCollection : Decodable {
 var photoSelected = 0
 var imageArray = [UIImage?]()
 
-class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UIViewControllerPreviewingDelegate{
+class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate{
    
     
     
@@ -110,7 +110,18 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     
-    func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int){
+    func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int) {
+        
+        let spinner = UIActivityIndicatorView()
+        spinner.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.width/3)
+        spinner.activityIndicatorViewStyle = .white
+        spinner.center = CGPoint(x: spinner.frame.size.width / 2, y: spinner.frame.size.height / 2)
+        spinner.backgroundColor = UIColor.gray
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        spinner.layer.zPosition = 100000
+        imageView.addSubview(spinner)
+        
         let url : URL = URL(string: urlString)!
         let session = URLSession.shared
         let task = session.dataTask(with: url, completionHandler: {
@@ -120,7 +131,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if imageOut != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = imageOut
+                        print(index)
                         imageArray[index] = imageOut
+                        spinner.stopAnimating()
                     })
                 }
             } else {
