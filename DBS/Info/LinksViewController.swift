@@ -153,6 +153,29 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     func contactSelected(_ section: Int, _ row: Int) {
+        
+        let callAlert = UIAlertController(title: "Call", message: "Do you really want to call?", preferredStyle: .alert)
+        callAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        callAlert.addAction(UIAlertAction(title: "Call", style: .default, handler: { action in
+            if section == 1 {
+                if let url = URL(string: "tel://\(self.phone[row])"), UIApplication.shared.canOpenURL(url) {
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            } else if section == 2 {
+                if let url = URL(string: "tel://\(self.fax[row])"), UIApplication.shared.canOpenURL(url) {
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            }
+        }))
+        
         switch section {
         case 0:
             let latitude: CLLocationDegrees = 22.323583
@@ -170,23 +193,8 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             mapItem.name = "Diocesan Boys' School"
             mapItem.openInMaps(launchOptions: options)
             
-        case 1:
-            if let url = URL(string: "tel://\(phone[row])"), UIApplication.shared.canOpenURL(url) {
-                if #available(iOS 10, *) {
-                    UIApplication.shared.open(url)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
-            }
-            
-        case 2:
-            if let url = URL(string: "tel://\(fax[row])"), UIApplication.shared.canOpenURL(url) {
-                if #available(iOS 10, *) {
-                    UIApplication.shared.open(url)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
-            }
+        case 1, 2:
+            present(callAlert, animated: true)
             
         case 3:
             if !MFMailComposeViewController.canSendMail() {let cannotSendAlert = UIAlertController(title: "ERROR", message: "Mail services are not available.", preferredStyle: .alert)

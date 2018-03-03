@@ -75,7 +75,6 @@ class classmatesViewController: UIViewController {
     @IBAction func viewClassmates(_ sender: Any) {
         classmateChoice = classDisplay.text!
         print(classmateChoice)
-        viewDidLoad()
     }
     
     override func viewDidLoad() {
@@ -104,6 +103,11 @@ class classmatesViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewDidLoad()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

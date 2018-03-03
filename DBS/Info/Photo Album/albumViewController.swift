@@ -42,7 +42,7 @@ var albumSelected = 0
 var photoToken = String()
 var albumAlbum : AlbumCollection?
 
-class albumViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerPreviewingDelegate, TwicketSegmentedControlDelegate {
+class albumViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerPreviewingDelegate, UIWebViewDelegate, TwicketSegmentedControlDelegate {
 
     var selectedSegment = 0
     @IBOutlet weak var videoTable: UITableView!
@@ -174,7 +174,9 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
             navigationController?.navigationBar.prefersLargeTitles = false
         }
     }
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -229,7 +231,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         if previewingContext.sourceView == albumCollection {
-            guard let indexPath = videoTable.indexPathForRow(at: location) else {
+            guard let indexPath = albumCollection.indexPathForItem(at: location) else {
                 return nil
             }
             albumSelected = indexPath.row
@@ -239,13 +241,16 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
             guard let indexPath = videoTable.indexPathForRow(at: location) else {
                 return nil
             }
-            let url = URL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")!
-            let webView = UIWebView()
+            let url = URL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")
+            
             let webVC = UIViewController()
             webVC.view.frame = self.view.frame
+            
+            let webView = UIWebView()
+            webView.delegate = self as UIWebViewDelegate
             webView.frame = webVC.view.frame
             webView.scalesPageToFit = true
-            webView.loadRequest(URLRequest(url: url))
+            webView.loadRequest(URLRequest(url: url!))
             webVC.view.addSubview(webView)
             return webVC
         }
@@ -255,6 +260,18 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if previewingContext.sourceView == albumCollection {
             navigationController?.pushViewController(viewControllerToCommit, animated: true)
         }
+    }
+    
+    let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        webView.addSubview(spinner)
+    }
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        spinner.stopAnimating()
     }
     
     func didSelect(_ segmentIndex: Int) {
@@ -303,13 +320,13 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func setUpSegmentedControl() {
-        let titles = ["Photos", "Videos"]
+        let titles = ["Albums", "Videos"]
 
         let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
         
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+        segmentedControl.delegate = self
         segmentedControl.tag = 1
         view.addSubview(segmentedControl)
         

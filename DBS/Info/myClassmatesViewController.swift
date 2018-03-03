@@ -28,6 +28,13 @@ class myClassmatesViewController: UIViewController, UITableViewDelegate, UITable
         func backToChoosePage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToChoosePage))
         
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        self.view.addSubview(spinner)
+        
         if isInternetAvailable() {
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 do {
@@ -37,9 +44,7 @@ class myClassmatesViewController: UIViewController, UITableViewDelegate, UITable
                     }
                     
                     DispatchQueue.main.async {
-                        if self.myClassmates.count == 0 {
-                            self.present(networkAlert, animated: true)
-                        }
+                        spinner.stopAnimating()
                         self.myClassmatesTable.reloadData()
                     }
                 } catch {

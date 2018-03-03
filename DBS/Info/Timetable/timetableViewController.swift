@@ -77,7 +77,6 @@ class timetableViewController: UIViewController {
         timetableChoice = classDisplay.text!
         print(timetableChoice)
         performSegue(withIdentifier: "My Timetable", sender: self)
-        viewDidLoad()
     }
     
     override func viewDidLoad() {
@@ -104,6 +103,11 @@ class timetableViewController: UIViewController {
             navigationItem.largeTitleDisplayMode = .never
         }
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {
