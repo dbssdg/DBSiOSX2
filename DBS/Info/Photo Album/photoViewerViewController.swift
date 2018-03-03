@@ -68,8 +68,11 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
             
             cell.imgView.contentMode = .scaleAspectFit
             
+<<<<<<< HEAD
             print(cell.imgView.frame, "frame", self.view.frame.height)
             
+=======
+>>>>>>> 2a331db4dfbeeed881424d016c5013de03afa8a4
             cell.imgView.image = image
             
             let downGest = UISwipeGestureRecognizer(target: self, action: #selector(self.back(recognizer:)))

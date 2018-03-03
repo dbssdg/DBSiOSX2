@@ -175,6 +175,8 @@ class aboutDBSViewController: UIViewController {
         self.title = "Vision and Mission"
         vAndM(self)
         
+        information.textAlignment = .justified
+        
     }
 
     override func didReceiveMemoryWarning() {
