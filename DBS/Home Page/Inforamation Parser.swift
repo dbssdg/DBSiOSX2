@@ -11,28 +11,28 @@ import CSVImporter
 
 func EventParser() {
     
-    var temporary = [events]()
-    var a = [events]()
-    var b = 3
+    _ = [events]()
+    _ = [events]()
+    _ = 3
     
     let path = Bundle.main.path(forResource: "2017 - 2018 School Events New", ofType: "csv")!
 
     
     
     let importer = CSVImporter<[String: String]>(path: path)
-    let parser = importer.startImportingRecords(structure: { (headerValues) -> Void in
+    _ = importer.startImportingRecords(structure: { (headerValues) -> Void in
     }) { $0 }.onFinish { (importedRecords) in
         for record in importedRecords {
             
             
             
-            var formatter = DateFormatter()
+            let formatter = DateFormatter()
             formatter.dateFormat = "d/M/yyyy"
-            var EventStartDate = formatter.date(from: record["Start Date"]!)
-            var EventEndDate = formatter.date(from: record["End Date"]!)
+            let EventStartDate = formatter.date(from: record["Start Date"]!)
+            let EventEndDate = formatter.date(from: record["End Date"]!)
             
             let string = record["Title"]!
-            var input = string
+            let input = string
             var output = ""
             var didColon = false
             for i in input{

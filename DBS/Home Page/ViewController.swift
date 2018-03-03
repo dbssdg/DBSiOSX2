@@ -15,7 +15,6 @@ struct ScrollViewDataStruct {
     let title : String?
 }
 var EventsFromNow = [events]()
-//var LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil || !(UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!)
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
@@ -141,7 +140,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
         if isInternetAvailable(){
-            if circulars == nil || circulars.isEmpty{
+            if circulars.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
                     if data != nil{
@@ -305,28 +304,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.delegate = self
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-            self.UISetup()
-            var logInNumber = 0
-            if !LoggedIn && self.teacherOrStudent() == "s"{
-                logInNumber = 1
-            }else{
-                logInNumber = 0
-            }
-            
-//            for i in (10001 - logInNumber)...(10004 - logInNumber) {
-//                let View = self.scrollView.viewWithTag(i)
-//                if let TableView = View {
-//                    self.registerForPreviewing(with: self, sourceView: TableView as! UITableView)
-//                }
-//
-//            }
-            
-            
-        }
-        
-        
-        
-        
+            self.UISetup()   
+    }
     }
     
     func ScrollLeft(){
@@ -724,9 +703,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
             //Class
-                var Grade = 8
                 var Class = "S"
-                
                 
                 //if UserInformation != nil{
                 let input = "\(UserInformation[3])"
@@ -734,20 +711,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 var GradeString = "\(input)"
                 GradeString.removeLast(4)
                 GradeString.removeFirst()
-                let GradeInt = Int(GradeString)!
+                let Grade = Int(GradeString)!
                 
-                var ClassString1 = "\(input)"
-                ClassString1.removeLast(3)
-                var ClassString2 = ClassString1.index(before: ClassString1.endIndex)
+                var ClassString = "\(input)"
+                ClassString.removeLast(3)
                 
-                if GradeInt != nil{
-                    Grade = GradeInt
-                }
-                
-                Class = ClassString1
+                Class = ClassString
                 Class.removeFirst(2)
  
-                
                 
              //Elective
                 var isElective = false
@@ -794,9 +765,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
             //Subject
             var out = ""
-                if GradeInt >= 7 && GradeInt <= 9 {
+                if Grade >= 7 && Grade <= 9 {
                     formSection = classArrayLow
-                } else if GradeInt >= 10 && GradeInt <= 12 {
+                } else if Grade >= 10 && Grade <= 12 {
                     formSection = classArrayHigh
                 }
             
@@ -944,7 +915,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Circular
         else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
             DispatchQueue.main.async{
-                if circulars == nil{
+                if circulars.isEmpty{
                     self.ParseNewsCurriculars()
                 }
             }
@@ -1137,12 +1108,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Home to Timetable"{
-        if let dest = segue.destination as? myTimetableViewController{
-            
-        }
-        }
-        
     }
     
     func setupSpinner(view: UITableView){
@@ -1225,7 +1190,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     self.ParseEvents()
                     (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
                 }
-            }else if circulars == nil{
+            }else if circulars.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
                     (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
@@ -1329,7 +1294,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     func reloadAllTables(){
-        let tablesArray = [UITableView]()
         for i in 10000...10002{
             let table = self.scrollView.viewWithTag(i)! as! UITableView
             
@@ -1340,7 +1304,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 logInNumber = 0
             }
             
-            (self.scrollView.viewWithTag(i)! as! UITableView).reloadData()
+            table.reloadData()
         }
     }
     

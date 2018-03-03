@@ -8,7 +8,7 @@
 
 import UIKit
 
-class photoViewerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+class photoViewerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, UIGestureRecognizerDelegate  {
     
     var collectionView: UICollectionView!
     
@@ -38,6 +38,8 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         
         let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.sharePhoto))
         self.navigationItem.rightBarButtonItem = shareButton
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +47,17 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: [0, photoSelected], at: .left, animated: false)
         }
+        self.navigationController?.hidesBarsOnTap = true
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.hidesBarsOnTap = false
+    }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
@@ -101,6 +113,8 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
 //            }
 //        }
     }
+    
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
