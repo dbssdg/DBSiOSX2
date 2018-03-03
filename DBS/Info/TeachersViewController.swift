@@ -41,6 +41,13 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
         func backToInfoPage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToInfoPage))
         
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        self.view.addSubview(spinner)
+        
         if isInternetAvailable() {
             URLSession.shared.dataTask(with: url!) { (datas, response, error) in
                 do {
@@ -53,9 +60,7 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                     DispatchQueue.main.async {
-                        if self.teacherArray.count == 0 {
-                            self.present(networkAlert, animated: true)
-                        }
+                        spinner.stopAnimating()
                         self.teachersTable.reloadData()
                     }
                 } catch {

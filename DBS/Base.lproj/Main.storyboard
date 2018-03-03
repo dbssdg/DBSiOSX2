@@ -1565,7 +1565,7 @@
                                 <rect key="frame" x="0.0" y="527" width="375" height="61"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="View My Classmates"/>
+                                <state key="normal" title="View Classmates"/>
                                 <connections>
                                     <action selector="viewClassmates:" destination="4db-rW-aWf" eventType="touchUpInside" id="y67-HJ-ULt"/>
                                     <segue destination="3Ew-BF-dTP" kind="show" id="Eu0-0Y-5XK"/>
@@ -2758,7 +2758,7 @@ Title</string>
                                 <rect key="frame" x="0.0" y="527" width="375" height="61"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="View My Timetable"/>
+                                <state key="normal" title="View Timetable"/>
                                 <connections>
                                     <action selector="viewTimetable:" destination="KNq-7M-NHv" eventType="touchUpInside" id="5r1-4G-iFj"/>
                                 </connections>

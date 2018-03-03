@@ -68,6 +68,11 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
             
             cell.imgView.contentMode = .scaleAspectFit
             
+<<<<<<< HEAD
+            print(cell.imgView.frame, "frame", self.view.frame.height)
+            
+=======
+>>>>>>> 2a331db4dfbeeed881424d016c5013de03afa8a4
             cell.imgView.image = image
             
             let downGest = UISwipeGestureRecognizer(target: self, action: #selector(self.back(recognizer:)))
@@ -93,6 +98,14 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         photoSelected = (collectionView.indexPath(for: collectionView.visibleCells[0])?.item)!
+        
+//        for i in 0..<imageArray.count {
+//            if let scroll = (collectionView.cellForItem(at: [0,i]) as? ImagePreviewFullViewCell)?.scrollImg {
+//                if scroll.zoomScale != 1 && photoSelected != i {
+//                    scroll.setZoomScale(1, animated: true)
+//                }
+//            }
+//        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -171,6 +184,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         self.addSubview(scrollImg)
         
         imgView = UIImageView()
+        imgView.contentMode = .scaleAspectFit
         imgView.image = #imageLiteral(resourceName: "Home Logo")
         scrollImg.addSubview(imgView!)
         imgView.clipsToBounds = true

@@ -64,7 +64,12 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
-        if isInternetAvailable() && !circularTitleArray.isEmpty && !newsTitleArray.isEmpty{
+        circularTitleArray.removeAll()
+        circularTimeArray.removeAll()
+        newsTitleArray.removeAll()
+        newsDateArray.removeAll()
+        
+        if isInternetAvailable() || !circularTitleArray.isEmpty || !newsTitleArray.isEmpty{
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
                 do {
                     DispatchQueue.main.async {
@@ -73,15 +78,13 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     }
                     if data != nil {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
-                    }
-                    circularTitleArray.removeAll()
-                    circularTimeArray.removeAll()
-                    pinnedCircular = 2
-                    //The code works when it is reloaded but not when it first displayed. anyways to trigger the reload button by computer
-                    for i in 1...circulars.values.count {
-                        if circulars.count > circularTitleArray.count {
-                            circularTimeArray += [(circulars["\(i)"]!["time"]!)]
-                            circularTitleArray += [(circulars["\(i)"]!["title"]!)]
+                    
+                        pinnedCircular = 2
+                        for i in 1...circulars.values.count {
+                            if circulars.count > circularTitleArray.count {
+                                circularTimeArray += [(circulars["\(i)"]!["time"]!)]
+                                circularTitleArray += [(circulars["\(i)"]!["title"]!)]
+                            }
                         }
                     }
                     DispatchQueue.main.async {
@@ -91,7 +94,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 } catch {
                     print("ERROR")
                 }
-                }.resume()
+            }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 do {
                     DispatchQueue.main.async {
@@ -100,18 +103,19 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     }
                     if data != nil {
                         news = try JSONDecoder().decode(newsData.self, from: data!)
-                    }
-                    for i in (news?.title)! {
-                        if (news?.title)!.count > newsTitleArray.count {
-                            newsTitleArray += [i]
+                    
+                        for i in (news?.title)! {
+                            if (news?.title)!.count > newsTitleArray.count {
+                                newsTitleArray += [i]
+                            }
                         }
-                    }
-                    for i in (news?.date)! {
-                        var newsDate = String(describing: Date(timeIntervalSince1970: Double(i)!))
-                        newsDate.removeLast(15)
-                        let dateArr = newsDate.split(separator: "-")
-                        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-                        newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
+                        for i in (news?.date)! {
+                            var newsDate = String(describing: Date(timeIntervalSince1970: Double(i)!))
+                            newsDate.removeLast(15)
+                            let dateArr = newsDate.split(separator: "-")
+                            let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+                            newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
+                        }
                     }
                     DispatchQueue.main.async {
                         self.featuredTable.reloadData()
