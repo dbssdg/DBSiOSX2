@@ -53,15 +53,42 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewerCell", for: indexPath) as! ImagePreviewFullViewCell
-        cell.imgView.image = imageArray[indexPath.row]
-        
-        let downGest = UISwipeGestureRecognizer(target: self, action: #selector(back(recognizer:)))
-        downGest.direction = .down
-        cell.addGestureRecognizer(downGest)
-        let shrinkGest = UIPinchGestureRecognizer(target: self, action: #selector(back(recognizer:)))
-        shrinkGest.scale = 0.8
-        cell.addGestureRecognizer(shrinkGest)
-        
+        DispatchQueue.main.async {
+            
+            
+            let image = imageArray[indexPath.row]
+            
+            var scale = CGFloat(1)
+            if image != nil{
+                scale = (image?.size.width)! / self.view.frame.width
+            }
+            
+            cell.imgView.frame.size = CGSize(width: self.view.frame.width, height: (image?.size.height)! / scale)
+            cell.imgView.center = self.view.center
+            
+            cell.imgView.contentMode = .scaleAspectFit
+            
+            print(cell.imgView.frame, "frame", self.view.frame.height)
+            
+            cell.imgView.layer.borderWidth = 10
+            
+            
+            cell.imgView.image = image
+            
+            let downGest = UISwipeGestureRecognizer(target: self, action: #selector(self.back(recognizer:)))
+            downGest.direction = .down
+            cell.addGestureRecognizer(downGest)
+            let shrinkGest = UIPinchGestureRecognizer(target: self, action: #selector(self.back(recognizer:)))
+            shrinkGest.scale = 0.8
+            cell.addGestureRecognizer(shrinkGest)
+            
+            if cell.imgView.frame.height == self.view.frame.height{
+                print("reload")
+                cell.reloadInputViews()
+            }
+            
+            
+        }
         return cell
     }
     
@@ -151,8 +178,8 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         imgView = UIImageView()
         imgView.image = #imageLiteral(resourceName: "Home Logo")
         scrollImg.addSubview(imgView!)
-        imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
+        
     }
     
     func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
@@ -177,6 +204,7 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         return self.imgView
     }
     
+    
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView.zoomScale < 0.8 {
             
@@ -192,7 +220,6 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         
         scrollImg.frame = self.bounds
         imgView.frame = self.bounds
-        print(scrollImg.contentSize)
         
 //        print(scrollImg.frame, imgView.frame, (imgView.image?.size)!, self.bounds)
     }
