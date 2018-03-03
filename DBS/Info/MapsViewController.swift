@@ -38,7 +38,12 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         doubleTapGest.numberOfTapsRequired = 2
         ScrollView.addGestureRecognizer(doubleTapGest)
         
-        
+        self.navigationController?.hidesBarsOnTap = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.hidesBarsOnTap = false
     }
     
     func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {

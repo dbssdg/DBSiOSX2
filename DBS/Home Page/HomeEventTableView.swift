@@ -78,11 +78,3 @@ class HomeEventTableView: UITableView, UITableViewDelegate, UITableViewDataSourc
  
     
 }
-/*
-extension HomeEventTableView{
-    convenience init(array: [events]) {
-        self.init(array: array)
-        self.Events = array
-    }
-}
-*/

@@ -210,11 +210,11 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         }) { $0 }.onFinish { importedRecords in
             for record in importedRecords {
                 self.formatter.dateFormat = "d/M/yyyy"
-                var EventStartDate = self.formatter.date(from: record["Start Date"]!)
-                var EventEndDate = self.formatter.date(from: record["End Date"]!)
+                let EventStartDate = self.formatter.date(from: record["Start Date"]!)
+                let EventEndDate = self.formatter.date(from: record["End Date"]!)
                 
                 let string = record["Title"]!
-                var input = string
+                let input = string
                 var output = ""
                 var didColon = false
                 for i in input{
@@ -351,7 +351,6 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
        CurrentDayEventsArray = CellDateEventsArray
         
         if cellState.date == Date(){
-            print("TOday")
             self.EventsTableView.reloadData()
         }
         
@@ -413,7 +412,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         var count = 0
-        for i in CurrentDayEventsArray{
+        for _ in CurrentDayEventsArray{
             count += 1
         }
         if count == 0{
@@ -572,7 +571,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
         
          let firstDayOfWeek: DaysOfWeek = .sunday
         
-        let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!, numberOfRows: 4, calendar: Calendar.current, generateInDates: generateInDates, generateOutDates: .tillEndOfRow, firstDayOfWeek: firstDayOfWeek, hasStrictBoundaries: true)
+        let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!, numberOfRows: 4, calendar: Calendar.current, generateInDates: generateInDates, generateOutDates: generateOutDates, firstDayOfWeek: firstDayOfWeek, hasStrictBoundaries: true)
         
         
         //let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!)
