@@ -239,13 +239,13 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
             guard let indexPath = videoTable.indexPathForRow(at: location) else {
                 return nil
             }
-            let url = NSURL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")
+            let url = URL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")!
             let webView = UIWebView()
             let webVC = UIViewController()
             webVC.view.frame = self.view.frame
             webView.frame = webVC.view.frame
             webView.scalesPageToFit = true
-            webView.loadRequest(URLRequest(url: url as! URL))
+            webView.loadRequest(URLRequest(url: url))
             webVC.view.addSubview(webView)
             return webVC
         }

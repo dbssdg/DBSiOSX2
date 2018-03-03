@@ -100,7 +100,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func sharePhoto() {
         let activityViewController = UIActivityViewController(
-            activityItems: [(collectionView.cellForItem(at: [0, photoSelected]) as! ImagePreviewFullViewCell).imgView.image], applicationActivities: nil)
+            activityItems: [(collectionView.cellForItem(at: [0, photoSelected]) as! ImagePreviewFullViewCell).imgView.image as Any], applicationActivities: nil)
         
 ////              This line is for the popover you need to show in iPad
 //                activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem
