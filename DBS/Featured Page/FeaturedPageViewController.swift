@@ -55,12 +55,12 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         viewDidLoad()
     }
     
-    func ParseJSON(){
+    func ParseJSON() {
         let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
         let circularsURL = URL(string: circularsJSONURL)
         let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
-        
         let newsURL = URL(string: newsJSONURL)
+        
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
@@ -69,14 +69,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         newsTitleArray.removeAll()
         newsDateArray.removeAll()
         
-        if isInternetAvailable() || !circularTitleArray.isEmpty || !newsTitleArray.isEmpty{
+        removeSpinner(view: featuredTable)
+        setupSpinner(view: featuredTable)
+        
+        if isInternetAvailable() || circularTitleArray.isEmpty || newsTitleArray.isEmpty {
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
-                do {
-                    DispatchQueue.main.async {
-                        self.featuredTable.reloadData()
-                        print("\(circularTitleArray.count)A")
-                    }
-                    if data != nil {
+                print("THIS IS NOT PRINTED ON TIME AS EXPECTED")
+                if data != nil {
+                    do {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
                     
                         pinnedCircular = 2
@@ -86,22 +86,20 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                                 circularTitleArray += [(circulars["\(i)"]!["title"]!)]
                             }
                         }
+                        DispatchQueue.main.async {
+                            self.removeSpinner(view: self.featuredTable)
+                            self.featuredTable.reloadData()
+                            print("\(circularTitleArray.count)A")
+                        }
+                        
+                    } catch {
+                        print("ERROR")
                     }
-                    DispatchQueue.main.async {
-                        self.featuredTable.reloadData()
-                        print("\(circularTitleArray.count)A")
-                    }
-                } catch {
-                    print("ERROR")
                 }
             }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
-                do {
-                    DispatchQueue.main.async {
-                        self.featuredTable.reloadData()
-                        print("\(newsTitleArray.count)A")
-                    }
-                    if data != nil {
+                if data != nil {
+                    do {
                         news = try JSONDecoder().decode(newsData.self, from: data!)
                     
                         for i in (news?.title)! {
@@ -116,16 +114,21 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                             let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
                             newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
                         }
+                        DispatchQueue.main.async {
+                            self.featuredTable.reloadData()
+                            print("\(newsTitleArray.count)A")
+                        }
+                    
                     }
-                    DispatchQueue.main.async {
-                        self.featuredTable.reloadData()
-                        print("\(newsTitleArray.count)A")
+                    catch {
+                        print("ERROR")
                     }
                 }
-                catch {
-                    print("ERROR")
-                }
-                }.resume()
+            }.resume()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.featuredTable.reloadData()
+            })
             
         } else {
             //present(networkAlert, animated: true)
@@ -147,8 +150,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         featuredSearch.searchBar.delegate = self
         featuredSearch.dimsBackgroundDuringPresentation = false
         
-        
         ParseJSON()
+        self.featuredTable.reloadData()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -357,7 +360,12 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         featuredTable.addSubview(spinner)
         
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
-        label.text = "Please check your Internet connectivity"
+        
+        if isInternetAvailable() {
+            label.text = ""
+        } else {
+            label.text = "Please check your Internet connectivity"
+        }
         label.textColor = spinner.color
         label.font = UIFont(name: "Helvetica", size: 14)
         label.textAlignment = .center
