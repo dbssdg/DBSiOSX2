@@ -9,6 +9,7 @@
 import UIKit
 import TwicketSegmentedControl
 import SystemConfiguration
+import CFNetwork
 
 struct newsData : Decodable {
     let title : [String]
