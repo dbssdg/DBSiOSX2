@@ -167,15 +167,15 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
-            for i in self.view.subviews { if i.tag == 1 {
-                (i as! TwicketSegmentedControl).isEnabled = false
-                } }
+//            for i in self.view.subviews { if i.tag == 1 {
+//                (i as! TwicketSegmentedControl).isEnabled = false
+//                } }
             featuredTable.reloadData()
         }
         
-        for i in self.view.subviews { if i.tag == 1 {
-            (i as! TwicketSegmentedControl).isEnabled = true
-            } }
+//        for i in self.view.subviews { if i.tag == 1 {
+//            (i as! TwicketSegmentedControl).isEnabled = true
+//            } }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
