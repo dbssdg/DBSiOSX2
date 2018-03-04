@@ -260,12 +260,15 @@ class SchoolRulesViewController: UIViewController {
     
     func attributedText(_ str: String, _ titles: [String]) -> NSAttributedString {
         let string = str as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .justified
+        
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSParagraphStyleAttributeName: paragraphStyle])
+        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0), NSParagraphStyleAttributeName: paragraphStyle]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }
-        
         return attributedString
     }
     

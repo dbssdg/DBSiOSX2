@@ -164,16 +164,13 @@ class aboutDBSViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
     
-        
         // Do any additional setup after loading the view.
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
         self.title = "Vision and Mission"
-        vAndM(self)
         
         information.textAlignment = .justified
         
@@ -184,14 +181,22 @@ class aboutDBSViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        vAndM(self)
+    }
+    
     func attributedText(_ str: String, _ titles: [String]) -> NSAttributedString {
         let string = str as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .justified
+        
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSParagraphStyleAttributeName: paragraphStyle])
+        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0), NSParagraphStyleAttributeName: paragraphStyle]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }
-        
         return attributedString
     }
     
