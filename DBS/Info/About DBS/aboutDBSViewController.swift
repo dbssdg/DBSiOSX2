@@ -12,6 +12,9 @@ class aboutDBSViewController: UIViewController {
 
     @IBOutlet weak var information: UITextView!
     
+    
+    @IBOutlet var aboutDBSslider: UISlider!
+    
     @IBAction func onAboutDBSSettingsPressed(_ sender: Any) {
         UIView.animate(withDuration: 0.3){
             self.aboutDBSCollectionView.forEach {
@@ -205,6 +208,14 @@ class aboutDBSViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func changeFont(_ sender: Any) {
+        
+        var fontSize =  CGFloat(aboutDBSslider.value)
+        
+    }
+    
+    
     
 }
 

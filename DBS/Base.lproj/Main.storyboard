@@ -671,19 +671,30 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="e9G-eg-C0J">
+                                <rect key="frame" x="85" y="581" width="204" height="30"/>
+                                <connections>
+                                    <action selector="changeFont:" destination="Vte-9o-Zqt" eventType="valueChanged" id="Q0O-Cd-Exs"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cVP-J1-meE" firstAttribute="top" secondItem="HSo-Lm-8IY" secondAttribute="bottom" constant="8" id="40n-t9-Qn7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="e9G-eg-C0J" secondAttribute="trailing" constant="72" id="8dx-k3-8Cd"/>
                             <constraint firstItem="k1L-gw-ob5" firstAttribute="top" secondItem="HSo-Lm-8IY" secondAttribute="bottom" constant="80" id="90G-gl-huM"/>
                             <constraint firstItem="k1L-gw-ob5" firstAttribute="trailing" secondItem="kVt-Cy-Sdm" secondAttribute="trailingMargin" id="AiA-Hs-KU7"/>
+                            <constraint firstItem="e9G-eg-C0J" firstAttribute="top" secondItem="cVP-J1-meE" secondAttribute="bottom" constant="149" id="FWP-d1-wew"/>
+                            <constraint firstItem="ChO-MS-5rF" firstAttribute="top" secondItem="e9G-eg-C0J" secondAttribute="bottom" constant="8" id="H6b-YN-Zp9"/>
                             <constraint firstItem="cVP-J1-meE" firstAttribute="leading" secondItem="kVt-Cy-Sdm" secondAttribute="leadingMargin" id="LYn-0Q-X8b"/>
                             <constraint firstItem="k1L-gw-ob5" firstAttribute="leading" secondItem="kVt-Cy-Sdm" secondAttribute="leadingMargin" id="SNG-FS-TQa"/>
                             <constraint firstItem="cVP-J1-meE" firstAttribute="trailing" secondItem="kVt-Cy-Sdm" secondAttribute="trailingMargin" id="WJY-rb-sWf"/>
                             <constraint firstItem="ChO-MS-5rF" firstAttribute="top" secondItem="k1L-gw-ob5" secondAttribute="bottom" constant="20" id="esQ-aJ-UyW"/>
+                            <constraint firstItem="e9G-eg-C0J" firstAttribute="leading" secondItem="kVt-Cy-Sdm" secondAttribute="leadingMargin" constant="71" id="hZr-ts-cyU"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aboutDBSslider" destination="e9G-eg-C0J" id="3iL-QT-Ua3"/>
                         <outlet property="information" destination="k1L-gw-ob5" id="z6x-ot-8eB"/>
                         <outletCollection property="aboutDBSCollectionView" destination="OWu-ol-Hm9" collectionClass="NSMutableArray" id="qla-O6-vuQ"/>
                         <outletCollection property="aboutDBSCollectionView" destination="XjI-9b-ke0" collectionClass="NSMutableArray" id="fiJ-9Y-hd2"/>
@@ -699,7 +710,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pgw-Rh-PSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5689" y="1281"/>
+            <point key="canvasLocation" x="5688.8000000000002" y="1280.5097451274364"/>
         </scene>
         <!--Houses-->
         <scene sceneID="1il-yk-Xtt">
