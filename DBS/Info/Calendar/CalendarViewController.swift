@@ -188,12 +188,16 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         TodayButton(self)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         let AddCalendar = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ActionSheetFunc))
         
         let AllEvents = UIBarButtonItem(title: "All Events", style: .plain, target: self, action: #selector(self.AllEvents))
         
         self.navigationItem.rightBarButtonItems = [AddCalendar, AllEvents]
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

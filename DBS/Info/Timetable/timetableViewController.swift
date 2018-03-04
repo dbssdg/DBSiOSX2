@@ -69,6 +69,9 @@ class timetableViewController: UIViewController {
             }
             backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
             backspaceOutlet.isEnabled = true
+            
+            viewTimetableOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+            viewTimetableOutlet.isEnabled = false
         default:
             viewDidLoad()
         }
