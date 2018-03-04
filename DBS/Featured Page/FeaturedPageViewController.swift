@@ -73,9 +73,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         removeSpinner(view: featuredTable)
         setupSpinner(view: featuredTable)
         
-        if isInternetAvailable() || circularTitleArray.isEmpty || newsTitleArray.isEmpty {
+        if isInternetAvailable() {
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
-                print("THIS IS NOT PRINTED ON TIME AS EXPECTED")
                 if data != nil {
                     do {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
@@ -127,24 +126,18 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }.resume()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.featuredTable.reloadData()
-            })
-            
         } else {
             //present(networkAlert, animated: true)
-            if newsDateArray.isEmpty{
+//            if newsDateArray.isEmpty{
                 featuredTable.reloadData()
                 removeSpinner(view: featuredTable)
                 setupSpinner(view: featuredTable)
-            }
+//            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("view did load")
         
         featuredTable.delegate = self
         featuredTable.dataSource = self
@@ -152,7 +145,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         featuredSearch.dimsBackgroundDuringPresentation = false
         
         ParseJSON()
-        self.featuredTable.reloadData()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -171,6 +163,20 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         registerForPreviewing(with: self, sourceView: featuredTable)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
+//            for i in self.view.subviews { if i.tag == 1 {
+//                (i as! TwicketSegmentedControl).isEnabled = false
+//                } }
+            featuredTable.reloadData()
+        }
+        
+//        for i in self.view.subviews { if i.tag == 1 {
+//            (i as! TwicketSegmentedControl).isEnabled = true
+//            } }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -354,7 +360,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
         spinner.activityIndicatorViewStyle = .gray
-        spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        spinner.center = self.view.center
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         spinner.tag = 1000
