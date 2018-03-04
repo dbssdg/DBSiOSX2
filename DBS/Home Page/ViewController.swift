@@ -1294,7 +1294,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     func reloadAllTables(){
-        for i in 10000...10002{
+        for i in 10001...10003{
+            if teacherOrStudent() == "s"{
             let table = self.scrollView.viewWithTag(i)! as! UITableView
             
             var logInNumber = 0
@@ -1305,6 +1306,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
             table.reloadData()
+        }
         }
     }
     

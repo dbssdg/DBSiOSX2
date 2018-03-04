@@ -174,6 +174,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             print(userInfo["hash"]!!)
                             
                             DispatchQueue.main.async {
+                                print(userInfo["hash"]!!)
                                 UserInformation.removeAll()
                                 let first = "\(loginAlert.textFields![0].text!)"
                                 let second = "\(loginAlert.textFields![1].text!)"
@@ -318,9 +319,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func teacherOrStudent() -> String {
-
+        if isInternetAvailable(){
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
             return "s"
+        }
         }
         return ""
     }

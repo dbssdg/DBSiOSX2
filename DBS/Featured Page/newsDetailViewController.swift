@@ -57,6 +57,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
         
+        
         let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
         let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
         self.newsContent.attributedText = attributedString
@@ -93,6 +94,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         newsImage.image = nil
         newsContent.text = ""
         
+        
         let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
         let url = URL(string: jsonURL)
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -108,6 +110,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             spinner.hidesWhenStopped = true
             self.view.addSubview(spinner)
             
+            if news == nil{
             let request = NSMutableURLRequest(url: url!)
             request.httpMethod = "POST"
             request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
@@ -139,6 +142,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         } else {
             present(networkAlert, animated: true)
         }
+        }
+       
         
         previousNews.tintColor = UIColor.lightGray
         previousNews.isEnabled = false
