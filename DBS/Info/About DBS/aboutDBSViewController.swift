@@ -13,8 +13,6 @@ class aboutDBSViewController: UIViewController {
     @IBOutlet weak var information: UITextView!
     
     
-    @IBOutlet var aboutDBSslider: UISlider!
-    
     @IBAction func onAboutDBSSettingsPressed(_ sender: Any) {
         UIView.animate(withDuration: 0.3){
             self.aboutDBSCollectionView.forEach {
@@ -174,11 +172,14 @@ class aboutDBSViewController: UIViewController {
             navigationItem.largeTitleDisplayMode = .never
         }
         self.title = "Vision and Mission"
+        self.hideButtons()
+        self.hideButtons()
         
         information.textAlignment = .justified
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
             self.vAndM(self)
+            
         })
     }
 
@@ -207,12 +208,6 @@ class aboutDBSViewController: UIViewController {
                 $0.isHidden = !$0.isHidden
             }
         }
-    }
-    
-    @IBAction func changeFont(_ sender: Any) {
-        
-        var fontSize =  CGFloat(aboutDBSslider.value)
-        
     }
     
     

@@ -10,6 +10,9 @@ import UIKit
 import KCFloatingActionButton
 class SchoolRulesViewController: UIViewController {
 
+    let sliderView = UIView()
+    let slider = UISlider()
+    
     @IBOutlet weak var schoolRulesTextView: UITextView!
     @IBOutlet var schoolrulesstackview: [UIView]!{
         
@@ -42,6 +45,22 @@ class SchoolRulesViewController: UIViewController {
         self.navigationItem.titleView = label
         
         // Do any additional setup after loading the view.
+        
+        let setFontSizeButton = UIBarButtonItem(title: "Set Font", style: .plain, target: self, action: #selector(setFontSize))
+        self.navigationItem.rightBarButtonItem = setFontSizeButton
+        
+        sliderView.backgroundColor = UIColor.white
+        sliderView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 100)
+        sliderView.layer.cornerRadius = 20
+        self.view.addSubview(sliderView)
+        
+        slider.frame = CGRect(x: 0, y: 50, width: 300, height: 20)
+        slider.minimumValue = 9
+        slider.maximumValue = 40
+        slider.isContinuous = true
+        slider.tintColor = UIColor.purple
+//        slider.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControlEvents#>)
+        sliderView.addSubview(slider)
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,6 +68,11 @@ class SchoolRulesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setFontSize(_ sender: UIBarButtonItem) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.sliderView.frame.origin.y = 100
+        }, completion: nil)
+    }
     
     @IBAction func forbiddenButton(_ sender: Any) {
         hideButtons()
