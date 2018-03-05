@@ -52,14 +52,15 @@ class SchoolRulesViewController: UIViewController {
         sliderView.backgroundColor = UIColor.white
         sliderView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 100)
         sliderView.layer.cornerRadius = 20
+        slider.layer.zPosition = 1000
         self.view.addSubview(sliderView)
         
-        slider.frame = CGRect(x: 0, y: 50, width: 300, height: 20)
+        slider.frame = CGRect(x: 50, y: 50, width: self.view.frame.width-100, height: 20)
         slider.minimumValue = 9
         slider.maximumValue = 40
         slider.isContinuous = true
         slider.tintColor = UIColor.purple
-//        slider.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControlEvents#>)
+//        slider.addTarget(self, action: <#T##Selector#>, for: .touchUpInside)
         sliderView.addSubview(slider)
     }
     
@@ -70,7 +71,7 @@ class SchoolRulesViewController: UIViewController {
     
     func setFontSize(_ sender: UIBarButtonItem) {
         UIView.animate(withDuration: 0.3, animations: {
-            self.sliderView.frame.origin.y = 100
+            self.sliderView.frame.origin.y = self.view.frame.height - 200
         }, completion: nil)
     }
     
