@@ -78,11 +78,11 @@ class SchoolRulesViewController: UIViewController {
 //        sliderTitle.textAlignment = .center
 //        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
 //        sliderView.addSubview(sliderTitle)
-        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:20, width: self.view.frame.width/10, height: 30))
+        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:0, width: self.view.frame.width/10, height: 50))
         smallA.text = "A"
         smallA.font = UIFont(name: "Helvetica", size: 9)
         sliderView.addSubview(smallA)
-        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:20, width: self.view.frame.width/10, height: 30))
+        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:0, width: self.view.frame.width/10, height: 50))
         bigA.text = "A"
         bigA.font = UIFont(name: "Helvetica", size: 30)
         sliderView.addSubview(bigA)

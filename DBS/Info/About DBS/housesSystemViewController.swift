@@ -126,13 +126,19 @@ Mrs. Alwyn Wong
 Mr. Keith Lowcock
 
 """ as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        var attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
+        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            attributedString = NSMutableAttributedString(string: string as String, attributes:
+                [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")))])
+            boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))]
+        }
+        
         let titles = ["A brief introduction to our House System", "Roster of Headmasters", "Mr. William Monarch Burnside ARTHUR (雅瑟先生)", "Mr. George H. PIERCY (俾士先生)", "Mr. Henry O. E. SYKES (賽克思先生)", "Rev. William Thornton FEATHERSTONE (費瑟士東牧師)", "The Rt. Rev. Christopher Birdwood Roussel SARGENT (舒展會督)", "Mr. Gerald Archer GOODBAN (葛賓先生)", "Rev. George Samuel ZIMMERN (施玉麒牧師)", "Mr. Sidney James LOWCOCK (郭慎墀先生)", "We would like to express our cordial gratitude to the following people who gave us invaluable help:"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }
-        
+        housesSystem.scrollsToTop = true
         housesSystem.attributedText = attributedString
         housesSystem.textAlignment = .justified
     }

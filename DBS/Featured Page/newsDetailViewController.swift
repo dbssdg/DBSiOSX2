@@ -29,20 +29,25 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     @IBOutlet var previousNews: UIBarButtonItem!
     @IBOutlet var nextNews: UIBarButtonItem!
     
+    let sliderView = UIView()
+    let slider = UISlider()
+    
     @IBAction func previousNews(_ sender: Any) {
         newsIndex -= 1
         updateData()
+        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
+        scrollView.setContentOffset(desiredOffset, animated: false)
         
     }
     @IBAction func nextNews(_ sender: Any) {
         newsIndex += 1
         updateData()
+        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
+        scrollView.setContentOffset(desiredOffset, animated: false)
     }
     
     func updateData() {
         
-        let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
-        scrollView.setContentOffset(desiredOffset, animated: false)
         self.title = "\(newsIndex+1) of \(newsTotal)"
         self.newsTitle.text? = self.news!.title[newsIndex]
         
@@ -61,7 +66,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
         let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
         self.newsContent.attributedText = attributedString
-        self.newsContent.font = UIFont(name: "Helvetica", size: 16)
+        self.newsContent.font = UIFont(name: "Helvetica", size: CGFloat(slider.value))
         
         if newsIndex+1 <= 1 {
             previousNews.tintColor = UIColor.lightGray
@@ -153,6 +158,49 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
+        
+        // Slider Components
+        
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
+        self.navigationItem.rightBarButtonItem = setFontSizeButton
+        
+        sliderView.backgroundColor = UIColor.lightGray
+        sliderView.frame = CGRect(x: 8, y: self.view.frame.height, width: self.view.frame.width - 16, height: 50)
+        sliderView.layer.cornerRadius = 20
+        sliderView.layer.zPosition = 1000
+        self.view.addSubview(sliderView)
+        
+        slider.frame = CGRect(x: self.view.frame.width*0.25, y: 20, width: self.view.frame.width/2, height: 20)
+        slider.minimumValue = 9
+        slider.maximumValue = 40
+        
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            slider.value = Float(UserDefaults.standard.integer(forKey: "fontSize"))
+        } else {
+            slider.value = 14
+        }
+        sliderValueChanged(slider)
+        
+        slider.isContinuous = true
+        slider.tintColor = UIColor.purple
+        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        sliderView.addSubview(slider)
+        
+        //        let sliderTitle = UILabel()
+        //        sliderTitle.frame = CGRect(x: 0, y:0, width: self.view.frame.width, height: 65)
+        //        sliderTitle.text = "Adjust Font Size"
+        //        sliderTitle.textAlignment = .center
+        //        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
+        //        sliderView.addSubview(sliderTitle)
+        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:0, width: self.view.frame.width/10, height: 50))
+        smallA.text = "A"
+        smallA.font = UIFont(name: "Helvetica", size: 9)
+        sliderView.addSubview(smallA)
+        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:0, width: self.view.frame.width/10, height: 50))
+        bigA.text = "A"
+        bigA.font = UIFont(name: "Helvetica", size: 30)
+        sliderView.addSubview(bigA)
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -165,6 +213,32 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setFontSize(_ sender: UIBarButtonItem) {
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishedSetFontSize(_:)))
+        self.navigationItem.rightBarButtonItem = doneButton
+        //        self.view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.sliderView.frame.origin.y = self.view.frame.height - (self.tabBarController == nil ? 15: (self.tabBarController?.tabBar.frame.height)!) - 50
+        }, completion: nil)
+    }
+    func finishedSetFontSize(_ sender: UIBarButtonItem) {
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
+        self.navigationItem.rightBarButtonItem = setFontSizeButton
+        //        self.view.backgroundColor = UIColor.white
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.sliderView.frame.origin.y = self.view.frame.height
+        }, completion: nil)
+    }
+    func sliderValueChanged(_ sender: UISlider) {
+        UserDefaults.standard.set(slider.value, forKey: "fontSize")
+        if news != nil {
+            updateData()
+        }
     }
     
     let progressView = UIProgressView()
