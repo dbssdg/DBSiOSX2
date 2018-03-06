@@ -35,15 +35,27 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     @IBAction func previousNews(_ sender: Any) {
         newsIndex -= 1
         updateData()
+        
         let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
         scrollView.setContentOffset(desiredOffset, animated: false)
+        
+        self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        if self.news!.image[newsIndex] != nil {
+            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+        }
         
     }
     @IBAction func nextNews(_ sender: Any) {
         newsIndex += 1
         updateData()
+        
         let desiredOffset = CGPoint(x: 0, y: -self.scrollView.contentInset.top - (navigationController == nil ? 0 : (navigationController?.navigationBar.frame.height)!) - 18)
         scrollView.setContentOffset(desiredOffset, animated: false)
+        
+        self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        if self.news!.image[newsIndex] != nil {
+            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+        }
     }
     
     func updateData() {
@@ -56,12 +68,6 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         let dateArr = newsDate.split(separator: "-")
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         self.newsDate.text = "\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"
-        
-        self.newsImage.image = UIImage(named: "newsImage")
-        if self.news!.image[newsIndex] != nil {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-        }
-        
         
         let htmlData = NSString(string: "\(self.news!.content[newsIndex])").data(using: String.Encoding.unicode.rawValue)
         let attributedString = try! NSAttributedString(data: htmlData!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
@@ -115,38 +121,42 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             spinner.hidesWhenStopped = true
             self.view.addSubview(spinner)
             
-            if news == nil{
-            let request = NSMutableURLRequest(url: url!)
-            request.httpMethod = "POST"
-            request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
-            
-            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-//            session.setValue("Keep-Alive", forKey: "Connection")
-            
-//            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
-            
-            session.dataTask(with: url!) { (data, response, error) in
-                do {
-                    self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
-                    DispatchQueue.main.async {
-                        spinner.stopAnimating()
-//                        if self.news == nil {
-//                            self.present(networkAlert, animated: true)
-//                        } else {
-                            self.updateData()
-//                        }
+            if news == nil {
+                let request = NSMutableURLRequest(url: url!)
+                request.httpMethod = "POST"
+                request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
+                
+                let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+    //            session.setValue("Keep-Alive", forKey: "Connection")
+                
+    //            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+                
+                session.dataTask(with: url!) { (data, response, error) in
+                    do {
+                        self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
+                        DispatchQueue.main.async {
+                            spinner.stopAnimating()
+    //                        if self.news == nil {
+    //                            self.present(networkAlert, animated: true)
+    //                        } else {
+                                self.updateData()
+                                self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+                                if self.news!.image[newsIndex] != nil {
+                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                }
+    //                        }
+                        }
+                        
                     }
-                    
-                }
-                catch {
-                    self.present(networkAlert, animated: true)
-                    print("ERROR")
-                }
-            }.resume()
-            
+                    catch {
+                        self.present(networkAlert, animated: true)
+                        print("ERROR")
+                    }
+                }.resume()
+            }
         } else {
             present(networkAlert, animated: true)
-        }
+        
         }
        
         
@@ -182,7 +192,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         sliderValueChanged(slider)
         
         slider.isContinuous = true
-        slider.tintColor = UIColor(red: 136, green: 176, blue: 229, alpha: 1)
+        slider.tintColor = UIColor.blue
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         sliderView.addSubview(slider)
         
