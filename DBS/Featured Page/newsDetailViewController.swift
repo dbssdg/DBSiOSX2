@@ -182,7 +182,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         sliderValueChanged(slider)
         
         slider.isContinuous = true
-        slider.tintColor = UIColor.purple
+        slider.tintColor = UIColor(red: 136, green: 176, blue: 229, alpha: 1)
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         sliderView.addSubview(slider)
         
