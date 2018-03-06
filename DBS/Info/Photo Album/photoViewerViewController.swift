@@ -8,9 +8,11 @@
 
 import UIKit
 
+var originalFrame = CGRect()
 class photoViewerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, UIGestureRecognizerDelegate  {
     
     var collectionView: UICollectionView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +82,8 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
             
             cell.imgView.contentMode = .scaleAspectFit
             cell.imgView.image = image
+            
+            originalFrame = cell.imgView.frame
             
             let downGest = UISwipeGestureRecognizer(target: self, action: #selector(self.back(recognizer:)))
             downGest.direction = .down
@@ -192,8 +196,9 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         self.addSubview(scrollImg)
         
         imgView = UIImageView()
-        imgView.contentMode = .scaleAspectFit
         imgView.image = #imageLiteral(resourceName: "Home Logo")
+        imgView.frame.size.width = frame.width
+        imgView.contentMode = .scaleAspectFit
         scrollImg.addSubview(imgView!)
         imgView.clipsToBounds = true
         
@@ -203,7 +208,9 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         if scrollImg.zoomScale <= 1 {
             scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
         } else {
-            scrollImg.setZoomScale(1, animated: true)
+            scrollImg.setZoomScale(1.0, animated: true)
+            
+            imgView.frame = originalFrame
         }
     }
     
@@ -218,13 +225,16 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.imgView
+        
+        return imgView
     }
     
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        if scrollView.zoomScale < 0.8 {
-            
+        if scrollImg.zoomScale == 1{
+            var scale = CGFloat(1)
+            scale = (imgView.image?.size.width)! / frame.width
+            imgView.frame.size.height = (imgView.image?.size.height)! / scale
         }
     }
     

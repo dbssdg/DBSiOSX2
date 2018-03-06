@@ -14,8 +14,6 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var ScrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
         
         self.title = "Maps"
         self.view.backgroundColor = UIColor.white
@@ -23,15 +21,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
             navigationItem.largeTitleDisplayMode = .never
         }
         
-        MapImage.frame.size.width = self.view.frame.width
-        MapImage.frame.size.height = #imageLiteral(resourceName: "Classroom Map").size.height / (#imageLiteral(resourceName: "Classroom Map").size.width / self.view.frame.width)
-        MapImage.center = self.view.center
-        //MapImage.sizeThatFits(self.view.frame.size)
-        
-        ScrollView.frame = self.view.frame
-        
-        ScrollView.maximumZoomScale = 10.0
-        ScrollView.minimumZoomScale = 1.0
+        UISetup()
         
         //Double Tap
         let doubleTapGest = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapScrollView(recognizer:)))
@@ -39,6 +29,31 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         ScrollView.addGestureRecognizer(doubleTapGest)
         
         //self.navigationController?.hidesBarsOnTap = true
+    }
+    
+    func UISetup(){
+        DispatchQueue.main.async {
+            let MapImage = self.MapImage!
+            let ScrollView = self.ScrollView!
+            
+            MapImage.frame.size.width = self.view.frame.width
+            MapImage.frame.size.height = #imageLiteral(resourceName: "Classroom Map").size.height / (#imageLiteral(resourceName: "Classroom Map").size.width / self.view.frame.width)
+            MapImage.frame.origin.x = 0
+            MapImage.frame.origin.y = (ScrollView.frame.height - MapImage.frame.height) / 2
+            
+            MapImage.contentMode = .scaleAspectFit
+            
+            
+            MapImage.layer.borderWidth = 5
+            MapImage.layer.backgroundColor = UIColor.red.cgColor
+            
+            ScrollView.frame = self.view.frame
+            ScrollView.layer.backgroundColor = UIColor.red.cgColor
+            
+            ScrollView.maximumZoomScale = 10.0
+            ScrollView.minimumZoomScale = 1.0
+            
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,21 +81,15 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
     
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-<<<<<<< HEAD
-        var zoomRect = CGRect()
-        zoomRect.size.height = scrollView.frame.size.height / scrollView.zoomScale
-        zoomRect.size.width  = scrollView.frame.size.width  / scrollView.zoomScale
+//        var zoomRect = CGRect()
+//        zoomRect.size.height = scrollView.frame.size.height / scrollView.zoomScale
+//        zoomRect.size.width  = scrollView.frame.size.width  / scrollView.zoomScale
 //        zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
 //        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
-        viewForZooming(in: scrollView)?.layer.borderWidth = 5
-=======
->>>>>>> 310a08c922bfba56f8c9e17376ca99f48bccb85f
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        
-        MapImage.layer.borderWidth = 10
-        return self.MapImage
+        return MapImage
     }
     
     /*
