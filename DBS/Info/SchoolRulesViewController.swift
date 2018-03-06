@@ -12,7 +12,6 @@ class SchoolRulesViewController: UIViewController {
 
     let sliderView = UIView()
     let slider = UISlider()
-    var sliderTitle = UILabel()
     let dim = UIView()
     
     @IBOutlet weak var schoolRulesTextView: UITextView!
@@ -46,18 +45,18 @@ class SchoolRulesViewController: UIViewController {
         label.text = ""
         self.navigationItem.titleView = label
         
-        // Adjust Font Size
+        // Slider Components
         
-        let setFontSizeButton = UIBarButtonItem(title: "Set Font", style: .plain, target: self, action: #selector(setFontSize))
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
         self.navigationItem.rightBarButtonItem = setFontSizeButton
         
         sliderView.backgroundColor = UIColor.lightGray
-        sliderView.frame = CGRect(x: 8, y: self.view.frame.height, width: self.view.frame.width - 16, height: 100)
+        sliderView.frame = CGRect(x: 8, y: self.view.frame.height, width: self.view.frame.width - 16, height: 50)
         sliderView.layer.cornerRadius = 20
         sliderView.layer.zPosition = 1000
         self.view.addSubview(sliderView)
         
-        slider.frame = CGRect(x: self.view.frame.width*0.25, y: 65, width: self.view.frame.width/2, height: 20)
+        slider.frame = CGRect(x: self.view.frame.width*0.25, y: 20, width: self.view.frame.width/2, height: 20)
         slider.minimumValue = 9
         slider.maximumValue = 40
         
@@ -73,16 +72,17 @@ class SchoolRulesViewController: UIViewController {
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         sliderView.addSubview(slider)
         
-        sliderTitle.frame = CGRect(x: 0, y:0, width: self.view.frame.width, height: 65)
-        sliderTitle.text = "Adjust Font Size"
-        sliderTitle.textAlignment = .center
-        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
-        sliderView.addSubview(sliderTitle)
-        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:65, width: self.view.frame.width/10, height: 30))
+//        let sliderTitle = UILabel()
+//        sliderTitle.frame = CGRect(x: 0, y:0, width: self.view.frame.width, height: 65)
+//        sliderTitle.text = "Adjust Font Size"
+//        sliderTitle.textAlignment = .center
+//        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
+//        sliderView.addSubview(sliderTitle)
+        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:20, width: self.view.frame.width/10, height: 30))
         smallA.text = "A"
         smallA.font = UIFont(name: "Helvetica", size: 9)
         sliderView.addSubview(smallA)
-        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:65, width: self.view.frame.width/10, height: 20))
+        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:20, width: self.view.frame.width/10, height: 30))
         bigA.text = "A"
         bigA.font = UIFont(name: "Helvetica", size: 30)
         sliderView.addSubview(bigA)
@@ -103,16 +103,16 @@ class SchoolRulesViewController: UIViewController {
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishedSetFontSize(_:)))
         self.navigationItem.rightBarButtonItem = doneButton
-        schoolRulesTextView.isUserInteractionEnabled = false
+//        self.view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         
         UIView.animate(withDuration: 0.3, animations: {
-            self.sliderView.frame.origin.y = self.view.frame.height - (self.tabBarController == nil ? 15: (self.tabBarController?.tabBar.frame.height)!) - 100
+            self.sliderView.frame.origin.y = self.view.frame.height - (self.tabBarController == nil ? 15: (self.tabBarController?.tabBar.frame.height)!) - 50
         }, completion: nil)
     }
     func finishedSetFontSize(_ sender: UIBarButtonItem) {
-        let setFontSizeButton = UIBarButtonItem(title: "Set Font", style: .plain, target: self, action: #selector(setFontSize))
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
         self.navigationItem.rightBarButtonItem = setFontSizeButton
-        schoolRulesTextView.isUserInteractionEnabled = true
+//        self.view.backgroundColor = UIColor.white
         
         UIView.animate(withDuration: 0.3, animations: {
             self.sliderView.frame.origin.y = self.view.frame.height
@@ -133,10 +133,10 @@ class SchoolRulesViewController: UIViewController {
             """
         }
         
-        sliderTitle.text = "\(Int(sender.value))"
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            self.sliderTitle.text = "Adjust Font Size"
-        })
+//        sliderTitle.text = "\(Int(sender.value))"
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//            self.sliderTitle.text = "Adjust Font Size"
+//        })
     }
     
     @IBAction func forbiddenButton(_ sender: Any) {
