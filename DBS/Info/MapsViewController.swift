@@ -26,9 +26,9 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         MapImage.frame.size.width = self.view.frame.width
         MapImage.frame.size.height = #imageLiteral(resourceName: "Classroom Map").size.height / (#imageLiteral(resourceName: "Classroom Map").size.width / self.view.frame.width)
         MapImage.center = self.view.center
-        MapImage.sizeThatFits(self.view.frame.size)
+        //MapImage.sizeThatFits(self.view.frame.size)
         
-        ScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        ScrollView.frame = self.view.frame
         
         ScrollView.maximumZoomScale = 10.0
         ScrollView.minimumZoomScale = 1.0
@@ -38,7 +38,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         doubleTapGest.numberOfTapsRequired = 2
         ScrollView.addGestureRecognizer(doubleTapGest)
         
-        self.navigationController?.hidesBarsOnTap = true
+        //self.navigationController?.hidesBarsOnTap = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,6 +71,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         zoomRect.size.width  = scrollView.frame.size.width  / scrollView.zoomScale
 //        zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
 //        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
+        viewForZooming(in: scrollView)?.layer.borderWidth = 5
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

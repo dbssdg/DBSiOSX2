@@ -284,7 +284,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))
         if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceRect = (sender as! AnyObject).frame
+            popoverController.sourceRect = (sender as AnyObject).frame
         }
         present(actionSheet, animated: true)
     }
