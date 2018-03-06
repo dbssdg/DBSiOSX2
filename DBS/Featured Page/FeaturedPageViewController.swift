@@ -349,7 +349,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+        segmentedControl.delegate = self
         segmentedControl.tag = 1
         segmentedControl.move(to: selectedSegment)
         view.addSubview(segmentedControl)

@@ -66,15 +66,20 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
     
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
+<<<<<<< HEAD
         var zoomRect = CGRect()
         zoomRect.size.height = scrollView.frame.size.height / scrollView.zoomScale
         zoomRect.size.width  = scrollView.frame.size.width  / scrollView.zoomScale
 //        zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
 //        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
         viewForZooming(in: scrollView)?.layer.borderWidth = 5
+=======
+>>>>>>> 310a08c922bfba56f8c9e17376ca99f48bccb85f
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        
+        MapImage.layer.borderWidth = 10
         return self.MapImage
     }
     
@@ -120,6 +125,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
     
     return zoomRect;
     */
+    
     /*
     // MARK: - Navigation
 

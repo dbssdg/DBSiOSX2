@@ -30,31 +30,41 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func customizeButton(_ sender: Any) {
         if customizeButton.currentTitle! == "Customize" {
             customizeButton.setTitle("Done", for: .normal)
-            calendar.isOpaque = false
-            calendar.isEnabled = false
-            about.isOpaque = false
-            about.isEnabled = false
-            map.isOpaque = false
-            map.isEnabled = false
-            timetable.isOpaque = false
-            timetable.isEnabled = false
-            menuTable.isEditing = true
+//            calendar.isOpaque = false
+//            calendar.isEnabled = false
+//            about.isOpaque = false
+//            about.isEnabled = false
+//            map.isOpaque = false
+//            map.isEnabled = false
+//            timetable.isOpaque = false
+//            timetable.isEnabled = false
+//            menuTable.isEditing = true
             
         } else if customizeButton.currentTitle! == "Done" {
             customizeButton.setTitle("Customize", for: .normal)
-            calendar.isOpaque = true
-            calendar.isEnabled = true
-            about.isOpaque = true
-            about.isEnabled = true
-            map.isOpaque = true
-            map.isEnabled = true
-            timetable.isOpaque = true
-            timetable.isEnabled = true
-            menuTable.isEditing = false
+//            calendar.isOpaque = true
+//            calendar.isEnabled = true
+//            about.isOpaque = true
+//            about.isEnabled = true
+//            map.isOpaque = true
+//            map.isEnabled = true
+//            timetable.isOpaque = true
+//            timetable.isEnabled = true
+//            menuTable.isEditing = false
             
             UserDefaults.standard.set(functions, forKey: "functionsCustomization")
             UserDefaults.standard.set(functionIcon, forKey: "functionIcon")
         }
+        
+        calendar.isOpaque = !calendar.isOpaque
+        calendar.isEnabled = !calendar.isEnabled
+        about.isOpaque = !about.isOpaque
+        about.isEnabled = !about.isEnabled
+        map.isOpaque = !map.isOpaque
+        map.isEnabled = !map.isEnabled
+        timetable.isOpaque = !timetable.isOpaque
+        timetable.isEnabled = !timetable.isEnabled
+        menuTable.isEditing = !menuTable.isEditing
     }
     
     override func viewDidLoad() {

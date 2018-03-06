@@ -12,6 +12,9 @@ class aboutDBSViewController: UIViewController {
 
     @IBOutlet weak var information: UITextView!
     
+    let sliderView = UIView()
+    let slider = UISlider()
+    
     @IBAction func onAboutDBSSettingsPressed(_ sender: Any) {
         UIView.animate(withDuration: 0.3){
             self.aboutDBSCollectionView.forEach {
@@ -166,22 +169,101 @@ class aboutDBSViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        // Do any additional setup after loading the view.
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
-        self.title = "Vision and Mission"
         
-        information.textAlignment = .justified
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+        DispatchQueue.main.async {
+            // Do any additional setup after loading the view.
+            if #available(iOS 11.0, *) {
+                self.navigationItem.largeTitleDisplayMode = .never
+            }
+            self.title = "Vision and Mission"
+            self.information.textAlignment = .justified
+            
             self.vAndM(self)
-        })
+        }
+        
+        // Slider Components
+        
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
+        self.navigationItem.rightBarButtonItem = setFontSizeButton
+        
+        sliderView.backgroundColor = UIColor.lightGray
+        sliderView.frame = CGRect(x: 8, y: self.view.frame.height, width: self.view.frame.width - 16, height: 50)
+        sliderView.layer.cornerRadius = 20
+        sliderView.layer.zPosition = 1000
+        self.view.addSubview(sliderView)
+        
+        slider.frame = CGRect(x: self.view.frame.width*0.25, y: 20, width: self.view.frame.width/2, height: 20)
+        slider.minimumValue = 9
+        slider.maximumValue = 40
+        
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            slider.value = Float(UserDefaults.standard.integer(forKey: "fontSize"))
+        } else {
+            slider.value = 14
+        }
+        sliderValueChanged(slider)
+        
+        slider.isContinuous = true
+        slider.tintColor = UIColor.purple
+        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        sliderView.addSubview(slider)
+        
+//        let sliderTitle = UILabel()
+//        sliderTitle.frame = CGRect(x: 0, y:0, width: self.view.frame.width, height: 65)
+//        sliderTitle.text = "Adjust Font Size"
+//        sliderTitle.textAlignment = .center
+//        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
+//        sliderView.addSubview(sliderTitle)
+        let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:0, width: self.view.frame.width/10, height: 50))
+        smallA.text = "A"
+        smallA.font = UIFont(name: "Helvetica", size: 9)
+        sliderView.addSubview(smallA)
+        let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:0, width: self.view.frame.width/10, height: 50))
+        bigA.text = "A"
+        bigA.font = UIFont(name: "Helvetica", size: 30)
+        sliderView.addSubview(bigA)
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setFontSize(_ sender: UIBarButtonItem) {
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishedSetFontSize(_:)))
+        self.navigationItem.rightBarButtonItem = doneButton
+        //        self.view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.sliderView.frame.origin.y = self.view.frame.height - (self.tabBarController == nil ? 15: (self.tabBarController?.tabBar.frame.height)!) - 50
+        }, completion: nil)
+    }
+    func finishedSetFontSize(_ sender: UIBarButtonItem) {
+        let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
+        self.navigationItem.rightBarButtonItem = setFontSizeButton
+        //        self.view.backgroundColor = UIColor.white
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.sliderView.frame.origin.y = self.view.frame.height
+        }, completion: nil)
+    }
+    func sliderValueChanged(_ sender: UISlider) {
+        UserDefaults.standard.set(Int(sender.value), forKey: "fontSize")
+        
+        if self.title == "Vision and Mission" {
+            vAndM(sender)
+        } else if self.title == "School Policy" {
+            schoolPolicy(sender)
+        } else if self.title  == "A Brief History of DBS" {
+            history(sender)
+        }
+        
+//        sliderTitle.text = "\(Int(sender.value))"
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//            self.sliderTitle.text = "Adjust Font Size"
+//        })
     }
     
     func attributedText(_ str: String, _ titles: [String]) -> NSAttributedString {
@@ -190,8 +272,8 @@ class aboutDBSViewController: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .justified
         
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSParagraphStyleAttributeName: paragraphStyle])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0), NSParagraphStyleAttributeName: paragraphStyle]
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: CGFloat(slider.value)), NSParagraphStyleAttributeName: paragraphStyle])
+        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(slider.value+4)), NSParagraphStyleAttributeName: paragraphStyle]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }
@@ -201,10 +283,14 @@ class aboutDBSViewController: UIViewController {
     func hideButtons() {
         UIView.animate(withDuration: 0.3) {
             self.aboutDBSCollectionView.forEach {
-                $0.isHidden = !$0.isHidden
+                if !$0.isHidden {
+                    $0.isHidden = !$0.isHidden
+                }
             }
         }
     }
+    
+    
     
 }
 

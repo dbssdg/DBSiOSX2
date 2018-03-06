@@ -14,5 +14,6 @@ pod 'SpreadsheetView'
 pod 'CSVImporter'
 pod 'NVActivityIndicatorView'
 pod 'CryptoSwift', '~> 0.7.1’
+pod ‘GoogleMaps’
 
 end
