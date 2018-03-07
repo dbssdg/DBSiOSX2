@@ -28,7 +28,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         doubleTapGest.numberOfTapsRequired = 2
         ScrollView.addGestureRecognizer(doubleTapGest)
         
-        //self.navigationController?.hidesBarsOnTap = true
+        self.navigationController?.hidesBarsOnTap = true
     }
     
     func UISetup(){
@@ -43,12 +43,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
             
             MapImage.contentMode = .scaleAspectFit
             
-            
-            MapImage.layer.borderWidth = 5
-            MapImage.layer.backgroundColor = UIColor.red.cgColor
-            
             ScrollView.frame = self.view.frame
-            ScrollView.layer.backgroundColor = UIColor.red.cgColor
             
             ScrollView.maximumZoomScale = 10.0
             ScrollView.minimumZoomScale = 1.0
@@ -86,9 +81,15 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
 //        zoomRect.size.width  = scrollView.frame.size.width  / scrollView.zoomScale
 //        zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
 //        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
+        
+        let offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0)
+        let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
+        // adjust the center of image view
+        MapImage.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY)
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        
         return MapImage
     }
     
