@@ -62,6 +62,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         } else {
             ScrollView.setZoomScale(1, animated: true)
         }
+        scrollViewDidZoom(ScrollView)
     }
     
     func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {

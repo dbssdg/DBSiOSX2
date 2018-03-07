@@ -62,7 +62,9 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToInfoPage))
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        spinner.activityIndicatorViewStyle = .gray
+        spinner.activityIndicatorViewStyle = .white
+        spinner.backgroundColor = UIColor.gray
+        spinner.layer.cornerRadius = 10
         spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
@@ -197,7 +199,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - ( (tabBarController?.tabBar.frame.height == nil) ? 15 : (tabBarController?.tabBar.frame.height)! ) - 40, width: self.view.frame.width * 0.9, height: 40)
             let segmentedControl = TwicketSegmentedControl(frame: frame)
             segmentedControl.setSegmentItems(titles)
-            segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+            segmentedControl.delegate = self
             
             //Init Day
             var DayToDisplay = 0
@@ -205,7 +207,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             calendar.firstWeekday = -1
             
             let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-            let TimeBoundString = "16:00"
+//            let TimeBoundString = "16:00"
             let formatter : DateFormatter = {
                 let dateFormatter  = DateFormatter()
                 dateFormatter.timeZone = Calendar.current.timeZone

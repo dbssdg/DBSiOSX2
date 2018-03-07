@@ -167,13 +167,29 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
+        
+        for i in 1...20 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)/10, execute: {
+                if self.tableView(self.featuredTable, numberOfRowsInSection: 0) <= 0 && self.isInternetAvailable() {
+                    self.featuredTable.reloadData()
+                    print(Double(i)/10)
+                    if i == 20 {
+                        print("BYE")
+                    }
+                } else if self.tableView(self.featuredTable, numberOfRowsInSection: 0) > 0 {
+                    self.removeSpinner(view: self.featuredTable)
+                    self.featuredTable.reloadData()
+                }
+            })
+        }
+        
+//        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
 //            for i in self.view.subviews { if i.tag == 1 {
 //                (i as! TwicketSegmentedControl).isEnabled = false
 //                } }
-            featuredTable.reloadData()
-        }
-        
+//            featuredTable.reloadData()
+//        }
+//
 //        for i in self.view.subviews { if i.tag == 1 {
 //            (i as! TwicketSegmentedControl).isEnabled = true
 //            } }

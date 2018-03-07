@@ -240,13 +240,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
             }else{
                 let toRecipients = ["dbssdg@gmail.com"]
-                let toRecipients2 = ["kevinlauofficial01@gmail.com"]
+//                let toRecipients2 = ["kevinlauofficial01@gmail.com"]
                 let subject = "Report A Bug"
                 let mc = MFMailComposeViewController()
-                let reportMessage = ""
+                var reportMessage = ""
+                if let user = UserDefaults.standard.array(forKey: "profileData") {
+                    reportMessage += " \(user[1])"
+                    if user.count > 3 {
+                        reportMessage += " \(user[3])"
+                    }
+                }
+                
                 mc.mailComposeDelegate = self
                 mc.setToRecipients(toRecipients)
-                mc.setCcRecipients(toRecipients2)
+//                mc.setCcRecipients(toRecipients2)
                 mc.setMessageBody(reportMessage, isHTML: false)
                 mc.setSubject(subject)
                 

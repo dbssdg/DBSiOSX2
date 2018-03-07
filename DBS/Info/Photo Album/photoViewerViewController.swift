@@ -208,17 +208,19 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         if scrollImg.zoomScale <= 1 {
             scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
             
-            var scale = CGFloat(1)
-            scale = (imgView.image?.size.width)! / frame.width
-            //imgView.frame.size.height = (imgView.image?.size.height)! / scale
-            print("double tap zoom in")
+//            var scale = CGFloat(1)
+//            scale = (imgView.image?.size.width)! / frame.width
+//            imgView.frame.size.height = (imgView.image?.size.height)! / scale
+//            print("double tap zoom in")
             
         } else {
             scrollImg.setZoomScale(1, animated: true)
 //            scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.minimumZoomScale, center: recognizer.location(in: recognizer.view)), animated: false)
             imgView.frame = originalFrame
-            print("zoom out")
+//            print("zoom out")
         }
+        scrollViewDidZoom(scrollImg)
+        print("zoomScale", scrollImg.zoomScale, "; minimumZoomScale", scrollImg.minimumZoomScale)
     }
     
     func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
@@ -232,16 +234,11 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         return zoomRect
     }
     
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imgView.layer.borderWidth = 5
-        return imgView
-    }
-    
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        if scrollView.zoomScale == 1{
-        var scale = CGFloat(1)
-        scale = (imgView.image?.size.width)! / frame.width
-        imgView.frame.size.height = (imgView.image?.size.height)! / scale
+        if scrollView.zoomScale == 1 {
+            var scale = CGFloat(1)
+            scale = (imgView.image?.size.width)! / frame.width
+            imgView.frame.size.height = (imgView.image?.size.height)! / scale
         }
     }
     
@@ -252,6 +249,11 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
         // adjust the center of image view
         imgView.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY)
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+//        imgView.layer.borderWidth = 5
+        return imgView
     }
     
     override func layoutSubviews() {
