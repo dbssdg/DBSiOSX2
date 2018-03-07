@@ -57,13 +57,13 @@ class SchoolRulesViewController: UIViewController {
         self.view.addSubview(sliderView)
         
         slider.frame = CGRect(x: self.view.frame.width*0.25, y: 20, width: self.view.frame.width/2, height: 20)
-        slider.minimumValue = 9
-        slider.maximumValue = 40
+        slider.minimumValue = 8
+        slider.maximumValue = 24
         
         if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
             slider.value = Float(UserDefaults.standard.integer(forKey: "fontSize"))
         } else {
-            slider.value = 14
+            slider.value = 16
         }
         sliderValueChanged(slider)
         

@@ -14,38 +14,17 @@ import SystemConfiguration
 struct ScrollViewDataStruct {
     let title : String?
 }
-var EventsFromNow = [events]()
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
 var OldClass = ""
 
+var EventsFromNow = [events]()
+
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
-    var CurrentTableIndex = 0
-    
-    /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
-        coordinator.animate(alongsideTransition: { (_) in
-            self.presentedViewController.invalidateLayout()
-            
-            if self.pageControl.currentPage == 0 {
-                self.collectionView?.contentOffset = .zero
-                
-            } else {
-                let indexPath = indexPath(item: self.pageControl.currentPage, section : 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                
-            } { (_) in
+    var CurrentTableIndex = 0 // Detect Current Table
  
-            }
-        })
-        
-        
-        
-    }*/ 
-    
-    
     var eventsArray = [events]()
     var array = EventsArray
     var EventsAreLoaded = false
@@ -115,11 +94,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     }
 }
-        
-       
-        
-        
-    
+    //Events From Now
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
         self.array = EventsArray
         for i in EventsArray{
@@ -197,7 +172,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             CurrentClass.removeLast(3)
             
             
-            
         if timetable == nil || (timetableChoice != CurrentClass) || OldClass != UserInformation[3]{
         
         timetableChoice = CurrentClass
@@ -208,7 +182,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         var GradeString = "\(input)"
         GradeString.removeLast(4)
         GradeString.removeFirst()
-            _ = Int(GradeString)!
         
         var ClassString1 = "\(input)"
         ClassString1.removeLast(3)
@@ -221,9 +194,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     URLSession.shared.dataTask(with: url!) { (data, response, error) in
                         do {
                             if data != nil {
-                                
                                 timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
-                                
                             }
                             
                         } catch {
@@ -235,7 +206,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
     }
-    }
+}
     
     @objc func GoToTimetable(){
         
@@ -245,28 +216,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         performSegue(withIdentifier: "Home to My Timetable", sender: self)
         
     }
-    
-    
-    func isInternetAvailable() -> Bool {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        
-        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
-            }
-        }
-        
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            return false
-        }
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
-    }
-
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -1382,11 +1331,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)
         (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
-        
-        
-       
     }
-    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
+    }
 }
 
 

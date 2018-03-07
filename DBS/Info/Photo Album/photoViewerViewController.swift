@@ -248,6 +248,11 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
             scale = (imgView.image?.size.width)! / frame.width
             imgView.frame.size.height = (imgView.image?.size.height)! / scale
         }
+        
+        let offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0)
+        let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
+        // adjust the center of image view
+        imgView.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY)
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

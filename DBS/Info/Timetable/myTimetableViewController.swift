@@ -196,7 +196,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         
         if hasSegmentedControl == false{
             let titles = ["Mon", "Tue", "Wed", "Thur", "Fri"]
-            let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - ( (tabBarController?.tabBar.frame.height == nil) ? 15 : (tabBarController?.tabBar.frame.height)! ) - 40, width: self.view.frame.width * 0.9, height: 40)
+            let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
             let segmentedControl = TwicketSegmentedControl(frame: frame)
             segmentedControl.setSegmentItems(titles)
             segmentedControl.delegate = self
@@ -207,7 +207,6 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             calendar.firstWeekday = -1
             
             let CurrentDay = calendar.component(.weekday, from: Date()) - 1
-//            let TimeBoundString = "16:00"
             let formatter : DateFormatter = {
                 let dateFormatter  = DateFormatter()
                 dateFormatter.timeZone = Calendar.current.timeZone
