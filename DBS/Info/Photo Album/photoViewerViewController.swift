@@ -223,6 +223,14 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
         print("zoomScale", scrollImg.zoomScale, "; minimumZoomScale", scrollImg.minimumZoomScale)
     }
     
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        if scrollView.zoomScale == 1{
+            var scale = CGFloat(1)
+            scale = (imgView.image?.size.width)! / frame.width
+            imgView.frame.size.height = (imgView.image?.size.height)! / scale
+        }
+    }
+    
     func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
         var zoomRect = CGRect.zero
         zoomRect.size.height = self.imgView.frame.size.height / scale
