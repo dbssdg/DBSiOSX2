@@ -207,9 +207,13 @@ class ImagePreviewFullViewCell: UICollectionViewCell, UIScrollViewDelegate {
     func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
         if scrollImg.zoomScale <= 1 {
             scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
+            
+            var scale = CGFloat(1)
+            scale = (imgView.image?.size.width)! / frame.width
+            imgView.frame.size.height = (imgView.image?.size.height)! / scale
+            
         } else {
             scrollImg.setZoomScale(1.0, animated: true)
-            
             imgView.frame = originalFrame
         }
     }
