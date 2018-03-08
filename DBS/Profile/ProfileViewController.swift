@@ -101,10 +101,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                     } catch {
-                        if self.teacherOrStudent() == "s" {
-                            self.studentImage.image = UIImage(named: "StudentBig")
-                        } else if self.teacherOrStudent() == "" {
+                        if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
                             self.studentImage.image = UIImage(named: "TeacherBig")
+                        } else {
+                            self.studentImage.image = UIImage(named: "StudentBig")
                         }
                         if let x = UserDefaults.standard.array(forKey: "profileData") {
                             self.profileData = x as! [String]
@@ -114,14 +114,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 }.resume()
                 
             } else {
-                if self.teacherOrStudent() == "s" {
-                    self.studentImage.image = UIImage(named: "StudentBig")
-                } else if self.teacherOrStudent() == "" {
-                    self.studentImage.image = UIImage(named: "TeacherBig")
-                }
                 if let x = UserDefaults.standard.array(forKey: "profileData") {
                     profileData = x as! [String]
                     userInfo.reloadData()
+                }
+                if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
+                    self.studentImage.image = UIImage(named: "TeacherBig")
+                } else {
+                    self.studentImage.image = UIImage(named: "StudentBig")
                 }
             }
             
@@ -245,7 +245,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 let mc = MFMailComposeViewController()
                 var reportMessage = ""
                 if let user = UserDefaults.standard.array(forKey: "profileData") {
-                    reportMessage += " \(user[1])"
+                    reportMessage += "By \(user[1])"
                     if user.count > 3 {
                         reportMessage += " \(user[3])"
                     }
@@ -298,11 +298,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if loginID != "" {
-            if teacherOrStudent() == "" {
+            if teacherOrStudent() == "" && profileData.count <= 3 {
                 return 3
             } else if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 {
                 return 4
-            } else if teacherOrStudent() == "s" {
+            } else {
                 return 5
             }
         }
