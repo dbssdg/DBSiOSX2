@@ -14,6 +14,7 @@ class housesSystemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        housesSystem.scrollRangeToVisible(NSRange(location: 0, length: 0))
         let string = """
 A brief introduction to our House System
     Unlike many other schools in Hong Kong, the house system of DBS has a unique historical development. Under Rev. Featherstone's Headmastership, in 1922 the School has been divided into four Houses for House Sports, and to get as many boys as possible to do something for their Houses and for the School. The Houses were represented for four different colours (blue, brown, green and yellow). Rev. Sargent, the successor of Rev. Featherstone, extended the house system to cover senior and junior grades in various sports.

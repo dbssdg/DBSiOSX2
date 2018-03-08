@@ -146,11 +146,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         ParseJSON()
         
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.searchController = featuredSearch
-            navigationItem.hidesSearchBarWhenScrolling = true
-        }
+        
         setUpSegmentedControl()
         
         //Refresher
@@ -163,6 +159,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         registerForPreviewing(with: self, sourceView: featuredTable)
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = featuredSearch
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
