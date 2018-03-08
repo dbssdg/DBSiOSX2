@@ -25,7 +25,7 @@ class ContributionsViewController: UIViewController {
         
         let string = """
 Diocesan Boys' School Official School Application
-Alpha Build 4.0
+Version 4.0
 
 TEACHER-IN-CHARGE
 Mr. Chris Lee
