@@ -168,6 +168,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if segmentChanged{
+            viewDidLoad()
+            segmentChanged = false
+        }
+        
         for i in 1...20 {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)/10, execute: {
                 if self.tableView(self.featuredTable, numberOfRowsInSection: 0) <= 0 && self.isInternetAvailable() {
@@ -243,7 +248,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 if isSearching {
                     cell.textLabel?.text = filteredNews[indexPath.row]
                     cell.detailTextLabel?.text = ""
-                } else {
+                } else if !newsTitleArray.isEmpty && !newsDateArray.isEmpty{
                     cell.textLabel?.text = newsTitleArray[indexPath.row]
                     cell.detailTextLabel?.text = newsDateArray[indexPath.row]
                 }
@@ -368,6 +373,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         segmentedControl.delegate = self
         segmentedControl.tag = 1
         segmentedControl.move(to: selectedSegment)
+        segmentedControl.tag = 10000
         view.addSubview(segmentedControl)
         
     }

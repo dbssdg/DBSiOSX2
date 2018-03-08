@@ -21,6 +21,8 @@ var OldClass = ""
 
 var EventsFromNow = [events]()
 
+var segmentChanged = false
+
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
     var CurrentTableIndex = 0 // Detect Current Table
@@ -1034,9 +1036,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     performSegue(withIdentifier: "Home to News Detailed", sender: self)
                 }
             }else{
-                
                 destinationFeature = 1
+                if selectedSegment != 1{
+                    selectedSegment = 1
+                    segmentChanged = true
+                }
                 selectedSegment = 1
+                
                 tabBarController?.selectedIndex = 1
             }
         }else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
@@ -1046,7 +1052,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     performSegue(withIdentifier: "Home to Circular Detailed", sender: self)
                 }
             }else{
-                selectedSegment = 0
+                if selectedSegment != 0{
+                    selectedSegment = 0
+                    segmentChanged = true
+                }
+                
                 tabBarController?.selectedIndex = 1
             }
         }
