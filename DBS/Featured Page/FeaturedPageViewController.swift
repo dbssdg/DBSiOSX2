@@ -229,7 +229,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             print("\(pinnedCircular)th post")
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
-        if !circularTimeArray.isEmpty {
+        cell.textLabel?.text = ""
+        cell.detailTextLabel?.text = ""
+        if !circularTimeArray.isEmpty && !newsTitleArray.isEmpty {
             if selectedSegment == 0 {
                 if isSearching {
                     cell.textLabel?.text = filteredCirculars[indexPath.row]
@@ -249,10 +251,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     
                 }
             } else if selectedSegment == 1 {
+                print(newsTitleArray.count, indexPath.row)
                 if isSearching {
                     cell.textLabel?.text = filteredNews[indexPath.row]
                     cell.detailTextLabel?.text = ""
-                } else if !newsTitleArray.isEmpty && !newsDateArray.isEmpty{
+                } else if !newsTitleArray.isEmpty && !newsDateArray.isEmpty && indexPath.row < newsTitleArray.count {
                     cell.textLabel?.text = newsTitleArray[indexPath.row]
                     cell.detailTextLabel?.text = newsDateArray[indexPath.row]
                 }

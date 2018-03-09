@@ -316,7 +316,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
         }else if teacherOrStudent() == ""{
             let Name = String(UserInformation[1].capitalized)!
-            WelcomeLabel.text = " Hi! \(Name) "
+            WelcomeLabel.text = " Welcome! \(Name) "
         }
         WelcomeLabel.reloadInputViews()
         WelcomeLabel.textColor = UIColor.white
