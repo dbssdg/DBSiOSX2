@@ -655,7 +655,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 ClassString.removeLast(3)
                 
                 Class = ClassString
-                Class.removeFirst(2)
+                Class = "\(Class.last!)"
  
                 
              //Elective
@@ -711,7 +711,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
                
                 
-            if timetable != nil {
+            if timetable != nil && formSection.contains(Class){
                 
                     
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
@@ -1065,9 +1065,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         spinner.tag = view.tag + 30
         view.addSubview(spinner)
         
+        var Class = "\(UserInformation[3])"
+        Class.removeLast(3)
+        Class = "\(Class.last!)"
+        
+        print(view.tag)
         
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
-        label.text = "Please check your Internet connectivity"
+        if  LoggedIn == true && teacherOrStudent() == "s" && !formSection.contains(Class) && view.tag == 10000{
+            label.text = "Timetable for IB boys will be available soon"
+        }else if isInternetAvailable(){
+            label.text = "Please Reload"
+        }else{
+            label.text = "Please check your Internet connectivity"
+        }
         label.textColor = spinner.color
         label.font = UIFont(name: "Helvetica", size: 14)
         label.textAlignment = .center
