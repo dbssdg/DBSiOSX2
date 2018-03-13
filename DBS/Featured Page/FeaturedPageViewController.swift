@@ -389,7 +389,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
         spinner.activityIndicatorViewStyle = .gray
-        spinner.center = self.view.center
+        spinner.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         spinner.tag = 1000
