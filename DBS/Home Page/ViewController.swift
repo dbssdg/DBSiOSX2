@@ -1187,8 +1187,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                 
                 if CurrentTableIndex == 0 - logInNumber{
-                    
                     if isInternetAvailable() && timetable != nil{
+                        previewingContext.sourceRect = ((self.scrollView.viewWithTag(CurrentTableIndex + 10000)! as! UITableView).cellForRow(at: indexPath!)?.frame)!
+                    
                     timetableChoice = "\(UserInformation[3])"
                     timetableChoice.removeLast(3)
                     let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "My Timetable") as! myTimetableViewController
