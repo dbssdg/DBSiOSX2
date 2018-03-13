@@ -80,11 +80,27 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        var temp = [events]()
+        for i in EventsArray{
+            var duplicated = false
+            for j in temp{
+                if i.Title == j.Title{
+                    duplicated = true
+                }
+            }
+            if duplicated == false{
+                temp += [i]
+            }
+        }
+        
+        EventsArray = temp
+    }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        
         
         if !EventsFromNow.isEmpty{
             tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
@@ -187,3 +203,4 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
    
 
 }
+
