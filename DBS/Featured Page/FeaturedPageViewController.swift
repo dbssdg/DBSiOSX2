@@ -146,11 +146,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         ParseJSON()
         
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.searchController = featuredSearch
-            navigationItem.hidesSearchBarWhenScrolling = true
-        }
+        
         setUpSegmentedControl()
         
         //Refresher
@@ -163,6 +159,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         registerForPreviewing(with: self, sourceView: featuredTable)
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = featuredSearch
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,7 +229,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             print("\(pinnedCircular)th post")
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "featuredCell")! as UITableViewCell
-        if !circularTimeArray.isEmpty {
+        cell.textLabel?.text = ""
+        cell.detailTextLabel?.text = ""
+        if !circularTimeArray.isEmpty && !newsTitleArray.isEmpty {
             if selectedSegment == 0 {
                 if isSearching {
                     cell.textLabel?.text = filteredCirculars[indexPath.row]
@@ -245,10 +251,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                     
                 }
             } else if selectedSegment == 1 {
+                print(newsTitleArray.count, indexPath.row)
                 if isSearching {
                     cell.textLabel?.text = filteredNews[indexPath.row]
                     cell.detailTextLabel?.text = ""
-                } else if !newsTitleArray.isEmpty && !newsDateArray.isEmpty{
+                } else if !newsTitleArray.isEmpty && !newsDateArray.isEmpty && indexPath.row < newsTitleArray.count {
                     cell.textLabel?.text = newsTitleArray[indexPath.row]
                     cell.detailTextLabel?.text = newsDateArray[indexPath.row]
                 }
@@ -382,7 +389,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
         spinner.activityIndicatorViewStyle = .gray
-        spinner.center = self.view.center
+        spinner.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         spinner.tag = 1000

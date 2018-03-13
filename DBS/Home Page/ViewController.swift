@@ -316,7 +316,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
         }else if teacherOrStudent() == ""{
             let Name = String(UserInformation[1].capitalized)!
-            WelcomeLabel.text = " Hi! \(Name) "
+            WelcomeLabel.text = " Welcome! \(Name) "
         }
         WelcomeLabel.reloadInputViews()
         WelcomeLabel.textColor = UIColor.white
@@ -508,8 +508,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         PageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
         self.view.addSubview(PageControl)
         
-        
-        
         //scrollView.reloadInputViews()
     }
     func changePage(sender: AnyObject) -> () {
@@ -578,15 +576,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var BigFont : CGFloat = 18
         var SmallFont : CGFloat = 13
-        /*
-        if UIScreen.main.bounds.width < 700{
-            BigFont = 14
-            SmallFont = 11
-        }else if UIScreen.main.bounds.width <= 750{
-            BigFont = 17
-            SmallFont = 13
-        }
- */
         
         if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375{
             BigFont = 14
@@ -635,8 +624,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 dateFormatter.dateFormat = "HH:mm"
                 return dateFormatter
             }()
-            //let TimeBound = formatter.date(from: TimeBoundString)
-            //let CurrentTime = calendar.dateComponents([.hour], from: Date())
+                
             let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
             DayToDisplay = CurrentDay
                 
@@ -656,7 +644,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             //Class
                 var Class = "S"
                 
-                //if UserInformation != nil{
                 let input = "\(UserInformation[3])"
                 
                 var GradeString = "\(input)"
@@ -668,7 +655,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 ClassString.removeLast(3)
                 
                 Class = ClassString
-                Class.removeFirst(2)
+                Class = "\(Class.last!)"
  
                 
              //Elective
@@ -724,7 +711,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
                
                 
-            if timetable != nil {
+            if timetable != nil && formSection.contains(Class){
                 
                     
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
@@ -997,9 +984,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
         }else{
             if indexPath.row < 4{
-                return self.scrollView.viewWithTag(10001)!.frame.size.height / 4 - 6
+                return self.scrollView.viewWithTag(10001)!.frame.size.height / 4 - 7
             }else{
-                return 24
+                return 28
             }
         }
     }
@@ -1078,9 +1065,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         spinner.tag = view.tag + 30
         view.addSubview(spinner)
         
+        var Class = "\(UserInformation[3])"
+        Class.removeLast(3)
+        Class = "\(Class.last!)"
+        
+        print(view.tag)
         
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
-        label.text = "Please check your Internet connectivity"
+        if  LoggedIn == true && teacherOrStudent() == "s" && !formSection.contains(Class) && view.tag == 10000{
+            label.text = "Timetable for IB boys will be available soon"
+        }else if isInternetAvailable(){
+            label.text = "Please Reload"
+        }else{
+            label.text = "Please check your Internet connectivity"
+        }
         label.textColor = spinner.color
         label.font = UIFont(name: "Helvetica", size: 14)
         label.textAlignment = .center

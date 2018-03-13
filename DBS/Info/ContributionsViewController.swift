@@ -24,6 +24,9 @@ class ContributionsViewController: UIViewController {
         self.navigationItem.titleView = label
         
         let string = """
+Diocesan Boys' School Official School Application
+Version 4.0
+
 TEACHER-IN-CHARGE
 Mr. Chris Lee
 
@@ -31,10 +34,7 @@ SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
 Ng Ching Wang Kelvin
 
 APP DEVELOPERS
-Ieung Ho Kwan
-Louie Chi To
-Lau Cheuk Hang
-Chan Yuen Ho
+Ieung Ho Kwan, Louie Chi To, Lau Cheuk Hang & Chan Yuen Ho
 
 ICONS
 https://www.flaticon.com

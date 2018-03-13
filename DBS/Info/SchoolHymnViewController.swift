@@ -20,7 +20,8 @@ class SchoolHymnViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        audioLyrics.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        audioLyrics.setContentOffset(CGPoint.zero, animated: true)
+        
         
         if let filePath = Bundle.main.path(forResource: "school", ofType: "wav") {
             let fileURL = URL(fileURLWithPath: filePath)
