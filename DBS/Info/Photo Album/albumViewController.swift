@@ -149,7 +149,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         layout.itemSize = CGSize(width: (self.view.frame.width-2)/2, height: (self.view.frame.width-2)/2)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
