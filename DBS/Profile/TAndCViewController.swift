@@ -16,7 +16,7 @@ class TAndCViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        textView.scrollsToTop = true
+        textView.setContentOffset(CGPoint.zero, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

@@ -2111,10 +2111,10 @@ And love to all men 'neath the sun.</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fkd-kq-9bA">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="fkd-kq-9bA">
                                 <rect key="frame" x="8" y="121" width="359" height="489"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">In this document, “The school” represents Diocesan Boys’ School, “We”, “Us”, “Our” represents the Diocesan Boys’ School Software Development Group.
+                                <mutableString key="text">In this document, “The school” represents Diocesan Boys’ School, “We”, “Us”, “Our” represents the Diocesan Boys’ School Software Development Group.
 
 We reserve the right to amend, modify or change any of the terms of service at any time without prior notice by posting the amended terms on our website. By using this service, you agree to the most recent version of this terms of service. You may not use this service if you do not agree to all the following terms.
 
@@ -2126,7 +2126,7 @@ You can choose to remove content that you transmit to our service. However, you 
 
 We do not guarantee that every information provided by our service is accurate and correct.
 
-Date of last revision: 30 January 2018.</string>
+Date of last revision: 30 January 2018.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -2143,7 +2143,7 @@ Date of last revision: 30 January 2018.</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="textView" destination="fkd-kq-9bA" id="bvU-zP-gDx"/>
+                        <outlet property="textView" destination="fkd-kq-9bA" id="46j-8r-nQ4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rO-c5-1ax" userLabel="First Responder" sceneMemberID="firstResponder"/>

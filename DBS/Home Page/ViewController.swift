@@ -1081,7 +1081,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             if  teacherOrStudent() == "s" && !formSection.contains(Class) && view.tag == 10000{
                 label.text = "Timetable for IB boys will be available soon"
-                spinner.isHidden = false
+                spinner.isHidden = true
             }
         }
         
