@@ -148,12 +148,12 @@
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
 				F837043A2046D6DF0026AC3D /* Timetable */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
-				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
+				6A1515C42010627800BBF15C /* Photo Album */,
 				6A9A505B1F8C407F005E1211 /* SchoolRulesViewController.swift */,
 				6A7B445D1F87499000227545 /* TeachersViewController.swift */,
 				F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */,
 				F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */,
-				6A1515C42010627800BBF15C /* Photo Album */,
+				6ACBB73F1F7B69D60086916E /* SchoolHymnViewController.swift */,
 				6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */,
 			);
 			path = Info;
