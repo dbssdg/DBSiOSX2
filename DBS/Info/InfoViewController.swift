@@ -208,6 +208,8 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             guard let indexPath = menuTable.indexPathForRow(at: location) else {
                 return nil
             }
+            
+            previewingContext.sourceRect = menuTable.cellForRow(at: indexPath)!.frame
 
             let Row = indexPath.row
 

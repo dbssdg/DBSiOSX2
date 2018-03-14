@@ -314,6 +314,8 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         guard let indexPath = featuredTable.indexPathForRow(at: location) else {
             return nil
         }
+        previewingContext.sourceRect = featuredTable.cellForRow(at: indexPath)!.frame
+        
         if selectedSegment == 0 {
             circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
             let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController

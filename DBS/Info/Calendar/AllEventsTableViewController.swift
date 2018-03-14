@@ -189,6 +189,8 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
             return nil
         }
         
+        previewingContext.sourceRect = tableView.cellForRow(at: indexPath)!.frame
+        
         let SelectedEvent = EventsArray[indexPath.row]
         PassingEvent = (SelectedEvent.Title, SelectedEvent.StartDate, SelectedEvent.EndDate, SelectedEvent.EventType)
         let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController

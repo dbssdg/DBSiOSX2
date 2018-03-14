@@ -234,6 +234,9 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
             guard let indexPath = albumCollection.indexPathForItem(at: location) else {
                 return nil
             }
+            
+            previewingContext.sourceRect = albumCollection.cellForItem(at: indexPath)!.frame
+            
             albumSelected = indexPath.row
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Photo Collection") as! photoCollectionViewController
             return destViewController
@@ -241,6 +244,9 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
             guard let indexPath = videoTable.indexPathForRow(at: location) else {
                 return nil
             }
+            
+            previewingContext.sourceRect = videoTable.cellForRow(at: indexPath)!.frame
+            
             let url = URL(string: "http://www.youtube.com/watch?v=\((self.videoCollection?.items[indexPath.row].snippet.resourceId["videoId"])!)/")
             
             let webVC = UIViewController()

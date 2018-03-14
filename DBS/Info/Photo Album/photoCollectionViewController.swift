@@ -151,6 +151,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         guard let indexPath = photoCollection.indexPathForItem(at: location) else{
              return nil
         }
+        
+        previewingContext.sourceRect = photoCollection.cellForItem(at: indexPath)!.frame
+        
         photoSelected = indexPath.row
         print(location, indexPath)
         if imageArray[photoSelected] != nil {

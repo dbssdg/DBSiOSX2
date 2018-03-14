@@ -511,6 +511,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             return nil
         }
         
+        previewingContext.sourceRect = EventsTableView.cellForRow(at: indexPath)!.frame
+        
         let index = indexPath.row
         PassingEvent = (DayEvents[index].1.Title, DayEvents[index].1.StartDate, DayEvents[index].1.EndDate, DayEvents[index].1.EventType)
         let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail Event") as! DetailedEventViewController

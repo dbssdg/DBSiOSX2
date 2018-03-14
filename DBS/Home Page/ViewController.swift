@@ -1174,6 +1174,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         CurrentTableIndex = Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
         
+        
+        
         var logInNumber = 0
         if !LoggedIn || teacherOrStudent() == "" {
             logInNumber = 1
@@ -1187,12 +1189,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
             if indexPath != nil{
                 
+                previewingContext.sourceRect = ((previewingContext.sourceView as! UITableView).cellForRow(at: indexPath!)?.frame)!
+                
                 let RealIndexPath = (indexPath?.row)!
                 
                 
                 if CurrentTableIndex == 0 - logInNumber{
                     if isInternetAvailable() && timetable != nil{
-                        previewingContext.sourceRect = ((self.scrollView.viewWithTag(CurrentTableIndex + 10000)! as! UITableView).cellForRow(at: indexPath!)?.frame)!
+                        
                     
                     timetableChoice = "\(UserInformation[3])"
                     timetableChoice.removeLast(3)
