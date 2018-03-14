@@ -270,6 +270,27 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         
+        //
+        
+        var temp = [events]()
+        for i in EventsArray{
+            if temp.isEmpty{
+                temp += [i]
+            }
+            var count = 0
+            for j in temp{
+                
+                if i.StartDate >= j.StartDate{
+                    
+                    temp.insert(i, at: count)
+                    print(i.Title, j.Title)
+                    break
+                }
+                count += 1
+            }
+        }
+        EventsArray = temp
+        
     }
     
     func ParseAdoptionTimetable(){
