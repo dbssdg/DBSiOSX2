@@ -291,6 +291,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         }
         EventsArray = temp
         
+        EventsArray = EventsArray.sorted(by: { $0.StartDate <= $1.StartDate })
+        
     }
     
     func ParseAdoptionTimetable(){
