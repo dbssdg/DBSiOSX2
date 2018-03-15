@@ -270,28 +270,6 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         
-        //
-        
-        var temp = [events]()
-        for i in EventsArray{
-            if temp.isEmpty{
-                temp += [i]
-            }
-            var count = 0
-            for j in temp{
-                
-                if i.StartDate >= j.StartDate{
-                    
-                    temp.insert(i, at: count)
-                    print(i.Title, j.Title)
-                    break
-                }
-                count += 1
-            }
-        }
-        EventsArray = temp
-        
-        EventsArray = EventsArray.sorted(by: { $0.StartDate <= $1.StartDate })
         
     }
     
@@ -314,6 +292,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         Formatter.dateFormat = "dd MM yyyy"
         
         EventsArray += [events(Title: "30/4 Mon Adopts Tue Timetable", StartDate: Formatter.date(from: "30 04 2018")!, EndDate: Formatter.date(from: "30 04 2018")!, EventType: .SE), events(Title: "14/5 Mon Adopts Fri Timetable", StartDate: Formatter.date(from: "14 05 2018")!, EndDate: Formatter.date(from: "14 05 2018")!, EventType: .SE)]
+        EventsArray = EventsArray.sorted(by: { $0.StartDate <= $1.StartDate })
     }
     
     func setUpCalendarView(){
