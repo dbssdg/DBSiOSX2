@@ -1074,7 +1074,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             label.text = "Please check your Internet connectivity"
         }
         
-        if LoggedIn{
+        if LoggedIn && UserInformation.count > 3{
             var Class = "\(UserInformation[3])"
             Class.removeLast(3)
             Class = "\(Class.last!)"
