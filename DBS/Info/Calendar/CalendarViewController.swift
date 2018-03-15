@@ -495,7 +495,6 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         index = indexPath.row
         PassingEvent = (DayEvents[index].1.Title, DayEvents[index].1.StartDate, DayEvents[index].1.EndDate, DayEvents[index].1.EventType)
-        print("did select row")
         performSegue(withIdentifier: "Detail Event", sender: self)
         
     }
@@ -643,7 +642,6 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
         if didScroll{
             calendar.deselect(dates: [CurrentDay])
             didScroll = false
-            print("deselect", CurrentDay)
         }
         
         CurrentDay = date
