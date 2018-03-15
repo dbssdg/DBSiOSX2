@@ -1074,12 +1074,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             label.text = "Please check your Internet connectivity"
         }
         
+        
+        var IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
+        
         if LoggedIn && UserInformation.count > 3{
             var Class = "\(UserInformation[3])"
             Class.removeLast(3)
-            Class = "\(Class.last!)"
+            print(Class)
             
-            if  teacherOrStudent() == "s" && !formSection.contains(Class) && view.tag == 10000{
+            if  teacherOrStudent() == "s" && IBClass.contains(Class) && view.tag == 10000{
                 label.text = "Timetable for IB boys will be available soon"
                 spinner.isHidden = true
             }
@@ -1090,9 +1093,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         label.textAlignment = .center
         label.tag = view.tag + 40
         view.addSubview(label)
-        
-        
-        
     }
     
     func removeSpinner(view: UITableView){
