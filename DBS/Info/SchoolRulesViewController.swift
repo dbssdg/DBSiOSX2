@@ -126,6 +126,8 @@ class SchoolRulesViewController: UIViewController {
             uniformButton(sender)
         } else if (self.navigationItem.titleView as! UILabel).text == "Rules for Using Lockers" {
             lockerrulesButton(sender)
+        } else if (self.navigationItem.titleView as! UILabel).text != "" {
+            
         } else {
             schoolRulesTextView.attributedText = attributedText("", [])
             schoolRulesTextView.text = """

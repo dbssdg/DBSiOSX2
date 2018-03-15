@@ -306,13 +306,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-                                                        <rect key="frame" x="267.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2114,7 +2114,7 @@ And love to all men 'neath the sun.</string>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="fkd-kq-9bA">
                                 <rect key="frame" x="8" y="121" width="359" height="489"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">In this document, “The school” represents Diocesan Boys’ School, “We”, “Us”, “Our” represents the Diocesan Boys’ School Software Development Group.
+                                <string key="text">In this document, “The school” represents Diocesan Boys’ School, “We”, “Us”, “Our” represents the Diocesan Boys’ School Software Development Group.
 
 We reserve the right to amend, modify or change any of the terms of service at any time without prior notice by posting the amended terms on our website. By using this service, you agree to the most recent version of this terms of service. You may not use this service if you do not agree to all the following terms.
 
@@ -2126,7 +2126,7 @@ You can choose to remove content that you transmit to our service. However, you 
 
 We do not guarantee that every information provided by our service is accurate and correct.
 
-Date of last revision: 30 January 2018.</mutableString>
+Date of last revision: 30 January 2018.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -2268,14 +2268,14 @@ Date of last revision: 30 January 2018.</mutableString>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m2r-HZ-9YF">
-                                <rect key="frame" x="112.5" y="72" width="150" height="200"/>
+                                <rect key="frame" x="127.5" y="72" width="120" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="4JO-Vf-bxo"/>
-                                    <constraint firstAttribute="width" constant="150" id="nBR-9B-ewM"/>
+                                    <constraint firstAttribute="height" constant="160" id="4JO-Vf-bxo"/>
+                                    <constraint firstAttribute="width" constant="120" id="nBR-9B-ewM"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="COT-vc-dPA">
-                                <rect key="frame" x="0.0" y="280" width="375" height="338"/>
+                                <rect key="frame" x="0.0" y="240" width="375" height="378"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" rowHeight="62" id="4nu-Eo-Tw7" customClass="descriptionsTableViewCell" customModule="DBS" customModuleProvider="target">
