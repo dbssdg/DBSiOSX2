@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let startsWithdbs = loginID
             loginID.removeFirst(3)
             let startsWith20 = "20\(loginID)"
-            studentImage.layer.cornerRadius = 30
+            studentImage.layer.cornerRadius = studentImage.frame.height/6
             
             userInfo.dataSource = self
             userInfo.delegate = self
