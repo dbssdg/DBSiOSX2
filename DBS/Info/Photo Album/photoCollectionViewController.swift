@@ -23,6 +23,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
 
     @IBOutlet weak var photoCollection: UICollectionView!
     var photoAlbum : PhotoCollection?
+    let titleView = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +67,16 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
             
         }
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
-        label.backgroundColor = .clear
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14.0)
-        label.text = "\((albumAlbum?.data[albumSelected]["name"]!)!)"
-        self.navigationItem.titleView = label
+        titleView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
+        titleView.backgroundColor = .clear
+        titleView.numberOfLines = 0
+        titleView.textAlignment = .center
+        titleView.font = UIFont.boldSystemFont(ofSize: 14.0)
+        titleView.text = "\((albumAlbum?.data[albumSelected]["name"]!)!)"
+        
+        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+        
+        self.navigationItem.titleView = titleView
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -89,6 +93,18 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func updateTitle() {
+        if titleView.text == albumAlbum?.data[albumSelected]["name"] {
+            var date = albumAlbum?.data[albumSelected]["created_time"]
+            date?.removeLast(14)
+            if let x = date {
+                titleView.text = "Date: \(x)"
+            }
+        } else {
+            titleView.text = "\((albumAlbum?.data[albumSelected]["name"]!)!)"
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if photoAlbum?.data == nil {
             return 0
@@ -103,6 +119,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        photoSelected = indexPath.row
         if imageArray[photoSelected] != nil {
             photoSelected = indexPath.row
             performSegue(withIdentifier: "Photo Viewer", sender: self)

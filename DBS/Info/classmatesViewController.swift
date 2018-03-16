@@ -50,9 +50,9 @@ class classmatesViewController: UIViewController {
     }
     @IBAction func backspace(_ sender: Any) {
         if (sender as AnyObject).currentTitle == "CLR" {
-            viewDidLoad()
+            resetDisplay()
             backspaceOutlet.setTitle("DEL", for: .normal)
-        } else if (sender as! AnyObject).currentTitle == "DEL" {
+        } else if (sender as AnyObject).currentTitle == "DEL" {
             switch "\((classDisplay.text?.last)!)" {
             case "D", "S", "G", "P", "M", "L", "A", "J", "T":
                 classDisplay.text?.removeLast()
@@ -76,7 +76,7 @@ class classmatesViewController: UIViewController {
                 viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
                 viewClassmatesOutlet.isEnabled = false
             default:
-                viewDidLoad()
+                resetDisplay()
             }
         }
     }
@@ -85,8 +85,7 @@ class classmatesViewController: UIViewController {
         print(classmateChoice)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func resetDisplay() {
         for i in formButtons {
             i.setTitleColor(UIColor.orange, for: .normal)
             i.layer.cornerRadius = i.frame.width/2
@@ -103,6 +102,7 @@ class classmatesViewController: UIViewController {
         backspaceOutlet.layer.cornerRadius = backspaceOutlet.frame.width/2
         backspaceOutlet.isEnabled = false
         viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+        viewClassmatesOutlet.setTitle("View Classmates", for: .normal)
         viewClassmatesOutlet.isEnabled = false
         
         if #available(iOS 11.0, *) {
@@ -111,34 +111,38 @@ class classmatesViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if UserDefaults.standard.array(forKey: "profileData") > 3 {
-            classDisplay.text = UserDefaults.standard.array(forKey: "profileData")[3]
-            classDisplay.text?.removeLast(3)
-            classDisplay.textColor = UIColor.black
-            
-            for i in formButtons {
-                i.setTitleColor(UIColor.lightGray, for: .normal)
-                i.isEnabled = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        resetDisplay()
+        if let array = UserDefaults.standard.array(forKey: "profileData") {
+            if array.count > 3 {
+                classDisplay.text = array[3] as? String
+                classDisplay.text?.removeLast(3)
+                classDisplay.textColor = UIColor.black
+    
+                for i in formButtons {
+                    i.setTitleColor(UIColor.lightGray, for: .normal)
+                    i.isEnabled = false
+                }
+                for i in classButtons {
+                    i.setTitleColor(UIColor.lightGray, for: .normal)
+                    i.isEnabled = false
+                }
+                backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+                backspaceOutlet.setTitle("CLR", for: .normal)
+                backspaceOutlet.isEnabled = true
+    
+                viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+                viewClassmatesOutlet.setTitle("View My Classmates", for: .normal)
+                viewClassmatesOutlet.isEnabled = true
             }
-            for i in classButtons {
-                i.setTitleColor(UIColor.lightGray, for: .normal)
-                i.isEnabled = false
-            }
-            backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
-            backspaceOutlet.setTitle("CLR", for: .normal)
-            backspaceOutlet.isEnabled = true
-            
-            viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
-            viewClassmatesOutlet.isEnabled = true
         }
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        viewDidLoad()
+        resetDisplay()
     }
     
     override func didReceiveMemoryWarning() {

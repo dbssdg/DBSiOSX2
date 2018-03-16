@@ -18,6 +18,8 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        self.title = "\(photoSelected+1) of \(imageArray.count)"
+        
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumInteritemSpacing = 0
@@ -29,7 +31,6 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
         collectionView.dataSource = self
         collectionView.register(ImagePreviewFullViewCell.self, forCellWithReuseIdentifier: "viewerCell")
         collectionView.isPagingEnabled = true
-        
         self.view.addSubview(collectionView)
         
         collectionView.backgroundColor = UIColor.white
@@ -108,7 +109,7 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         photoSelected = (collectionView.indexPath(for: collectionView.visibleCells[0])?.item)!
-        
+        self.title = "\(photoSelected+1) of \(imageArray.count)"
 //        for i in 0..<imageArray.count {
 //            if let scroll = (collectionView.cellForItem(at: [0,i]) as? ImagePreviewFullViewCell)?.scrollImg {
 //                if scroll.zoomScale != 1 && photoSelected != i {
@@ -117,8 +118,6 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
 //            }
 //        }
     }
-    
-    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
