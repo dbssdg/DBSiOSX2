@@ -143,9 +143,9 @@ class timetableViewController: UIViewController {
         case "G10G", "G10L", "G11G", "G11L", "G12G", "G12L":
             resetDisplay()
             classDisplay.adjustsFontSizeToFitWidth = true
-            classDisplay.text = "Timetable for IB boys will be available soon"
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                if self.classDisplay.text == "Timetable for IB boys will be available soon" {
+            classDisplay.text = " Timetable for IB boys will be available soon "
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                if self.classDisplay.text == " Timetable for IB boys will be available soon " {
                     self.classDisplay.text = "Enter class"
                 }
             })
