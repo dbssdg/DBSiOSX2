@@ -352,9 +352,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Arrows
         //Left Arrow
-        let LeftArrrowImage = #imageLiteral(resourceName: "Arrow")
+        let LeftArrowImage = #imageLiteral(resourceName: "Arrow")
         let LeftArrowImageView = UIImageView()
-        LeftArrowImageView.image = LeftArrrowImage
+        LeftArrowImageView.image = LeftArrowImage
         
         let LeftArrow = UIButton()
         
@@ -366,7 +366,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         LeftArrow.layer.zPosition = 100000
         LeftArrow.backgroundColor = self.view.backgroundColor
         
-        var tintableImage = LeftArrrowImage.withRenderingMode(.alwaysTemplate)
+        var tintableImage = LeftArrowImage.withRenderingMode(.alwaysTemplate)
         LeftArrow.setImage(tintableImage, for: .normal)
         LeftArrow.imageView?.tintColor = UIColor.white.withAlphaComponent(0.6)
         LeftArrow.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi))
@@ -1343,6 +1343,19 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
             }
         }
+        
+        /*
+        if CurrentTableIndex == 1{
+            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+            
+            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+        }
+ */
+        
     }
     
     

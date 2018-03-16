@@ -21,7 +21,7 @@ class classmatesViewController: UIViewController {
     @IBAction func form(_ sender: Any) {
        classDisplay.textColor = UIColor.black
        classDisplay.text? = (sender as AnyObject).currentTitle as! String
-    
+        
         for i in formButtons {
             i.setTitleColor(UIColor.lightGray, for: .normal)
             i.isEnabled = false
@@ -49,30 +49,35 @@ class classmatesViewController: UIViewController {
         viewClassmatesOutlet.isEnabled = true
     }
     @IBAction func backspace(_ sender: Any) {
-        switch "\((classDisplay.text?.last)!)" {
-        case "D", "S", "G", "P", "M", "L", "A", "J", "T":
-            classDisplay.text?.removeLast()
-            for i in formButtons {
-                i.setTitleColor(UIColor.lightGray, for: .normal)
-                i.isEnabled = false
-            }
-            for i in classButtons {
-                i.setTitleColor(UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
-                i.isEnabled = true
-            }
-            if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
-                for i in nonHighClassButtons {
+        if (sender as AnyObject).currentTitle == "CLR" {
+            viewDidLoad()
+            backspaceOutlet.setTitle("DEL", for: .normal)
+        } else if (sender as! AnyObject).currentTitle == "DEL" {
+            switch "\((classDisplay.text?.last)!)" {
+            case "D", "S", "G", "P", "M", "L", "A", "J", "T":
+                classDisplay.text?.removeLast()
+                for i in formButtons {
                     i.setTitleColor(UIColor.lightGray, for: .normal)
                     i.isEnabled = false
                 }
+                for i in classButtons {
+                    i.setTitleColor(UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
+                    i.isEnabled = true
+                }
+                if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
+                    for i in nonHighClassButtons {
+                        i.setTitleColor(UIColor.lightGray, for: .normal)
+                        i.isEnabled = false
+                    }
+                }
+                backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+                backspaceOutlet.isEnabled = true
+                
+                viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+                viewClassmatesOutlet.isEnabled = false
+            default:
+                viewDidLoad()
             }
-            backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
-            backspaceOutlet.isEnabled = true
-            
-            viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
-            viewClassmatesOutlet.isEnabled = false
-        default:
-            viewDidLoad()
         }
     }
     @IBAction func viewClassmates(_ sender: Any) {
@@ -106,6 +111,31 @@ class classmatesViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.array(forKey: "profileData") > 3 {
+            classDisplay.text = UserDefaults.standard.array(forKey: "profileData")[3]
+            classDisplay.text?.removeLast(3)
+            classDisplay.textColor = UIColor.black
+            
+            for i in formButtons {
+                i.setTitleColor(UIColor.lightGray, for: .normal)
+                i.isEnabled = false
+            }
+            for i in classButtons {
+                i.setTitleColor(UIColor.lightGray, for: .normal)
+                i.isEnabled = false
+            }
+            backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+            backspaceOutlet.setTitle("CLR", for: .normal)
+            backspaceOutlet.isEnabled = true
+            
+            viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+            viewClassmatesOutlet.isEnabled = true
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewDidLoad()
