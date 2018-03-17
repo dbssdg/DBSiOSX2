@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view.
+        UserInformation.removeAll()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -68,17 +69,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     self.studentImage.image = UIImage(named: "TeacherBig")
                 }
                 
-                let spinner = UIActivityIndicatorView()
-                spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-                spinner.activityIndicatorViewStyle = .white
-                spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
-                spinner.backgroundColor = UIColor.gray
-                spinner.layer.cornerRadius = 10
-                spinner.startAnimating()
-                spinner.hidesWhenStopped = true
-                spinner.layer.zPosition = 100000
-                self.view.addSubview(spinner)
-                
                 URLSession.shared.dataTask(with: url!) { (data, response, error) in
                     do {
                         
@@ -107,7 +97,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                         DispatchQueue.main.async {
-                            spinner.stopAnimating()
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
@@ -180,6 +169,18 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
                     let url = URL(string: jsonURL)
                     
+                    let spinner = UIActivityIndicatorView()
+                    spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+                    spinner.activityIndicatorViewStyle = .white
+                    spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+                    spinner.backgroundColor = UIColor.gray
+                    spinner.layer.cornerRadius = 10
+                    print(tableView(userInfo, numberOfRowsInSection: 0))
+                    spinner.startAnimating()
+                    spinner.hidesWhenStopped = true
+                    spinner.layer.zPosition = 100000
+                    self.view.addSubview(spinner)
+                    
                     URLSession.shared.dataTask(with: url!) { (data, response, error) in
                         do {
                             let userInfo = try JSONDecoder().decode([String: String?].self, from: data!)
@@ -188,6 +189,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             
                             DispatchQueue.main.async {
                                 print(userInfo["hash"]!!)
+                                spinner.stopAnimating()
                                 UserInformation.removeAll()
                                 let first = "\(loginAlert.textFields![0].text!)"
                                 let second = "\(loginAlert.textFields![1].text!)"
