@@ -63,7 +63,7 @@ class myClassmatesViewController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myClassmatesCell") as! descriptionsTableViewCell
-        cell.descriptionText?.text = "(\(classmateChoice)-\(indexPath.row+1)) \(myClassmates[indexPath.row][2])"
+        cell.descriptionText?.text = "(\(classmateChoice)-\(indexPath.row+1)) \(myClassmates[indexPath.row][2].capitalized)"
         cell.selectionStyle = .none
         return cell
     }

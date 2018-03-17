@@ -51,7 +51,6 @@ class classmatesViewController: UIViewController {
     @IBAction func backspace(_ sender: Any) {
         if (sender as AnyObject).currentTitle == "CLR" {
             resetDisplay()
-            backspaceOutlet.setTitle("DEL", for: .normal)
         } else if (sender as AnyObject).currentTitle == "DEL" {
             switch "\((classDisplay.text?.last)!)" {
             case "D", "S", "G", "P", "M", "L", "A", "J", "T":
@@ -99,6 +98,7 @@ class classmatesViewController: UIViewController {
         classDisplay.text = "Enter class"
         classDisplay.textColor = UIColor.lightGray
         backspaceOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+        backspaceOutlet.setTitle("DEL", for: .normal)
         backspaceOutlet.layer.cornerRadius = backspaceOutlet.frame.width/2
         backspaceOutlet.isEnabled = false
         viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
