@@ -137,12 +137,14 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if searchBar.text! != "" {
+        if searchBar.text != "" {
             isSearching = true
         }
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        isSearching = false
+        if searchBar.text == "" {
+            isSearching = false
+        }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text? = ""
@@ -150,7 +152,9 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
         teachersTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false
+        if searchBar.text == "" {
+            isSearching = false
+        }
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredTeachers = teacherArray.filter({ (text) -> Bool in
