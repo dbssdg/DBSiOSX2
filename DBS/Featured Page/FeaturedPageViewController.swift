@@ -146,7 +146,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         ParseJSON()
         
-        
         setUpSegmentedControl()
         
         //Refresher
@@ -171,7 +170,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        tabBarPage = 1
         if segmentChanged{
             viewDidLoad()
             segmentChanged = false

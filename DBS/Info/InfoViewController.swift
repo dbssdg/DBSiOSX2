@@ -102,7 +102,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        tabBarPage = 2
     }
     
     

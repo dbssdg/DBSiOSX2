@@ -23,6 +23,8 @@ var EventsFromNow = [events]()
 
 var segmentChanged = false
 
+var tabBarPage = 0
+
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
     var CurrentTableIndex = 0 // Detect Current Table
@@ -1125,7 +1127,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         //let teacherOrStudent() = "\(self.teacherOrStudent())"
         
-        
+        tabBarPage = 0
  
 //        if shortcutItemIdentifier == "upcoming" {
 //            performSegue(withIdentifier: "Home to All Events", sender: self)
