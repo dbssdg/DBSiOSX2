@@ -16,9 +16,7 @@ struct PhotoCollection : Decodable {
 var photoSelected = 0
 var imageArray = [UIImage?]()
 
-class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate{
-   
-    
+class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate {
     
 
     @IBOutlet weak var photoCollection: UICollectionView!
@@ -49,7 +47,11 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
 //                        for i in 0..<(self.photoAlbum?.data.count)!-1 {
 //                            self.photoCollection.scrollToItem(at: [0,i], at: .bottom, animated: false)
 //                        }
-                        self.photoCollection.scrollToItem(at: [0,(self.photoAlbum?.data)!.count-1], at: .bottom, animated: false)
+                        
+                        for i in 0..<self.collectionView(self.photoCollection, numberOfItemsInSection: 0) {
+                            let iv = UIImageView()
+                            self.getImage("http://graph.facebook.com/\((self.photoAlbum?.data[i]["id"])!)/picture", iv, i)
+                        }
                         self.photoCollection.scrollToItem(at: [0,0], at: .top, animated: false)
                         
 //                        for i in 0..<(self.photoAlbum?.data)!.count {
@@ -114,7 +116,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
-        getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
+//        getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
+        cell.backgroundColor = .gray
+        cell.image.image = imageArray[indexPath.row]
         return cell
     }
     
@@ -129,15 +133,15 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int) {
         
-        let spinner = UIActivityIndicatorView()
-        spinner.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.width/3)
-        spinner.activityIndicatorViewStyle = .white
-        spinner.center = CGPoint(x: spinner.frame.size.width / 2, y: spinner.frame.size.height / 2)
-        spinner.backgroundColor = UIColor.gray
-        spinner.startAnimating()
-        spinner.hidesWhenStopped = true
-        spinner.layer.zPosition = 100000
-        imageView.addSubview(spinner)
+//        let spinner = UIActivityIndicatorView()
+//        spinner.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.width/3)
+//        spinner.activityIndicatorViewStyle = .white
+//        spinner.center = CGPoint(x: spinner.frame.size.width / 2, y: spinner.frame.size.height / 2)
+//        spinner.backgroundColor = UIColor.gray
+//        spinner.startAnimating()
+//        spinner.hidesWhenStopped = true
+//        spinner.layer.zPosition = 100000
+//        imageView.addSubview(spinner)
         
         let url : URL = URL(string: urlString)!
         let session = URLSession.shared
@@ -150,7 +154,8 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                         imageView.image = imageOut
                         print(index)
                         imageArray[index] = imageOut
-                        spinner.stopAnimating()
+                        self.photoCollection.reloadData()
+//                        spinner.stopAnimating()
                     })
                 }
             } else {

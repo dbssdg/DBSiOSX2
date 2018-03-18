@@ -148,7 +148,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         if timetable != nil {
             print((timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)!)
             for i in (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)! {
-                out += "\(i.decodeUrl()) | "
+                out += "\(i.decodeUrl().capitalized.replacingOccurrences(of: "Schd", with: "SCHD").replacingOccurrences(of: "Fis", with: "FIS").replacingOccurrences(of: "Maco", with: "MACO").replacingOccurrences(of: "Mam", with: "MAM").replacingOccurrences(of: "Bafs", with: "BAFS").replacingOccurrences(of: "Ict", with: "ICT").replacingOccurrences(of: "Dse", with: "DSE")) | "
             }
             if (timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].isActivityPeriod)! == true || ((timetable?.timetable.`class`[formSection.index(of: self.group)!].day[selectedSegment].lesson[indexPath.row].name)![0] == "" && indexPath.row != 5){
                 out = "Activity Period   "

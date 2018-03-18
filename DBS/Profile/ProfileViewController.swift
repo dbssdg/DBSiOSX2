@@ -329,11 +329,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 && teacherOrStudent() == "s" {
             var arr = profileData
             arr.remove(at: 2)
-            cell.descriptionText.text = "\(arr[indexPath.row])"
+            cell.descriptionText.text = "\(arr[indexPath.row].capitalized)"
         } else {
             cell.descriptionText.text = ""
             if !profileData.isEmpty {
-                cell.descriptionText.text = "\(self.profileData[indexPath.row])"
+                cell.descriptionText.text = "\(self.profileData[indexPath.row].capitalized)"
             }
         }
         cell.descriptionText.textAlignment = .center
