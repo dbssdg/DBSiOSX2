@@ -78,7 +78,9 @@ class photoViewerViewController: UIViewController, UICollectionViewDelegate, UIC
                 scale = (image?.size.width)! / self.view.frame.width
             }
             
-            cell.imgView.frame.size = CGSize(width: self.view.frame.width, height: (image?.size.height)! / scale)
+            if let height = image?.size.height {
+                cell.imgView.frame.size = CGSize(width: self.view.frame.width, height: height / scale)
+            }
             cell.imgView.center = self.view.center
             
             cell.imgView.contentMode = .scaleAspectFit

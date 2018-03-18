@@ -16,9 +16,7 @@ struct PhotoCollection : Decodable {
 var photoSelected = 0
 var imageArray = [UIImage?]()
 
-class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate{
-   
-    
+class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate {
     
 
     @IBOutlet weak var photoCollection: UICollectionView!
@@ -50,6 +48,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
 //                            self.photoCollection.scrollToItem(at: [0,i], at: .bottom, animated: false)
 //                        }
                         self.photoCollection.scrollToItem(at: [0,(self.photoAlbum?.data)!.count-1], at: .bottom, animated: false)
+                        self.photoCollection.reloadData()
                         self.photoCollection.scrollToItem(at: [0,0], at: .top, animated: false)
                         
 //                        for i in 0..<(self.photoAlbum?.data)!.count {
