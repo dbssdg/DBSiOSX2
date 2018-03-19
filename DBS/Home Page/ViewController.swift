@@ -275,9 +275,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func UISetup(){
         
-        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
+        
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
+            LoggedIn = x != "" &&  x != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/
         }
         
         var arrayData = scrollViewLoggedInData

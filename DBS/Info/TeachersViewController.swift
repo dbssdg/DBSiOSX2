@@ -34,7 +34,7 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
         teacherSearch.searchBar.delegate = self
         teacherSearch.dimsBackgroundDuringPresentation = false
         
-        let jsonURL = "http://m-poll.dbs.edu.hk/poller/load_staff_info.php"
+        let jsonURL = "http://m-poll.dbs.edu.hk/poller/load_tstaff_info.php"
         let url = URL(string: jsonURL)
         
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
