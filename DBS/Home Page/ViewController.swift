@@ -1315,34 +1315,48 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
         
+        func HideArrow(tag: Int){
+            (self.view.viewWithTag(tag)! as! UIButton).isEnabled = false
+            (self.view.viewWithTag(tag)! as! UIButton).isHidden = true
+            for i in self.view.subviews{
+                if i.tag == tag{
+                    i.isHidden = true
+                }
+            }
+        }
+        
+        
+        func ShowArrow(tag: Int){
+            (self.view.viewWithTag(tag)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(tag)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(tag)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+        }
+        
         
         if scrollView == self.scrollView{
             if scrollView.contentOffset.x >= scrollView.contentSize.width - self.view.frame.height{
-                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = false
-                (self.view.viewWithTag(60000)! as! UIButton).isHidden = true
-                for i in self.view.subviews{
-                    if i.tag == 60000{
-                        i.isHidden = true
-                    }
-                }
+                HideArrow(tag: 60000)
             }else{
-                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
-                (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
-                (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+                ShowArrow(tag: 60000)
             }
             
             if scrollView.contentOffset.x < self.view.frame.width{
-                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
-                (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
-                for i in self.view.subviews{
-                    if i.tag == 50000{
-                        i.isHidden = true
-                    }
-                }
+                HideArrow(tag: 50000)
             }else{
-                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
-                (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
-                (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+               ShowArrow(tag: 50000)
+            }
+            
+            
+            if LoggedIn && teacherOrStudent() == "s"{
+                if CurrentTableIndex == 1 || CurrentTableIndex == 2{
+                    ShowArrow(tag: 50000)
+                    ShowArrow(tag: 60000)
+                }
+            }else if !LoggedIn || teacherOrStudent() == ""{
+                if CurrentTableIndex == 1{
+                    ShowArrow(tag: 50000)
+                    ShowArrow(tag: 60000)
+                }
             }
         }
         

@@ -8,11 +8,8 @@
 
 import UIKit
 
-//var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgements"]
-//var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
-
- var functions = ["Links, Contact & Steps", "School Rules", "Photo Album", "Teachers", "Classmates", "School Hymn", "Acknowledgements"]
- var functionIcon = ["worldwide", "SchoolRules", "photos-1", "Teacher", "Student", "piano", "star"]
+var functions = ["Links, Contact & Steps", "School Rules", "Photo Album", "Teachers", "Classmates", "School Hymn", "Acknowledgements"]
+var functionIcon = ["worldwide", "SchoolRules", "photos-1", "Teacher", "Student", "piano", "star"]
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
