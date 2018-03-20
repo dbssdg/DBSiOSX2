@@ -19,11 +19,15 @@ var UserInformation = [String]()
 
 var OldClass = ""
 
+var OldUser = UserDefaults.standard.array(forKey: "profileData") as! [String]
+
 var EventsFromNow = [events]()
 
 var segmentChanged = false
 
 var tabBarPage = 0
+
+let CurrenttableIndexKey = "CurrenttableIndexKey"
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
@@ -1168,9 +1172,35 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+            
+        let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
+            var page = CGFloat(Page)
+            
+            print(OldUser, UserInformation)
+            
+            if OldUser.count < UserInformation.count && page != 3{
+                page += 1
+            }
+            
+            if page > 2 && self.teacherOrStudent() == "s"{
+                print(page, self.teacherOrStudent())
+                self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+            }else if page <= 2{
+                self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+            }
+        
+            OldUser = UserInformation
+        }
+        
+        
+        
         
     }
     
+        
+    
+
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
@@ -1380,6 +1410,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)
         (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
+        
+        UserDefaults.standard.set(CurrentTableIndex, forKey: CurrenttableIndexKey)
+        
     }
     func isInternetAvailable() -> Bool {
         var zeroAddress = sockaddr_in()
