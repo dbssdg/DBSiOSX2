@@ -160,6 +160,7 @@ class aboutDBSViewController: UIViewController {
         hideButtons()
     }
     @IBAction func houses(_ sender: Any) {
+        finishedSetFontSize(nil)
         hideButtons()
     }
     @IBAction func schoolBadge(_ sender: Any) {
@@ -240,7 +241,7 @@ class aboutDBSViewController: UIViewController {
             self.sliderView.frame.origin.y = self.view.frame.height - (self.tabBarController == nil ? 15: (self.tabBarController?.tabBar.frame.height)!) - 50
         }, completion: nil)
     }
-    func finishedSetFontSize(_ sender: UIBarButtonItem) {
+    func finishedSetFontSize(_ sender: UIBarButtonItem?) {
         let setFontSizeButton = UIBarButtonItem(title: "Aa", style: .plain, target: self, action: #selector(setFontSize))
         self.navigationItem.rightBarButtonItem = setFontSizeButton
         //        self.view.backgroundColor = UIColor.white
