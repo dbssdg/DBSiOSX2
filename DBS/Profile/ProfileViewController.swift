@@ -336,6 +336,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 cell.descriptionText.text = "\(self.profileData[indexPath.row].capitalized)"
             }
         }
+        if indexPath.row == 0 {
+            cell.descriptionText.text = cell.descriptionText.text.uppercased()
+        }
         cell.descriptionText.textAlignment = .center
         cell.selectionStyle = .none
         return cell
