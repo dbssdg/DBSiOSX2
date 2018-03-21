@@ -19,7 +19,7 @@ var UserInformation = [String]()
 
 var OldClass = ""
 
-var OldUser = UserDefaults.standard.array(forKey: "profileData") as! [String]
+var OldUser = [String]()
 
 var EventsFromNow = [events]()
 
@@ -30,6 +30,7 @@ var tabBarPage = 0
 let CurrenttableIndexKey = "CurrenttableIndexKey"
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
+    
     
     var CurrentTableIndex = 0 // Detect Current Table
  
@@ -246,6 +247,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let x = UserDefaults.standard.array(forKey: "profileData") as? [String]{
+            OldUser = x
+        }
         
         ViewTimesLoaded += 1
         
@@ -1158,17 +1163,23 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else if EventsArray.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseEvents()
+                    if self.scrollView.viewWithTag(10001 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }else if circulars.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
+                    if self.scrollView.viewWithTag(10002 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }else if news == nil{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
+                    if self.scrollView.viewWithTag(10003 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }
         }
@@ -1177,10 +1188,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
             var page = CGFloat(Page)
             
-            print(OldUser, UserInformation)
             
-            if OldUser.count < UserInformation.count && page != 3{
-                page += 1
+            if OldUser.count != UserInformation.count && page != 3{
+                page = 0
             }
             
             if page > 2 && self.teacherOrStudent() == "s"{
@@ -1192,9 +1202,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
             OldUser = UserInformation
         }
-        
-        
-        
         
     }
     
