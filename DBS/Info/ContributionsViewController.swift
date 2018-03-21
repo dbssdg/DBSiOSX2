@@ -14,7 +14,7 @@ class ContributionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(UIScreen.main.bounds)
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         label.backgroundColor = .clear
         label.adjustsFontSizeToFitWidth = true
@@ -24,8 +24,7 @@ class ContributionsViewController: UIViewController {
         self.navigationItem.titleView = label
         
         let string = """
-Diocesan Boys' School Official School Application
-Version 4.0.3
+Diocesan Boys' School Official School Application Version 4.1
 
 TEACHER-IN-CHARGE
 Mr. Chris Lee
@@ -40,8 +39,8 @@ ICONS
 https://www.flaticon.com
 https://icons8.com
 """ as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16.5)])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0)]
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: self.view.frame.width*self.view.frame.height/13000)])
+        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: self.view.frame.width*self.view.frame.height/17000)]
         let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS", "ICONS"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
