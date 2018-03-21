@@ -149,8 +149,7 @@
 				6AA965A31F7232EC00C57BB6 /* InfoViewController.swift */,
 				3E440D081FFB2E630067E8DE /* Calendar */,
 				F83A08202034191F00F9E034 /* About DBS */,
-				6A85E8031F96F444001836CD /* MapsViewController.swift */,
-				6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */,
+				F831D6F220629E6000B66B04 /* Maps */,
 				F837043A2046D6DF0026AC3D /* Timetable */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
 				6A1515C42010627800BBF15C /* Photo Album */,
@@ -281,6 +280,15 @@
 				F831D6EF206227D000B66B04 /* earsDateDetailViewController.swift */,
 			);
 			path = EARS;
+			sourceTree = "<group>";
+		};
+		F831D6F220629E6000B66B04 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				6A85E8031F96F444001836CD /* MapsViewController.swift */,
+				6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */,
+			);
+			path = Maps;
 			sourceTree = "<group>";
 		};
 		F837043A2046D6DF0026AC3D /* Timetable */ = {

@@ -742,7 +742,7 @@
             </objects>
             <point key="canvasLocation" x="6726" y="1281"/>
         </scene>
-<<<<<<< HEAD
+
         <!--Ears Date View Controller-->
         <scene sceneID="rxT-Mj-MrH">
             <objects>
@@ -857,9 +857,9 @@
             <point key="canvasLocation" x="13007" y="2067"/>
         </scene>
         <!--Maps View Controller-->
-=======
+
         <!--Real Maps View Controller-->
->>>>>>> 8b6a278695b635d71d2bf2943d4267a629068bbc
+
         <scene sceneID="8MW-Rb-p3u">
             <objects>
                 <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwQ-mz-9cq" customClass="RealMapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
