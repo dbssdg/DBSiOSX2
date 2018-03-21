@@ -48,6 +48,8 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
             ScrollView.maximumZoomScale = 10.0
             ScrollView.minimumZoomScale = 1.0
             
+            
+            
         }
     }
     
@@ -87,6 +89,7 @@ class MapsViewController: UIViewController, UIScrollViewDelegate {
         let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
         // adjust the center of image view
         MapImage.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY)
+        
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

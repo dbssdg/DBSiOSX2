@@ -139,7 +139,7 @@
                                                             <color key="titleColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="bwQ-mz-9cq" kind="show" id="RXT-W5-og9"/>
+                                                            <segue destination="bwQ-mz-9cq" kind="show" id="RQz-EB-JaQ"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1B-9m-qRf">
@@ -300,13 +300,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Mk-tM-hRQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4716" y="1284.1079460269866"/>
+            <point key="canvasLocation" x="4652" y="1283"/>
         </scene>
         <!--AboutDBS View Controller-->
         <scene sceneID="4oP-WS-hEj">
@@ -742,10 +742,10 @@
             </objects>
             <point key="canvasLocation" x="6726" y="1281"/>
         </scene>
-        <!--Maps View Controller-->
+        <!--Real Maps View Controller-->
         <scene sceneID="8MW-Rb-p3u">
             <objects>
-                <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwQ-mz-9cq" customClass="MapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwQ-mz-9cq" customClass="RealMapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0ZN-bG-MZb"/>
                         <viewControllerLayoutGuide type="bottom" id="VPc-Is-v5C"/>
@@ -754,30 +754,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nn1-hH-hem">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JOHIHIHI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVM-aI-gPA">
+                                <rect key="frame" x="140" y="289" width="71" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Classroom Map" translatesAutoresizingMaskIntoConstraints="NO" id="ItX-eb-fuE">
-                                        <rect key="frame" x="0.0" y="-8" width="375" height="117"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <connections>
-                                    <outlet property="delegate" destination="bwQ-mz-9cq" id="Zhr-Eq-BR4"/>
-                                </connections>
-                            </scrollView>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     </view>
                     <connections>
-                        <outlet property="MapImage" destination="ItX-eb-fuE" id="AfO-5m-Npw"/>
-                        <outlet property="ScrollView" destination="Nn1-hH-hem" id="8WX-mv-GXT"/>
+                        <segue destination="ksY-CN-2VC" kind="show" identifier="MapsToCampus" id="T4C-Yz-PGX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Le-Wl-3DX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3725.5999999999999" y="2129.6851574212897"/>
+            <point key="canvasLocation" x="3726" y="2130"/>
         </scene>
         <!--School Rules View Controller-->
         <scene sceneID="sBw-FX-SFy">
@@ -2150,6 +2142,40 @@ Date of last revision: 30 January 2018.</string>
             </objects>
             <point key="canvasLocation" x="3726" y="-702"/>
         </scene>
+        <!--Maps View Controller-->
+        <scene sceneID="dQs-GK-pdQ">
+            <objects>
+                <viewController id="ksY-CN-2VC" customClass="MapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wJs-o5-xyC"/>
+                        <viewControllerLayoutGuide type="bottom" id="AKs-lM-8CG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="G2J-JM-Hyw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="Nn1-hH-hem">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Classroom Map" translatesAutoresizingMaskIntoConstraints="NO" id="ItX-eb-fuE">
+                                        <rect key="frame" x="0.0" y="-8" width="375" height="117"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="MapImage" destination="ItX-eb-fuE" id="JSU-Ou-Iw6"/>
+                        <outlet property="ScrollView" destination="Nn1-hH-hem" id="vXf-6P-8GC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kxw-u2-yQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4652" y="2130"/>
+        </scene>
         <!--School Badge-->
         <scene sceneID="WVj-BX-jZ3">
             <objects>
@@ -3098,7 +3124,7 @@ Title</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v0q-4g-YqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4652" y="2130"/>
+            <point key="canvasLocation" x="6726" y="2130"/>
         </scene>
     </scenes>
     <resources>
