@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class RealMapsViewController: UIViewController {
 
@@ -22,6 +23,7 @@ class RealMapsViewController: UIViewController {
         }
         
         UISetup()
+        SetupMaps()
     }
     
     func GoToCampus(){
@@ -34,20 +36,86 @@ class RealMapsViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [ToImage]
     }
 
+    
+    
+    func SetupMaps(){
+        let LocationManager = CLLocationManager()
+        
+        let mapKitView = MKMapView(frame: self.view.frame)
+        
+        mapKitView.delegate = self as! MKMapViewDelegate
+        mapKitView.showsUserLocation = true
+        
+        LocationManager.requestAlwaysAuthorization()
+        LocationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled(){
+            LocationManager.delegate = self as! CLLocationManagerDelegate
+            LocationManager.desiredAccuracy = kCLLocationAccuracyBest
+            LocationManager.startUpdatingLocation()
+        }
+        
+        let sourceCoordinates = LocationManager.location?.coordinate
+        let destCoordinates = CLLocationCoordinate2DMake(22.322924, 114.174229)
+        
+        let sourcePlacemark = MKPlacemark(coordinate: sourceCoordinates!)
+        let destPlacemark = MKPlacemark(coordinate: destCoordinates)
+        
+        let sourceItem = MKMapItem(placemark: sourcePlacemark)
+        let destItem = MKMapItem(placemark: destPlacemark)
+        
+        let directionRequest = MKDirectionsRequest()
+        directionRequest.source = sourceItem
+        directionRequest.destination = destItem
+        /*
+        switch Transport{
+        case .Walking:
+            directionRequest.transportType = .walking
+        case .PublicTransport:
+            directionRequest.transportType = .transit
+        case .Car:
+            directionRequest.transportType = .automobile
+        default:
+            directionRequest.transportType = .automobile
+        }
+ */
+        
+        let directions = MKDirections(request: directionRequest)
+        
+        directions .calculate(completionHandler: {
+            response, error in
+            
+            guard let response = response else{
+                
+                if let error = error{
+                    print("Error")
+                }
+                return
+            }
+            
+            let route = response.routes[0]
+            mapKitView.add(route.polyline, level: .aboveRoads)
+            
+            let rekt = route.polyline.boundingMapRect
+            mapKitView.setRegion(MKCoordinateRegionForMapRect(rekt), animated: true)
+            
+        })
+        
+        
+    }
+
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.blue
+        renderer.lineWidth = 5.0
+        return renderer
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ 
 
 }

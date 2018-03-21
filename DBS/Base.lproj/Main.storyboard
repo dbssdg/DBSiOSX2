@@ -2163,13 +2163,16 @@ Date of last revision: 30 January 2018.</string>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="ksY-CN-2VC" id="mlJ-5z-dMI"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="MapImage" destination="ItX-eb-fuE" id="JSU-Ou-Iw6"/>
-                        <outlet property="ScrollView" destination="Nn1-hH-hem" id="vXf-6P-8GC"/>
+                        <outlet property="MapImage" destination="ItX-eb-fuE" id="nGO-D5-LOz"/>
+                        <outlet property="ScrollView" destination="Nn1-hH-hem" id="BoV-ze-3q4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kxw-u2-yQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
