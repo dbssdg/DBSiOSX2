@@ -16,6 +16,7 @@
 		6A1515C1200EC48B00BBF15C /* ContributionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */; };
 		6A1515C32010626500BBF15C /* albumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1515C22010626500BBF15C /* albumCollectionViewCell.swift */; };
 		6A1515C62010660B00BBF15C /* videoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1515C52010660B00BBF15C /* videoTableViewCell.swift */; };
+		6A2FA2432061FCF20070FF77 /* RealMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */; };
 		6A39AB621FCE2F8B00E0421F /* 2017 - 2018 School Events New.csv in Resources */ = {isa = PBXBuildFile; fileRef = 6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */; };
 		6A3C861B1FC2C43D002472E9 /* badgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */; };
 		6A3C861D1FC2C4AC002472E9 /* badgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C861C1FC2C4AC002472E9 /* badgeViewController.swift */; };
@@ -68,6 +69,7 @@
 		6A1515C0200EC48B00BBF15C /* ContributionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionsViewController.swift; sourceTree = "<group>"; };
 		6A1515C22010626500BBF15C /* albumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = albumCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A1515C52010660B00BBF15C /* videoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoTableViewCell.swift; sourceTree = "<group>"; };
+		6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMapsViewController.swift; sourceTree = "<group>"; };
 		6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2017 - 2018 School Events New.csv"; sourceTree = "<group>"; };
 		6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = badgeTableViewCell.swift; sourceTree = "<group>"; };
 		6A3C861C1FC2C4AC002472E9 /* badgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = badgeViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				3E440D081FFB2E630067E8DE /* Calendar */,
 				F83A08202034191F00F9E034 /* About DBS */,
 				6A85E8031F96F444001836CD /* MapsViewController.swift */,
+				6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */,
 				F837043A2046D6DF0026AC3D /* Timetable */,
 				6A7B44591F837BDC00227545 /* LinksViewController.swift */,
 				6A1515C42010627800BBF15C /* Photo Album */,
@@ -471,6 +474,7 @@
 				6A1515C62010660B00BBF15C /* videoTableViewCell.swift in Sources */,
 				F831D6F0206227D000B66B04 /* earsDateDetailViewController.swift in Sources */,
 				6AA819481F71FE8300FCA420 /* ViewController.swift in Sources */,
+				6A2FA2432061FCF20070FF77 /* RealMapsViewController.swift in Sources */,
 				6ACBB7401F7B69D60086916E /* SchoolHymnViewController.swift in Sources */,
 				F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */,
 				6A3C861B1FC2C43D002472E9 /* badgeTableViewCell.swift in Sources */,
