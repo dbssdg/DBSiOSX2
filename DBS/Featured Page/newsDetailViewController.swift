@@ -150,7 +150,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                     }
                     catch {
                         self.present(networkAlert, animated: true)
-                        print("ERROR")
+                        print(error)
                     }
                 }.resume()
             }
