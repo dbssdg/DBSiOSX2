@@ -18,16 +18,20 @@ class earsDateDetailViewController: UIViewController {
         
         self.title = "Event"
         
-        var content = "\((earsByDate?.events[earsByDateSelected].title)!)\n"
+        var content = "\((earsByDate?.events[earsByDateSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
         
-        if earsByDate?.events[earsByDateSelected].period.components(separatedBy: " to ")[0] != earsByDate?.events[earsByDateSelected].period.components(separatedBy: " to ")[1] {
+        let array = earsByDate?.events[earsByDateSelected].period.components(separatedBy: " to ")
+        if array![0] == "101" {
+            content += "Morning Roll-call\n\n"
+        } else if array![0] == "102" {
+            content += "Afternoon Roll-call\n\n"
+        } else if array![0] == "0" {
+            content += "\n"
+        } else if array![0] != array![1] {
             content += "Period \((earsByDate?.events[earsByDateSelected].period)!)\n\n"
         } else {
-            content +=
-             "Period \((earsByDate?.events[earsByDateSelected].period.components(separatedBy: " to ")[0])!)\n\n"
+            content += "Period \((earsByDate?.events[earsByDateSelected].period.components(separatedBy: " to ")[0])!)\n\n"
         }
-        
-        
         
         content += """
         Location
@@ -59,6 +63,7 @@ class earsDateDetailViewController: UIViewController {
             attributedString.addAttributes(boldFontAttribute, range: (content as NSString).range(of: i))
         }
         textField.attributedText = attributedString
+        textField.scrollsToTop = true
     }
 
     override func didReceiveMemoryWarning() {

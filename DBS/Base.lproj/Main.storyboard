@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BJa-Y5-w3z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="c7H-Eg-fHO">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -282,31 +282,31 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -742,7 +742,6 @@
             </objects>
             <point key="canvasLocation" x="6726" y="1281"/>
         </scene>
-
         <!--Ears Date View Controller-->
         <scene sceneID="rxT-Mj-MrH">
             <objects>
@@ -757,13 +756,12 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No EARS Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Hf-rU-vlZ">
                                 <rect key="frame" x="0.0" y="322" width="375" height="24"/>
-                                <color key="backgroundColor" red="0.88665803109999997" green="0.88665803109999997" blue="0.88665803109999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rkc-7P-pAw">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="earsByDate" textLabel="Clq-9Q-8mP" detailTextLabel="oQJ-bc-uzE" style="IBUITableViewCellStyleSubtitle" id="xPp-6C-Ztg">
@@ -799,21 +797,48 @@
                                     <outlet property="delegate" destination="aYA-gx-6x2" id="FqX-rc-ASa"/>
                                 </connections>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jnU-Mw-hK5">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Today" id="qZb-Wl-Pkn">
+                                        <connections>
+                                            <action selector="todayAction:" destination="aYA-gx-6x2" id="hgr-KM-IiE"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="237" style="plain" systemItem="fixedSpace" id="QNz-m6-11q"/>
+                                    <barButtonItem title="◀︎" id="GGE-5H-Wdg">
+                                        <connections>
+                                            <action selector="yesterdayAction:" destination="aYA-gx-6x2" id="asC-fT-y7O"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="▶" id="SC8-xL-FHC">
+                                        <connections>
+                                            <action selector="tomorrowAction:" destination="aYA-gx-6x2" id="Y9K-cU-MMc"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="rkc-7P-pAw" secondAttribute="trailing" id="8Sx-cc-Un3"/>
+                            <constraint firstItem="jnU-Mw-hK5" firstAttribute="leading" secondItem="nI2-xh-Feg" secondAttribute="leading" id="AoU-yU-bXS"/>
                             <constraint firstItem="rkc-7P-pAw" firstAttribute="leading" secondItem="nI2-xh-Feg" secondAttribute="leading" id="Bo5-Z5-aBR"/>
                             <constraint firstItem="rkc-7P-pAw" firstAttribute="top" secondItem="nhg-FV-Gwd" secondAttribute="bottom" id="LCf-hd-cMT"/>
                             <constraint firstAttribute="trailing" secondItem="3Hf-rU-vlZ" secondAttribute="trailing" id="UFy-jA-9qg"/>
+                            <constraint firstAttribute="trailing" secondItem="jnU-Mw-hK5" secondAttribute="trailing" id="W8Q-Es-KXS"/>
                             <constraint firstItem="3Hf-rU-vlZ" firstAttribute="leading" secondItem="nI2-xh-Feg" secondAttribute="leading" id="Ya1-jM-512"/>
+                            <constraint firstItem="qs8-jf-HgE" firstAttribute="top" secondItem="jnU-Mw-hK5" secondAttribute="bottom" id="eb4-ou-tVy"/>
+                            <constraint firstItem="jnU-Mw-hK5" firstAttribute="top" secondItem="rkc-7P-pAw" secondAttribute="bottom" id="gG5-dx-0eI"/>
                             <constraint firstItem="3Hf-rU-vlZ" firstAttribute="centerY" secondItem="nI2-xh-Feg" secondAttribute="centerY" id="l1l-l1-gH4"/>
-                            <constraint firstItem="qs8-jf-HgE" firstAttribute="top" secondItem="rkc-7P-pAw" secondAttribute="bottom" id="tpx-KP-7ro"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qM6-VV-CpU"/>
                     <connections>
                         <outlet property="tableView" destination="rkc-7P-pAw" id="sjC-wr-QB7"/>
+                        <outlet property="today" destination="qZb-Wl-Pkn" id="Whl-Yj-wpr"/>
+                        <outlet property="tomorrow" destination="SC8-xL-FHC" id="T0e-Qs-OfN"/>
+                        <outlet property="yesterday" destination="GGE-5H-Wdg" id="8Aa-Q1-eY8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSg-q9-1tf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -856,10 +881,7 @@
             </objects>
             <point key="canvasLocation" x="13007" y="2067"/>
         </scene>
-        <!--Maps View Controller-->
-
         <!--Real Maps View Controller-->
-
         <scene sceneID="8MW-Rb-p3u">
             <objects>
                 <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwQ-mz-9cq" customClass="RealMapsViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">

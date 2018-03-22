@@ -28,6 +28,11 @@ var earsByDateSelected = Int()
 class earsDateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var today: UIBarButtonItem!
+    @IBOutlet var yesterday: UIBarButtonItem!
+    @IBOutlet var tomorrow: UIBarButtonItem!
+    
+    var dateSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +47,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         spinner.hidesWhenStopped = true
         self.view.addSubview(spinner)
         
-        URLSession.shared.dataTask(with: URL(string: "http://m-poll.dbs.edu.hk/poller/event.php?d=\(0)")!) { (data, response, error) in
+        URLSession.shared.dataTask(with: URL(string: "http://m-poll.dbs.edu.hk/poller/event.php?d=\(dateSelected)")!) { (data, response, error) in
             do {
                 earsByDate = try JSONDecoder().decode(EARSByDate.self, from: data!)
                 DispatchQueue.main.async {
@@ -52,6 +57,8 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
                         self.tableView.isHidden = true
                     } else {
                         self.tableView.isHidden = false
+//                        print(self.tableView(self.tableView, cellForRowAt: [0,0]))
+//                        self.tableView.scrollToRow(at: [0,0], at: .top, animated: false)
                     }
                     self.tableView.reloadData()
                 }
@@ -60,7 +67,15 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }.resume()
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if dateSelected <= 0 {
+            today.tintColor = .red
+            yesterday.tintColor = .lightGray
+            tomorrow.tintColor = .black
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -72,6 +87,26 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         navigationItem.backBarButtonItem = backItem
     }
     
+    @IBAction func todayAction(_ sender: Any) {
+        dateSelected = 0
+        viewDidLoad()
+        viewWillAppear(false)
+    }
+    @IBAction func yesterdayAction(_ sender: Any) {
+        dateSelected -= 1
+        if dateSelected <= 0 {
+            yesterday.tintColor = .lightGray
+            yesterday.isEnabled = false
+        }
+        viewDidLoad()
+    }
+    @IBAction func tomorrowAction(_ sender: Any) {
+        yesterday.tintColor = .orange
+        yesterday.isEnabled = true
+        dateSelected += 1
+        viewDidLoad()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let x = earsByDate?.events.count {
             return x
@@ -81,10 +116,17 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "earsByDate")
-        cell?.textLabel?.text = earsByDate?.events[indexPath.row].title
+        cell?.textLabel?.text = earsByDate?.events[indexPath.row].title.replacingOccurrences(of: "\\", with: "")
         cell?.textLabel?.numberOfLines = 0
         
-        if earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")[0] != earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")[1] {
+        let array = earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")
+        if array![0] == "101" {
+            cell?.detailTextLabel?.text = "Morning Roll-call"
+        } else if array![0] == "102" {
+            cell?.detailTextLabel?.text = "Afternoon Roll-call"
+        } else if array![0] == "0" {
+            cell?.detailTextLabel?.text = ""
+        } else if array![0] != array![1] {
             cell?.detailTextLabel?.text = "Period \((earsByDate?.events[indexPath.row].period)!)"
         } else {
             cell?.detailTextLabel?.text = "Period \((earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")[0])!)"

@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class RealMapsViewController: UIViewController {
+class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
