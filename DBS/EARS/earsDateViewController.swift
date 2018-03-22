@@ -49,18 +49,23 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         
         URLSession.shared.dataTask(with: URL(string: "http://m-poll.dbs.edu.hk/poller/event.php?d=\(dateSelected)")!) { (data, response, error) in
             do {
-                earsByDate = try JSONDecoder().decode(EARSByDate.self, from: data!)
-                DispatchQueue.main.async {
-                    spinner.stopAnimating()
-                    self.title = "EARS (\((earsByDate?.date)!))"
-                    if (earsByDate?.events.isEmpty)! {
-                        self.tableView.isHidden = true
-                    } else {
-                        self.tableView.isHidden = false
-//                        print(self.tableView(self.tableView, cellForRowAt: [0,0]))
-//                        self.tableView.scrollToRow(at: [0,0], at: .top, animated: false)
+                if data != nil {
+                    earsByDate = try JSONDecoder().decode(EARSByDate.self, from: data!)
+                    DispatchQueue.main.async {
+                        spinner.stopAnimating()
+                        self.title = "EARS (\((earsByDate?.date)!))"
+                        if (earsByDate?.events.isEmpty)! {
+                            self.tableView.isHidden = true
+                        } else {
+                            self.tableView.isHidden = false
+                        }
+                        self.tableView.reloadData()
                     }
-                    self.tableView.reloadData()
+                } else {
+                    let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+                    func backToChoosePage(action: UIAlertAction) { self.navigationController?.popViewController(animated: true) }
+                    networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToChoosePage))
+                    self.present(networkAlert, animated: true)
                 }
             } catch {
                 print(error)

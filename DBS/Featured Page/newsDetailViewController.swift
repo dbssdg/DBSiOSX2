@@ -326,3 +326,22 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     */
 
 }
+
+extension UIImageView {
+    func getImage(_ urlString: String) {
+        let url = URL(string: urlString.replacingOccurrences(of: " ", with: "%20"))!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            (data, response, error) in
+            if data != nil {
+                let image = UIImage(data: data!)
+                if image != nil {
+                    DispatchQueue.main.async(execute: {
+                        self.image = image
+                    })
+                }
+            }
+        })
+        task.resume()
+    }
+}
