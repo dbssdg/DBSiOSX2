@@ -843,7 +843,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSg-q9-1tf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12450.4" y="2066.7166416791606"/>
+            <point key="canvasLocation" x="12489" y="2067"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="EG6-UI-u9s">
+            <objects>
+                <viewController id="Iha-jN-2HJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="71K-gq-c6O"/>
+                        <viewControllerLayoutGuide type="bottom" id="uP5-7o-dDK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wMb-Ka-xbd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy9-cP-pLJ">
+                                <rect key="frame" x="0.0" y="252" width="359" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="EARS By Date"/>
+                                <connections>
+                                    <segue destination="aYA-gx-6x2" kind="show" id="iDg-AW-Mz2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Kzl-Mq-KNl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Njw-jh-qBQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="11672.799999999999" y="2066.7166416791606"/>
         </scene>
         <!--Ears Date Detail View Controller-->
         <scene sceneID="rVm-cj-7Ux">
@@ -3280,12 +3310,12 @@ Title</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="aYA-gx-6x2" kind="relationship" relationship="rootViewController" id="btq-dX-6ef"/>
+                        <segue destination="Iha-jN-2HJ" kind="relationship" relationship="rootViewController" id="IfX-8j-qTJ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SR9-W7-MDA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11604" y="2066.7166416791606"/>
+            <point key="canvasLocation" x="10770" y="2067"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="F0Q-zG-EB7">
@@ -3302,7 +3332,7 @@ Title</string>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B7p-zj-lh9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10772" y="2067"/>
+            <point key="canvasLocation" x="9842" y="2067"/>
         </scene>
     </scenes>
     <resources>

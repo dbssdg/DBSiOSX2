@@ -60,6 +60,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
                             self.tableView.isHidden = false
                         }
                         self.tableView.reloadData()
+                        spinner.stopAnimating()
                     }
                 } else {
                     let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -94,6 +95,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func todayAction(_ sender: Any) {
         dateSelected = 0
+        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
         viewDidLoad()
         viewWillAppear(false)
     }
@@ -103,12 +105,14 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             yesterday.tintColor = .lightGray
             yesterday.isEnabled = false
         }
+        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
         viewDidLoad()
     }
     @IBAction func tomorrowAction(_ sender: Any) {
         yesterday.tintColor = .orange
         yesterday.isEnabled = true
         dateSelected += 1
+        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
         viewDidLoad()
     }
     
