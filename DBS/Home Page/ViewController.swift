@@ -25,6 +25,8 @@ var segmentChanged = false
 
 var tabBarPage = 0
 
+let CurrentTableIndexKey = "CurrentTableIndexKey"
+
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
     var CurrentTableIndex = 0 // Detect Current Table
@@ -559,6 +561,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         (self.view.viewWithTag(20)! as! UIImageView).removeFromSuperview()
+        
+        
+        
     }
     
     
@@ -1082,7 +1087,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if LoggedIn && UserInformation.count > 3{
             var Class = "\(UserInformation[3])"
             Class.removeLast(3)
-            print(Class)
             
             if  teacherOrStudent() == "s" && IBClass.contains(Class) && view.tag == 10000{
                 label.text = "Timetable for IB boys will be available soon"
@@ -1128,13 +1132,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //let teacherOrStudent() = "\(self.teacherOrStudent())"
         
         tabBarPage = 0
- 
-//        if shortcutItemIdentifier == "upcoming" {
-//            performSegue(withIdentifier: "Home to All Events", sender: self)
-//            shortcutItemIdentifier = "false"
-//        } else if shortcutItemIdentifier == "timetable" || shortcutItemIdentifier == "schoolrules" {
-//            tabBarController?.selectedIndex = 2
-//        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
             var logInNumber = 0
             if !LoggedIn || self.teacherOrStudent() == ""{
@@ -1167,7 +1164,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
+        let Page = (UserDefaults.standard.integer(forKey: CurrentTableIndexKey))
+        let page = CGFloat(Page)
+        if page > 2 && teacherOrStudent() == "s"{
+            print(page, teacherOrStudent())
+            self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+        }else if page <= 2{
+            self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+        }
         
+        print("page", page, "Page", Page)
+        
+        //let Page = UserDefaults.standard.integer(forKey: )
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        CurrentTableIndex = Int(pageNumber)
+        UserDefaults.standard.set(CurrentTableIndex, forKey: CurrentTableIndexKey)
+        print("DidDisappear", UserDefaults.standard.set(CurrentTableIndex, forKey: CurrentTableIndexKey))
     }
     
     
