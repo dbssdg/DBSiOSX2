@@ -150,7 +150,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                     }
                     catch {
                         self.present(networkAlert, animated: true)
-                        print("ERROR")
+                        print(error)
                     }
                 }.resume()
             }
@@ -192,7 +192,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         sliderValueChanged(slider)
         
         slider.isContinuous = true
-        slider.tintColor = UIColor.blue
+        slider.tintColor = UIColor.black
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         sliderView.addSubview(slider)
         
@@ -200,15 +200,15 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         //        sliderTitle.frame = CGRect(x: 0, y:0, width: self.view.frame.width, height: 65)
         //        sliderTitle.text = "Adjust Font Size"
         //        sliderTitle.textAlignment = .center
-        //        sliderTitle.font = UIFont(name: "Helvetica", size: 30)
+        //        sliderTitle.font = UIFont(name: "Helvetica Bold", size: 30)
         //        sliderView.addSubview(sliderTitle)
         let smallA = UILabel(frame: CGRect(x: self.view.frame.width*0.15, y:0, width: self.view.frame.width/10, height: 50))
         smallA.text = "A"
-        smallA.font = UIFont(name: "Helvetica", size: 9)
+        smallA.font = UIFont(name: "Helvetica Bold", size: 9)
         sliderView.addSubview(smallA)
         let bigA = UILabel(frame: CGRect(x: self.view.frame.width*0.85, y:0, width: self.view.frame.width/10, height: 50))
         bigA.text = "A"
-        bigA.font = UIFont(name: "Helvetica", size: 30)
+        bigA.font = UIFont(name: "Helvetica Bold", size: 30)
         sliderView.addSubview(bigA)
         
     }
@@ -325,4 +325,23 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     }
     */
 
+}
+
+extension UIImageView {
+    func getImage(_ urlString: String) {
+        let url = URL(string: urlString.replacingOccurrences(of: " ", with: "%20"))!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            (data, response, error) in
+            if data != nil {
+                let image = UIImage(data: data!)
+                if image != nil {
+                    DispatchQueue.main.async(execute: {
+                        self.image = image
+                    })
+                }
+            }
+        })
+        task.resume()
+    }
 }

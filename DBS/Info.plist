@@ -71,6 +71,12 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>DBS</string>
+	<key>NSLocationUsageDescription</key>
+	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

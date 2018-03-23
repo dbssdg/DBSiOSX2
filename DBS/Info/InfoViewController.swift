@@ -8,11 +8,8 @@
 
 import UIKit
 
-//var functions = ["Links, Contact & Steps", "School Hymn", "School Rules", "Teachers", "Classmates", "Photo Album", "Acknowledgements"]
-//var functionIcon = ["worldwide", "piano", "SchoolRules", "Teacher", "Student", "photos-1", "star"]
-
- var functions = ["Links, Contact & Steps", "School Rules", "Photo Album", "Teachers", "Classmates", "School Hymn", "Acknowledgements"]
- var functionIcon = ["worldwide", "SchoolRules", "photos-1", "Teacher", "Student", "piano", "star"]
+var functions = ["Links, Contact & Steps", "School Rules", "Photo Album", "Teachers", "Classmates", "School Hymn", "Acknowledgements"]
+var functionIcon = ["worldwide", "SchoolRules", "photos-1", "Teacher", "Student", "piano", "star"]
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
@@ -250,7 +247,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About DBS") as! aboutDBSViewController
             return destViewController
         }else if previewingContext.sourceView == map{
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! MapsViewController
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! RealMapsViewController
             return destViewController
         }else if previewingContext.sourceView == timetable{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
