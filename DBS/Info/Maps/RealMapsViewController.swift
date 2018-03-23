@@ -13,6 +13,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     let SchoolLocation = CLLocationCoordinate2DMake(22.322924, 114.174229)
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         
         self.navigationItem.rightBarButtonItems = [ToImage]
         
-        let SettingsButton = UIButton(frame: CGRect(x: self.view.frame.width * 0.8, y: self.view.frame.height * 0.25, width: self.view.frame.width * 0.15, height: self.view.frame.width * 0.15))
+        let SettingsButton = UIButton(frame: CGRect(x: self.view.frame.width * 0.85, y: self.view.frame.height * 0.2, width: self.view.frame.width / 8, height: self.view.frame.width / 8))
         /*
         SettingsButton.frame.size.height = self.view.frame.width * 0.2
         SettingsButton.frame.size.width = SettingsButton.frame.height
@@ -179,6 +180,24 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         MKMapItem.openMaps(with: [start, destination], launchOptions: options)
     }
     
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        let LocationManager = CLLocationManager()
+        
+        LocationManager.requestAlwaysAuthorization()
+        LocationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled(){
+            LocationManager.delegate = self as! CLLocationManagerDelegate
+            LocationManager.desiredAccuracy = kCLLocationAccuracyBest
+            LocationManager.startUpdatingLocation()
+        }
+        
+        if let location = LocationManager.location?.coordinate{
+            //mapView.centerCoordinate = location
+        }
+    }
+    
+    
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         print("pin")
         /*
@@ -189,6 +208,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             mapkit.addAnnotation(pin)
         }
  */
+        //mapView.centerCoordinate = userLocation.coordinate
     }
     
     /*
@@ -216,6 +236,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
  */
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        /*
         let coordinates = CLLocationCoordinate2D(latitude: 22.322924, longitude: 114.174229)
         let pin = CustomPin(coordinate: coordinates, title: "United Kingdom", subtitle: "London")
         if let x = self.view.viewWithTag(1){
@@ -224,6 +245,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             mapView.centerCoordinate = coordinates
             mapView.addAnnotation(pin)
         }
+ */
     }
 
     
