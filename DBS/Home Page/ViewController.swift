@@ -27,11 +27,8 @@ var segmentChanged = false
 
 var tabBarPage = 0
 
-<<<<<<< HEAD
-let CurrentTableIndexKey = "CurrentTableIndexKey"
-=======
+
 let CurrenttableIndexKey = "CurrenttableIndexKey"
->>>>>>> 2ed851ab7131ea6360117c7ce44cb7afc8f52add
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
@@ -1182,15 +1179,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
-<<<<<<< HEAD
-        let Page = (UserDefaults.standard.integer(forKey: CurrentTableIndexKey))
-        let page = CGFloat(Page)
-        if page > 2 && teacherOrStudent() == "s"{
-            print(page, teacherOrStudent())
-            self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
-        }else if page <= 2{
-            self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
-=======
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             
         let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
@@ -1209,10 +1197,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         
             OldUser = UserInformation
->>>>>>> 2ed851ab7131ea6360117c7ce44cb7afc8f52add
         }
         
-        print("page", page, "Page", Page)
         
         //let Page = UserDefaults.standard.integer(forKey: )
     }
@@ -1221,8 +1207,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewWillDisappear(animated)
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)
-        UserDefaults.standard.set(CurrentTableIndex, forKey: CurrentTableIndexKey)
-        print("DidDisappear", UserDefaults.standard.set(CurrentTableIndex, forKey: CurrentTableIndexKey))
+        UserDefaults.standard.set(CurrentTableIndex, forKey: CurrenttableIndexKey)
+        print("DidDisappear", UserDefaults.standard.set(CurrentTableIndex, forKey: CurrenttableIndexKey))
     }
     
         
