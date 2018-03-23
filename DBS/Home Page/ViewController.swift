@@ -19,15 +19,22 @@ var UserInformation = [String]()
 
 var OldClass = ""
 
+var OldUser = [String]()
+
 var EventsFromNow = [events]()
 
 var segmentChanged = false
 
 var tabBarPage = 0
 
+<<<<<<< HEAD
 let CurrentTableIndexKey = "CurrentTableIndexKey"
+=======
+let CurrenttableIndexKey = "CurrenttableIndexKey"
+>>>>>>> 2ed851ab7131ea6360117c7ce44cb7afc8f52add
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
+    
     
     var CurrentTableIndex = 0 // Detect Current Table
  
@@ -245,6 +252,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let x = UserDefaults.standard.array(forKey: "profileData") as? [String]{
+            OldUser = x
+        }
+        
         ViewTimesLoaded += 1
         
         DispatchQueue.main.async {
@@ -277,9 +288,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func UISetup(){
         
-        LoggedIn = UserDefaults.standard.string(forKey: "loginID") != "" &&  (UserDefaults.standard.string(forKey: "loginID") != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/)
+        
         if let x = UserDefaults.standard.string(forKey: "loginID") {
             loginID = x
+            LoggedIn = x != "" &&  x != nil /*|| (UserDefaults.standard.string(forKey: "loginID")?.isEmpty)!*/
         }
         
         var arrayData = scrollViewLoggedInData
@@ -1150,20 +1162,27 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else if EventsArray.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseEvents()
+                    if self.scrollView.viewWithTag(10001 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }else if circulars.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
+                    if self.scrollView.viewWithTag(10002 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }else if news == nil{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
+                    if self.scrollView.viewWithTag(10003 - logInNumber) != nil{
                     (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
+                    }
                 }
             }
         }
+<<<<<<< HEAD
         let Page = (UserDefaults.standard.integer(forKey: CurrentTableIndexKey))
         let page = CGFloat(Page)
         if page > 2 && teacherOrStudent() == "s"{
@@ -1171,6 +1190,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
         }else if page <= 2{
             self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+=======
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+            
+        let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
+            var page = CGFloat(Page)
+            
+            
+            if OldUser.count != UserInformation.count && page != 3{
+                page = 0
+            }
+            
+            if page > 2 && self.teacherOrStudent() == "s"{
+                print(page, self.teacherOrStudent())
+                self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+            }else if page <= 2{
+                self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
+            }
+        
+            OldUser = UserInformation
+>>>>>>> 2ed851ab7131ea6360117c7ce44cb7afc8f52add
         }
         
         print("page", page, "Page", Page)
@@ -1186,6 +1225,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         print("DidDisappear", UserDefaults.standard.set(CurrentTableIndex, forKey: CurrentTableIndexKey))
     }
     
+        
+    
+
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
@@ -1331,34 +1373,48 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
         
+        func HideArrow(tag: Int){
+            (self.view.viewWithTag(tag)! as! UIButton).isEnabled = false
+            (self.view.viewWithTag(tag)! as! UIButton).isHidden = true
+            for i in self.view.subviews{
+                if i.tag == tag{
+                    i.isHidden = true
+                }
+            }
+        }
+        
+        
+        func ShowArrow(tag: Int){
+            (self.view.viewWithTag(tag)! as! UIButton).isEnabled = true
+            (self.view.viewWithTag(tag)! as! UIButton).isHidden = false
+            (self.view.viewWithTag(tag)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+        }
+        
         
         if scrollView == self.scrollView{
             if scrollView.contentOffset.x >= scrollView.contentSize.width - self.view.frame.height{
-                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = false
-                (self.view.viewWithTag(60000)! as! UIButton).isHidden = true
-                for i in self.view.subviews{
-                    if i.tag == 60000{
-                        i.isHidden = true
-                    }
-                }
+                HideArrow(tag: 60000)
             }else{
-                (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
-                (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
-                (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+                ShowArrow(tag: 60000)
             }
             
             if scrollView.contentOffset.x < self.view.frame.width{
-                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = false
-                (self.view.viewWithTag(50000)! as! UIButton).isHidden = true
-                for i in self.view.subviews{
-                    if i.tag == 50000{
-                        i.isHidden = true
-                    }
-                }
+                HideArrow(tag: 50000)
             }else{
-                (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
-                (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
-                (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+               ShowArrow(tag: 50000)
+            }
+            
+            
+            if LoggedIn && teacherOrStudent() == "s"{
+                if CurrentTableIndex == 1 || CurrentTableIndex == 2{
+                    ShowArrow(tag: 50000)
+                    ShowArrow(tag: 60000)
+                }
+            }else if !LoggedIn || teacherOrStudent() == ""{
+                if CurrentTableIndex == 1{
+                    ShowArrow(tag: 50000)
+                    ShowArrow(tag: 60000)
+                }
             }
         }
         
@@ -1381,6 +1437,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         let pageNumber = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
         CurrentTableIndex = Int(pageNumber)
         (self.view.viewWithTag(200)! as! UIPageControl).currentPage = Int(pageNumber)
+        
+        UserDefaults.standard.set(CurrentTableIndex, forKey: CurrenttableIndexKey)
+        
     }
     func isInternetAvailable() -> Bool {
         var zeroAddress = sockaddr_in()
