@@ -247,7 +247,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About DBS") as! aboutDBSViewController
             return destViewController
         }else if previewingContext.sourceView == map{
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! MapsViewController
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! RealMapsViewController
             return destViewController
         }else if previewingContext.sourceView == timetable{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
