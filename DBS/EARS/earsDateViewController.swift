@@ -32,11 +32,24 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var yesterday: UIBarButtonItem!
     @IBOutlet var tomorrow: UIBarButtonItem!
     
+    @IBOutlet var textFieldView: UIView!
+    @IBOutlet weak var earsDetails: UITextView!
+    @IBOutlet weak var dismissButton: UIButton!
+    let visualView = UIVisualEffectView()
+    
+    var ears : EARSByDate?
     var dateSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+//        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
+        textFieldView.layer.cornerRadius = 20
+        textFieldView.layer.borderWidth = 2
+        textFieldView.layer.borderColor = UIColor.lightGray.cgColor
+        dismissButton.layer.cornerRadius = dismissButton.frame.height/2
+        visualView.frame = (UIApplication.shared.keyWindow?.frame)!
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         spinner.activityIndicatorViewStyle = .white
@@ -50,17 +63,19 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         URLSession.shared.dataTask(with: URL(string: "http://m-poll.dbs.edu.hk/poller/event.php?d=\(dateSelected)")!) { (data, response, error) in
             do {
                 if data != nil {
-                    earsByDate = try JSONDecoder().decode(EARSByDate.self, from: data!)
+                    self.ears = try JSONDecoder().decode(EARSByDate.self, from: data!)
                     DispatchQueue.main.async {
                         spinner.stopAnimating()
-                        self.title = "EARS (\((earsByDate?.date)!))"
-                        if (earsByDate?.events.isEmpty)! {
+                        self.title = "EARS (\((self.ears?.date)!))"
+                        if (self.ears?.events.isEmpty)! {
                             self.tableView.isHidden = true
                         } else {
                             self.tableView.isHidden = false
                         }
                         self.tableView.reloadData()
                         spinner.stopAnimating()
+                        
+//                        self.updateText()
                     }
                 } else {
                     let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -72,12 +87,14 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
                 print(error)
             }
         }.resume()
+        
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if dateSelected <= 0 {
             today.tintColor = .red
-            yesterday.tintColor = .lightGray
+            yesterday.tintColor = .white
             tomorrow.tintColor = .black
         }
     }
@@ -93,6 +110,57 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         navigationItem.backBarButtonItem = backItem
     }
     
+    func updateText() {
+        //TEXT FIELD VIEW
+        var content = "\((self.ears?.events[earsByDateSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
+        
+        let array = self.ears?.events[earsByDateSelected].period.components(separatedBy: " to ")
+        if array![0] == "101" {
+            content += "Morning Roll-call\n\n"
+        } else if array![0] == "102" {
+            content += "Afternoon Roll-call\n\n"
+        } else if array![0] == "0" {
+            content += "\n"
+        } else if array![0] != array![1] {
+            content += "Period \((self.ears?.events[earsByDateSelected].period)!)\n\n"
+        } else {
+            content += "Period \((self.ears?.events[earsByDateSelected].period.components(separatedBy: " to ")[0])!)\n\n"
+        }
+        
+        content += """
+        Location
+        \((self.ears?.events[earsByDateSelected].location)!)
+        
+        Application Date
+        \((self.ears?.events[earsByDateSelected].applyDate)!)
+        
+        Participants
+        
+        """
+        for participant in (self.ears?.events[earsByDateSelected].participant)! {
+            content += "\(participant.capitalized)\n"
+        }
+        
+        var attributedString = NSMutableAttributedString(string: content as NSString as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
+        let titleFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30.0)]
+        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            attributedString = NSMutableAttributedString(string: content as NSString as String, attributes:
+                [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")))])
+            boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))]
+        }
+        
+        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.ears?.events[earsByDateSelected].title)!))
+        print((self.ears?.date)!)
+        let wordsToBold = ["Location", "Application Date", "Participants"]
+        for i in wordsToBold {
+            attributedString.addAttributes(boldFontAttribute, range: (content as NSString).range(of: i))
+        }
+        self.earsDetails.attributedText = attributedString
+        self.earsDetails.scrollsToTop = true
+        self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
     @IBAction func todayAction(_ sender: Any) {
         dateSelected = 0
         tableView.scrollToRow(at: [0,0], at: .top, animated: false)
@@ -102,7 +170,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func yesterdayAction(_ sender: Any) {
         dateSelected -= 1
         if dateSelected <= 0 {
-            yesterday.tintColor = .lightGray
+            yesterday.tintColor = .white
             yesterday.isEnabled = false
         }
         tableView.scrollToRow(at: [0,0], at: .top, animated: false)
@@ -115,9 +183,21 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.scrollToRow(at: [0,0], at: .top, animated: false)
         viewDidLoad()
     }
+    @IBAction func dismissTextField(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.textFieldView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.textFieldView.alpha = 0
+            self.visualView.effect = nil
+        }) { (success: Bool) in
+            self.textFieldView.removeFromSuperview()
+//            self.textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
+//            self.textFieldView.center.y = self.view.center.y+60
+            self.visualView.removeFromSuperview()
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let x = earsByDate?.events.count {
+        if let x = self.ears?.events.count {
             return x
         }
         return 0
@@ -125,10 +205,10 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "earsByDate")
-        cell?.textLabel?.text = earsByDate?.events[indexPath.row].title.replacingOccurrences(of: "\\", with: "")
+        cell?.textLabel?.text = self.ears?.events[indexPath.row].title.replacingOccurrences(of: "\\", with: "")
         cell?.textLabel?.numberOfLines = 0
         
-        let array = earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")
+        let array = self.ears?.events[indexPath.row].period.components(separatedBy: " to ")
         if array![0] == "101" {
             cell?.detailTextLabel?.text = "Morning Roll-call"
         } else if array![0] == "102" {
@@ -136,9 +216,9 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         } else if array![0] == "0" {
             cell?.detailTextLabel?.text = ""
         } else if array![0] != array![1] {
-            cell?.detailTextLabel?.text = "Period \((earsByDate?.events[indexPath.row].period)!)"
+            cell?.detailTextLabel?.text = "Period \((self.ears?.events[indexPath.row].period)!)"
         } else {
-            cell?.detailTextLabel?.text = "Period \((earsByDate?.events[indexPath.row].period.components(separatedBy: " to ")[0])!)"
+            cell?.detailTextLabel?.text = "Period \((self.ears?.events[indexPath.row].period.components(separatedBy: " to ")[0])!)"
         }
         
         cell?.detailTextLabel?.numberOfLines = 0
@@ -151,6 +231,22 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         cell?.selectionStyle = .none
         cell?.selectionStyle = .default
         earsByDateSelected = indexPath.row
+        
+        updateText()
+//        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
+        textFieldView.center.x = self.view.center.x
+        textFieldView.center.y = self.view.center.y+60
+        textFieldView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        textFieldView.alpha = 0
+        textFieldView.layer.zPosition = 10000
+        UIApplication.shared.keyWindow?.addSubview(visualView)
+        UIApplication.shared.keyWindow?.addSubview(textFieldView)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.visualView.effect = UIBlurEffect(style: .light)
+            self.textFieldView.alpha = 1
+            self.textFieldView.transform = CGAffineTransform.identity
+        }, completion: nil)
+        self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
     }
     
     /*
