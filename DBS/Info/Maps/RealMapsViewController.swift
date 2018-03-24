@@ -8,17 +8,28 @@
 
 import UIKit
 import MapKit
+import TwicketSegmentedControl
 
-class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, TwicketSegmentedControlDelegate {
+    
+    
     
     let SchoolLocation = CLLocationCoordinate2DMake(22.322924, 114.174229)
     
+    let EffectView = UIVisualEffectView()
+    let SettingsView = UIView()
     
+    let SettingsLabel = UILabel()
+    let MapType = TwicketSegmentedControl()
+    let TravelType = TwicketSegmentedControl()
+    
+    var MapTypeSeg = 0
+    var TravelTypeSeg = 0
+    
+    var StackView = UIStackView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("realmaps")
         
         self.title = "Maps"
         self.view.backgroundColor = UIColor.white
@@ -40,26 +51,100 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         
         self.navigationItem.rightBarButtonItems = [ToImage]
         
+        
+        //Settings Button
         let SettingsButton = UIButton(frame: CGRect(x: self.view.frame.width * 0.85, y: self.view.frame.height * 0.2, width: self.view.frame.width / 8, height: self.view.frame.width / 8))
-        /*
-        SettingsButton.frame.size.height = self.view.frame.width * 0.2
-        SettingsButton.frame.size.width = SettingsButton.frame.height
-        SettingsButton.frame.origin.x = self.view.frame.width * 0.7
-        SettingsButton.frame.origin.y = self.view.frame.height * 0.2
- */
-        let tintableImage = #imageLiteral(resourceName: "Info").withRenderingMode(.alwaysTemplate)
+        
+        var tintableImage = #imageLiteral(resourceName: "Info").withRenderingMode(.alwaysTemplate)
         SettingsButton.setImage(tintableImage, for: .normal)
         SettingsButton.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        SettingsButton.round(corners: [.topRight, .topLeft], radius: SettingsButton.frame.height * 0.2)
+        SettingsButton.layer.zPosition = 100
+//        SettingsButton.layer.borderWidth = 1
+//        SettingsButton.layer.borderColor = UIColor.darkGray.cgColor
         
-        
-        SettingsButton.layer.cornerRadius = SettingsButton.frame.height * 0.2
+        SettingsButton.addTarget(self, action: #selector(Settings), for: .touchUpInside)
         
         self.view.addSubview(SettingsButton)
+        
+        //Location Button
+        let LocationButton = UIButton(frame: CGRect(x: SettingsButton.frame.origin.x, y: SettingsButton.frame.origin.y + SettingsButton.frame.height, width: SettingsButton.frame.width, height: SettingsButton.frame.width))
+        tintableImage = #imageLiteral(resourceName: "LocationArrow").withRenderingMode(.alwaysTemplate)
+        LocationButton.setImage(tintableImage, for: .normal)
+        LocationButton.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        LocationButton.round(corners: [.bottomRight, .bottomLeft], radius: LocationButton.frame.height * 0.2)
+        LocationButton.layer.zPosition = SettingsButton.layer.zPosition
+//        LocationButton.layer.borderWidth = 1
+//        LocationButton.layer.borderColor = UIColor.darkGray.cgColor
+        
+        self.view.addSubview(LocationButton)
+        
        
+        //Visual Effect View
+        EffectView.effect = UIBlurEffect(style: .light)
+        EffectView.frame = self.view.frame
+        EffectView.layer.zPosition = 1000
+        
+        //Settings View
+        SettingsView.center = self.view.center
+        SettingsView.frame.size = CGSize(width: self.view.frame.width * 0.85, height: self.view.frame.height / 3)
+        SettingsView.layer.cornerRadius = SettingsView.frame.height * 0.1
+        SettingsView.backgroundColor = UIColor.white
+        SettingsView.layer.zPosition = 10000
+        
+        //Settings Label
+        SettingsLabel.frame = CGRect(x: self.SettingsView.center.x - self.SettingsLabel.frame.width / 2, y:  SettingsView.frame.height * 0.15, width: 100, height: 100)
+        SettingsLabel.text = "Maps Settings"
+        SettingsLabel.textColor = UIColor.darkText
+        SettingsLabel.font = UIFont.init(name: "Helvetica Light", size: 26)
+    
+        SettingsLabel.sizeToFit()
+        SettingsLabel.frame.origin = CGPoint(x: (self.SettingsView.frame.width - self.SettingsLabel.frame.width) / 2, y:  SettingsView.frame.height * 0.1)
+        
+        SettingsLabel.layer.zPosition = SettingsView.layer.zPosition * 10
+        
+        //Map Type Seg Con
+        MapType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.5, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        MapType.setSegmentItems(["Map", "Transport", "Satellite"])
+        MapType.delegate = self
+        MapType.tag = 20
+        
+        //Travel Type Seg Con
+        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.8, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        TravelType.setSegmentItems(["Drive", "Walk", "Transport"])
+        TravelType.delegate = self
+        TravelType.tag = 30
+        
+        
+        //Stack
+//        StackView = UIStackView(arrangedSubviews: [SettingsButton, LocationButton])
+//        StackView.axis = .vertical
+//        StackView.translatesAutoresizingMaskIntoConstraints = false
+//        StackView.dropShadow()
+//        self.view.addSubview(StackView)
+        
     }
 
     
     func Settings(){
+        self.view.addSubview(EffectView)
+        self.view.addSubview(SettingsView)
+        SettingsView.addSubview(SettingsLabel)
+        SettingsView.center = self.view.center
+        
+        SettingsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        SettingsView.alpha = 0
+        
+        UIView.animate(withDuration: 0.4) {
+            self.SettingsView.alpha = 1
+            self.SettingsView.transform = CGAffineTransform.identity
+            
+        }
+        
+        print("set", SettingsLabel.center.x, "view", self.view.center.x)
+    }
+    
+    func BackToUserLocation(){
         
     }
     
@@ -196,57 +281,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             //mapView.centerCoordinate = location
         }
     }
-    
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        print("pin")
-        /*
-        let pin = CustomPin(coordinate: userLocation.coordinate, title: "Apps Foundation", subtitle: "London")
-        if let x = self.view.viewWithTag(1){
-            let mapkit = x as! MKMapView
-            mapkit.centerCoordinate = pin.coordinate
-            mapkit.addAnnotation(pin)
-        }
- */
-        //mapView.centerCoordinate = userLocation.coordinate
-    }
-    
-    /*
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("pin")
-        let pin = CustomPin(coordinate: locations.last!.coordinate, title: "Apps Foundation", subtitle: "London")
-        if let x = self.view.viewWithTag(1){
-            let mapkit = x as! MKMapView
-            mapkit.centerCoordinate = pin.coordinate
-            mapkit.addAnnotation(pin)
-        }
-    }
- */
-    /*
-    private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        let coordinates = CLLocationCoordinate2D(latitude: 22.322924, longitude: 114.174229)
-        let pin = CustomPin(coordinate: coordinates, title: "United Kingdom", subtitle: "London")
-        if let x = self.view.viewWithTag(1){
-            
-            let mapView = x as! MKMapView
-            mapView.centerCoordinate = coordinates
-            mapView.addAnnotation(pin)
-        }
-    }
- */
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        /*
-        let coordinates = CLLocationCoordinate2D(latitude: 22.322924, longitude: 114.174229)
-        let pin = CustomPin(coordinate: coordinates, title: "United Kingdom", subtitle: "London")
-        if let x = self.view.viewWithTag(1){
-            
-            let mapView = x as! MKMapView
-            mapView.centerCoordinate = coordinates
-            mapView.addAnnotation(pin)
-        }
- */
-    }
+
 
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -261,7 +296,10 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         // Dispose of any resources that can be recreated.
     }
  
-
+    func didSelect(_ segmentIndex: Int) {
+        print("selected!")
+    }
+    
 }
 
 
@@ -273,5 +311,42 @@ class CustomPin : NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
+    }
+}
+
+extension CALayer{
+    func roundCorners(corners: UIRectCorner, radius: CGFloat, viewBounds: CGRect) {
+        
+        let maskPath = UIBezierPath(roundedRect: viewBounds,
+                                    byRoundingCorners: corners,
+                                    cornerRadii: CGSize(width: radius, height: radius))
+        
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        mask = shape
+    }
+}
+
+extension UIView {
+    func round(corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+    
+    func dropShadow() {
+        
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: -1, height: 1)
+        self.layer.shadowRadius = 1
+        
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        
+        self.layer.rasterizationScale = UIScreen.main.scale
+        
     }
 }
