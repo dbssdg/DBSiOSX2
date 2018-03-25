@@ -10,9 +10,14 @@ import UIKit
 import MapKit
 import TwicketSegmentedControl
 
-class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, TwicketSegmentedControlDelegate {
+class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, TwicketSegmentedControlDelegate{
+    func didSelect(_ segmentIndex: Int) {
+        
+    }
     
     
+    
+    let mapKitView = MKMapView()
     
     let SchoolLocation = CLLocationCoordinate2DMake(22.322924, 114.174229)
     
@@ -22,6 +27,11 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     let SettingsLabel = UILabel()
     let MapType = TwicketSegmentedControl()
     let TravelType = TwicketSegmentedControl()
+    let DoneButton = UIButton()
+    
+    var DoneTapGesture = UIGestureRecognizer()
+    
+    let BackgroundButton = UIButton()
     
     var MapTypeSeg = 0
     var TravelTypeSeg = 0
@@ -74,6 +84,8 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         LocationButton.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         LocationButton.round(corners: [.bottomRight, .bottomLeft], radius: LocationButton.frame.height * 0.2)
         LocationButton.layer.zPosition = SettingsButton.layer.zPosition
+        
+        LocationButton.addTarget(self, action: #selector(BackToUserLocation), for: .touchUpInside)
 //        LocationButton.layer.borderWidth = 1
 //        LocationButton.layer.borderColor = UIColor.darkGray.cgColor
         
@@ -104,17 +116,29 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         SettingsLabel.layer.zPosition = SettingsView.layer.zPosition * 10
         
         //Map Type Seg Con
-        MapType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.5, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        MapType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.3, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
         MapType.setSegmentItems(["Map", "Transport", "Satellite"])
         MapType.delegate = self
         MapType.tag = 20
         
         //Travel Type Seg Con
-        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.8, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
         TravelType.setSegmentItems(["Drive", "Walk", "Transport"])
         TravelType.delegate = self
         TravelType.tag = 30
         
+        //Done Button
+        DoneButton.frame = CGRect(x: (self.DoneButton.frame.width - self.DoneButton.frame.width) / 2, y: SettingsView.frame.height * 0.8, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.2)
+        DoneButton.setTitle("Done", for: .normal)
+        DoneButton.setTitleColor(self.view.tintColor!, for: .normal)
+        
+        DoneButton.addTarget(self, action: #selector(EndSettings), for: .touchUpInside)
+        DoneButton.layer.zPosition = SettingsLabel.layer.zPosition
+        
+        //background Button
+        BackgroundButton.frame = self.view.frame
+        BackgroundButton.layer.zPosition = SettingsView.layer.zPosition - 1
+        BackgroundButton.addTarget(self, action: #selector(handleTapGesture), for: .touchUpOutside)
         
         //Stack
 //        StackView = UIStackView(arrangedSubviews: [SettingsButton, LocationButton])
@@ -129,7 +153,20 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     func Settings(){
         self.view.addSubview(EffectView)
         self.view.addSubview(SettingsView)
+        //self.view.addSubview(BackgroundButton)
+        
+        
         SettingsView.addSubview(SettingsLabel)
+        SettingsView.addSubview(MapType)
+        SettingsView.addSubview(TravelType)
+        SettingsView.addSubview(DoneButton)
+        //SettingsView.addGestureRecognizer(DoneTapGesture)
+        
+        //DoneTapGesture.addTarget(self, action: #selector(handleTapGesture(_:)))
+        if let GR = DoneButton.gestureRecognizers{
+            DoneTapGesture.require(toFail: GR[0])
+        }
+        
         SettingsView.center = self.view.center
         
         SettingsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -144,16 +181,27 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         print("set", SettingsLabel.center.x, "view", self.view.center.x)
     }
     
-    func BackToUserLocation(){
+    func EndSettings(){
+        EffectView.removeFromSuperview()
+        SettingsView.removeFromSuperview()
+        SettingsLabel.removeFromSuperview()
+        MapType.removeFromSuperview()
+        TravelType.removeFromSuperview()
+        DoneButton.removeFromSuperview()
+        BackgroundButton.removeFromSuperview()
         
+        //self.view.removeGestureRecognizer(DoneTapGesture)
+        print("did end settings")
+    }
+    
+    func BackToUserLocation(){
+        mapKitView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
     
     func SetupMaps(){
         let LocationManager = CLLocationManager()
-        
-        
-        let mapKitView = MKMapView(frame: view.frame)
+        mapKitView.frame = view.frame
         mapKitView.tag = 1
         
         self.view.addSubview(mapKitView)
@@ -209,10 +257,10 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 }
                 
                 let route = response.routes[0]
-                mapKitView.add(route.polyline, level: .aboveRoads)
+                self.mapKitView.add(route.polyline, level: .aboveRoads)
                 
                 let rekt = route.polyline.boundingMapRect
-                mapKitView.setRegion(MKCoordinateRegionForMapRect(rekt), animated: true)
+                self.mapKitView.setRegion(MKCoordinateRegionForMapRect(rekt), animated: true)
                 
             })
         }
@@ -232,26 +280,35 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         //openMapInTransitMode()
     }
     
+//    func handleTapGesture(_ gestureRecognizer: UIGestureRecognizer) {
+//        let location = gestureRecognizer.location(in: self.view)
+//        print(location)
+//        if !SettingsView.frame.contains(location){
+//            EndSettings()
+//        }
+//    }
+    func handleTapGesture() {
+        print("handle")
+        EndSettings()
+    }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    
+    private func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if case .authorizedWhenInUse = status {
             manager.requestLocation()
         }
     }
     
     func displayInFlyoverMode() {
-        if let x = self.view.viewWithTag(1){
-            let mapkit = x as! MKMapView
-            mapkit.mapType = .satelliteFlyover
-            mapkit.showsBuildings = true
+            mapKitView.mapType = .satelliteFlyover
+            mapKitView.showsBuildings = true
             let location = SchoolLocation
             let altitude: CLLocationDistance  = 500
             let heading: CLLocationDirection = 90
             let pitch = CGFloat(45)
             //let camera = MKMapCamera(lookingAtCenterCoordinate: location, fromDistance: altitude, pitch: pitch, heading: heading)
             let camera = MKMapCamera(lookingAtCenter: location, fromDistance: altitude, pitch: pitch, heading: heading)
-            mapkit.setCamera(camera, animated: true)
-        }
+            mapKitView.setCamera(camera, animated: true)
     }
     
     func openMapInTransitMode() {
@@ -272,13 +329,9 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         LocationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled(){
-            LocationManager.delegate = self as! CLLocationManagerDelegate
+            LocationManager.delegate = self
             LocationManager.desiredAccuracy = kCLLocationAccuracyBest
             LocationManager.startUpdatingLocation()
-        }
-        
-        if let location = LocationManager.location?.coordinate{
-            //mapView.centerCoordinate = location
         }
     }
 
@@ -296,8 +349,10 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         // Dispose of any resources that can be recreated.
     }
  
-    func didSelect(_ segmentIndex: Int) {
-        print("selected!")
+    func didSelect(_ segmentIndex: Int, _ sender: TwicketSegmentedControl) {
+        if sender.tag == 20{
+            print("selected")
+        }
     }
     
 }
