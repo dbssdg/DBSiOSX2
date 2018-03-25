@@ -39,6 +39,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     var ears : EARSByDate?
     var dateSelected = 0
+    var earsSelected = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,9 +112,9 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     func updateText() {
         //TEXT FIELD VIEW
-        var content = "\((self.ears?.events[earsByDateSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
+        var content = "\((self.ears?.events[earsSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
         
-        let array = self.ears?.events[earsByDateSelected].period.components(separatedBy: " to ")
+        let array = self.ears?.events[earsSelected].period.components(separatedBy: " to ")
         if array![0] == "101" {
             content += "Morning Roll-call\n\n"
         } else if array![0] == "102" {
@@ -121,22 +122,22 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         } else if array![0] == "0" {
             content += "\n"
         } else if array![0] != array![1] {
-            content += "Period \((self.ears?.events[earsByDateSelected].period)!)\n\n"
+            content += "Period \((self.ears?.events[earsSelected].period)!)\n\n"
         } else {
-            content += "Period \((self.ears?.events[earsByDateSelected].period.components(separatedBy: " to ")[0])!)\n\n"
+            content += "Period \((self.ears?.events[earsSelected].period.components(separatedBy: " to ")[0])!)\n\n"
         }
         
         content += """
         Location
-        \((self.ears?.events[earsByDateSelected].location)!)
+        \((self.ears?.events[earsSelected].location)!)
         
         Application Date
-        \((self.ears?.events[earsByDateSelected].applyDate)!)
+        \((self.ears?.events[earsSelected].applyDate)!)
         
         Participants
         
         """
-        for participant in (self.ears?.events[earsByDateSelected].participant)! {
+        for participant in (self.ears?.events[earsSelected].participant)! {
             content += "\(participant.capitalized)\n"
         }
         
@@ -149,7 +150,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))]
         }
         
-        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.ears?.events[earsByDateSelected].title)!))
+        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.ears?.events[earsSelected].title)!.replacingOccurrences(of: "\\", with: "")))
         print((self.ears?.date)!)
         let wordsToBold = ["Location", "Application Date", "Participants"]
         for i in wordsToBold {
@@ -229,7 +230,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.cellForRow(at: indexPath)
         cell?.selectionStyle = .none
         cell?.selectionStyle = .default
-        earsByDateSelected = indexPath.row
+        earsSelected = indexPath.row
         
         updateText()
         textFieldView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!
