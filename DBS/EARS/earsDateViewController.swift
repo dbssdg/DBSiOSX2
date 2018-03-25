@@ -43,7 +43,6 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
 //        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
         textFieldView.layer.cornerRadius = 20
         textFieldView.layer.borderWidth = 2
@@ -163,7 +162,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func todayAction(_ sender: Any) {
         dateSelected = 0
-        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
+        tableView.setContentOffset(CGPoint.zero, animated: false)
         viewDidLoad()
         viewWillAppear(false)
     }
@@ -173,14 +172,14 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             yesterday.tintColor = .white
             yesterday.isEnabled = false
         }
-        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
+        tableView.setContentOffset(CGPoint.zero, animated: false)
         viewDidLoad()
     }
     @IBAction func tomorrowAction(_ sender: Any) {
         yesterday.tintColor = .orange
         yesterday.isEnabled = true
         dateSelected += 1
-        tableView.scrollToRow(at: [0,0], at: .top, animated: false)
+        tableView.setContentOffset(CGPoint.zero, animated: false)
         viewDidLoad()
     }
     @IBAction func dismissTextField(_ sender: Any) {
@@ -233,7 +232,8 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         earsByDateSelected = indexPath.row
         
         updateText()
-//        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
+        textFieldView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!
+        textFieldView.bounds.size.height = (UIApplication.shared.keyWindow?.bounds.height)!
         textFieldView.center.x = self.view.center.x
         textFieldView.center.y = self.view.center.y+60
         textFieldView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -244,7 +244,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         UIView.animate(withDuration: 0.3, animations: {
             self.visualView.effect = UIBlurEffect(style: .light)
             self.textFieldView.alpha = 1
-            self.textFieldView.transform = CGAffineTransform.identity
+            self.textFieldView.transform = .identity
         }, completion: nil)
         self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
     }
