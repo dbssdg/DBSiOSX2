@@ -16,7 +16,7 @@ class earsClassViewController: UIViewController {
     @IBOutlet var classButtons: [UIButton]!
     @IBOutlet var nonHighClassButtons: [UIButton]!
     @IBOutlet weak var backspaceOutlet: UIButton!
-    @IBOutlet weak var viewClassmatesOutlet: UIButton!
+    @IBOutlet weak var viewEARSOutlet: UIButton!
     
     @IBAction func form(_ sender: Any) {
         classDisplay.textColor = UIColor.black
@@ -45,8 +45,8 @@ class earsClassViewController: UIViewController {
             i.setTitleColor(UIColor.lightGray, for: .normal)
             i.isEnabled = false
         }
-        viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
-        viewClassmatesOutlet.isEnabled = true
+        viewEARSOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+        viewEARSOutlet.isEnabled = true
     }
     @IBAction func backspace(_ sender: Any) {
         if (sender as AnyObject).currentTitle == "CLR" {
@@ -72,16 +72,15 @@ class earsClassViewController: UIViewController {
                 backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
                 backspaceOutlet.isEnabled = true
                 
-                viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
-                viewClassmatesOutlet.isEnabled = false
+                viewEARSOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+                viewEARSOutlet.isEnabled = false
             default:
                 resetDisplay()
             }
         }
     }
-    @IBAction func viewClassmates(_ sender: Any) {
+    @IBAction func viewEARS(_ sender: Any) {
         earsChoice = classDisplay.text!
-        print(earsChoice)
     }
     
     func resetDisplay() {
@@ -101,9 +100,9 @@ class earsClassViewController: UIViewController {
         backspaceOutlet.setTitle("DEL", for: .normal)
         backspaceOutlet.layer.cornerRadius = backspaceOutlet.frame.width/2
         backspaceOutlet.isEnabled = false
-        viewClassmatesOutlet.setTitleColor(UIColor.lightGray, for: .normal)
-        viewClassmatesOutlet.setTitle("View Classmates", for: .normal)
-        viewClassmatesOutlet.isEnabled = false
+        viewEARSOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+        viewEARSOutlet.setTitle("View EARS", for: .normal)
+        viewEARSOutlet.isEnabled = false
         
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
@@ -119,6 +118,12 @@ class earsClassViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resetDisplay()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
     }
     
     override func didReceiveMemoryWarning() {

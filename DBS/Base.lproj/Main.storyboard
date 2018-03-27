@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BJa-Y5-w3z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ft2-mJ-baW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -282,43 +282,43 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-                                                        <rect key="frame" x="267.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-jf-STC">
-                                                        <rect key="frame" x="321" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="321.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -835,7 +835,7 @@
                         <outlet property="dismissButton" destination="1pY-G6-1rg" id="BZ3-nc-05x"/>
                         <outlet property="earsDetails" destination="C1N-Ec-Omd" id="xfV-iN-wpi"/>
                         <outlet property="tableView" destination="rkc-7P-pAw" id="sjC-wr-QB7"/>
-                        <outlet property="textFieldView" destination="f2U-Pq-gHJ" id="rDc-zJ-ixb"/>
+                        <outlet property="textViewView" destination="f2U-Pq-gHJ" id="Vjl-3Z-5tD"/>
                         <outlet property="today" destination="qZb-Wl-Pkn" id="Whl-Yj-wpr"/>
                         <outlet property="tomorrow" destination="SC8-xL-FHC" id="T0e-Qs-OfN"/>
                         <outlet property="yesterday" destination="GGE-5H-Wdg" id="8Aa-Q1-eY8"/>
@@ -865,7 +865,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="dismissTextField:" destination="aYA-gx-6x2" eventType="touchUpInside" id="bse-eJ-DhU"/>
+                                <action selector="dismissTextView:" destination="aYA-gx-6x2" eventType="touchUpInside" id="adP-YR-VHW"/>
                             </connections>
                         </button>
                     </subviews>
@@ -894,18 +894,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy9-cP-pLJ">
-                                <rect key="frame" x="0.0" y="252" width="359" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy9-cP-pLJ">
+                                <rect key="frame" x="8" y="252" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Date"/>
                                 <connections>
                                     <segue destination="aYA-gx-6x2" kind="show" id="iDg-AW-Mz2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaI-R0-3R1">
-                                <rect key="frame" x="0.0" y="303" width="359" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaI-R0-3R1">
+                                <rect key="frame" x="8" y="348" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Class"/>
                                 <connections>
@@ -914,6 +912,14 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="trailing" secondItem="Gy9-cP-pLJ" secondAttribute="trailing" id="2x4-5z-Ger"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="top" secondItem="Gy9-cP-pLJ" secondAttribute="bottom" constant="36" id="Q9z-QS-O1t"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="wMb-Ka-xbd" secondAttribute="leadingMargin" constant="-8" id="X2N-No-esT"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="leading" secondItem="Gy9-cP-pLJ" secondAttribute="leading" id="au5-FB-gGb"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="top" secondItem="71K-gq-c6O" secondAttribute="bottom" constant="188" id="nVV-PE-bMu"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="centerX" secondItem="wMb-Ka-xbd" secondAttribute="centerX" id="w4O-m3-Tgj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kzl-Mq-KNl"/>
                 </viewController>
@@ -3409,7 +3415,7 @@ Title</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="View EARS"/>
                                 <connections>
-                                    <action selector="viewClassmates:" destination="PtS-LP-QQf" eventType="touchUpInside" id="Rzk-yJ-ymU"/>
+                                    <action selector="viewEARS:" destination="PtS-LP-QQf" eventType="touchUpInside" id="cLN-gZ-3h6"/>
                                     <segue destination="Fxu-xE-Gbe" kind="show" id="uFK-kZ-8yx"/>
                                 </connections>
                             </button>
@@ -3731,7 +3737,7 @@ Title</string>
                     <connections>
                         <outlet property="backspaceOutlet" destination="aum-ve-eRt" id="ZTR-dE-sGl"/>
                         <outlet property="classDisplay" destination="eKT-t1-Bb0" id="OUD-6u-Dav"/>
-                        <outlet property="viewClassmatesOutlet" destination="bWQ-YH-gFX" id="Nz2-sZ-9e8"/>
+                        <outlet property="viewEARSOutlet" destination="bWQ-YH-gFX" id="Z5l-7E-mnO"/>
                         <outletCollection property="formButtons" destination="ZLm-AZ-wHK" collectionClass="NSMutableArray" id="RLN-nz-LfF"/>
                         <outletCollection property="formButtons" destination="KC8-jm-kIf" collectionClass="NSMutableArray" id="rY1-Nn-GKL"/>
                         <outletCollection property="formButtons" destination="C2T-s0-9TS" collectionClass="NSMutableArray" id="diQ-PE-XmW"/>
@@ -3810,14 +3816,50 @@ Title</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dismissButton" destination="Uzg-9j-y3i" id="avh-I3-dCF"/>
+                        <outlet property="earsStudDetails" destination="ldt-ye-d4V" id="8dk-Sg-pd9"/>
                         <outlet property="tableView" destination="cgW-8h-glb" id="14f-Lh-8bL"/>
+                        <outlet property="textViewView" destination="oTc-Xz-mpJ" id="quz-dl-J6d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62x-7z-i9P" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="oTc-Xz-mpJ">
                     <rect key="frame" x="0.0" y="0.0" width="359" height="812"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-ye-d4V">
+                            <rect key="frame" x="8" y="20" width="343" height="732"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzg-9j-y3i">
+                            <rect key="frame" x="313" y="8" width="30" height="30"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="QUl-x8-yqu"/>
+                                <constraint firstAttribute="height" constant="30" id="SKl-qK-YbH"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                            <state key="normal" title="×">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="dismissTextField:" destination="aYA-gx-6x2" eventType="touchUpInside" id="GTB-UC-3QR"/>
+                                <action selector="dismissTextView:" destination="Fxu-xE-Gbe" eventType="touchUpInside" id="gcg-hF-bSD"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="ldt-ye-d4V" firstAttribute="top" secondItem="oTc-Xz-mpJ" secondAttribute="top" constant="20" id="CEa-Oy-w7r"/>
+                        <constraint firstAttribute="trailing" secondItem="ldt-ye-d4V" secondAttribute="trailing" constant="8" id="FAJ-q1-ZpE"/>
+                        <constraint firstAttribute="trailing" secondItem="Uzg-9j-y3i" secondAttribute="trailing" constant="16" id="eWg-RH-SQt"/>
+                        <constraint firstItem="Uzg-9j-y3i" firstAttribute="top" secondItem="oTc-Xz-mpJ" secondAttribute="top" constant="8" id="kTg-Vf-Mo2"/>
+                        <constraint firstAttribute="bottom" secondItem="ldt-ye-d4V" secondAttribute="bottom" constant="60" id="nrO-7B-AIt"/>
+                        <constraint firstItem="ldt-ye-d4V" firstAttribute="leading" secondItem="oTc-Xz-mpJ" secondAttribute="leading" constant="8" id="orJ-Vl-dC4"/>
+                    </constraints>
                 </view>
             </objects>
             <point key="canvasLocation" x="12516" y="3519"/>
@@ -3843,7 +3885,7 @@ Title</string>
         <segue reference="SLH-E1-IId"/>
         <segue reference="ZX2-rL-u3a"/>
         <segue reference="9mC-AT-bKI"/>
-        <segue reference="kVF-5A-evd"/>
+        <segue reference="WZe-7W-OjW"/>
         <segue reference="2fI-rG-aNj"/>
         <segue reference="NGb-v2-BUs"/>
     </inferredMetricsTieBreakers>
