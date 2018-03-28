@@ -32,7 +32,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var yesterday: UIBarButtonItem!
     @IBOutlet var tomorrow: UIBarButtonItem!
     
-    @IBOutlet var textFieldView: UIView!
+    @IBOutlet var textViewView: UIView!
     @IBOutlet weak var earsDetails: UITextView!
     @IBOutlet weak var dismissButton: UIButton!
     let visualView = UIVisualEffectView()
@@ -45,11 +45,11 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 //        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
-        textFieldView.layer.cornerRadius = 20
-        textFieldView.layer.borderWidth = 2
-        textFieldView.layer.borderColor = UIColor.lightGray.cgColor
+        textViewView.layer.cornerRadius = 20
+        textViewView.layer.borderWidth = 2
+        textViewView.layer.borderColor = UIColor.lightGray.cgColor
         dismissButton.layer.cornerRadius = dismissButton.frame.height/2
-        visualView.frame = (UIApplication.shared.keyWindow?.frame)!
+        visualView.frame = (UIApplication.shared.keyWindow?.bounds)!
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         spinner.activityIndicatorViewStyle = .white
@@ -104,12 +104,6 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backItem = UIBarButtonItem()
-        backItem.title = "Back"
-        navigationItem.backBarButtonItem = backItem
-    }
-    
     func updateText() {
         //TEXT FIELD VIEW
         var content = "\((self.ears?.events[earsSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
@@ -124,7 +118,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         } else if array![0] != array![1] {
             content += "Period \((self.ears?.events[earsSelected].period)!)\n\n"
         } else {
-            content += "Period \((self.ears?.events[earsSelected].period.components(separatedBy: " to ")[0])!)\n\n"
+            content += "Period \((array![0]))\n\n"
         }
         
         content += """
@@ -183,13 +177,13 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.setContentOffset(CGPoint.zero, animated: false)
         viewDidLoad()
     }
-    @IBAction func dismissTextField(_ sender: Any) {
+    @IBAction func dismissTextView(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: {
-            self.textFieldView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-            self.textFieldView.alpha = 0
+            self.textViewView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.textViewView.alpha = 0
             self.visualView.effect = nil
         }) { (success: Bool) in
-            self.textFieldView.removeFromSuperview()
+            self.textViewView.removeFromSuperview()
 //            self.textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
 //            self.textFieldView.center.y = self.view.center.y+60
             self.visualView.removeFromSuperview()
@@ -233,19 +227,19 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         earsSelected = indexPath.row
         
         updateText()
-        textFieldView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!
-        textFieldView.bounds.size.height = (UIApplication.shared.keyWindow?.bounds.height)!
-        textFieldView.center.x = self.view.center.x
-        textFieldView.center.y = self.view.center.y+60
-        textFieldView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-        textFieldView.alpha = 0
-        textFieldView.layer.zPosition = 10000
+        textViewView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!
+        textViewView.bounds.size.height = (UIApplication.shared.keyWindow?.bounds.height)!
+        textViewView.center.x = self.view.center.x
+        textViewView.center.y = self.view.center.y+60
+        textViewView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        textViewView.alpha = 0
+        textViewView.layer.zPosition = 10000
         UIApplication.shared.keyWindow?.addSubview(visualView)
-        UIApplication.shared.keyWindow?.addSubview(textFieldView)
+        UIApplication.shared.keyWindow?.addSubview(textViewView)
         UIView.animate(withDuration: 0.3, animations: {
             self.visualView.effect = UIBlurEffect(style: .light)
-            self.textFieldView.alpha = 1
-            self.textFieldView.transform = .identity
+            self.textViewView.alpha = 1
+            self.textViewView.transform = .identity
         }, completion: nil)
         self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
     }

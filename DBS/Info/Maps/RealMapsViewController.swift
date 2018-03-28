@@ -119,12 +119,16 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         MapType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.3, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
         MapType.setSegmentItems(["Map", "Transport", "Satellite"])
         MapType.delegate = self
+        MapType.addTarget(self, action: #selector(MapTypeChanged(_:)), for: .touchUpInside)
+        MapType.addTarget(self, action: #selector(MapTypeChanged(_:)), for: .valueChanged)
         MapType.tag = 20
         
         //Travel Type Seg Con
         TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
         TravelType.setSegmentItems(["Drive", "Walk", "Transport"])
         TravelType.delegate = self
+        TravelType.addTarget(self, action: #selector(TravelTypeChanged(_:)), for: .touchUpInside)
+        TravelType.addTarget(self, action: #selector(TravelTypeChanged(_:)), for: .valueChanged)
         TravelType.tag = 30
         
         //Done Button
@@ -207,6 +211,15 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         mapKitView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
+    func MapTypeChanged(_ sender: TwicketSegmentedControl){
+        print("maptype")
+        
+        
+    }
+    
+    func TravelTypeChanged(_ sender: TwicketSegmentedControl){
+        print("travek typeq")
+    }
     
     func SetupMaps(){
         let LocationManager = CLLocationManager()
