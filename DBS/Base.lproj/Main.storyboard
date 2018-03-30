@@ -282,25 +282,25 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-nT-r5I">
-                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gy-Eh-1JO">
-                                                        <rect key="frame" x="54" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="53.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5x4-Mb-f9u">
-                                                        <rect key="frame" x="107.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="107" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="161" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -880,7 +880,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="12516" y="1428"/>
+            <point key="canvasLocation" x="12516" y="1044"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="EG6-UI-u9s">
@@ -895,7 +895,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy9-cP-pLJ">
-                                <rect key="frame" x="8" y="252" width="359" height="60"/>
+                                <rect key="frame" x="8" y="207" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Date"/>
                                 <connections>
@@ -903,22 +903,33 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaI-R0-3R1">
-                                <rect key="frame" x="8" y="348" width="359" height="60"/>
+                                <rect key="frame" x="8" y="303" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Class"/>
                                 <connections>
                                     <segue destination="PtS-LP-QQf" kind="show" id="Jq6-nE-2Xh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvV-Vp-ipc">
+                                <rect key="frame" x="8" y="402" width="359" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="My EARS Record"/>
+                                <connections>
+                                    <segue destination="Wla-53-IYs" kind="show" id="CcJ-cb-PeX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="trailing" secondItem="Gy9-cP-pLJ" secondAttribute="trailing" id="2x4-5z-Ger"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="top" secondItem="Gy9-cP-pLJ" secondAttribute="bottom" constant="36" id="Q9z-QS-O1t"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="wMb-Ka-xbd" secondAttribute="leadingMargin" constant="-8" id="X2N-No-esT"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="leading" secondItem="Gy9-cP-pLJ" secondAttribute="leading" id="au5-FB-gGb"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="top" secondItem="71K-gq-c6O" secondAttribute="bottom" constant="188" id="nVV-PE-bMu"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="centerX" secondItem="wMb-Ka-xbd" secondAttribute="centerX" id="w4O-m3-Tgj"/>
+                            <constraint firstItem="hvV-Vp-ipc" firstAttribute="top" secondItem="iaI-R0-3R1" secondAttribute="bottom" constant="39" id="3bD-KF-GPo"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="centerY" secondItem="wMb-Ka-xbd" secondAttribute="centerY" id="4j8-Mq-lmD"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="top" secondItem="Gy9-cP-pLJ" secondAttribute="bottom" constant="36" id="Ce4-Of-RJc"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="leading" secondItem="hvV-Vp-ipc" secondAttribute="leading" id="Cg3-dx-RVW"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="trailing" secondItem="hvV-Vp-ipc" secondAttribute="trailing" id="GuU-PH-8iF"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="wMb-Ka-xbd" secondAttribute="leadingMargin" constant="-8" id="dQl-b2-ReM"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="iaI-R0-3R1" secondAttribute="leading" id="djQ-LW-Kqk"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="trailing" secondItem="iaI-R0-3R1" secondAttribute="trailing" id="mQe-SN-09r"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="centerX" secondItem="wMb-Ka-xbd" secondAttribute="centerX" id="npk-oS-6Wj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kzl-Mq-KNl"/>
@@ -961,7 +972,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nFW-4U-QOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13344.799999999999" y="2066.7166416791606"/>
+            <point key="canvasLocation" x="13398" y="1044"/>
         </scene>
         <!--Real Maps View Controller-->
         <scene sceneID="8MW-Rb-p3u">
@@ -3758,7 +3769,79 @@ Title</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8K-fa-YdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11673" y="2978"/>
+            <point key="canvasLocation" x="12516" y="2087"/>
+        </scene>
+        <!--My EARS Record-->
+        <scene sceneID="CV1-s3-Jg0">
+            <objects>
+                <viewController title="My EARS Record" id="Wla-53-IYs" customClass="earsStudRecordViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Cnp-mB-gp2"/>
+                        <viewControllerLayoutGuide type="bottom" id="Eu2-G4-woJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="33F-Sx-Ob1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No EARS Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SlO-OJ-P7K">
+                                <rect key="frame" x="16" y="321.5" width="343" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jeO-jl-wUh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="studEARS" textLabel="nWa-H1-woe" detailTextLabel="5On-gd-GTf" style="IBUITableViewCellStyleSubtitle" id="gyz-mQ-EVW">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gyz-mQ-EVW" id="jt9-04-XGJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nWa-H1-woe">
+                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5On-gd-GTf">
+                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Wla-53-IYs" id="kx9-nK-6pR"/>
+                                    <outlet property="delegate" destination="Wla-53-IYs" id="xCR-wW-YMz"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="SlO-OJ-P7K" secondAttribute="trailing" id="7uw-RJ-pAR"/>
+                            <constraint firstItem="Eu2-G4-woJ" firstAttribute="top" secondItem="jeO-jl-wUh" secondAttribute="bottom" id="RlZ-pu-7jX"/>
+                            <constraint firstItem="jeO-jl-wUh" firstAttribute="top" secondItem="Cnp-mB-gp2" secondAttribute="bottom" id="T5k-d0-bcV"/>
+                            <constraint firstAttribute="trailing" secondItem="jeO-jl-wUh" secondAttribute="trailing" id="jwg-q7-jcj"/>
+                            <constraint firstItem="SlO-OJ-P7K" firstAttribute="centerY" secondItem="33F-Sx-Ob1" secondAttribute="centerY" id="obR-Xd-gcX"/>
+                            <constraint firstItem="jeO-jl-wUh" firstAttribute="leading" secondItem="33F-Sx-Ob1" secondAttribute="leading" id="r1z-u4-hK2"/>
+                            <constraint firstItem="SlO-OJ-P7K" firstAttribute="leading" secondItem="33F-Sx-Ob1" secondAttribute="leadingMargin" id="uNE-of-3P0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="studRecordTable" destination="jeO-jl-wUh" id="Mei-XM-gCA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hfG-uR-YRF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12516" y="3005.8470764617696"/>
         </scene>
         <!--Ears Period View Controller-->
         <scene sceneID="gQj-BB-68U">
@@ -3862,7 +3945,7 @@ Title</string>
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="12516" y="3519"/>
+            <point key="canvasLocation" x="13398" y="2087"/>
         </scene>
     </scenes>
     <resources>
