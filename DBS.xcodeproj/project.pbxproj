@@ -363,7 +363,7 @@
 								enabled = 1;
 							};
 							com.apple.NearFieldCommunicationTagReading = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.NetworkExtensions.iOS = {
 								enabled = 1;
