@@ -85,9 +85,15 @@ class TeachersViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = "Swipe to the left to Email."
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTitle() {
+        if self.title == "Teachers" {
+            self.title = "Swipe to the left to Email."
+        } else if self.title == "Swipe to the left to Email." {
             self.title = "Teachers"
-        })
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

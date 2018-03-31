@@ -23,26 +23,26 @@ class earsClassViewController: UIViewController {
         classDisplay.text? = (sender as AnyObject).currentTitle as! String
         
         for i in formButtons {
-            i.setTitleColor(UIColor.lightGray, for: .normal)
+            i.backgroundColor = .lightGray
             i.isEnabled = false
         }
         for i in classButtons {
-            i.setTitleColor(UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
+            i.backgroundColor = UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1)
             i.isEnabled = true
         }
         if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
             for i in nonHighClassButtons {
-                i.setTitleColor(UIColor.lightGray, for: .normal)
+                i.backgroundColor = .lightGray
                 i.isEnabled = false
             }
         }
-        backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+        backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
         backspaceOutlet.isEnabled = true
     }
     @IBAction func classChoices(_ sender: Any) {
         classDisplay.text? += (sender as AnyObject).currentTitle as! String
         for i in classButtons {
-            i.setTitleColor(UIColor.lightGray, for: .normal)
+            i.backgroundColor = .lightGray
             i.isEnabled = false
         }
         viewEARSOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
@@ -56,20 +56,20 @@ class earsClassViewController: UIViewController {
             case "D", "S", "G", "P", "M", "L", "A", "J", "T":
                 classDisplay.text?.removeLast()
                 for i in formButtons {
-                    i.setTitleColor(UIColor.lightGray, for: .normal)
+                    i.backgroundColor = .lightGray
                     i.isEnabled = false
                 }
                 for i in classButtons {
-                    i.setTitleColor(UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1), for: .normal)
+                    i.backgroundColor = UIColor(red: 100/255, green: 200/255, blue: 200/255, alpha: 1)
                     i.isEnabled = true
                 }
                 if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
                     for i in nonHighClassButtons {
-                        i.setTitleColor(UIColor.lightGray, for: .normal)
+                        i.backgroundColor = .lightGray
                         i.isEnabled = false
                     }
                 }
-                backspaceOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
+                backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
                 backspaceOutlet.isEnabled = true
                 
                 viewEARSOutlet.setTitleColor(UIColor.lightGray, for: .normal)
@@ -85,18 +85,18 @@ class earsClassViewController: UIViewController {
     
     func resetDisplay() {
         for i in formButtons {
-            i.setTitleColor(UIColor.orange, for: .normal)
+            i.backgroundColor = .orange
             i.layer.cornerRadius = i.frame.width/2
             i.isEnabled = true
         }
         for i in classButtons {
-            i.setTitleColor(UIColor.lightGray, for: .normal)
+            i.backgroundColor = .lightGray
             i.layer.cornerRadius = i.frame.width/2
             i.isEnabled = false
         }
         classDisplay.text = "Enter class"
         classDisplay.textColor = UIColor.lightGray
-        backspaceOutlet.setTitleColor(UIColor.lightGray, for: .normal)
+        backspaceOutlet.backgroundColor = .lightGray
         backspaceOutlet.setTitle("DEL", for: .normal)
         backspaceOutlet.layer.cornerRadius = backspaceOutlet.frame.width/2
         backspaceOutlet.isEnabled = false
@@ -112,6 +112,13 @@ class earsClassViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        for i in formButtons {
+            i.setTitleColor(.white, for: .normal)
+        }
+        for i in classButtons {
+            i.setTitleColor(.white, for: .normal)
+        }
+        backspaceOutlet.setTitleColor(.white, for: .normal)
         resetDisplay()
     }
     

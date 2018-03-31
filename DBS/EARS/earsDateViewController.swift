@@ -215,6 +215,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             cell?.detailTextLabel?.text = "Period \((self.ears?.events[indexPath.row].period.components(separatedBy: " to ")[0])!)"
         }
         
+        cell?.detailTextLabel?.textColor = .gray
         cell?.detailTextLabel?.numberOfLines = 0
         cell?.accessoryType = .disclosureIndicator
         return cell!

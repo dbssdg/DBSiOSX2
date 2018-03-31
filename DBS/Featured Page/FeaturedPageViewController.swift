@@ -265,7 +265,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         cell.textLabel?.numberOfLines = 0
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
-        cell.detailTextLabel?.textColor = .black
+        cell.detailTextLabel?.textColor = .gray
         
         if cell.detailTextLabel?.text! == "Pinned"{
             cell.detailTextLabel?.textColor = UIColor.orange

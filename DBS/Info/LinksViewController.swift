@@ -55,6 +55,14 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @objc func updateTitle() {
+        if self.title == "Contact" {
+            self.title = "Swipe to the left to Copy."
+        } else if self.title == "Swipe to the left to Copy." {
+            self.title = "Contact"
+        }
+    }
     func didSelect(_ segmentIndex: Int) {
         selectedSegment = segmentIndex
         switch selectedSegment {
@@ -63,10 +71,8 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.title = "Links"
         case 1:
             sectionData = [0: address, 1: phone, 2: fax, 3: email]
-            self.title = "Swipe to the left to Copy."
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self.title = "Contact"
-            })
+            Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+            self.title = "Contact"
         case 2:
             sectionData = [0: weekdays, 1: saturdays, 2: sundays]
             self.title = "Steps Opening Hours"

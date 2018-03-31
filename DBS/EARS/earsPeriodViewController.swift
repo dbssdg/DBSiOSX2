@@ -164,6 +164,7 @@ class earsPeriodViewController: UIViewController, UITableViewDelegate, UITableVi
         
         cell?.textLabel?.numberOfLines = 0
         cell?.detailTextLabel?.numberOfLines = 0
+        cell?.detailTextLabel?.textColor = .gray
         return cell!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

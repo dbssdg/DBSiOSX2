@@ -55,13 +55,6 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
                         self.studRecordTable.reloadData()
                         spinner.stopAnimating()
                         
-                        if let data = self.earsStudRecord?.data {
-                            var oleHours = 0.0
-                            for i in data {
-                                oleHours += Double(i.OLE_Hours)!
-                            }
-                            print("OLE Hours:", oleHours)
-                        }
                     }
                 } else {
                     let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -75,11 +68,29 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
             }
         }.resume()
         
+        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func updateTitle() {
+        if self.title == "My EARS Record" {
+            
+            if let data = self.earsStudRecord?.data {
+                var oleHours = 0.0
+                for i in data {
+                    oleHours += Double(i.OLE_Hours)!
+                }
+                self.title = "My Total OLE Hours: \(oleHours)"
+            }
+            
+        } else {
+            self.title = "My EARS Record"
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,6 +106,7 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = self.earsStudRecord?.data[indexPath.row].EventDate
         cell.detailTextLabel?.numberOfLines = 0
+        cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
         return cell
     }
