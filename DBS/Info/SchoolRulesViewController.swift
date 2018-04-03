@@ -28,11 +28,17 @@ class SchoolRulesViewController: UIViewController {
         self.view.addSubview(button)
         
         //button Constraints
-        button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+//        button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//        button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
         button.widthAnchor.constraint(equalToConstant: self.view.frame.width-16).isActive = true
+        button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height/9).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.frame = CGRect(x: 8, y: 8, width: self.view.frame.width, height: self.view.frame.height)
+        print(button.frame)
+//        button.frame = CGRect(x: 8, y: 8, width: self.view.frame.width, height: self.view.frame.height)
+        if #available(iOS 11.0, *) {
+            self.navigationController?.navigationBar.prefersLargeTitles = false
+        }
         
         //Set the drop down menu's options
         button.dropView.dropDownOptions = ["Forbidden", "Out of Bounds", "The Hall", "Physical Education", "Lateness", "Absence/Early leave from School", "Prefects", "Rules of using Mobile Phone in School Campus", "Uniform", "Rules for Using Lockers"]
@@ -53,6 +59,7 @@ class dropDownBtn: UIButton, dropDownProtocol {
     
     func dropDownPressed(string: String) {
         self.setTitle(string, for: .normal)
+        self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.dismissDropDown()
     }
     
@@ -177,6 +184,7 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         let cell = UITableViewCell()
         
         cell.textLabel?.text = dropDownOptions[indexPath.row]
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.textLabel?.textAlignment = NSTextAlignment.center
         cell.backgroundColor = UIColor.clear
         cell.layer.cornerRadius = cell.frame.height / 2

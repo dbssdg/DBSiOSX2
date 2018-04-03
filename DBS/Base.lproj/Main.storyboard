@@ -295,13 +295,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -932,42 +932,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Njw-jh-qBQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="11672.799999999999" y="2066.7166416791606"/>
-        </scene>
-        <!--Ears Date Detail View Controller-->
-        <scene sceneID="rVm-cj-7Ux">
-            <objects>
-                <viewController id="SNY-61-NLM" customClass="earsDateDetailViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="teh-gH-5rh"/>
-                        <viewControllerLayoutGuide type="bottom" id="dBf-qF-asd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LK0-Px-KGA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Evq-Wl-O8B">
-                                <rect key="frame" x="8" y="28" width="359" height="631"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Evq-Wl-O8B" secondAttribute="trailing" constant="8" id="7BQ-7h-opN"/>
-                            <constraint firstItem="dBf-qF-asd" firstAttribute="top" secondItem="Evq-Wl-O8B" secondAttribute="bottom" constant="8" id="EPg-N3-XhE"/>
-                            <constraint firstItem="Evq-Wl-O8B" firstAttribute="top" secondItem="teh-gH-5rh" secondAttribute="bottom" constant="8" id="vN2-gS-qlI"/>
-                            <constraint firstItem="Evq-Wl-O8B" firstAttribute="leading" secondItem="LK0-Px-KGA" secondAttribute="leading" constant="8" id="yDK-01-nEv"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="textField" destination="Evq-Wl-O8B" id="jP2-2n-Arl"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nFW-4U-QOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="13398" y="1044"/>
         </scene>
         <!--Real Maps View Controller-->
         <scene sceneID="8MW-Rb-p3u">
@@ -2035,44 +1999,6 @@ And love to all men 'neath the sun.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQg-rj-wFn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="bCH-d7-O0b">
-                    <rect key="frame" x="0.0" y="0.0" width="359" height="812"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Qrx-Ea-Esx">
-                            <rect key="frame" x="8" y="20" width="343" height="732"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18e-f8-UdA">
-                            <rect key="frame" x="313" y="8" width="30" height="30"/>
-                            <color key="backgroundColor" white="0.66666666669999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="VJR-AD-mz0"/>
-                                <constraint firstAttribute="width" constant="30" id="pSd-8m-9r0"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <state key="normal" title="×">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="dismissTextField:" destination="aYA-gx-6x2" eventType="touchUpInside" id="okZ-4G-b3D"/>
-                                <action selector="dismissTextView:" destination="Fxu-xE-Gbe" eventType="touchUpInside" id="shM-2g-KHb"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="Qrx-Ea-Esx" firstAttribute="leading" secondItem="bCH-d7-O0b" secondAttribute="leading" constant="8" id="GE3-bM-Nzb"/>
-                        <constraint firstAttribute="bottom" secondItem="Qrx-Ea-Esx" secondAttribute="bottom" constant="60" id="Jya-ig-Uoe"/>
-                        <constraint firstItem="Qrx-Ea-Esx" firstAttribute="top" secondItem="bCH-d7-O0b" secondAttribute="top" constant="20" id="c5G-MY-nSD"/>
-                        <constraint firstAttribute="trailing" secondItem="18e-f8-UdA" secondAttribute="trailing" constant="16" id="fO1-fY-ZMf"/>
-                        <constraint firstAttribute="trailing" secondItem="Qrx-Ea-Esx" secondAttribute="trailing" constant="8" id="vnl-5w-TIK"/>
-                        <constraint firstItem="18e-f8-UdA" firstAttribute="top" secondItem="bCH-d7-O0b" secondAttribute="top" constant="8" id="xjg-3Q-qux"/>
-                    </constraints>
-                </view>
             </objects>
             <point key="canvasLocation" x="4652" y="2884"/>
         </scene>
@@ -3595,7 +3521,10 @@ Title</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dismissButton" destination="Ddx-K7-wmw" id="jq0-PJ-6Kk"/>
+                        <outlet property="earsDetails" destination="6hv-nr-SPG" id="dgf-m4-Rtd"/>
                         <outlet property="studRecordTable" destination="jeO-jl-wUh" id="Mei-XM-gCA"/>
+                        <outlet property="textViewView" destination="x10-kK-xJy" id="MvB-VB-VuF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hfG-uR-YRF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3603,7 +3532,7 @@ Title</string>
                     <rect key="frame" x="0.0" y="0.0" width="359" height="812"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6hv-nr-SPG">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6hv-nr-SPG">
                             <rect key="frame" x="8" y="20" width="343" height="732"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -3624,6 +3553,7 @@ Title</string>
                             <connections>
                                 <action selector="dismissTextField:" destination="aYA-gx-6x2" eventType="touchUpInside" id="ULH-KP-Xp2"/>
                                 <action selector="dismissTextView:" destination="Fxu-xE-Gbe" eventType="touchUpInside" id="7tR-9G-mgD"/>
+                                <action selector="dismissTextView:" destination="Wla-53-IYs" eventType="touchUpInside" id="Ofa-me-wRI"/>
                             </connections>
                         </button>
                     </subviews>
@@ -3765,7 +3695,7 @@ Title</string>
         <segue reference="QFP-lR-bCP"/>
         <segue reference="ZvZ-Pz-6g0"/>
         <segue reference="9mM-5a-2BY"/>
-        <segue reference="kVF-5A-evd"/>
+        <segue reference="WZe-7W-OjW"/>
         <segue reference="OKZ-rb-QcV"/>
         <segue reference="NGb-v2-BUs"/>
     </inferredMetricsTieBreakers>

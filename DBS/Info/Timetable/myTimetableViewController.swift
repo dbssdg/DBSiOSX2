@@ -118,7 +118,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         let noticeButton = UIBarButtonItem(title: "Notice", style: .plain, target: self, action: #selector(notice))
         self.navigationItem.rightBarButtonItem = noticeButton
     }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
         backItem.title = "Back"

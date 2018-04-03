@@ -22,8 +22,6 @@ struct EARSByDate : Decodable {
     let date : String
     let events : [EARSEvent]
 }
-var earsByDate : EARSByDate?
-var earsByDateSelected = Int()
 
 class earsDateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

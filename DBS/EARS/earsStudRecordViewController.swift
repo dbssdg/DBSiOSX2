@@ -23,14 +23,26 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var studRecordTable: UITableView!
     var earsStudRecord : EARSStudRecord?
+    var recordSelected = Int()
+    
+    @IBOutlet var textViewView: UIView!
+    @IBOutlet weak var earsDetails: UITextView!
+    @IBOutlet weak var dismissButton: UIButton!
+    let visualView = UIVisualEffectView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var startsWithDBS = "dbs15072545"
+        var startsWithDBS = "dbs16070755"
         startsWithDBS.removeFirst(3)
         let startsWith20 = "20\(startsWithDBS)"
+        
+        textViewView.layer.cornerRadius = 20
+        textViewView.layer.borderWidth = 2
+        textViewView.layer.borderColor = UIColor.lightGray.cgColor
+        dismissButton.layer.cornerRadius = dismissButton.frame.height/2
+        visualView.frame = (UIApplication.shared.keyWindow?.bounds)!
         
         let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         spinner.activityIndicatorViewStyle = .white
@@ -93,6 +105,45 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    func updateText() {
+        var content = String()
+        let record = (self.earsStudRecord?.data[recordSelected])!
+        content += "\(record.EventName.replacingOccurrences(of: "\\", with: "").capitalized)\n"
+        content += "\(record.EventDate)\n\n"
+        content += "\(record.OLE_Hours) OLE \(Double(record.OLE_Hours)! > 1 ? "Hours":"Hour")\n"
+        content += "Skipped \(record.SkippedLesson) \(record.SkippedLesson > 1 ? "Lessons":"Lesson")\n\n"
+        content += "Event Teacher\n\(record.EventTeacher)"
+        
+        var attributedString = NSMutableAttributedString(string: content as NSString as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
+        let titleFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30.0)]
+        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            attributedString = NSMutableAttributedString(string: content as NSString as String, attributes:
+                [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")))])
+            boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))]
+        }
+        
+        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.earsStudRecord?.data[recordSelected].EventName)!.replacingOccurrences(of: "\\", with: "").capitalized))
+        let wordsToBold = ["Event Teacher"]
+        for i in wordsToBold {
+            attributedString.addAttributes(boldFontAttribute, range: (content as NSString).range(of: i))
+        }
+        self.earsDetails.attributedText = attributedString
+        self.earsDetails.scrollsToTop = true
+        self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
+    @IBAction func dismissTextView(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.textViewView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.textViewView.alpha = 0
+            self.visualView.effect = nil
+        }) { (success: Bool) in
+            self.textViewView.removeFromSuperview()
+            self.visualView.removeFromSuperview()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.earsStudRecord != nil {
             return (self.earsStudRecord?.totalCount)!
@@ -102,7 +153,7 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studEARS")!
-        cell.textLabel?.text = self.earsStudRecord?.data[indexPath.row].EventName.replacingOccurrences(of: "\\", with: "")
+        cell.textLabel?.text = self.earsStudRecord?.data[indexPath.row].EventName.replacingOccurrences(of: "\\", with: "").capitalized
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = self.earsStudRecord?.data[indexPath.row].EventDate
         cell.detailTextLabel?.numberOfLines = 0
@@ -115,6 +166,24 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         let cell = tableView.cellForRow(at: indexPath)!
         cell.selectionStyle = .none
         cell.selectionStyle = .default
+        recordSelected = indexPath.row
+        
+        updateText()
+        textViewView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!
+        textViewView.bounds.size.height = (UIApplication.shared.keyWindow?.bounds.height)!
+        textViewView.center.x = self.view.center.x
+        textViewView.center.y = self.view.center.y+60
+        textViewView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        textViewView.alpha = 0
+        textViewView.layer.zPosition = 10000
+        UIApplication.shared.keyWindow?.addSubview(visualView)
+        UIApplication.shared.keyWindow?.addSubview(textViewView)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.visualView.effect = UIBlurEffect(style: .light)
+            self.textViewView.alpha = 1
+            self.textViewView.transform = .identity
+        }, completion: nil)
+        self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
     }
     
     /*
