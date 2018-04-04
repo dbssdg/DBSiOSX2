@@ -158,14 +158,17 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.registerForPreviewing(with: self, sourceView: albumCollection)
         self.registerForPreviewing(with: self, sourceView: videoTable)
         
-        didSelect(0)
-        setUpSegmentedControl()
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        didSelect(0)
+        setUpSegmentedControl()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -326,15 +329,41 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func setUpSegmentedControl() {
-        let titles = ["Albums", "Videos"]
-
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
         
-        let segmentedControl = TwicketSegmentedControl(frame: frame)
-        segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self
-        segmentedControl.tag = 1
-        view.addSubview(segmentedControl)
+        var hasSegmentedControl = false
+        for subview in self.view.subviews {
+            if (subview as? TwicketSegmentedControl) != nil {
+                hasSegmentedControl = true
+            }
+        }
+        
+        if !hasSegmentedControl {
+            
+            let titles = ["Albums", "Videos"]
+            let segmentedControl = TwicketSegmentedControl()
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                segmentedControl.frame = CGRect(x: 0, y: tabBarY - 40, width: self.view.frame.width, height: 40)
+            } else {
+                segmentedControl.frame = CGRect(x: 0, y: self.view.frame.height - 40, width: self.view.frame.width, height: 40)
+            }
+            segmentedControl.setSegmentItems(titles)
+            segmentedControl.delegate = self
+            view.addSubview(segmentedControl)
+            
+        } else {
+            
+            for subview in self.view.subviews {
+            if let segmentedControl = (subview as? TwicketSegmentedControl) {
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                segmentedControl.removeFromSuperview()
+                setUpSegmentedControl()
+            }
+            }
+            }
+            }
+            
+        }
         
     }
     
