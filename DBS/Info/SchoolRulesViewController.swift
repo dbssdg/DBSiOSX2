@@ -15,6 +15,30 @@ class SchoolRulesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let textView = UITextView(frame: CGRect(x: 20.0, y: 90.0, width: 250.0, height: 100.0))
+        
+        textView.center = self.view.center
+        textView.textAlignment = NSTextAlignment.justified
+        textView.backgroundColor = UIColor.clear
+        
+        
+        // Update UITextView font size and colour
+        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.textColor = UIColor.white
+        
+        textView.font = UIFont.boldSystemFont(ofSize: 20)
+        textView.font = UIFont(name: "Verdana", size: 17)
+
+        // Make UITextView corners rounded
+        textView.layer.cornerRadius = 10
+        
+    
+        // Make UITextView Editable
+        textView.isEditable = false
+        textView.isUserInteractionEnabled = false
+        
+        self.view.addSubview(textView)
+        
         
         //Configure the button
         button = dropDownBtn.init(frame: CGRect(x: 8, y: 8, width: self.view.frame.width, height: self.view.frame.height ))
@@ -42,6 +66,40 @@ class SchoolRulesViewController: UIViewController {
         
         //Set the drop down menu's options
         button.dropView.dropDownOptions = ["Forbidden", "Out of Bounds", "The Hall", "Physical Education", "Lateness", "Absence/Early leave from School", "Prefects", "Rules of using Mobile Phone in School Campus", "Uniform", "Rules for Using Lockers"]
+        
+        
+//        if UITableViewDelegate.dropDownPressed(string: dropDownOptions[0])  {
+//            textView.text  = { """
+//        a. Fighting and/or Bullying.
+//        b. Willful damage to school property, e.g. trees, furniture, paint, newspaper, notices.
+//        (This is a serious offense. Accidental damage, if reported immediately, is not punished.)
+//        c. Shouting, playing games and rowdy behaviour in classrooms.
+//        d. Creating a disturbance when going from one room to another. (Boys should take a route passing the least number of classrooms.)
+//        e. Disrespectful behavior to janitors, watchmen and supporting staff.
+//        f. Taking into classroom or the Hall any radios, cameras, tape-recorders or electronic equipment without permission.
+//        g. Duplicating and / or possessing classroom or special room key.
+//        h. Running or loitering in the corridors, climbing trees, running up or down the banks.
+//        i. Drinking and eating in the Hall, in the Gymnasium, in the classrooms or in other study room.
+//        j. Playing ball games and keeping basketball, football or volleyball in the classroom. (Boys should leave them to the gymnasium keeper.)
+//        k. Staying in the tuck shop during school hours other than recess and lunch time.
+//        l. Using the chapel for any purpose other than private prayer or quiet meditation or without prior approval from the school.
+//        m. Scattering rubbish instead of putting it in the bins provided.
+//        n. Walking up and down the School Drive; boys must use the footpath provided.
+//        o. Throwing or slinging stones or other objects likely to cause injury.
+//        p. Putting up notices without proper authorization and/or writing on walls.
+//        q. Entering the Gymnasium and tennis courts when not wearing rubber shoes.
+//        r. Playing balls other than Ping-Pong balls in the Covered Playground.
+//        s. Playing card games without teacher supervision.
+//        t. Handling any tools or equipment belonging to the teaching or supporting staff without permission.
+//        u. The possession of a pager or a mobile phone without prior approval from the Headmaster.
+//        v. Using the lift in the SIP and Michiko Miyakawa Building.
+//        w. Breaking into the server of the School or to access files not opened to students.
+//        x. Using of foul language.
+//        y. Smoking, spitting, gambling, chewing gum.
+//        """ }()
+//
+//        }
+//
         
     }
     
