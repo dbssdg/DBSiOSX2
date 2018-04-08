@@ -51,11 +51,11 @@
 		F82F00EB1FECC78400A19A61 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82F00EA1FECC78400A19A61 /* WebKit.framework */; };
 		F82F00ED1FECC7B500A19A61 /* circularsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F00EC1FECC7B500A19A61 /* circularsWebViewController.swift */; };
 		F831D6EE2061FAEC00B66B04 /* earsDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F831D6ED2061FAEC00B66B04 /* earsDateViewController.swift */; };
-		F831D6F0206227D000B66B04 /* earsDateDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F831D6EF206227D000B66B04 /* earsDateDetailViewController.swift */; };
 		F8331F7D1FEE5C610050479C /* newsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */; };
 		F8343B8D1FE8AFDB00A03047 /* classmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */; };
 		F83704392046D6D10026AC3D /* timetableNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83704382046D6D10026AC3D /* timetableNoticeViewController.swift */; };
 		F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */; };
+		F8381001206E346E00C883F4 /* earsStudRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8381000206E346D00C883F4 /* earsStudRecordViewController.swift */; };
 		F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E87422041AD3300E20E04 /* TAndCViewController.swift */; };
 		F8D40BC91FE9148600C0FBD5 /* myClassmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */; };
 		F8D40BCB1FE92CDC00C0FBD5 /* timetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */; };
@@ -110,11 +110,11 @@
 		F82F00EA1FECC78400A19A61 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F82F00EC1FECC7B500A19A61 /* circularsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = circularsWebViewController.swift; sourceTree = "<group>"; };
 		F831D6ED2061FAEC00B66B04 /* earsDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = earsDateViewController.swift; sourceTree = "<group>"; };
-		F831D6EF206227D000B66B04 /* earsDateDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = earsDateDetailViewController.swift; sourceTree = "<group>"; };
 		F8331F7C1FEE5C610050479C /* newsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newsDetailViewController.swift; sourceTree = "<group>"; };
 		F8343B8C1FE8AFDB00A03047 /* classmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classmatesViewController.swift; sourceTree = "<group>"; };
 		F83704382046D6D10026AC3D /* timetableNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableNoticeViewController.swift; sourceTree = "<group>"; };
 		F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = housesSystemViewController.swift; sourceTree = "<group>"; };
+		F8381000206E346D00C883F4 /* earsStudRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = earsStudRecordViewController.swift; sourceTree = "<group>"; };
 		F83E87422041AD3300E20E04 /* TAndCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAndCViewController.swift; sourceTree = "<group>"; };
 		F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClassmatesViewController.swift; sourceTree = "<group>"; };
 		F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableViewController.swift; sourceTree = "<group>"; };
@@ -281,9 +281,9 @@
 			isa = PBXGroup;
 			children = (
 				F831D6ED2061FAEC00B66B04 /* earsDateViewController.swift */,
-				F831D6EF206227D000B66B04 /* earsDateDetailViewController.swift */,
 				6AE1FCD520686DEE00EA3643 /* earsClassViewController.swift */,
 				6AE1FCD72068934700EA3643 /* earsPeriodViewController.swift */,
+				F8381000206E346D00C883F4 /* earsStudRecordViewController.swift */,
 			);
 			path = EARS;
 			sourceTree = "<group>";
@@ -360,7 +360,7 @@
 								enabled = 1;
 							};
 							com.apple.NearFieldCommunicationTagReading = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.NetworkExtensions.iOS = {
 								enabled = 1;
@@ -486,7 +486,6 @@
 				3EEA13761FF4843C004AFC3C /* AllEventsTableViewController.swift in Sources */,
 				6A429C2D2015DECA00758515 /* photoViewerViewController.swift in Sources */,
 				6A1515C62010660B00BBF15C /* videoTableViewCell.swift in Sources */,
-				F831D6F0206227D000B66B04 /* earsDateDetailViewController.swift in Sources */,
 				6AA819481F71FE8300FCA420 /* ViewController.swift in Sources */,
 				6A2FA2432061FCF20070FF77 /* RealMapsViewController.swift in Sources */,
 				6ACBB7401F7B69D60086916E /* SchoolHymnViewController.swift in Sources */,
@@ -522,6 +521,7 @@
 				6A7B445E1F87499000227545 /* TeachersViewController.swift in Sources */,
 				6AE1FCD82068934700EA3643 /* earsPeriodViewController.swift in Sources */,
 				6A85E8041F96F444001836CD /* MapsViewController.swift in Sources */,
+				F8381001206E346E00C883F4 /* earsStudRecordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

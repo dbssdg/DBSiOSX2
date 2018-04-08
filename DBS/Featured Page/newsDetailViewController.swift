@@ -40,6 +40,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         scrollView.setContentOffset(desiredOffset, animated: false)
         
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
@@ -53,6 +54,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         scrollView.setContentOffset(desiredOffset, animated: false)
         
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
@@ -141,6 +143,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     //                        } else {
                                 self.updateData()
                                 self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+                                self.newsImage.clipsToBounds = true
                                 if self.news!.image[newsIndex] != nil {
                                     self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
                                 }
@@ -288,6 +291,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 if image != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = image
+                        imageView.clipsToBounds = true
                     })
                 }
             }

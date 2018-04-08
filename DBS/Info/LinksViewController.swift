@@ -39,7 +39,6 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setUpSegmentedControl()
         
         linksTable.dataSource = self
         linksTable.delegate = self
@@ -51,9 +50,21 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpSegmentedControl()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func updateTitle() {
+        if self.title == "Contact" {
+            self.title = "Swipe to the left to Copy."
+        } else if self.title == "Swipe to the left to Copy." {
+            self.title = "Contact"
+        }
     }
     func didSelect(_ segmentIndex: Int) {
         selectedSegment = segmentIndex
@@ -63,10 +74,8 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.title = "Links"
         case 1:
             sectionData = [0: address, 1: phone, 2: fax, 3: email]
-            self.title = "Swipe to the left to Copy."
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self.title = "Contact"
-            })
+            Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+            self.title = "Contact"
         case 2:
             sectionData = [0: weekdays, 1: saturdays, 2: sundays]
             self.title = "Steps Opening Hours"
@@ -133,23 +142,50 @@ class LinksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func setUpSegmentedControl() {
-        //Check if there is segmented Control
+        
         var hasSegmentedControl = false
-        let subviews = self.view.subviews
-        for subview in subviews{
-            if subview.tag == 100{
+        for subview in self.view.subviews {
+            if (subview as? TwicketSegmentedControl) != nil {
                 hasSegmentedControl = true
             }
         }
+//
+//        if hasSegmentedControl == false{
+//            let titles = ["Links", "Contact", "Steps"]
+//            let frame = CGRect(x: 0, y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width, height: 40)
+//            let segmentedControl = TwicketSegmentedControl(frame: frame)
+//            segmentedControl.setSegmentItems(titles)
+//            segmentedControl.delegate = self
+//            segmentedControl.tag = 100
+//            view.addSubview(segmentedControl)
+//        }
         
-        if hasSegmentedControl == false{
+        if !hasSegmentedControl {
+            
             let titles = ["Links", "Contact", "Steps"]
-            let frame = CGRect(x: 0, y: self.view.frame.height * 0.9 - 40, width: self.view.frame.width, height: 40)
-            let segmentedControl = TwicketSegmentedControl(frame: frame)
+            let segmentedControl = TwicketSegmentedControl()
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                segmentedControl.frame = CGRect(x: 0, y: tabBarY - 40, width: self.view.frame.width, height: 40)
+            } else {
+                segmentedControl.frame = CGRect(x: 0, y: self.view.frame.height - 40, width: self.view.frame.width, height: 40)
+            }
             segmentedControl.setSegmentItems(titles)
             segmentedControl.delegate = self
-            segmentedControl.tag = 100
             view.addSubview(segmentedControl)
+            
+        } else {
+            
+            for subview in self.view.subviews {
+            if let segmentedControl = (subview as? TwicketSegmentedControl) {
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                segmentedControl.removeFromSuperview()
+                setUpSegmentedControl()
+            }
+            }
+            }
+            }
+            
         }
     }
     func contactSelected(_ section: Int, _ row: Int) {

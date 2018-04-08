@@ -1,48 +1,43 @@
 //
-//  earsDateViewController.swift
-//  DBS
+//  earsStudRecordViewController.swift
+//  
 //
-//  Created by Ben Lou on 21/3/2018.
-//  Copyright © 2018 DBSSDG. All rights reserved.
+//  Created by Ben Lou on 29/3/2018.
 //
 
 import UIKit
 
-struct EARSEvent : Decodable {
-    let id : String
-    let title : String
-    let link : String
-    let period : String
-    let location : String
-    let remark : String
-    let applyDate : String
-    let participant : [String]
+struct EARSStudRecordEvent : Decodable {
+    let EventName : String
+    let EventDate : String
+    let SkippedLesson : Int
+    let OLE_Hours : String
+    let EventTeacher : String
 }
-struct EARSByDate : Decodable {
-    let date : String
-    let events : [EARSEvent]
+struct EARSStudRecord : Decodable {
+    var data : [EARSStudRecordEvent]
+    let totalCount : Int
 }
 
-class earsDateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var today: UIBarButtonItem!
-    @IBOutlet var yesterday: UIBarButtonItem!
-    @IBOutlet var tomorrow: UIBarButtonItem!
+class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet weak var studRecordTable: UITableView!
+    var earsStudRecord : EARSStudRecord?
+    var recordSelected = Int()
     
     @IBOutlet var textViewView: UIView!
     @IBOutlet weak var earsDetails: UITextView!
     @IBOutlet weak var dismissButton: UIButton!
     let visualView = UIVisualEffectView()
     
-    var ears : EARSByDate?
-    var dateSelected = 0
-    var earsSelected = Int()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-//        textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
+        
+        var startsWithDBS = "dbs16070755"
+        startsWithDBS.removeFirst(3)
+        let startsWith20 = "20\(startsWithDBS)"
+        
         textViewView.layer.cornerRadius = 20
         textViewView.layer.borderWidth = 2
         textViewView.layer.borderColor = UIColor.lightGray.cgColor
@@ -58,22 +53,20 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         spinner.hidesWhenStopped = true
         self.view.addSubview(spinner)
         
-        URLSession.shared.dataTask(with: URL(string: "http://m-poll.dbs.edu.hk/poller/event.php?d=\(dateSelected)")!) { (data, response, error) in
+        URLSession.shared.dataTask(with: URL(string: "https://project.dbs.edu.hk/nis/serverside/LoadStudECA.php?all=1&req_stuid=\(startsWith20)")!) { (data, response, error) in
             do {
                 if data != nil {
-                    self.ears = try JSONDecoder().decode(EARSByDate.self, from: data!)
+                    self.earsStudRecord = try JSONDecoder().decode(EARSStudRecord.self, from: data!)
                     DispatchQueue.main.async {
-                        spinner.stopAnimating()
-                        self.title = "EARS (\((self.ears?.date)!))"
-                        if (self.ears?.events.isEmpty)! {
-                            self.tableView.isHidden = true
+                        self.earsStudRecord?.data = (self.earsStudRecord?.data)!.reversed()
+                        if (self.earsStudRecord?.data.isEmpty)! {
+                            self.studRecordTable.isHidden = true
                         } else {
-                            self.tableView.isHidden = false
+                            self.studRecordTable.isHidden = false
                         }
-                        self.tableView.reloadData()
+                        self.studRecordTable.reloadData()
                         spinner.stopAnimating()
                         
-//                        self.updateText()
                     }
                 } else {
                     let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -81,57 +74,45 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
                     networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToChoosePage))
                     self.present(networkAlert, animated: true)
                 }
+                
             } catch {
                 print(error)
             }
         }.resume()
         
+        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if dateSelected <= 0 {
-            today.tintColor = .red
-            yesterday.tintColor = .white
-            tomorrow.tintColor = .black
-        }
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func updateText() {
-        //TEXT FIELD VIEW
-        var content = "\((self.ears?.events[earsSelected].title)!.replacingOccurrences(of: "\\", with: ""))\n"
-        
-        let array = self.ears?.events[earsSelected].period.components(separatedBy: " to ")
-        if array![0] == "101" {
-            content += "Morning Roll-call\n\n"
-        } else if array![0] == "102" {
-            content += "Afternoon Roll-call\n\n"
-        } else if array![0] == "0" {
-            content += "\n"
-        } else if array![0] != array![1] {
-            content += "Period \((self.ears?.events[earsSelected].period)!)\n\n"
+    @objc func updateTitle() {
+        if self.title == "My EARS Record" {
+            
+            if let data = self.earsStudRecord?.data {
+                var oleHours = 0.0
+                for i in data {
+                    oleHours += Double(i.OLE_Hours)!
+                }
+                self.title = "My Total OLE Hours: \(oleHours)"
+            }
+            
         } else {
-            content += "Period \((array![0]))\n\n"
+            self.title = "My EARS Record"
         }
-        
-        content += """
-        Location
-        \((self.ears?.events[earsSelected].location)!)
-        
-        Application Date
-        \((self.ears?.events[earsSelected].applyDate)!)
-        
-        Participants
-        
-        """
-        for participant in (self.ears?.events[earsSelected].participant)! {
-            content += "\(participant.capitalized)\n"
-        }
+    }
+    
+    func updateText() {
+        var content = String()
+        let record = (self.earsStudRecord?.data[recordSelected])!
+        content += "\(record.EventName.replacingOccurrences(of: "\\", with: "").capitalized)\n"
+        content += "\(record.EventDate)\n\n"
+        content += "\(record.OLE_Hours) OLE \(Double(record.OLE_Hours)! > 1 ? "Hours":"Hour")\n"
+        content += "Skipped \(record.SkippedLesson) \(record.SkippedLesson > 1 ? "Lessons":"Lesson")\n\n"
+        content += "Event Teacher\n\(record.EventTeacher)"
         
         var attributedString = NSMutableAttributedString(string: content as NSString as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14.0)])
         let titleFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30.0)]
@@ -142,9 +123,8 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))]
         }
         
-        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.ears?.events[earsSelected].title)!.replacingOccurrences(of: "\\", with: "")))
-        print((self.ears?.date)!)
-        let wordsToBold = ["Location", "Application Date", "Participants"]
+        attributedString.addAttributes(titleFontAttribute, range: (content as NSString).range(of: (self.earsStudRecord?.data[recordSelected].EventName)!.replacingOccurrences(of: "\\", with: "").capitalized))
+        let wordsToBold = ["Event Teacher"]
         for i in wordsToBold {
             attributedString.addAttributes(boldFontAttribute, range: (content as NSString).range(of: i))
         }
@@ -153,28 +133,6 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
     }
     
-    @IBAction func todayAction(_ sender: Any) {
-        dateSelected = 0
-        tableView.setContentOffset(CGPoint.zero, animated: false)
-        viewDidLoad()
-        viewWillAppear(false)
-    }
-    @IBAction func yesterdayAction(_ sender: Any) {
-        dateSelected -= 1
-        if dateSelected <= 0 {
-            yesterday.tintColor = .white
-            yesterday.isEnabled = false
-        }
-        tableView.setContentOffset(CGPoint.zero, animated: false)
-        viewDidLoad()
-    }
-    @IBAction func tomorrowAction(_ sender: Any) {
-        yesterday.tintColor = .orange
-        yesterday.isEnabled = true
-        dateSelected += 1
-        tableView.setContentOffset(CGPoint.zero, animated: false)
-        viewDidLoad()
-    }
     @IBAction func dismissTextView(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: {
             self.textViewView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -182,48 +140,33 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             self.visualView.effect = nil
         }) { (success: Bool) in
             self.textViewView.removeFromSuperview()
-//            self.textFieldView.frame = (UIApplication.shared.keyWindow?.frame)!
-//            self.textFieldView.center.y = self.view.center.y+60
             self.visualView.removeFromSuperview()
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let x = self.ears?.events.count {
-            return x
+        if self.earsStudRecord != nil {
+            return (self.earsStudRecord?.totalCount)!
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "earsByDate")
-        cell?.textLabel?.text = self.ears?.events[indexPath.row].title.replacingOccurrences(of: "\\", with: "")
-        cell?.textLabel?.numberOfLines = 0
-        
-        let array = self.ears?.events[indexPath.row].period.components(separatedBy: " to ")
-        if array![0] == "101" {
-            cell?.detailTextLabel?.text = "Morning Roll-call"
-        } else if array![0] == "102" {
-            cell?.detailTextLabel?.text = "Afternoon Roll-call"
-        } else if array![0] == "0" {
-            cell?.detailTextLabel?.text = ""
-        } else if array![0] != array![1] {
-            cell?.detailTextLabel?.text = "Period \((self.ears?.events[indexPath.row].period)!)"
-        } else {
-            cell?.detailTextLabel?.text = "Period \((self.ears?.events[indexPath.row].period.components(separatedBy: " to ")[0])!)"
-        }
-        
-        cell?.detailTextLabel?.textColor = .gray
-        cell?.detailTextLabel?.numberOfLines = 0
-        cell?.accessoryType = .disclosureIndicator
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "studEARS")!
+        cell.textLabel?.text = self.earsStudRecord?.data[indexPath.row].EventName.replacingOccurrences(of: "\\", with: "").capitalized
+        cell.textLabel?.numberOfLines = 0
+        cell.detailTextLabel?.text = self.earsStudRecord?.data[indexPath.row].EventDate
+        cell.detailTextLabel?.numberOfLines = 0
+        cell.detailTextLabel?.textColor = .gray
+        cell.accessoryType = .disclosureIndicator
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.selectionStyle = .none
-        cell?.selectionStyle = .default
-        earsSelected = indexPath.row
+        let cell = tableView.cellForRow(at: indexPath)!
+        cell.selectionStyle = .none
+        cell.selectionStyle = .default
+        recordSelected = indexPath.row
         
         updateText()
         textViewView.bounds.size.width = (UIApplication.shared.keyWindow?.bounds.width)!

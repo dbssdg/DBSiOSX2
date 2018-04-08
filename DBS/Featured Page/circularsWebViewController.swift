@@ -125,10 +125,13 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
         let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height - 55, width: self.view.frame.width * 0.9, height: 40)
         let segmentedControl = TwicketSegmentedControl(frame: frame)
         segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self as? TwicketSegmentedControlDelegate
+        segmentedControl.delegate = self
         segmentedControl.tag = 1
         if titles.count > 1 {
             view.addSubview(segmentedControl)
+        } else {
+            circularWebView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 40).isActive = false
+            circularWebView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         }
         
     }

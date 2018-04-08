@@ -10,11 +10,21 @@ import UIKit
 import SystemConfiguration
 import CryptoSwift
 import MessageUI
+import CoreNFC
 
 var loginID = ""
 var loginTextFieldSave = ["", ""]
 
+@available(iOS 11.0, *)
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
+    
+    // Reference the NFC session
+    private var nfcSession: NFCNDEFReaderSession!
+    
+    // Reference the found NFC messages
+    private var nfcMessages: [[NFCNDEFMessage]] = []
+   
+    
     
     @IBOutlet weak var studentImage: UIImageView!
     @IBOutlet weak var userInfo: UITableView!
@@ -29,7 +39,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view.
-        
+        self.initializeNFCSession()
         UserInformation.removeAll()
         spinner.stopAnimating()
         
@@ -390,5 +400,36 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         return (isReachable && !needsConnection)
     }
     
+    func initializeNFCSession() {
+        // Create the NFC Reader Session when the app starts
+        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
+        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
+    }
+}
+
+@available(iOS 11.0, *)
+extension ProfileViewController : NFCNDEFReaderSessionDelegate {
     
+    // Called when the reader-session expired, you invalidated the dialog or accessed an invalidated session
+    @available(iOS 11.0, *)
+    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
+        print("Error reading NFC: \(error.localizedDescription)")
+    }
+    
+    // Called when a new set of NDEF messages is found
+    @available(iOS 11.0, *)
+    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
+        print("New NFC Tag detected:")
+        
+        for message in messages {
+            for record in message.records {
+                print("Type name format: \(record.typeNameFormat)")
+                print("Payload: \(record.payload)")
+                print("Type: \(record.type)")
+                print("Identifier: \(record.identifier)")
+            }
+        }
+        
+        
+    }
 }

@@ -33,7 +33,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
 //        if !imageArray.isEmpty {
 //            imageArray.removeAll()
 //        }
-        
+        photoCollection.setContentOffset(CGPoint(x:0, y:0), animated: false)
         if isInternetAvailable() {
         
             URLSession.shared.dataTask(with: URL(string: "https://graph.facebook.com/\((albumAlbum?.data[albumSelected]["id"])!)/photos?limit=1000&access_token=\(photoToken)")!) { (data, response, error) in
@@ -152,8 +152,10 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if imageOut != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = imageOut
-                        print(index)
-                        imageArray[index] = imageOut
+                        print(index, imageArray.count)
+                        if imageArray.count > index {
+                            imageArray[index] = imageOut
+                        }
                         self.photoCollection.reloadData()
 //                        spinner.stopAnimating()
                     })

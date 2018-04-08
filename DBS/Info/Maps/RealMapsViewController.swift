@@ -186,16 +186,25 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     func EndSettings(){
-        EffectView.removeFromSuperview()
-        SettingsView.removeFromSuperview()
-        SettingsLabel.removeFromSuperview()
-        MapType.removeFromSuperview()
-        TravelType.removeFromSuperview()
-        DoneButton.removeFromSuperview()
-        BackgroundButton.removeFromSuperview()
+        
         
         //self.view.removeGestureRecognizer(DoneTapGesture)
         print("did end settings")
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.SettingsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.SettingsView.alpha = 0
+            
+            
+        }) { (success:Bool) in
+            self.EffectView.removeFromSuperview()
+            self.SettingsView.removeFromSuperview()
+            self.SettingsLabel.removeFromSuperview()
+            self.MapType.removeFromSuperview()
+            self.TravelType.removeFromSuperview()
+            self.DoneButton.removeFromSuperview()
+            self.BackgroundButton.removeFromSuperview()
+        }
     }
     
     func BackToUserLocation(){

@@ -50,7 +50,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpSegmentedControl()
+        
         self.title = timetableChoice
         timetableTable.separatorColor = UIColor.gray
         timetableTable.separatorStyle = .singleLineEtched
@@ -115,10 +115,11 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpSegmentedControl()
         let noticeButton = UIBarButtonItem(title: "Notice", style: .plain, target: self, action: #selector(notice))
         self.navigationItem.rightBarButtonItem = noticeButton
     }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
         backItem.title = "Back"
@@ -169,6 +170,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.textLabel?.numberOfLines = Int((self.view.frame.height-40)/(6+2)/30)
         cell.textLabel?.adjustsFontSizeToFitWidth = true
+        cell.detailTextLabel?.textColor = .gray
         cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.selectionStyle = .none
         return cell
@@ -187,17 +189,20 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         
         //Check if there is segmented Control
         var hasSegmentedControl = false
-        let subviews = self.view.subviews
-        for subview in subviews{
-            if subview.tag == 100{
+        for subview in self.view.subviews {
+            if (subview as? TwicketSegmentedControl) != nil {
                 hasSegmentedControl = true
             }
         }
         
-        if hasSegmentedControl == false{
+        if !hasSegmentedControl {
             let titles = ["Mon", "Tue", "Wed", "Thur", "Fri"]
-            let frame = CGRect(x: self.view.frame.width * 0.05 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
-            let segmentedControl = TwicketSegmentedControl(frame: frame)
+            let segmentedControl = TwicketSegmentedControl()
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                segmentedControl.frame = CGRect(x: 0, y: tabBarY - 40, width: self.view.frame.width, height: 40)
+            } else {
+                segmentedControl.frame = CGRect(x: 0, y: self.view.frame.height - 40, width: self.view.frame.width, height: 40)
+            }
             segmentedControl.setSegmentItems(titles)
             segmentedControl.delegate = self
             
@@ -247,8 +252,21 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             segmentedControl.move(to: DayToDisplay)
             selectedSegment = DayToDisplay
             view.addSubview(segmentedControl)
+        } else {
+            for subview in self.view.subviews {
+            if let segmentedControl = (subview as? TwicketSegmentedControl) {
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                segmentedControl.removeFromSuperview()
+                setUpSegmentedControl()
+            }
+            }
+            }
+            }
+
         }
     }
+    
     func isInternetAvailable() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
