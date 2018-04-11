@@ -16,7 +16,6 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     
-    
     let mapKitView = MKMapView()
     
     let SchoolLocation = CLLocationCoordinate2DMake(22.322924, 114.174229)
@@ -25,8 +24,8 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     let SettingsView = UIView()
     
     let SettingsLabel = UILabel()
-    let MapType = TwicketSegmentedControl()
-    let TravelType = TwicketSegmentedControl()
+    var MapType = UISegmentedControl()
+    var TravelType = UISegmentedControl()
     let DoneButton = UIButton()
     
     var DoneTapGesture = UIGestureRecognizer()
@@ -116,19 +115,27 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         SettingsLabel.layer.zPosition = SettingsView.layer.zPosition * 10
         
         //Map Type Seg Con
-        MapType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.3, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
-        MapType.setSegmentItems(["Map", "Transport", "Satellite"])
-        MapType.delegate = self
-        MapType.addTarget(self, action: #selector(MapTypeChanged(_:)), for: .touchUpInside)
-        MapType.addTarget(self, action: #selector(MapTypeChanged(_:)), for: .valueChanged)
+        MapType = UISegmentedControl(items: ["Map", "Transport", "Satellite"])
+        MapType.frame = CGRect(x:  (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.3, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        //MapType.setSegmentItems(["Map", "Transport", "Satellite"])
+//        MapType.setTitle("Map", forSegmentAt: 0)
+//        MapType.setTitle("Transport", forSegmentAt: 1)
+//        MapType.setTitle("Satellite", forSegmentAt: 2)
+        //MapType.delegate = self
+        //MapType.addTarget(self, action: #selector(MapTypeChanged), for: .touchUpInside)
+        MapType.addTarget(self, action: #selector(MapTypeChanged), for: .valueChanged)
+        
         MapType.tag = 20
         
         //Travel Type Seg Con
-        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width, height: SettingsView.frame.height * 0.1)
-        TravelType.setSegmentItems(["Drive", "Walk", "Transport"])
-        TravelType.delegate = self
-        TravelType.addTarget(self, action: #selector(TravelTypeChanged(_:)), for: .touchUpInside)
-        TravelType.addTarget(self, action: #selector(TravelTypeChanged(_:)), for: .valueChanged)
+        TravelType = UISegmentedControl(items: ["Drive", "Walk", "Transport"])
+        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+//        TravelType.setTitle("Drive", forSegmentAt: 0)
+//        TravelType.setTitle("Walk", forSegmentAt: 1)
+//        TravelType.setTitle("Transport", forSegmentAt: 2)
+        //TravelType.delegate = self
+        //TravelType.addTarget(self, action: #selector(TravelTypeChanged), for: .touchUpInside)
+        TravelType.addTarget(self, action: #selector(TravelTypeChanged), for: .valueChanged)
         TravelType.tag = 30
         
         //Done Button
@@ -211,13 +218,22 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         mapKitView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
-    func MapTypeChanged(_ sender: TwicketSegmentedControl){
+    func MapTypeChanged(){
         print("maptype")
+        if MapType.selectedSegmentIndex == 0{
+            mapKitView.mapType = .standard
+            mapKitView.showsBuildings = false
+            
+        }else if MapType.selectedSegmentIndex == 1{
+            self.openMapInTransitMode()
+        }else if MapType.selectedSegmentIndex == 2{
+            self.displayInFlyoverMode()
+        }
         
         
     }
     
-    func TravelTypeChanged(_ sender: TwicketSegmentedControl){
+    func TravelTypeChanged(){
         print("travek typeq")
     }
     
