@@ -365,6 +365,9 @@
 							com.apple.NetworkExtensions.iOS = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 				};
