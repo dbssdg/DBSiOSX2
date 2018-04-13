@@ -194,12 +194,12 @@
                         <outlet property="scrollViewView" destination="kbk-mg-eYx" id="fQT-6Z-5i3"/>
                         <outlet property="timetable" destination="h1B-9m-qRf" id="32d-d0-ad8"/>
                         <segue destination="T4N-a4-izW" kind="show" identifier="School Hymn Segue" id="1Q5-7K-AE7"/>
-                        <segue destination="QBH-iv-tNT" kind="show" identifier="School Rules Segue" id="XEN-r1-H9x"/>
                         <segue destination="pTo-Q4-ldU" kind="show" identifier="Teachers Segue" id="vu0-uF-M9o"/>
                         <segue destination="3RO-Xm-ERx" kind="show" identifier="Photo Album Segue" id="tWt-b9-sA8"/>
                         <segue destination="2m3-pH-F3Z" kind="show" identifier="Acknowledgements Segue" id="9gC-Ja-56a"/>
                         <segue destination="byZ-wL-izR" kind="show" identifier="Links, Contact &amp; Steps Segue" id="EWp-nx-Ms8"/>
                         <segue destination="4db-rW-aWf" kind="show" identifier="Classmates Segue" id="RFJ-Lb-TEZ"/>
+                        <segue destination="QBH-iv-tNT" kind="show" id="SxP-hY-0SO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaA-H9-BZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -307,13 +307,17 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
+<<<<<<< HEAD
                                                         <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
+=======
+                                                        <rect key="frame" x="267.5" y="0.0" width="53.5" height="20.5"/>
+>>>>>>> 3b76dabb6c5826a975b2192bd57ff28bc82eff83
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-jf-STC">
-                                                        <rect key="frame" x="321.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="321" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -978,7 +982,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXs-3t-uSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1832.8" y="2883.5082458770617"/>
+            <point key="canvasLocation" x="1183" y="2884"/>
         </scene>
         <!--Photo Album-->
         <scene sceneID="NlX-Ac-MLw">
@@ -1860,7 +1864,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scz-FX-upf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1848.8" y="2129.6851574212897"/>
+            <point key="canvasLocation" x="1143" y="2130"/>
         </scene>
         <!--School Hymn View Controller-->
         <scene sceneID="ui9-yC-tZc">
