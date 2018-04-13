@@ -10,13 +10,20 @@ import UIKit
 import MapKit
 import TwicketSegmentedControl
 
+enum TransportType{
+    case Walking
+    case PublicTransport
+    case Car
+    
+}
+
 class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, TwicketSegmentedControlDelegate{
     func didSelect(_ segmentIndex: Int) {
         
     }
     
     
-    let mapKitView = MKMapView()
+    let MapView = MKMapView()
     
     let SchoolLocation = CLLocationCoordinate2DMake(22.322924, 114.174229)
     
@@ -32,8 +39,8 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     let BackgroundButton = UIButton()
     
-    var MapTypeSeg = 0
-    var TravelTypeSeg = 0
+    var MapTypeString = "MapTypeString"
+    var TravelTypeString = "TravelTypeString"
     
     var StackView = UIStackView()
 
@@ -46,7 +53,14 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             navigationItem.largeTitleDisplayMode = .never
         }
         
-        SetupMaps()
+        var MapTypeNo = 0
+        
+        if let x = UserDefaults.standard.object(forKey: TravelTypeString) as? Int{
+            MapTypeNo = x
+        }
+        
+        
+        SetupMaps(TravelType: MapTypeNo)
         UISetup()
         
     }
@@ -115,8 +129,8 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         SettingsLabel.layer.zPosition = SettingsView.layer.zPosition * 10
         
         //Map Type Seg Con
-        MapType = UISegmentedControl(items: ["Map", "Transport", "Satellite"])
-        MapType.frame = CGRect(x:  (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.3, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        MapType = UISegmentedControl(items: ["Map", "Transit", "Satellite"])
+        MapType.frame = CGRect(x:  (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.35, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.15)
         //MapType.setSegmentItems(["Map", "Transport", "Satellite"])
 //        MapType.setTitle("Map", forSegmentAt: 0)
 //        MapType.setTitle("Transport", forSegmentAt: 1)
@@ -124,18 +138,27 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         //MapType.delegate = self
         //MapType.addTarget(self, action: #selector(MapTypeChanged), for: .touchUpInside)
         MapType.addTarget(self, action: #selector(MapTypeChanged), for: .valueChanged)
-        
+        MapType.selectedSegmentIndex = 0
         MapType.tag = 20
         
         //Travel Type Seg Con
         TravelType = UISegmentedControl(items: ["Drive", "Walk", "Transport"])
-        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.1)
+        TravelType.frame = CGRect(x: (self.MapType.frame.width - self.MapType.frame.width) / 2 + self.SettingsView.frame.width * 0.1, y: SettingsView.frame.height * 0.6, width: SettingsView.frame.width * 0.8, height: SettingsView.frame.height * 0.15)
 //        TravelType.setTitle("Drive", forSegmentAt: 0)
 //        TravelType.setTitle("Walk", forSegmentAt: 1)
 //        TravelType.setTitle("Transport", forSegmentAt: 2)
         //TravelType.delegate = self
         //TravelType.addTarget(self, action: #selector(TravelTypeChanged), for: .touchUpInside)
         TravelType.addTarget(self, action: #selector(TravelTypeChanged), for: .valueChanged)
+        
+        var MapTypeNo = 0
+        
+        if let x = UserDefaults.standard.object(forKey: TravelTypeString) as? Int{
+            MapTypeNo = x
+        }
+        
+        TravelType.selectedSegmentIndex = MapTypeNo
+        
         TravelType.tag = 30
         
         //Done Button
@@ -215,14 +238,14 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     func BackToUserLocation(){
-        mapKitView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+        MapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
     func MapTypeChanged(){
         print("maptype")
         if MapType.selectedSegmentIndex == 0{
-            mapKitView.mapType = .standard
-            mapKitView.showsBuildings = false
+            MapView.mapType = .standard
+            MapView.showsBuildings = false
             
         }else if MapType.selectedSegmentIndex == 1{
             self.openMapInTransitMode()
@@ -234,18 +257,43 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     func TravelTypeChanged(){
-        print("travek typeq")
+        
+//        if TravelType.selectedSegmentIndex == 0{
+//            directionRequest.transportType = .automobile
+//        }else if TravelType.selectedSegmentIndex == 1{
+//            directionRequest.transportType = .walking
+//        }else if TravelType.selectedSegmentIndex == 2{
+//            directionRequest.transportType = .transit
+//        }
+        //self.MapView.removeFromSuperview()
+        
+        
+        SetupMaps(TravelType: TravelType.selectedSegmentIndex)
+        
+        UserDefaults.standard.set(TravelType.selectedSegmentIndex, forKey: TravelTypeString)
+        
+        
     }
     
-    func SetupMaps(){
+    func SetupMaps(TravelType: Int){
         let LocationManager = CLLocationManager()
-        mapKitView.frame = view.frame
-        mapKitView.tag = 1
+        MapView.frame = view.frame
+        MapView.tag = 1
         
-        self.view.addSubview(mapKitView)
+        var hasSubview = false
+        for i in self.view.subviews{
+            if i == MapView{
+                hasSubview = true
+            }
+        }
+        if !hasSubview{
+            self.view.addSubview(MapView)
+        }
         
-        mapKitView.delegate = self as! MKMapViewDelegate
-        mapKitView.showsUserLocation = true
+        MapView.delegate = self as! MKMapViewDelegate
+        MapView.showsUserLocation = true
+        
+        
         
         LocationManager.requestAlwaysAuthorization()
         LocationManager.requestWhenInUseAuthorization()
@@ -268,18 +316,14 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             let directionRequest = MKDirectionsRequest()
             directionRequest.source = sourceItem
             directionRequest.destination = destItem
-            /*
-            switch Transport{
-            case .Walking:
+            
+            if TravelType == 0{
+                directionRequest.transportType = .automobile
+            }else if TravelType == 1{
                 directionRequest.transportType = .walking
-            case .PublicTransport:
+            }else if TravelType == 2{
                 directionRequest.transportType = .transit
-            case .Car:
-                directionRequest.transportType = .automobile
-            default:
-                directionRequest.transportType = .automobile
             }
-     */
             
             let directions = MKDirections(request: directionRequest)
             
@@ -295,23 +339,23 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 }
                 
                 let route = response.routes[0]
-                self.mapKitView.add(route.polyline, level: .aboveRoads)
+                self.MapView.add(route.polyline, level: .aboveRoads)
                 
                 let rekt = route.polyline.boundingMapRect
-                self.mapKitView.setRegion(MKCoordinateRegionForMapRect(rekt), animated: true)
+                self.MapView.setRegion(MKCoordinateRegionForMapRect(rekt), animated: true)
                 
             })
         }
         
         
         let pin = CustomPin(coordinate: SchoolLocation, title: "Diocesan Boys' School", subtitle: "Hong Kong")
-        mapKitView.centerCoordinate = pin.coordinate
-        mapKitView.addAnnotation(pin)
+        MapView.centerCoordinate = pin.coordinate
+        MapView.addAnnotation(pin)
         
         //Properties
-        mapKitView.showsCompass = true
-        mapKitView.showsTraffic = true
-        mapKitView.showsScale = true
+        MapView.showsCompass = true
+        MapView.showsTraffic = true
+        MapView.showsScale = true
         
         
         //displayInFlyoverMode()
@@ -330,6 +374,15 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         EndSettings()
     }
     
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        var MapTypeNo = 0
+        
+        if let x = UserDefaults.standard.object(forKey: TravelTypeString) as? Int{
+            MapTypeNo = x
+        }
+        
+        SetupMaps(TravelType: MapTypeNo)
+    }
     
     private func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if case .authorizedWhenInUse = status {
@@ -338,15 +391,15 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     func displayInFlyoverMode() {
-            mapKitView.mapType = .satelliteFlyover
-            mapKitView.showsBuildings = true
+            MapView.mapType = .satelliteFlyover
+            MapView.showsBuildings = true
             let location = SchoolLocation
             let altitude: CLLocationDistance  = 500
             let heading: CLLocationDirection = 90
             let pitch = CGFloat(45)
             //let camera = MKMapCamera(lookingAtCenterCoordinate: location, fromDistance: altitude, pitch: pitch, heading: heading)
             let camera = MKMapCamera(lookingAtCenter: location, fromDistance: altitude, pitch: pitch, heading: heading)
-            mapKitView.setCamera(camera, animated: true)
+            MapView.setCamera(camera, animated: true)
     }
     
     func openMapInTransitMode() {
