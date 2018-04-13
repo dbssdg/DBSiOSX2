@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+let textView = UITextView()
 class SchoolRulesViewController: UIViewController {
 
     var button = dropDownBtn()
@@ -15,8 +17,8 @@ class SchoolRulesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let textView = UITextView(frame: CGRect(x: 20.0, y: 90.0, width: 250.0, height: 100.0))
-        
+        textView.frame = CGRect(x: 8, y: 48, width: self.view.frame.width-16, height: self.view.frame.height-48)
+        textView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 8)
         textView.center = self.view.center
         textView.textAlignment = NSTextAlignment.justified
         textView.backgroundColor = UIColor.clear
@@ -33,7 +35,7 @@ class SchoolRulesViewController: UIViewController {
         textView.layer.cornerRadius = 10
         
     
-        // Make UITextView Editable
+        // Make UITextView Not Editable
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
         
@@ -44,7 +46,7 @@ class SchoolRulesViewController: UIViewController {
         button = dropDownBtn.init(frame: CGRect(x: 8, y: 8, width: self.view.frame.width, height: self.view.frame.height ))
         
         
-        button.setTitle("School Rules", for: .normal)
+        button.setTitle("▼ Introduction", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -65,8 +67,7 @@ class SchoolRulesViewController: UIViewController {
         }
         
         //Set the drop down menu's options
-        button.dropView.dropDownOptions = ["Forbidden", "Out of Bounds", "The Hall", "Physical Education", "Lateness", "Absence/Early leave from School", "Prefects", "Rules of using Mobile Phone in School Campus", "Uniform", "Rules for Using Lockers"]
-        
+        button.dropView.dropDownOptions = ["Introduction", "Forbidden", "Out of Bounds", "The Hall", "Physical Education", "Lateness", "Absence/Early leave from School", "Prefects", "Rules of using Mobile Phone in School Campus", "Uniform", "Rules for Using Lockers"]
         
 //        if UITableViewDelegate.dropDownPressed(string: dropDownOptions[0])  {
 //            textView.text  = { """
@@ -116,7 +117,7 @@ protocol dropDownProtocol {
 class dropDownBtn: UIButton, dropDownProtocol {
     
     func dropDownPressed(string: String) {
-        self.setTitle(string, for: .normal)
+        self.setTitle("▼ \(string)", for: .normal)
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.dismissDropDown()
     }
@@ -223,8 +224,9 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         tableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        updateSchoolRules(0)
         
-    }
+        }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -275,11 +277,67 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate.dropDownPressed(string: dropDownOptions[indexPath.row])
         self.tableView.deselectRow(at: indexPath, animated: true)
+        
+        updateSchoolRules(indexPath.row)
     }
     
+    func updateSchoolRules(_ n: Int) {
+        switch n {
+            
+        case 0:
+            textView.attributedText = NSAttributedString(string: """
+00
+""")
+            
+        case 1:
+            textView.attributedText = NSAttributedString(string: """
+01
+""")
+            
+        case 2:
+            textView.attributedText = NSAttributedString(string: """
+02
+""")
 
-    
-    
+        case 3:
+            textView.attributedText = NSAttributedString(string: """
+03
+""")
+
+        case 4:
+            textView.attributedText = NSAttributedString(string: """
+04
+""")
+
+        case 5:
+            textView.attributedText = NSAttributedString(string: """
+05
+""")
+
+            
+        case 6:
+            textView.attributedText = NSAttributedString(string: """
+06
+""")
+            
+        case 7:
+            textView.attributedText = NSAttributedString(string: """
+07
+""")
+
+        case 8:
+            textView.attributedText = NSAttributedString(string: """
+08
+""")
+
+        case 9:
+            textView.attributedText = NSAttributedString(string: """
+09
+""")
+
+        default: break
+        }
+    }
     
 
 }
