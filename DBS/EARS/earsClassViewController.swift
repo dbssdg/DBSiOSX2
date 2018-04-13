@@ -104,14 +104,11 @@ class earsClassViewController: UIViewController {
         viewEARSOutlet.setTitle("View EARS", for: .normal)
         viewEARSOutlet.isEnabled = false
         
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         for i in formButtons {
             i.setTitleColor(.white, for: .normal)
         }
@@ -120,6 +117,10 @@ class earsClassViewController: UIViewController {
         }
         backspaceOutlet.setTitleColor(.white, for: .normal)
         resetDisplay()
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
