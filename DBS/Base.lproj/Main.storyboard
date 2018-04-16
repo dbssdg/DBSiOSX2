@@ -199,7 +199,7 @@
                         <segue destination="2m3-pH-F3Z" kind="show" identifier="Acknowledgements Segue" id="9gC-Ja-56a"/>
                         <segue destination="byZ-wL-izR" kind="show" identifier="Links, Contact &amp; Steps Segue" id="EWp-nx-Ms8"/>
                         <segue destination="4db-rW-aWf" kind="show" identifier="Classmates Segue" id="RFJ-Lb-TEZ"/>
-                        <segue destination="QBH-iv-tNT" kind="show" id="SxP-hY-0SO"/>
+                        <segue destination="o0z-aS-tPy" kind="show" identifier="School Rules Segue" id="Px6-Ai-l4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaA-H9-BZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -295,29 +295,25 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-<<<<<<< HEAD
                                                         <rect key="frame" x="268" y="0.0" width="53.5" height="20.5"/>
-=======
-                                                        <rect key="frame" x="267.5" y="0.0" width="53.5" height="20.5"/>
->>>>>>> 3b76dabb6c5826a975b2192bd57ff28bc82eff83
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-jf-STC">
-                                                        <rect key="frame" x="321" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="321.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -965,24 +961,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Le-Wl-3DX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3726" y="2130"/>
-        </scene>
-        <!--School Rules View Controller-->
-        <scene sceneID="sBw-FX-SFy">
-            <objects>
-                <viewController storyboardIdentifier="School Rules" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QBH-iv-tNT" customClass="SchoolRulesViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uzB-2n-Rg9"/>
-                        <viewControllerLayoutGuide type="bottom" id="RsJ-fE-VCX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="DIH-HO-Pcj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vXs-3t-uSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1183" y="2884"/>
         </scene>
         <!--Photo Album-->
         <scene sceneID="NlX-Ac-MLw">
@@ -1865,6 +1843,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scz-FX-upf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1143" y="2130"/>
+        </scene>
+        <!--School Rules View Controller-->
+        <scene sceneID="K9U-Ry-a2P">
+            <objects>
+                <viewController id="o0z-aS-tPy" customClass="SchoolRulesViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rf0-xJ-YM6"/>
+                        <viewControllerLayoutGuide type="bottom" id="PVF-ZN-1ip"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MdD-Eu-uwZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Oj-5d-5uv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1116" y="2861"/>
         </scene>
         <!--School Hymn View Controller-->
         <scene sceneID="ui9-yC-tZc">

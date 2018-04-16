@@ -13,15 +13,17 @@ class SchoolRulesViewController: UIViewController {
 
     var button = dropDownBtn()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        textView.frame = CGRect(x: 8, y: 48, width: self.view.frame.width-16, height: self.view.frame.height-48)
-        textView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 8)
+        textView.frame = CGRect(x: 8, y: 0, width: self.view.frame.width-16, height: self.view.frame.height-40-16)
+        textView.layer.borderWidth = 5
+        textView.frame.origin.y = self.view.frame.height/9 + 200
+        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y
         textView.center = self.view.center
         textView.textAlignment = NSTextAlignment.justified
         textView.backgroundColor = UIColor.clear
+        print(textView.frame)
         
         
         // Update UITextView font size and colour
@@ -30,16 +32,22 @@ class SchoolRulesViewController: UIViewController {
         
         textView.font = UIFont.boldSystemFont(ofSize: 20)
         textView.font = UIFont(name: "Verdana", size: 17)
-
+        
         // Make UITextView corners rounded
         textView.layer.cornerRadius = 10
         
-    
+        
         // Make UITextView Not Editable
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
         
         self.view.addSubview(textView)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
         
         
         //Configure the button
