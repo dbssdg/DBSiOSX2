@@ -40,6 +40,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view.
         self.initializeNFCSession()
+        
         UserInformation.removeAll()
         spinner.stopAnimating()
         
@@ -50,6 +51,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             loginID = x
         }
         userInfo.separatorStyle = .none
+        if UIScreen.main.bounds.height < 667 && UIScreen.main.bounds.width < 375 {
+            print(UIScreen.main.bounds.height)
+            studentImage.heightAnchor.constraint(equalToConstant: 160).isActive = false
+            studentImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        }
+        
         
         func reload(action: UIAlertAction) { viewDidAppear(animated) }
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -326,8 +333,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if loginID != "" {
             if teacherOrStudent() == "" && profileData.count <= 3 {
                 return 3
-            } else if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 {
-                return 4
             } else {
                 return 5
             }
@@ -336,7 +341,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! descriptionsTableViewCell
-        if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 && teacherOrStudent() == "s" {
+        if false {
             var arr = profileData
             arr.remove(at: 2)
             cell.descriptionText.text = "\(arr[indexPath.row].capitalized)"
@@ -353,7 +358,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.selectionStyle = .none
         return cell
     }
-
+    
     func teacherOrStudent() -> String {
         if isInternetAvailable(){
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
