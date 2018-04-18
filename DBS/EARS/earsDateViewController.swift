@@ -86,6 +86,9 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }.resume()
         
+        textViewView.isUserInteractionEnabled = true
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragToDismiss(_:)))
+        textViewView.addGestureRecognizer(pan)
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +103,29 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func dragToDismiss(_ recognizer: UIPanGestureRecognizer) {
+        
+        switch recognizer.state {
+        case .changed:
+            if earsDetails.contentOffset == .zero {
+                let translation = recognizer.translation(in: textViewView)
+                recognizer.view?.center.y += translation.y
+                visualView.alpha = 1 - (recognizer.view!.frame.origin.y - 60 / self.view.frame.height)
+                recognizer.setTranslation(.zero, in: self.view)
+            }
+            
+        case .ended:
+            if recognizer.view!.center.y > self.view.frame.height * 3/4 {
+                dismissTextView(self)
+            } else {
+                
+            }
+            
+        default: break
+        }
+        
     }
     
     func updateText() {
@@ -239,8 +265,10 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             self.visualView.effect = UIBlurEffect(style: .light)
             self.textViewView.alpha = 1
             self.textViewView.transform = .identity
-        }, completion: nil)
-        self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
+        }, completion: { (success: Bool) in
+            self.earsDetails.setContentOffset(CGPoint.zero, animated: false)
+        })
+        
     }
     
     /*

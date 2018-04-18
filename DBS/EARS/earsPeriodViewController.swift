@@ -188,7 +188,9 @@ class earsPeriodViewController: UIViewController, UITableViewDelegate, UITableVi
             self.visualView.effect = UIBlurEffect(style: .light)
             self.textViewView.alpha = 1
             self.textViewView.transform = .identity
-        }, completion: nil)
+        }, completion: { (success: Bool) in
+            self.earsStudDetails.setContentOffset(CGPoint.zero, animated: false)
+        })
         self.earsStudDetails.setContentOffset(CGPoint.zero, animated: false)
         
     }
