@@ -74,6 +74,10 @@ class earsPeriodViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             }.resume()
         }
+        
+        textViewView.isUserInteractionEnabled = true
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragToDismiss(_:)))
+        textViewView.addGestureRecognizer(pan)
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,6 +120,37 @@ class earsPeriodViewController: UIViewController, UITableViewDelegate, UITableVi
         self.earsStudDetails.attributedText = attributedString
         self.earsStudDetails.scrollsToTop = true
         self.earsStudDetails.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
+    @objc func dragToDismiss(_ recognizer: UIPanGestureRecognizer) {
+        
+        switch recognizer.state {
+        case .changed:
+            if earsStudDetails.contentOffset == .zero {
+                let translation = recognizer.translation(in: textViewView)
+                recognizer.view?.center.y += translation.y
+                visualView.alpha = 1 - (recognizer.view!.frame.origin.y - 60) / self.view.frame.height
+                recognizer.setTranslation(.zero, in: self.view)
+            }
+            
+        case .ended:
+            if recognizer.view!.center.y > self.view.frame.height * 3/4 {
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.frame.origin.y = self.view.frame.height * 1.3
+                    self.visualView.alpha = 0
+                }) { (success: Bool) in
+                    self.dismissTextView(self)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.center.y = self.view.center.y+60
+                    self.visualView.alpha = 1
+                }, completion: nil)
+            }
+            
+        default: break
+        }
+        
     }
     
     @IBAction func dismissTextView(_ sender: Any) {
@@ -186,6 +221,7 @@ class earsPeriodViewController: UIViewController, UITableViewDelegate, UITableVi
         UIApplication.shared.keyWindow?.addSubview(textViewView)
         UIView.animate(withDuration: 0.3, animations: {
             self.visualView.effect = UIBlurEffect(style: .light)
+            self.visualView.alpha = 1
             self.textViewView.alpha = 1
             self.textViewView.transform = .identity
         }, completion: { (success: Bool) in

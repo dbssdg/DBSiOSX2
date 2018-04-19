@@ -112,15 +112,23 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
             if earsDetails.contentOffset == .zero {
                 let translation = recognizer.translation(in: textViewView)
                 recognizer.view?.center.y += translation.y
-                visualView.alpha = 1 - (recognizer.view!.frame.origin.y - 60 / self.view.frame.height)
+                visualView.alpha = 1 - (recognizer.view!.frame.origin.y - 60) / self.view.frame.height
                 recognizer.setTranslation(.zero, in: self.view)
             }
             
         case .ended:
             if recognizer.view!.center.y > self.view.frame.height * 3/4 {
-                dismissTextView(self)
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.frame.origin.y = self.view.frame.height * 1.3
+                    self.visualView.alpha = 0
+                }) { (success: Bool) in
+                    self.dismissTextView(self)
+                }
             } else {
-                
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.center.y = self.view.center.y+60
+                    self.visualView.alpha = 1
+                }, completion: nil)
             }
             
         default: break
@@ -263,6 +271,7 @@ class earsDateViewController: UIViewController, UITableViewDelegate, UITableView
         UIApplication.shared.keyWindow?.addSubview(textViewView)
         UIView.animate(withDuration: 0.3, animations: {
             self.visualView.effect = UIBlurEffect(style: .light)
+            self.visualView.alpha = 1
             self.textViewView.alpha = 1
             self.textViewView.transform = .identity
         }, completion: { (success: Bool) in

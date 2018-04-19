@@ -34,7 +34,10 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var startsWithDBS = "dbs16070755"
+        var startsWithDBS = loginID
+        if loginID == "" {
+            return
+        }
         startsWithDBS.removeFirst(3)
         let startsWith20 = "20\(startsWithDBS)"
         
@@ -82,6 +85,10 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
         
+        textViewView.isUserInteractionEnabled = true
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragToDismiss(_:)))
+        textViewView.addGestureRecognizer(pan)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,6 +110,37 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         } else {
             self.title = "My EARS Record"
         }
+    }
+    
+    @objc func dragToDismiss(_ recognizer: UIPanGestureRecognizer) {
+        
+        switch recognizer.state {
+        case .changed:
+            if earsDetails.contentOffset == .zero {
+                let translation = recognizer.translation(in: textViewView)
+                recognizer.view?.center.y += translation.y
+                visualView.alpha = 1 - (recognizer.view!.frame.origin.y - 60) / self.view.frame.height
+                recognizer.setTranslation(.zero, in: self.view)
+            }
+            
+        case .ended:
+            if recognizer.view!.center.y > self.view.frame.height * 3/4 {
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.frame.origin.y = self.view.frame.height * 1.3
+                    self.visualView.alpha = 0
+                }) { (success: Bool) in
+                    self.dismissTextView(self)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    recognizer.view?.center.y = self.view.center.y+60
+                    self.visualView.alpha = 1
+                }, completion: nil)
+            }
+            
+        default: break
+        }
+        
     }
     
     func updateText() {
@@ -180,6 +218,7 @@ class earsStudRecordViewController: UIViewController, UITableViewDelegate, UITab
         UIApplication.shared.keyWindow?.addSubview(textViewView)
         UIView.animate(withDuration: 0.3, animations: {
             self.visualView.effect = UIBlurEffect(style: .light)
+            self.visualView.alpha = 1
             self.textViewView.alpha = 1
             self.textViewView.transform = .identity
         }, completion: { (success: Bool) in
