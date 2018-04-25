@@ -18,7 +18,6 @@
 		6A1515C62010660B00BBF15C /* videoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1515C52010660B00BBF15C /* videoTableViewCell.swift */; };
 		6A22A039209020BC0067D21D /* dropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A22A038209020BC0067D21D /* dropDownButton.swift */; };
 		6A22A03B209021320067D21D /* dropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A22A03A209021320067D21D /* dropDownView.swift */; };
-		6A22A03D209047990067D21D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A22A03C209047990067D21D /* GoogleService-Info.plist */; };
 		6A2FA2432061FCF20070FF77 /* RealMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */; };
 		6A39AB621FCE2F8B00E0421F /* 2017 - 2018 School Events New.csv in Resources */ = {isa = PBXBuildFile; fileRef = 6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */; };
 		6A3C861B1FC2C43D002472E9 /* badgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */; };
@@ -77,7 +76,6 @@
 		6A1515C52010660B00BBF15C /* videoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoTableViewCell.swift; sourceTree = "<group>"; };
 		6A22A038209020BC0067D21D /* dropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dropDownButton.swift; sourceTree = "<group>"; };
 		6A22A03A209021320067D21D /* dropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dropDownView.swift; sourceTree = "<group>"; };
-		6A22A03C209047990067D21D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Coding/Xcode Projects/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6A2FA2422061FCF20070FF77 /* RealMapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMapsViewController.swift; sourceTree = "<group>"; };
 		6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2017 - 2018 School Events New.csv"; sourceTree = "<group>"; };
 		6A3C861A1FC2C43D002472E9 /* badgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = badgeTableViewCell.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				6AB55F521FC696E9000A2A3D /* Assets.xcassets */,
 				6AA8194E1F71FE8300FCA420 /* LaunchScreen.storyboard */,
 				6AA819511F71FE8300FCA420 /* Info.plist */,
-				6A22A03C209047990067D21D /* GoogleService-Info.plist */,
 				6ACBB7461F7CC3A30086916E /* Music */,
 			);
 			path = DBS;
@@ -456,7 +453,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A39AB621FCE2F8B00E0421F /* 2017 - 2018 School Events New.csv in Resources */,
-				6A22A03D209047990067D21D /* GoogleService-Info.plist in Resources */,
 				6A7B445C1F86F9AD00227545 /* school.wav in Resources */,
 				6ACBB74A1F7DBF820086916E /* school.mid in Resources */,
 				6ACBB7481F7CC4290086916E /* hymn.mp3 in Resources */,
