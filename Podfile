@@ -13,6 +13,7 @@ pod 'JTAppleCalendar'
 pod 'SpreadsheetView'
 pod 'CSVImporter'
 pod 'NVActivityIndicatorView'
+pod ‘Firebase/Core’
 pod 'CryptoSwift', '~> 0.7.1’
 
 end
