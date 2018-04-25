@@ -65,7 +65,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CalendarView.selectDates([Date()])
         EventsTableView.reloadData()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.5), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.CalendarView.selectDates([Date()])
             self.EventsTableView.reloadData()
         })
