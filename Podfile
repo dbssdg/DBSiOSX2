@@ -11,8 +11,10 @@ pod 'TwicketSegmentedControl'
 pod 'KCFloatingActionButton'
 pod 'JTAppleCalendar'
 pod 'SpreadsheetView'
-pod 'CSVImporter'
+pod 'CSVImporter', '~> 1.8.0’
 pod 'NVActivityIndicatorView'
-pod 'CryptoSwift', '~> 0.7.1’
+pod 'CryptoSwift', '~> 0.7.2’
+pod ‘Firebase/Core’
+pod "STRegex", "~> 1.1"
 
 end
