@@ -105,92 +105,13 @@ public final class ActivityData {
     }
 }
 
-private protocol NVActivityIndicatorPresenterState {
-    func startAnimating(presenter: NVActivityIndicatorPresenter)
-    func stopAnimating(presenter: NVActivityIndicatorPresenter)
-}
-
-private struct NVActivityIndicatorPresenterStateWaitingToStart: NVActivityIndicatorPresenterState {
-    func startAnimating(presenter: NVActivityIndicatorPresenter) {
-        guard let activityData = presenter.data else { return }
-
-        presenter.show(with: activityData)
-        presenter.state = .animating
-        presenter.waitingToStartGroup.leave()
-    }
-
-    func stopAnimating(presenter: NVActivityIndicatorPresenter) {
-        presenter.state = .stopped
-        presenter.waitingToStartGroup.leave()
-    }
-}
-
-private struct NVActivityIndicatorPresenterStateAnimating: NVActivityIndicatorPresenterState {
-    func startAnimating(presenter: NVActivityIndicatorPresenter) {
-        // Do nothing
-    }
-
-    func stopAnimating(presenter: NVActivityIndicatorPresenter) {
-        guard let activityData = presenter.data else { return }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(activityData.minimumDisplayTime)) {
-            presenter.stopAnimating()
-        }
-        presenter.state = .waitingToStop
-    }
-}
-
-private struct NVActivityIndicatorPresenterStateWaitingToStop: NVActivityIndicatorPresenterState {
-    func startAnimating(presenter: NVActivityIndicatorPresenter) {
-        // Do nothing
-    }
-
-    func stopAnimating(presenter: NVActivityIndicatorPresenter) {
-        presenter.hide()
-        presenter.state = .stopped
-    }
-}
-
-private struct NVActivityIndicatorPresenterStateStopped: NVActivityIndicatorPresenterState {
-    func startAnimating(presenter: NVActivityIndicatorPresenter) {
-        guard let activityData = presenter.data else { return }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(activityData.displayTimeThreshold)) {
-            presenter.startAnimating(activityData)
-        }
-        presenter.state = .waitingToStart
-        presenter.waitingToStartGroup.enter()
-    }
-
-    func stopAnimating(presenter: NVActivityIndicatorPresenter) {
-        // Do nothing
-    }
-}
-
 /// Presenter that displays NVActivityIndicatorView as UI blocker.
 public final class NVActivityIndicatorPresenter {
-    fileprivate enum State: NVActivityIndicatorPresenterState {
-        case waitingToStart
-        case animating
-        case waitingToStop
-        case stopped
-
-        var performer: NVActivityIndicatorPresenterState {
-            switch self {
-            case .waitingToStart: return NVActivityIndicatorPresenterStateWaitingToStart()
-            case .animating: return NVActivityIndicatorPresenterStateAnimating()
-            case .waitingToStop: return NVActivityIndicatorPresenterStateWaitingToStop()
-            case .stopped: return NVActivityIndicatorPresenterStateStopped()
-            }
-        }
-
-        func startAnimating(presenter: NVActivityIndicatorPresenter) {
-            performer.startAnimating(presenter: presenter)
-        }
-
-        func stopAnimating(presenter: NVActivityIndicatorPresenter) {
-            performer.stopAnimating(presenter: presenter)
-        }
+    private enum State {
+        case waitingToShow
+        case showed
+        case waitingToHide
+        case hidden
     }
 
     private let restorationIdentifier = "NVActivityIndicatorViewContainer"
@@ -204,17 +125,11 @@ public final class NVActivityIndicatorPresenter {
         return label
     }()
 
-    fileprivate var state: State = .stopped
-    fileprivate var data: ActivityData? // Shared activity data across states
-
-    /// The group to synchronize the message so that the one set by `setMessage` is always displayed after the initial message passed to `startAnimating(_:)`.
-    fileprivate let waitingToStartGroup = DispatchGroup()
+    private var state: State = .hidden
+    private let startAnimatingGroup = DispatchGroup()
 
     /// Shared instance of `NVActivityIndicatorPresenter`.
     public static let sharedInstance = NVActivityIndicatorPresenter()
-
-    /// Current status of animation, read-only.
-    public var isAnimating: Bool { return state == .animating || state == .waitingToStop }
 
     private init() {}
 
@@ -226,29 +141,47 @@ public final class NVActivityIndicatorPresenter {
      - parameter data: Information package used to display UI blocker.
      */
     public final func startAnimating(_ data: ActivityData) {
-        self.data = data
-        state.startAnimating(presenter: self)
+        guard state == .hidden else { return }
+
+        state = .waitingToShow
+        startAnimatingGroup.enter()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(data.displayTimeThreshold)) {
+            guard self.state == .waitingToShow else {
+                self.startAnimatingGroup.leave()
+
+                return
+            }
+
+            self.show(with: data)
+            self.startAnimatingGroup.leave()
+        }
     }
 
     /**
      Remove UI blocker.
      */
     public final func stopAnimating() {
-        state.stopAnimating(presenter: self)
+        _hide()
     }
 
     /// Set message displayed under activity indicator view.
     ///
     /// - Parameter message: message displayed under activity indicator view.
     public final func setMessage(_ message: String?) {
-        waitingToStartGroup.notify(queue: DispatchQueue.main) {
-            self.messageLabel.text = message
+        guard state == .showed else {
+            startAnimatingGroup.notify(queue: DispatchQueue.main) {
+                self.messageLabel.text = message
+            }
+
+            return
         }
+
+        messageLabel.text = message
     }
 
     // MARK: - Helpers
 
-    fileprivate func show(with activityData: ActivityData) {
+    private func show(with activityData: ActivityData) {
         let containerView = UIView(frame: UIScreen.main.bounds)
 
         containerView.backgroundColor = activityData.backgroundColor
@@ -294,6 +227,7 @@ public final class NVActivityIndicatorPresenter {
         guard let keyWindow = UIApplication.shared.keyWindow else { return }
 
         keyWindow.addSubview(containerView)
+        state = .showed
 
         // Add constraints for `containerView`.
         ({
@@ -304,14 +238,29 @@ public final class NVActivityIndicatorPresenter {
 
             keyWindow.addConstraints([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
         }())
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(activityData.minimumDisplayTime)) {
+            self._hide()
+        }
     }
 
-    fileprivate func hide() {
+    private func _hide() {
+        if state == .waitingToHide {
+            hide()
+        } else if state == .waitingToShow {
+            state = .hidden
+        } else if state != .hidden {
+            state = .waitingToHide
+        }
+    }
+
+    private func hide() {
         guard let keyWindow = UIApplication.shared.keyWindow else { return }
 
         for item in keyWindow.subviews
             where item.restorationIdentifier == restorationIdentifier {
             item.removeFromSuperview()
         }
+        state = .hidden
     }
 }

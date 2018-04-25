@@ -260,11 +260,11 @@ public class CSVImporter<T> {
         var correctedLine = line.replacingOccurrences(of: delimiterQuoteDelimiter, with: delimiterDelimiter)
 
         if correctedLine.hasPrefix(quoteDelimiter) {
-            correctedLine = String(correctedLine.suffix(from: correctedLine.index(correctedLine.startIndex, offsetBy: 2)))
+            correctedLine = correctedLine.substring(from: correctedLine.index(correctedLine.startIndex, offsetBy: 2))
         }
 
         if correctedLine.hasSuffix(delimiterQuote) {
-            correctedLine = String(correctedLine.prefix(upTo: correctedLine.index(correctedLine.startIndex, offsetBy: correctedLine.utf16.count - 2)))
+            correctedLine = correctedLine.substring(to: correctedLine.index(correctedLine.startIndex, offsetBy: correctedLine.utf16.count - 2))
         }
 
         correctedLine = correctedLine.replacingOccurrences(of: "\"\"", with: substitute)

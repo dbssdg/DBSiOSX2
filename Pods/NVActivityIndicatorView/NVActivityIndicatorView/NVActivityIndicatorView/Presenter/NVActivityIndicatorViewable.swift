@@ -36,9 +36,6 @@ public protocol NVActivityIndicatorViewable {}
 
 public extension NVActivityIndicatorViewable where Self: UIViewController {
 
-    /// Current status of animation, read-only.
-    var isAnimating: Bool { return NVActivityIndicatorPresenter.sharedInstance.isAnimating }
-
     /**
      Display UI blocker.
 

@@ -153,7 +153,7 @@ activityIndicatorView.stopAnimating()
 Determine if it is animating.
 
 ```swift
-animating = activityIndicatorView.isAnimating
+animating = activityIndicatorView.animating
 ```
 
 ### Change properties
@@ -186,12 +186,6 @@ Stop animating.
 stopAnimating()
 ```
 
-Check if it is animating.
-
-```swift
-animating = isAnimating
-```
-
 Or you can use `NVActivityIndicatorPresenter` to display UI blocker anywhere.
 
 Start animating.
@@ -216,11 +210,6 @@ Change message.
 NVActivityIndicatorPresenter.sharedInstance.setMessage("Done")
 ```
 
-Check if it is animating.
-
-```swift
-animating = NVActivityIndicatorPresenter.sharedInstance.isAnimating
-```
 
 ## Acknowledgment
 
