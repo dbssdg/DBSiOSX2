@@ -15,14 +15,14 @@ import CoreNFC
 var loginID = ""
 var loginTextFieldSave = ["", ""]
 
-@available(iOS 11.0, *)
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
+//@available(iOS 11.0, *)
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UIScrollViewDelegate {
     
     // Reference the NFC session
-    private var nfcSession: NFCNDEFReaderSession!
+//    private var nfcSession: NFCNDEFReaderSession!
     
     // Reference the found NFC messages
-    private var nfcMessages: [[NFCNDEFMessage]] = []
+//    private var nfcMessages: [[NFCNDEFMessage]] = []
    
     
     
@@ -36,13 +36,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var userInformation = [String: String?]()
     var profileData = [String]()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Do any additional setup after loading the view.
-        self.initializeNFCSession()
-        
-        UserInformation.removeAll()
-        spinner.stopAnimating()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        createScrollOptions()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -56,15 +52,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             studentImage.heightAnchor.constraint(equalToConstant: 160).isActive = false
             studentImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
         }
-        
-        
-        func reload(action: UIAlertAction) { viewDidAppear(animated) }
-        let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
-        networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
-        let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
-        wrongPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
-        let noPassword = UIAlertController(title: "ERROR", message: "Please fill in your username and password. Thank you.", preferredStyle: .alert)
-        noPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
         
         if loginID != "" {
             let startsWithdbs = loginID
@@ -133,7 +120,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.userInfo.reloadData()
                         }
                     }
-                }.resume()
+                    }.resume()
                 
             } else {
                 if let x = UserDefaults.standard.array(forKey: "profileData") {
@@ -148,7 +135,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             
             
-        } else {
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Do any additional setup after loading the view.
+//        self.initializeNFCSession()
+        
+        UserInformation.removeAll()
+        spinner.stopAnimating()
+        
+         if loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Your eClass Account", preferredStyle: .alert)
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "eClass Login (starts with dbs)"
@@ -168,6 +167,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 performSegue(withIdentifier: "TAndC", sender: self)
             }
             loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
+            
+            
+            func reload(action: UIAlertAction) { viewDidLoad() }
+            let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+            networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
+            let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
+            wrongPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
+            let noPassword = UIAlertController(title: "ERROR", message: "Please fill in your username and password. Thank you.", preferredStyle: .alert)
+            noPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
             
             func checkPassword(action: UIAlertAction) {
                 if (loginAlert.textFields![0].text!) == "" || (loginAlert.textFields![1].text!) == "" {
@@ -214,7 +222,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                                 if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG!" {
                                     loginID = first
                                     UserDefaults.standard.set(loginID, forKey: "loginID")
-                                    self.viewDidAppear(animated)
+                                    self.viewDidLoad()
                                     print("SUCCESS")
                                 } else {
                                     loginID = ""
@@ -329,6 +337,76 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         present(actionSheet, animated: true)
     }
     
+    func createScrollOptions() {
+        for subview in self.view.subviews {
+            if subview.tag == 700 || subview.tag == 701 {
+                subview.removeFromSuperview()
+                
+            } else {
+                
+                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+                blurView.frame = self.view.frame
+                blurView.alpha = 0
+                blurView.tag = 700
+                blurView.layer.zPosition = 10000
+                self.view.addSubview(blurView)
+                
+                let scrollForOptions = UIScrollView(frame: self.view.frame)
+                scrollForOptions.isUserInteractionEnabled = true
+                scrollForOptions.contentSize = CGSize(width: self.view.frame.width*2, height: self.view.frame.height)
+                scrollForOptions.delegate = self
+                scrollForOptions.isPagingEnabled = true
+                scrollForOptions.showsHorizontalScrollIndicator = false
+                scrollForOptions.tag = 701
+                scrollForOptions.layer.zPosition = 10001
+                self.view.addSubview(scrollForOptions)
+                
+                let reportBug = UIButton()
+                reportBug.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
+                reportBug.frame.size.width = reportBug.frame.height
+                reportBug.frame.origin.x = self.view.frame.width*1.25 - reportBug.frame.width/2
+                reportBug.frame.origin.y = 96
+                print(reportBug.frame)
+                reportBug.backgroundColor = .white
+                reportBug.layer.borderWidth = 1
+                reportBug.layer.borderColor = UIColor.lightGray.cgColor
+                reportBug.layer.cornerRadius = 15
+                let reportBugImage = UIImageView()
+                reportBugImage.frame.origin.x = 0
+                reportBugImage.frame.origin.y = 0
+                reportBugImage.frame.size.height = reportBug.bounds.height*0.7
+                reportBugImage.frame.size.width = reportBug.bounds.width
+                reportBugImage.contentMode = .scaleAspectFit
+                reportBugImage.image = #imageLiteral(resourceName: "bug")
+                reportBug.addSubview(reportBugImage)
+                let reportBugTitle = UILabel()
+                reportBugTitle.frame.origin.x = 0
+                reportBugTitle.frame.origin.y = reportBug.bounds.height*0.7
+                reportBugTitle.frame.size.height = reportBug.bounds.height*0.3
+                reportBugTitle.frame.size.width = reportBug.frame.width
+                reportBugTitle.adjustsFontSizeToFitWidth = true
+                reportBugTitle.textColor = .purple
+                reportBug.addSubview(reportBugTitle)
+                reportBugTitle.text = "Report A Bug"
+                reportBugTitle.textAlignment = .center
+//                reportBugTitle.layer.zPosition = 100000
+                scrollForOptions.addSubview(reportBug)
+                
+                let downloadStudentImage = UIButton()
+                
+                let signOut = UIButton()
+                
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.tag == 701 {
+            self.view.viewWithTag(700)?.alpha = scrollView.contentOffset.x / self.view.frame.width
+            scrollView.alpha = scrollView.contentOffset.x / self.view.frame.width
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if loginID != "" {
             if teacherOrStudent() == "" && profileData.count <= 3 {
@@ -405,11 +483,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         return (isReachable && !needsConnection)
     }
     
-    func initializeNFCSession() {
-        // Create the NFC Reader Session when the app starts
-        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
-        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
-    }
+//    func initializeNFCSession() {
+//        // Create the NFC Reader Session when the app starts
+//        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
+//        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
+//    }
 }
 
 @available(iOS 11.0, *)
