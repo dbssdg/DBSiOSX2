@@ -17,14 +17,14 @@ class SchoolRulesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let exit = UIButton(frame: CGRect(x: 8, y: 8, width: 40, height: 40))
-        exit.setTitle("╳", for: .normal)
-        exit.setTitleColor(.white, for: .normal)
-        exit.backgroundColor = .gray
-        exit.layer.cornerRadius = self.view.frame.height/2
-        exit.layer.zPosition = 100000
-        exit.addTarget(self, action: #selector(exitView), for: .touchUpInside)
-        self.view.addSubview(exit)
+//        let exit = UIButton(frame: CGRect(x: 8, y: 8, width: 40, height: 40))
+//        exit.setTitle("╳", for: .normal)
+//        exit.setTitleColor(.white, for: .normal)
+//        exit.backgroundColor = .gray
+//        exit.layer.cornerRadius = self.view.frame.height/2
+//        exit.layer.zPosition = 100000
+//        exit.addTarget(self, action: #selector(exitView), for: .touchUpInside)
+//        self.view.addSubview(exit)
         
         textView.frame = CGRect(x: 8, y: 0, width: self.view.frame.width-16, height: self.view.frame.height-40-16)
         textView.layer.borderWidth = 5
@@ -58,7 +58,9 @@ class SchoolRulesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
         
         //Configure the button
         button = dropDownBtn.init(frame: CGRect(x: 8, y: 8, width: self.view.frame.width, height: self.view.frame.height ))
