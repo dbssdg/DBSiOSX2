@@ -89,6 +89,8 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
         updateSchoolRules(indexPath.row)
+        
+        
     }
     
     func updateSchoolRules(_ n: Int) {
@@ -96,7 +98,8 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
             
         case 0:
             textView.attributedText = NSAttributedString(string: """
-00
+        \"Love God, love your neighbour\" Diocesan Boys’ School expects students to show respect for all members of the school community at all times, and to value and respect the school buildings, grounds and property.
+
 """)
             
         case 1:
@@ -188,17 +191,81 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
             
         case 7:
             textView.attributedText = NSAttributedString(string: """
-07
+        \u{2022} Students should not display or use mobile phones during school hours (8:00a.m-3:45p.m).
+        \u{2022} Students should TURN OFF their mobile phones during school hours to avoid disrupting lesson.
+        \u{2022} Students should take proper care of their mobile phones. The school shall accept no responsibility for any loss or damage of a mobile phone.
 """)
             
         case 8:
             textView.attributedText = NSAttributedString(string: """
-08
+        Summer
+        \u{2022} Grey trousers
+        \u{2022} White shirt
+        \u{2022} White, grey, black or dark blue socks (Ankles must be covered)
+        \u{2022} Black or dark brown leather shoes
+        \u{2022} Black or dark brown leather belt
+
+        Winter
+        \u{2022} Grey trousers
+        \u{2022} White shirt
+        \u{2022} School tie
+        \u{2022} Dark blue blazer with school badge on the pocket
+        \u{2022} White, grey, black or dark blue socks (Ankles must be covered)
+        \u{2022} Black or dark brown leather shoes
+        \u{2022} Black or dark brown leather belt
+
+        Guidelines on Uniform
+        Shirt: Plain white. Sports or coloured shirts are not allowed. Shirts are to be worn inside trousers.
+        Pullover: Collarless; V-neck. Plain grey or dark blue. White pullovers are not allowed.
+        Chinese Jacket or Gowns: Can be worn in cold weather. Dark blue colour. School metal badge on the left pocket.
+        Shoes: Plain black or dark brown. Suede shows or shoes of two colors or very pointed shoes are not allowed.
+        Gloves and Scarf: Dark color and not allowed indoor.
+        Belt:    Plain, black or dark brown leather. Plain buckle.
+
+        At all times a School metal badge, School tie or School blazer badge must be worn.
+        Ornaments are not allowed except with the Headmaster’s approval.
+        Boys must maintain a tidy and clean hair cut. Hairstyling materials that produce a wet look, colour, or odor are not permitted.
+        Sportswear can only be worn for sports activities only. It shouldn't be worn in classroom or in any study room.
+
+        Guidelines for School Uniform when there is cold Weather Warning
+        1.  All students should strictly follow the school rules of "School Uniform" at all times.
+        2.  When the Hong Kong Observatory issues the Cold Weather Warning, students are allowed to wear, in addition to school uniform, thick overcoats of plain dark blue, black or grey.
+        3.  Sportswear can only be worn during P.E. lessons and sports activities. It should not be worn in the classroom or in any study room.
+
 """)
             
         case 9:
             textView.attributedText = NSAttributedString(string: """
-09
+        1. Eligible Users:
+        Each student is eligible to apply for one individual locker.
+
+        2. Use of Lockers:
+        \u{2022} Lockers are not installed with any locks. Users should bring along their own padlocks to safeguard their belongings deposited in the lockers. (Number lock is not recommended).
+        \u{2022} Students must take full responsibility for the items stored in the lockers.
+        \u{2022} Students are advised not to store any money or valuables in their lockers.
+        \u{2022} Storage of any items that are of illegal nature, or would cause or be likely to cause a health hazard, security risk, physical danger or a nuisance to the environment or other members of the school is prohibited.
+        \u{2022} In case of any loss or damage, students must report to their Form Teacher or any one of the Discipline Teachers immediately. Students are responsible to pay for the repair if the damages are caused by themselves.
+
+        3. Unauthorized Use of Lockers:
+        Unauthorized use of unoccupied or other people’s lockers is strictly forbidden. School Discipline Committee shall have the authority to open such lockers and dispose of all property found therein.
+        
+        4. Transfer of Lockers:
+        Lockers are not transferable. Students who wish to change the location of their lockers must apply with good reason in person to Coordinators of Discipline Committee.
+
+        5. Withdrawal of Studies:
+        Students who withdraw from studies or whose studies are terminated must clear their lockers within 3 days of withdrawal/termination. After 3 days, the Discipline Committee shall have the authority to open such lockers and dispose of all property found therein.
+
+        6. Clearance and Return of Lockers:
+        At the end of the academic year students must clear their lockers and remove their padlocks. The school will announce an exact deadline. After this date, the school shall have the authority to open such lockers and dispose of all property found therein.
+
+        7. Violation of the locker regulations:
+        Any violation of the locker regulations by the users may result in termination of the use of lockers and be reported to the Discipline Committee.
+    
+
+        8. The School shall not be liable in any circumstance for any loss or damage of property stored in any locker.
+        The School shall in no circumstances be responsible for the safe keeping of any items found in the lockers and any loss or damage in connection therewith.
+        
+        Users of the locker system must accept and are bound by the above rules.
 """)
             
         default: break
