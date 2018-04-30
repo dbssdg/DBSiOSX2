@@ -297,13 +297,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1253,29 +1253,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home Logo" translatesAutoresizingMaskIntoConstraints="NO" id="1bR-1R-ZXK">
-                                <rect key="frame" x="16" y="64" width="343" height="112"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Credits" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oNC-lr-AEI">
-                                <rect key="frame" x="8" y="176" width="359" height="442"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5iq-od-ErR">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kg-hj-iwg" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home Logo" translatesAutoresizingMaskIntoConstraints="NO" id="BDY-Pk-UUU">
+                                                <rect key="frame" x="8" y="8" width="359" height="112"/>
+                                            </imageView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Sda-1e-KCA">
+                                                <rect key="frame" x="8" y="128" width="359" height="200"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Sda-1e-KCA" secondAttribute="bottom" constant="8" id="4vk-SQ-5PN"/>
+                                            <constraint firstItem="Sda-1e-KCA" firstAttribute="top" secondItem="BDY-Pk-UUU" secondAttribute="bottom" constant="8" id="9vt-6R-3OE"/>
+                                            <constraint firstItem="Sda-1e-KCA" firstAttribute="leading" secondItem="7kg-hj-iwg" secondAttribute="leading" constant="8" id="Fts-yo-CUW"/>
+                                            <constraint firstAttribute="trailing" secondItem="BDY-Pk-UUU" secondAttribute="trailing" constant="8" id="J2K-Sd-hLA"/>
+                                            <constraint firstAttribute="trailing" secondItem="Sda-1e-KCA" secondAttribute="trailing" constant="8" id="Uu0-Ha-PUl"/>
+                                            <constraint firstItem="BDY-Pk-UUU" firstAttribute="leading" secondItem="7kg-hj-iwg" secondAttribute="leading" constant="8" id="jAE-9y-EsX"/>
+                                            <constraint firstItem="BDY-Pk-UUU" firstAttribute="top" secondItem="7kg-hj-iwg" secondAttribute="top" constant="8" id="zJS-yo-YZ5"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="7kg-hj-iwg" firstAttribute="top" secondItem="5iq-od-ErR" secondAttribute="top" id="6iE-eK-bV0"/>
+                                    <constraint firstAttribute="bottom" secondItem="7kg-hj-iwg" secondAttribute="bottom" id="BpU-cp-Pxg"/>
+                                    <constraint firstAttribute="trailing" secondItem="7kg-hj-iwg" secondAttribute="trailing" id="FwA-iL-al6"/>
+                                    <constraint firstItem="7kg-hj-iwg" firstAttribute="leading" secondItem="5iq-od-ErR" secondAttribute="leading" id="dwk-Zg-Nsh"/>
+                                    <constraint firstItem="7kg-hj-iwg" firstAttribute="width" secondItem="5iq-od-ErR" secondAttribute="width" id="lON-R1-zZW"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1bR-1R-ZXK" firstAttribute="top" secondItem="FJz-zR-KRt" secondAttribute="bottom" id="0Uc-Fx-ZeH"/>
-                            <constraint firstItem="oNC-lr-AEI" firstAttribute="leading" secondItem="6va-hH-LLh" secondAttribute="leading" constant="8" id="44A-CO-pxq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1bR-1R-ZXK" secondAttribute="trailing" id="75F-kG-ODV"/>
-                            <constraint firstAttribute="trailing" secondItem="oNC-lr-AEI" secondAttribute="trailing" constant="8" id="938-OU-TvU"/>
-                            <constraint firstItem="1bR-1R-ZXK" firstAttribute="leading" secondItem="6va-hH-LLh" secondAttribute="leadingMargin" id="J5i-T5-bgd"/>
-                            <constraint firstItem="5sk-uT-Kkh" firstAttribute="top" secondItem="oNC-lr-AEI" secondAttribute="bottom" id="xif-jv-vFL"/>
-                            <constraint firstItem="oNC-lr-AEI" firstAttribute="top" secondItem="1bR-1R-ZXK" secondAttribute="bottom" id="xuF-jA-We6"/>
+                            <constraint firstItem="5iq-od-ErR" firstAttribute="leading" secondItem="6va-hH-LLh" secondAttribute="leading" id="CMw-Bc-PF0"/>
+                            <constraint firstItem="5sk-uT-Kkh" firstAttribute="top" secondItem="5iq-od-ErR" secondAttribute="bottom" id="Jg7-OG-keh"/>
+                            <constraint firstItem="5iq-od-ErR" firstAttribute="top" secondItem="FJz-zR-KRt" secondAttribute="bottom" id="Qr6-uH-g4K"/>
+                            <constraint firstAttribute="trailing" secondItem="5iq-od-ErR" secondAttribute="trailing" id="hmR-ei-UAD"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="credits" destination="oNC-lr-AEI" id="AGr-Tl-zQ3"/>
+                        <outlet property="credits" destination="Sda-1e-KCA" id="tb6-QJ-lWk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgm-PQ-84X" userLabel="First Responder" sceneMemberID="firstResponder"/>

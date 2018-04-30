@@ -33,14 +33,22 @@ SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
 Ng Ching Wang Kelvin
 
 APP DEVELOPERS
-Ieung Ho Kwan, Louie Chi To, Lau Cheuk Hang & Chan Yuen Ho
+Ieung Ho Kwan
+Louie Chi To
+Lau Cheuk Hang
+Chan Yuen Ho
 
 ICONS
 https://www.flaticon.com
 https://icons8.com
 """ as NSString
-        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: self.view.frame.width*self.view.frame.height/13000)])
-        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: self.view.frame.width*self.view.frame.height/17000)]
+        var attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 18)])
+        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30)]
+        if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
+            attributedString = NSMutableAttributedString(string: string as NSString as String, attributes:
+                [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))])
+            boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")))]
+        }
         let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS", "ICONS"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
