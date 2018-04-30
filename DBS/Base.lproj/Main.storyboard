@@ -303,11 +303,8 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-<<<<<<< HEAD
                                                         <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
-=======
                                                         <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
->>>>>>> b69b16c572df9f51cc930f416a0618693e3c3f5d
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
