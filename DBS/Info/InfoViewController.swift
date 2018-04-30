@@ -94,7 +94,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
 //            performSegue(withIdentifier: "School Rules Segue", sender: self)
 //        }
 //        shortcutItemIdentifier = "false"
-        
+//        
     }
     
     override func viewDidAppear(_ animated: Bool) {

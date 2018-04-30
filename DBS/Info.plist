@@ -84,7 +84,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NFCReaderUsageDescription</key>
-	<string>DBS App needs permission of NFC to scan your student ID</string>
 </dict>
 </plist>
