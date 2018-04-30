@@ -169,7 +169,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
             
             
-            func reload(action: UIAlertAction) { viewDidLoad() }
+            func reload(action: UIAlertAction) { loginID = ""; viewDidAppear(true) }
             let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
             networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
             let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
@@ -361,24 +361,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 scrollForOptions.layer.zPosition = 10001
                 self.view.addSubview(scrollForOptions)
                 
-//                let reportBug = UIButton()
-//                reportBug.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
-//                reportBug.frame.size.width = reportBug.frame.height
-//                reportBug.frame.origin.x = self.view.frame.width*1.25 - reportBug.frame.width/2
-//                reportBug.frame.origin.y = 96 + (reportBug.frame.height+8)*(1-1)
-//
-//                let downloadStudentImage = UIButton()
-//                downloadStudentImage.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
-//                downloadStudentImage.frame.size.width = downloadStudentImage.frame.height
-//                downloadStudentImage.frame.origin.x = self.view.frame.width*1.75 - downloadStudentImage.frame.width/2
-//                downloadStudentImage.frame.origin.y = 96 + (downloadStudentImage.frame.height+8)*(1-1)
-//
-//                let signOut = UIButton()
-//                signOut.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
-//                signOut.frame.size.width = signOut.frame.height
-//                signOut.frame.origin.x = self.view.frame.width*1.75 - signOut.frame.width/2
-//                signOut.frame.origin.y = 96 + (signOut.frame.height+8)*(4-1)
-                
                 struct ButtonInfo {
                     let title : String
                     let image : UIImage
@@ -398,7 +380,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
                 ]
                 for buttonInfo in buttonInfos {
-                    
                     let button = UIButton()
                     button.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
                     button.frame.size.width = button.frame.height
@@ -425,9 +406,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     title.frame.size.width = button.frame.width
                     title.numberOfLines = 2
                     title.textColor = .black
-                    button.addSubview(title)
                     title.text = buttonInfo.title
                     title.textAlignment = .center
+                    button.addSubview(title)
                     
                     scrollForOptions.addSubview(button)
                 }
@@ -440,6 +421,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if scrollView.tag == 701 {
             self.view.viewWithTag(700)?.alpha = scrollView.contentOffset.x / self.view.frame.width
             scrollView.alpha = scrollView.contentOffset.x / self.view.frame.width
+            print("SCROLLING")
         }
     }
     
