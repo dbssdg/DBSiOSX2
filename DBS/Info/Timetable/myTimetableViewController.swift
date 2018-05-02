@@ -244,8 +244,11 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
                 DayToDisplay = 1
             }
-            if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!){
+            if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
                 DayToDisplay = 4
+            }
+            if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                DayToDisplay = 2
             }
             
             
