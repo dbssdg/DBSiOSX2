@@ -43,7 +43,7 @@ https://www.flaticon.com
 https://icons8.com
 """ as NSString
         var attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 18)])
-        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30)]
+        var boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)]
         if UserDefaults.standard.integer(forKey: "fontSize") != 0 {
             attributedString = NSMutableAttributedString(string: string as NSString as String, attributes:
                 [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))])

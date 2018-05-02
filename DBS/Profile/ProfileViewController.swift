@@ -169,7 +169,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
             
             
-            func reload(action: UIAlertAction) { viewDidLoad() }
+            func reload(action: UIAlertAction) { loginID = ""; viewDidAppear(true) }
             let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
             networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
             let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
@@ -361,40 +361,57 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 scrollForOptions.layer.zPosition = 10001
                 self.view.addSubview(scrollForOptions)
                 
-                let reportBug = UIButton()
-                reportBug.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
-                reportBug.frame.size.width = reportBug.frame.height
-                reportBug.frame.origin.x = self.view.frame.width*1.25 - reportBug.frame.width/2
-                reportBug.frame.origin.y = 96
-                print(reportBug.frame)
-                reportBug.backgroundColor = .white
-                reportBug.layer.borderWidth = 1
-                reportBug.layer.borderColor = UIColor.lightGray.cgColor
-                reportBug.layer.cornerRadius = 15
-                let reportBugImage = UIImageView()
-                reportBugImage.frame.origin.x = 0
-                reportBugImage.frame.origin.y = 0
-                reportBugImage.frame.size.height = reportBug.bounds.height*0.7
-                reportBugImage.frame.size.width = reportBug.bounds.width
-                reportBugImage.contentMode = .scaleAspectFit
-                reportBugImage.image = #imageLiteral(resourceName: "bug")
-                reportBug.addSubview(reportBugImage)
-                let reportBugTitle = UILabel()
-                reportBugTitle.frame.origin.x = 0
-                reportBugTitle.frame.origin.y = reportBug.bounds.height*0.7
-                reportBugTitle.frame.size.height = reportBug.bounds.height*0.3
-                reportBugTitle.frame.size.width = reportBug.frame.width
-                reportBugTitle.adjustsFontSizeToFitWidth = true
-                reportBugTitle.textColor = .purple
-                reportBug.addSubview(reportBugTitle)
-                reportBugTitle.text = "Report A Bug"
-                reportBugTitle.textAlignment = .center
-//                reportBugTitle.layer.zPosition = 100000
-                scrollForOptions.addSubview(reportBug)
-                
-                let downloadStudentImage = UIButton()
-                
-                let signOut = UIButton()
+                struct ButtonInfo {
+                    let title : String
+                    let image : UIImage
+                    let row : Int
+                    let column : Int
+//                    let target : Selector
+                }
+                var buttonInfos = [ButtonInfo]()
+                buttonInfos = [
+                    ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                    ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
+                    ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
+                    ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
+                    ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
+                    ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
+                    ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                    ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                ]
+                for buttonInfo in buttonInfos {
+                    let button = UIButton()
+                    button.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
+                    button.frame.size.width = button.frame.height
+                    button.frame.origin.x = self.view.frame.width * (CGFloat(buttonInfo.column) / 2 + 1.25) - button.frame.width/2
+                    button.frame.origin.y = 96 + (button.frame.height+8) * CGFloat(buttonInfo.row)
+                    button.backgroundColor = .white
+                    button.layer.borderWidth = 1
+                    button.layer.borderColor = UIColor.lightGray.cgColor
+                    button.layer.cornerRadius = 15
+                    
+                    let imageView = UIImageView()
+                    imageView.frame.origin.x = 0
+                    imageView.frame.origin.y = 0
+                    imageView.frame.size.height = button.bounds.height*0.7
+                    imageView.frame.size.width = button.bounds.width
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.image = buttonInfo.image
+                    button.addSubview(imageView)
+                    
+                    let title = UILabel()
+                    title.frame.origin.x = 0
+                    title.frame.origin.y = button.bounds.height*0.7
+                    title.frame.size.height = button.bounds.height*0.3
+                    title.frame.size.width = button.frame.width
+                    title.numberOfLines = 2
+                    title.textColor = .black
+                    title.text = buttonInfo.title
+                    title.textAlignment = .center
+                    button.addSubview(title)
+                    
+                    scrollForOptions.addSubview(button)
+                }
                 
             }
         }
@@ -404,6 +421,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if scrollView.tag == 701 {
             self.view.viewWithTag(700)?.alpha = scrollView.contentOffset.x / self.view.frame.width
             scrollView.alpha = scrollView.contentOffset.x / self.view.frame.width
+            print("SCROLLING")
         }
     }
     
