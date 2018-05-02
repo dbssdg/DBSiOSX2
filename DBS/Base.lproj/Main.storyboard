@@ -297,26 +297,25 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
                                                         <rect key="frame" x="214" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2E-7a-iuo">
-                                                        <rect key="frame" x="267.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="267.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-jf-STC">
-                                                        <rect key="frame" x="321.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="321" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -893,7 +892,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy9-cP-pLJ">
-                                <rect key="frame" x="8" y="207.5" width="359" height="60"/>
+                                <rect key="frame" x="8" y="125" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Date"/>
                                 <connections>
@@ -901,7 +900,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaI-R0-3R1">
-                                <rect key="frame" x="8" y="303.5" width="359" height="60"/>
+                                <rect key="frame" x="8" y="221" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="EARS By Class"/>
                                 <connections>
@@ -909,25 +908,35 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvV-Vp-ipc">
-                                <rect key="frame" x="8" y="402.5" width="359" height="60"/>
+                                <rect key="frame" x="8" y="320" width="359" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="My EARS Record"/>
                                 <connections>
                                     <segue destination="Wla-53-IYs" kind="show" id="CcJ-cb-PeX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHj-TZ-wkh">
+                                <rect key="frame" x="11" y="421" width="356" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Search Students by Name"/>
+                                <connections>
+                                    <segue destination="9aV-SD-EzG" kind="show" id="8lR-B7-QDP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hvV-Vp-ipc" firstAttribute="top" secondItem="iaI-R0-3R1" secondAttribute="bottom" constant="39" id="3bD-KF-GPo"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="centerY" secondItem="wMb-Ka-xbd" secondAttribute="centerY" id="4j8-Mq-lmD"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="top" secondItem="Gy9-cP-pLJ" secondAttribute="bottom" constant="36" id="Ce4-Of-RJc"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="leading" secondItem="hvV-Vp-ipc" secondAttribute="leading" id="Cg3-dx-RVW"/>
-                            <constraint firstItem="iaI-R0-3R1" firstAttribute="trailing" secondItem="hvV-Vp-ipc" secondAttribute="trailing" id="GuU-PH-8iF"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="wMb-Ka-xbd" secondAttribute="leadingMargin" constant="-8" id="dQl-b2-ReM"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="iaI-R0-3R1" secondAttribute="leading" id="djQ-LW-Kqk"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="trailing" secondItem="iaI-R0-3R1" secondAttribute="trailing" id="mQe-SN-09r"/>
-                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="centerX" secondItem="wMb-Ka-xbd" secondAttribute="centerX" id="npk-oS-6Wj"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="centerX" secondItem="wMb-Ka-xbd" secondAttribute="centerX" id="4jV-Tk-G7W"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="leading" secondItem="iaI-R0-3R1" secondAttribute="leading" id="H2h-U1-bZa"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="trailing" secondItem="iaI-R0-3R1" secondAttribute="trailing" id="Ieb-lW-Uv9"/>
+                            <constraint firstItem="hvV-Vp-ipc" firstAttribute="top" secondItem="iaI-R0-3R1" secondAttribute="bottom" constant="39" id="TyN-Cd-Zt7"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="top" secondItem="Gy9-cP-pLJ" secondAttribute="bottom" constant="36" id="VTw-Ub-nVO"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="trailing" secondItem="hvV-Vp-ipc" secondAttribute="trailing" id="agk-kS-EQX"/>
+                            <constraint firstItem="iaI-R0-3R1" firstAttribute="leading" secondItem="hvV-Vp-ipc" secondAttribute="leading" id="hsg-JY-5cj"/>
+                            <constraint firstItem="KHj-TZ-wkh" firstAttribute="leading" secondItem="wMb-Ka-xbd" secondAttribute="leadingMargin" constant="-5" id="jO1-82-s26"/>
+                            <constraint firstItem="hvV-Vp-ipc" firstAttribute="trailing" secondItem="KHj-TZ-wkh" secondAttribute="trailing" id="kJj-2g-Fp7"/>
+                            <constraint firstItem="Gy9-cP-pLJ" firstAttribute="top" secondItem="71K-gq-c6O" secondAttribute="bottom" constant="61" id="tON-dS-Wft"/>
+                            <constraint firstItem="KHj-TZ-wkh" firstAttribute="top" secondItem="hvV-Vp-ipc" secondAttribute="bottom" constant="41" id="wOy-Bd-A5h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kzl-Mq-KNl"/>
@@ -3512,7 +3521,7 @@ Title</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8K-fa-YdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12516" y="2087"/>
+            <point key="canvasLocation" x="12516" y="1737"/>
         </scene>
         <!--My EARS Record-->
         <scene sceneID="CV1-s3-Jg0">
@@ -3626,7 +3635,70 @@ Title</string>
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="12516" y="3005.8470764617696"/>
+            <point key="canvasLocation" x="12516" y="2434"/>
+        </scene>
+        <!--Student Profile-->
+        <scene sceneID="LRp-3T-uI1">
+            <objects>
+                <viewController title="Student Profile" id="9aV-SD-EzG" customClass="studentProfileByNameViewController" customModule="DBS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gwI-aN-UIb"/>
+                        <viewControllerLayoutGuide type="bottom" id="MQa-8d-ePU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5vH-zT-yL4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hjg-2l-z7Q">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="studentsByNameCell" textLabel="CqD-yh-Djv" detailTextLabel="JSB-Kd-NU9" style="IBUITableViewCellStyleValue2" id="QyY-ms-Psc">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QyY-ms-Psc" id="Ocg-lP-wtH">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CqD-yh-Djv">
+                                                    <rect key="frame" x="15" y="14" width="91" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JSB-Kd-NU9">
+                                                    <rect key="frame" x="112" y="14" width="35" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="9aV-SD-EzG" id="rnk-kC-wgA"/>
+                                    <outlet property="delegate" destination="9aV-SD-EzG" id="yj8-A3-j4w"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MQa-8d-ePU" firstAttribute="top" secondItem="Hjg-2l-z7Q" secondAttribute="bottom" id="4VY-JP-5qu"/>
+                            <constraint firstAttribute="trailing" secondItem="Hjg-2l-z7Q" secondAttribute="trailing" id="PCJ-yD-DGl"/>
+                            <constraint firstItem="Hjg-2l-z7Q" firstAttribute="leading" secondItem="5vH-zT-yL4" secondAttribute="leading" id="tGk-kO-cHC"/>
+                            <constraint firstItem="Hjg-2l-z7Q" firstAttribute="top" secondItem="gwI-aN-UIb" secondAttribute="bottom" id="x7P-yg-neh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Hjg-2l-z7Q" id="Uk8-ru-1UN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="acW-YX-3iD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12516" y="3196.5517241379312"/>
         </scene>
         <!--Ears Period View Controller-->
         <scene sceneID="gQj-BB-68U">
@@ -3730,7 +3802,7 @@ Title</string>
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="13398" y="2087"/>
+            <point key="canvasLocation" x="13396" y="1737"/>
         </scene>
     </scenes>
     <resources>

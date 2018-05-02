@@ -59,6 +59,7 @@
 		F83704392046D6D10026AC3D /* timetableNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83704382046D6D10026AC3D /* timetableNoticeViewController.swift */; };
 		F83800921FE7A4DF00C071C2 /* housesSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */; };
 		F8381001206E346E00C883F4 /* earsStudRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8381000206E346D00C883F4 /* earsStudRecordViewController.swift */; };
+		F83A3C68209982C1000B9AD3 /* studentProfileByNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83A3C67209982C1000B9AD3 /* studentProfileByNameViewController.swift */; };
 		F83E87432041AD3300E20E04 /* TAndCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E87422041AD3300E20E04 /* TAndCViewController.swift */; };
 		F8D40BC91FE9148600C0FBD5 /* myClassmatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */; };
 		F8D40BCB1FE92CDC00C0FBD5 /* timetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */; };
@@ -121,6 +122,7 @@
 		F83704382046D6D10026AC3D /* timetableNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableNoticeViewController.swift; sourceTree = "<group>"; };
 		F83800911FE7A4DF00C071C2 /* housesSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = housesSystemViewController.swift; sourceTree = "<group>"; };
 		F8381000206E346D00C883F4 /* earsStudRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = earsStudRecordViewController.swift; sourceTree = "<group>"; };
+		F83A3C67209982C1000B9AD3 /* studentProfileByNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studentProfileByNameViewController.swift; sourceTree = "<group>"; };
 		F83E87422041AD3300E20E04 /* TAndCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAndCViewController.swift; sourceTree = "<group>"; };
 		F8D40BC81FE9148600C0FBD5 /* myClassmatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClassmatesViewController.swift; sourceTree = "<group>"; };
 		F8D40BCA1FE92CDC00C0FBD5 /* timetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,8 @@
 			children = (
 				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
 				F83E87422041AD3300E20E04 /* TAndCViewController.swift */,
+				F83A3C67209982C1000B9AD3 /* studentProfileByNameViewController.swift */,
+				F831D6F120626FBC00B66B04 /* EARS */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -250,7 +254,6 @@
 				6A1515C720106B2300BBF15C /* Featured Page */,
 				3E5C76C020411483008EF546 /* Info */,
 				3E5C76C1204114FE008EF546 /* Profile */,
-				F831D6F120626FBC00B66B04 /* EARS */,
 				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
@@ -570,6 +573,7 @@
 				F82F00E91FEC9D0E00A19A61 /* descriptionsTableViewCell.swift in Sources */,
 				6A9A505C1F8C407F005E1211 /* SchoolRulesViewController.swift in Sources */,
 				F83704392046D6D10026AC3D /* timetableNoticeViewController.swift in Sources */,
+				F83A3C68209982C1000B9AD3 /* studentProfileByNameViewController.swift in Sources */,
 				3EEA13741FF3D363004AFC3C /* DetailedEventViewController.swift in Sources */,
 				6A53100D1FA1D1DF00531489 /* CustomCell.swift in Sources */,
 				6AA926BD200703160044FBDB /* albumViewController.swift in Sources */,
