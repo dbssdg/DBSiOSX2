@@ -15,9 +15,11 @@ struct newsDetails : Decodable {
     let content : [String]
     let id : [String]
     let image : [String?]
+    var attachment: [[String]]
 }
+var senderIsNews = false
 
-class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSessionDataDelegate {
+class newsDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, URLSessionTaskDelegate, URLSessionDataDelegate {
 
     var news : newsDetails?
     
@@ -28,6 +30,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     @IBOutlet var newsContent: UITextView!
     @IBOutlet var previousNews: UIBarButtonItem!
     @IBOutlet var nextNews: UIBarButtonItem!
+    
+    @IBOutlet var attachmentTable: UITableView!
     
     let sliderView = UIView()
     let slider = UISlider()
@@ -93,6 +97,24 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             nextNews.isEnabled = true
         }
         
+        if self.news != nil {
+            attachmentTable.separatorStyle = .none
+        } else if self.news!.attachment[newsIndex].isEmpty {
+            attachmentTable.separatorStyle = .singleLine
+        } else {
+            attachmentTable.separatorStyle = .none
+        }
+        
+        attachmentTable.reloadData()
+//        if news != nil {
+//            if tableView(attachmentTable, numberOfRowsInSection: 0) == 0 {
+//                attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = false
+//                attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = true
+//            } else {
+//                attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
+//                attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true
+//            }
+//        }
     }
     
     override func viewDidLoad() {
@@ -106,7 +128,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         newsDate.text = ""
         newsImage.image = nil
         newsContent.text = ""
-        
+        attachmentTable.separatorStyle = .none
         
         let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
         let url = URL(string: jsonURL)
@@ -135,23 +157,24 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 
                 session.dataTask(with: url!) { (data, response, error) in
                     do {
-                        self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
-                        DispatchQueue.main.async {
-                            spinner.stopAnimating()
-    //                        if self.news == nil {
-    //                            self.present(networkAlert, animated: true)
-    //                        } else {
-                                self.updateData()
-                                self.newsImage.image = #imageLiteral(resourceName: "newsImage")
-                                self.newsImage.clipsToBounds = true
-                                if self.news!.image[newsIndex] != nil {
-                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-                                }
-    //                        }
-                        }
+                        if var data = data {
                         
-                    }
-                    catch {
+                            let dataString = String(data: data, encoding: .utf8)
+                            data = dataString!.replacingOccurrences(of: "\"\"", with: "[]").data(using: .utf8)!
+                            
+                            self.news = try JSONDecoder().decode(newsDetails.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                spinner.stopAnimating()
+                                    self.updateData()
+                                    self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+                                    self.newsImage.clipsToBounds = true
+                                    if self.news!.image[newsIndex] != nil {
+                                        self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                    }
+                            }
+                        }
+                    } catch {
                         self.present(networkAlert, animated: true)
                         print(error)
                     }
@@ -226,6 +249,54 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+        senderIsNews = true
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if news == nil {
+            return 0
+        } else if !news!.attachment[newsIndex].isEmpty {
+            return 1
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Attachments"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if news != nil {
+            return self.news!.attachment[newsIndex].count
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "attachmentCell")!
+        cell.textLabel?.text = news!.attachment[newsIndex][indexPath.row]
+        cell.textLabel?.numberOfLines = 0
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)!
+        cell.selectionStyle = .none
+        cell.selectionStyle = .default
+        
+        for i in 0..<self.news!.attachment[newsIndex].count {
+            let eachModified = self.news!.attachment[newsIndex][i].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+            self.news!.attachment[newsIndex][i] = "http://docs.google.com/viewer?url=http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(eachModified)"
+        }
+        print(self.news!.attachment[newsIndex])
+        circularViewURL = self.news!.attachment[newsIndex][indexPath.row]
+        performSegue(withIdentifier: "News Attachment", sender: self)
     }
     
     func setFontSize(_ sender: UIBarButtonItem) {

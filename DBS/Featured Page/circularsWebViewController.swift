@@ -60,6 +60,11 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
         let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCircular))
         self.navigationItem.rightBarButtonItem = shareButton
         
+        if senderIsNews {
+            self.title = "Attachment"
+            senderIsNews = false
+        }
+        
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
@@ -116,7 +121,7 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
     
     func setUpSegmentedControl() {
         var titles = [String]()
-
+        
         if arr.count != 0 {
             for i in 1...arr.count {
                 titles += ["#\(i)"]

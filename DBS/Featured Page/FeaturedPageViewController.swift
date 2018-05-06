@@ -159,7 +159,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUpSegmentedControl()
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationItem.searchController = featuredSearch
@@ -168,7 +167,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
+        setUpSegmentedControl()
+        
         tabBarPage = 1
         if segmentChanged{
             viewDidLoad()
