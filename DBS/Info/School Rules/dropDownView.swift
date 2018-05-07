@@ -158,13 +158,18 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
             
         case 3:
             textView.attributedText = NSAttributedString(string: """
+        An air of dignity should be maintained in the Hall at all times. No meetings / activities should be held without permission. There must also be no eating, drinking, or misbehaving inside the Hall.
+""")
+            
+        case 4:
+            textView.attributedText = NSAttributedString(string: """
         a. Boys can only be excused from P.E. if they bring a letter from parents, guardians or doctors requesting leave off. This letter must be initialed by the Headmaster and shown to the P.E. master.
         b. Boys thus excused must report to the P.E. master at the beginning of lessons, who will normally require them to stay in the open air and, if they are fit enough, to walk about.
         c. School PE shorts, House vest, rubber shoes and white ankle-length socks must be worn.
 
 """)
             
-        case 4:
+        case 5:
             textView.attributedText = NSAttributedString(string: """
             Form teacher / Subject teacher will take a.m. roll-call at 8:05 a.m. and p.m. roll-call at 1:55 p.m.
             a. The late-comer must report himself to the School Office to obtain a LATE SLIP, with the signature of one of the Dean / the Discipline Masters, before being admitted to class.
@@ -173,7 +178,7 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
             d. Any boy who is late must report to his Form Teacher. (A late-comer checklist will be provided by the General Office to the Form Teacher before the afternoon roll-call)
 """)
             
-        case 5:
+        case 6:
             textView.attributedText = NSAttributedString(string: """
             a. Boys who want to obtain an early-leave from the School due to sickness must report to the Nursing Assistant. A sick-leave acknowledgement will be issued. With such acknowledgement, the boy can obtain the Early Leave slip from the General Office. Nursing Assistant may decline the request for early-leave of boys.
             b. Boys who want to obtain an early-leave from the School due to personal or family affairs are required to inform the Form Teacher / General Office with a letter from the parents. A leave-slip will be issued by the Dean. Those who do not have the letter from the parents are required to obtain written permission from the Headmaster.
@@ -184,19 +189,19 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
 """)
             
             
-        case 6:
+        case 7:
             textView.attributedText = NSAttributedString(string: """
             Prefects are leaders of students. They are acting under the Headmaster’s instructions and with his authority to keep the order in the School. Prefects have the authority to punish offenders by an initial imposition of not more than 100 lines. They are required to report more serious offences to the Headmaster. The Headmaster will not excuse any boy who disregards a proper order from a prefect or speaks insolently to him or in any way obstructs him in carrying out his duties. Appeals against punishment given by a prefect can be made through the discipline masters if valid reasons exist. However, no complaint will be entertained if the boy concerned has not treated the prefect with proper respect.
 """)
             
-        case 7:
+        case 8:
             textView.attributedText = NSAttributedString(string: """
         \u{2022} Students should not display or use mobile phones during school hours (8:00a.m-3:45p.m).
         \u{2022} Students should TURN OFF their mobile phones during school hours to avoid disrupting lesson.
         \u{2022} Students should take proper care of their mobile phones. The school shall accept no responsibility for any loss or damage of a mobile phone.
 """)
             
-        case 8:
+        case 9:
             textView.attributedText = NSAttributedString(string: """
         Summer
         \u{2022} Grey trousers
@@ -234,7 +239,7 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
 
 """)
             
-        case 9:
+        case 10:
             textView.attributedText = NSAttributedString(string: """
         1. Eligible Users:
         Each student is eligible to apply for one individual locker.
@@ -267,6 +272,7 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         
         Users of the locker system must accept and are bound by the above rules.
 """)
+            
             
         default: break
         }

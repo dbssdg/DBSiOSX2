@@ -60,9 +60,11 @@ class studentProfileByNameViewController: UIViewController, UITableViewDelegate,
         if result?.totalResultsCount == 0 {
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = "No results"
+            cell.accessoryType = .none
         } else if let studentInfo = result?.studnames[indexPath.row] {
             cell.textLabel?.text = studentInfo["classtag"]!
             cell.detailTextLabel?.text = studentInfo["nameeng"]!.capitalized
+            cell.accessoryType = .disclosureIndicator
         }
         
         return cell
@@ -104,6 +106,12 @@ class studentProfileByNameViewController: UIViewController, UITableViewDelegate,
                     print(error)
                 }
             } else {
+                
+                func back(action: UIAlertAction) { self.navigationController?.popViewController(animated: true) }
+                let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+                networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: back))
+                self.present(networkAlert, animated: true)
+                return
                 
             }
         }.resume()

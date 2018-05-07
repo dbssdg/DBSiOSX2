@@ -48,13 +48,16 @@ class dropDownBtn: UIButton, dropDownProtocol {
     
     var isOpen = false
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isOpen == false {
+        
+        self.layer.zPosition = 100000
+        if !isOpen {
             
             isOpen = true
             
             NSLayoutConstraint.deactivate([self.height])
             
-            textView.text = ""
+            textView.isUserInteractionEnabled = false
+            textView.textColor = .clear
             
             
             //            if self.dropView.tableView.contentSize.height > 400 {
@@ -73,6 +76,9 @@ class dropDownBtn: UIButton, dropDownProtocol {
             
         } else {
             isOpen = false
+            
+            textView.isUserInteractionEnabled = true
+            textView.textColor = .black
             
             NSLayoutConstraint.deactivate([self.height])
             self.height.constant = 0

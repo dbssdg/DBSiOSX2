@@ -26,10 +26,12 @@ class SchoolRulesViewController: UIViewController {
 //        exit.addTarget(self, action: #selector(exitView), for: .touchUpInside)
 //        self.view.addSubview(exit)
         
+        self.title = "School Rules"
+        
         textView.frame = CGRect(x: 8, y: 0, width: self.view.frame.width-16, height: self.view.frame.height-40-16)
         textView.layer.borderWidth = 5
-        textView.frame.origin.y = self.view.frame.height/9 + 200
-        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y
+        textView.center.y = self.view.frame.height/9 + 300
+        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y + 188
         textView.center = self.view.center
         textView.textAlignment = NSTextAlignment.justified
         textView.backgroundColor = UIColor.clear
@@ -46,10 +48,12 @@ class SchoolRulesViewController: UIViewController {
         // Make UITextView corners rounded
         textView.layer.cornerRadius = 10
         
-        
         // Make UITextView Not Editable
         textView.isEditable = false
-        textView.isUserInteractionEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isScrollEnabled = true
+        
+        textView.layer.zPosition = -1000
         
         self.view.addSubview(textView)
     }
