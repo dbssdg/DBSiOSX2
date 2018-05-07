@@ -16,5 +16,7 @@ pod 'NVActivityIndicatorView'
 pod 'CryptoSwift', '~> 0.7.2’
 pod ‘Firebase/Core’
 pod "STRegex", "~> 1.1"
+pod 'GoogleAPIClient/Calendar', '~> 1.0.2'
+pod 'Firebase'
 
 end
