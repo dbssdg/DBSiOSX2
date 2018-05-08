@@ -106,15 +106,20 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         attachmentTable.reloadData()
-//        if news != nil {
-//            if tableView(attachmentTable, numberOfRowsInSection: 0) == 0 {
-//                attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = false
-//                attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = true
-//            } else {
-//                attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
-//                attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true
-//            }
-//        }
+        DispatchQueue.main.async {
+            print(self.tableView(self.attachmentTable, numberOfRowsInSection: 0),
+                  self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+            if self.news != nil {
+//                if self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0 {
+                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0
+                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) != 0
+//                } else {
+//                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
+//                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true
+//                }
+            }
+        }
+
     }
     
     override func viewDidLoad() {
