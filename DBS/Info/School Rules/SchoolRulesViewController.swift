@@ -28,14 +28,14 @@ class SchoolRulesViewController: UIViewController {
         
         self.title = "School Rules"
         
-        textView.frame = CGRect(x: 8, y: 0, width: self.view.frame.width-16, height: self.view.frame.height-40-16)
-        textView.layer.borderWidth = 5
-        textView.center.y = self.view.frame.height/9 + 300
-        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y + 188
-        textView.center = self.view.center
+        textView.frame.size.width = self.view.frame.width - 16
+        textView.center.x = self.view.center.x
+        textView.center.y = self.view.center.y - self.view.frame.height/3
+        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y - 88
+        textView.layer.borderWidth = 1
         textView.textAlignment = NSTextAlignment.justified
         textView.backgroundColor = UIColor.clear
-        print(textView.frame)
+        print(textView.center.y, textView.frame.height)
         
         
         // Update UITextView font size and colour
