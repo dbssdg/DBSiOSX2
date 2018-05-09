@@ -107,12 +107,23 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         attachmentTable.reloadData()
         DispatchQueue.main.async {
-            print(self.tableView(self.attachmentTable, numberOfRowsInSection: 0),
-                  self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+            let rowsCount = self.tableView(self.attachmentTable, numberOfRowsInSection: 0)
             if self.news != nil {
 //                if self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0 {
+                
+                print(rowsCount,
+                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+                
                     self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0
+                
+                print(rowsCount,
+                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+                
                     self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) != 0
+                
+                print(rowsCount,
+                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+                
 //                } else {
 //                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
 //                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true

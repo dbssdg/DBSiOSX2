@@ -14,6 +14,25 @@ class SchoolRulesViewController: UIViewController {
 
     var button = dropDownBtn()
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        usleep(5000)
+        textView.frame.size.width = self.view.frame.width - 16
+        textView.center.x = self.view.center.x
+//        textView.frame.origin.y = self.view.frame.origin.y + 40 + 16
+        textView.center.y = self.view.center.y
+        textView.frame.origin.y = self.view.frame.height / 5.5
+        textView.layoutIfNeeded()
+        textView.sizeToFit()
+        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y
+        textView.layer.borderWidth = 1
+        textView.textAlignment = NSTextAlignment.justified
+        textView.backgroundColor = UIColor.clear
+        print(self.view.frame.height, textView.frame.origin.y, textView.frame.height)
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -27,16 +46,6 @@ class SchoolRulesViewController: UIViewController {
 //        self.view.addSubview(exit)
         
         self.title = "School Rules"
-        
-        textView.frame.size.width = self.view.frame.width - 16
-        textView.center.x = self.view.center.x
-        textView.center.y = self.view.center.y - self.view.frame.height/3
-        textView.frame.size.height = self.view.frame.height - textView.frame.origin.y - 88
-        textView.layer.borderWidth = 1
-        textView.textAlignment = NSTextAlignment.justified
-        textView.backgroundColor = UIColor.clear
-        print(textView.center.y, textView.frame.height)
-        
         
         // Update UITextView font size and colour
         textView.font = UIFont.systemFont(ofSize: 15)
