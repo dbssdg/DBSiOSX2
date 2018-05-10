@@ -9,6 +9,7 @@
 import UIKit
 
 let textView = UITextView()
+
 class SchoolRulesViewController: UIViewController {
 
 
@@ -16,7 +17,10 @@ class SchoolRulesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        textView.attributedText = NSAttributedString(string: """
+        \"Love God, love your neighbour\" Diocesan Boys’ School expects students to show respect for all members of the school community at all times, and to value and respect the school buildings, grounds and property.
+
+""")
         usleep(5000)
         textView.frame.size.width = self.view.frame.width - 16
         textView.center.x = self.view.center.x

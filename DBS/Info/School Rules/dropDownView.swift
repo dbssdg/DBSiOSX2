@@ -85,6 +85,7 @@ class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        updateSchoolRules(0)
         self.delegate.dropDownPressed(string: dropDownOptions[indexPath.row])
         self.tableView.deselectRow(at: indexPath, animated: true)
         
