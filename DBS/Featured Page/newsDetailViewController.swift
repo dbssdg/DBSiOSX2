@@ -109,25 +109,27 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         DispatchQueue.main.async {
             let rowsCount = self.tableView(self.attachmentTable, numberOfRowsInSection: 0)
             if self.news != nil {
-//                if self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0 {
                 
-                print(rowsCount,
-                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+                if self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0 {
                 
+//                print(rowsCount,
+//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+
                     self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0
-                
-                print(rowsCount,
-                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
-                
+
+//                print(rowsCount,
+//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
+
                     self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) != 0
+
+//                print(rowsCount,
+//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
                 
-                print(rowsCount,
-                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
-                
-//                } else {
+                } else {
+                    
 //                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
 //                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true
-//                }
+                }
             }
         }
 
