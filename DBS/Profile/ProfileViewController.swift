@@ -106,6 +106,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         DispatchQueue.main.async {
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
+                            self.createScrollOptions()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
                         }
                         
@@ -368,17 +369,31 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let column : Int
 //                    let target : Selector
                 }
+                print(profileData)
                 var buttonInfos = [ButtonInfo]()
-                buttonInfos = [
-                    ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
-                    ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
-                    ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
-                    ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
-                    ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
-                    ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
-                    ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
-                    ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
-                ]
+                if self.tableView(userInfo, numberOfRowsInSection: 0) == 5 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
+                        ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
+                        ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
+                        ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
+                        ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                } else if self.tableView(userInfo, numberOfRowsInSection: 0) == 3 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "EARS by Date", image: #imageLiteral(resourceName: "earsByDate"), row: 1, column: 0),
+                        ButtonInfo(title: "EARS by Class", image: #imageLiteral(resourceName: "earsByClass"), row: 1, column: 1),
+                        ButtonInfo(title: "Student Profile by Name", image: #imageLiteral(resourceName: "profileByName"), row: 2, column: 0),
+                        ButtonInfo(title: "Student Profile by Student ID", image: #imageLiteral(resourceName: "profileByID"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                }
+                
                 for buttonInfo in buttonInfos {
                     let button = UIButton()
                     button.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
@@ -405,6 +420,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     title.frame.size.height = button.bounds.height*0.3
                     title.frame.size.width = button.frame.width
                     title.numberOfLines = 2
+                    title.adjustsFontSizeToFitWidth = true
                     title.textColor = .black
                     title.text = buttonInfo.title
                     title.textAlignment = .center

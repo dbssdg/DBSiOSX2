@@ -177,8 +177,8 @@
 			children = (
 				6A86A5941F9476CA005943FB /* ProfileViewController.swift */,
 				F83E87422041AD3300E20E04 /* TAndCViewController.swift */,
-				F83A3C67209982C1000B9AD3 /* studentProfileByNameViewController.swift */,
 				F831D6F120626FBC00B66B04 /* EARS */,
+				F83A3C67209982C1000B9AD3 /* studentProfileByNameViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
