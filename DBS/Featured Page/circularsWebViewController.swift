@@ -121,7 +121,6 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
     
     func setUpSegmentedControl() {
         var titles = [String]()
-        
         if arr.count != 0 {
             for i in 1...arr.count {
                 titles += ["#\(i)"]

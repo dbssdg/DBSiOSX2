@@ -294,13 +294,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JC-zT-j6T">
-                                                        <rect key="frame" x="160.5" y="0.0" width="54" height="20.5"/>
+                                                        <rect key="frame" x="160.5" y="0.0" width="53.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-Dj-MHo">
-                                                        <rect key="frame" x="214.5" y="0.0" width="53.5" height="20.5"/>
+                                                        <rect key="frame" x="214" y="0.0" width="54" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2583,7 +2583,7 @@ Date of last revision: 30 January 2018.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCN-2h-jeN" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="412"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxm-KC-2mX">
                                                 <rect key="frame" x="8" y="8" width="359" height="107.5"/>
@@ -2610,35 +2610,12 @@ Title</string>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newsImage" translatesAutoresizingMaskIntoConstraints="NO" id="Wl5-Dz-o3N">
                                                 <rect key="frame" x="20" y="164" width="335" height="120"/>
                                             </imageView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LzO-qm-wBg">
-                                                <rect key="frame" x="0.0" y="412" width="375" height="130"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="130" id="pty-j0-jou"/>
-                                                </constraints>
-                                                <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="attachmentCell" id="xXB-Vk-WV7">
-                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xXB-Vk-WV7" id="Oo3-Rh-uUE">
-                                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </tableViewCellContentView>
-                                                    </tableViewCell>
-                                                </prototypes>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="YEp-1l-bPc" id="afO-bS-LDf"/>
-                                                    <outlet property="delegate" destination="YEp-1l-bPc" id="keH-QL-EwM"/>
-                                                </connections>
-                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="LzO-qm-wBg" firstAttribute="top" secondItem="I8a-jh-5Jt" secondAttribute="bottom" constant="8" id="46I-Qe-86E"/>
                                             <constraint firstItem="wxm-KC-2mX" firstAttribute="top" secondItem="aCN-2h-jeN" secondAttribute="top" constant="8" id="6ga-hj-JRk"/>
                                             <constraint firstItem="I8a-jh-5Jt" firstAttribute="leading" secondItem="aCN-2h-jeN" secondAttribute="leading" constant="8" id="BTZ-Eb-7MO"/>
                                             <constraint firstItem="kGi-SU-3dc" firstAttribute="leading" secondItem="aCN-2h-jeN" secondAttribute="leading" constant="8" id="JMM-Fq-RMH"/>
-                                            <constraint firstItem="LzO-qm-wBg" firstAttribute="bottom" secondItem="aCN-2h-jeN" secondAttribute="bottomMargin" constant="8" id="OFc-Xm-5KV"/>
                                             <constraint firstAttribute="trailing" secondItem="wxm-KC-2mX" secondAttribute="trailing" constant="8" id="ZAR-t3-9qT"/>
                                             <constraint firstItem="wxm-KC-2mX" firstAttribute="leading" secondItem="aCN-2h-jeN" secondAttribute="leading" constant="8" id="czA-0o-fbg"/>
                                             <constraint firstAttribute="trailing" secondItem="I8a-jh-5Jt" secondAttribute="trailing" constant="8" id="dnw-KL-Q3v"/>
@@ -2649,8 +2626,7 @@ Title</string>
                                             <constraint firstItem="kGi-SU-3dc" firstAttribute="top" secondItem="wxm-KC-2mX" secondAttribute="bottom" constant="8" id="oZg-Sp-lyK"/>
                                             <constraint firstItem="Wl5-Dz-o3N" firstAttribute="leading" secondItem="aCN-2h-jeN" secondAttribute="leading" constant="20" id="qYH-Xk-NJg"/>
                                             <constraint firstAttribute="trailing" secondItem="Wl5-Dz-o3N" secondAttribute="trailing" constant="20" id="ruO-q2-rxz"/>
-                                            <constraint firstAttribute="trailing" secondItem="LzO-qm-wBg" secondAttribute="trailing" id="u6e-Pd-yrB"/>
-                                            <constraint firstItem="LzO-qm-wBg" firstAttribute="leading" secondItem="aCN-2h-jeN" secondAttribute="leading" id="wRl-t2-Tvq"/>
+                                            <constraint firstAttribute="bottom" secondItem="I8a-jh-5Jt" secondAttribute="bottom" constant="8" id="vwl-S8-eIW"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2674,7 +2650,13 @@ Title</string>
                                             <action selector="previousNews:" destination="YEp-1l-bPc" id="oYL-k0-DSZ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="240" style="plain" systemItem="fixedSpace" id="a6p-O8-mm2"/>
+                                    <barButtonItem width="28" style="plain" systemItem="fixedSpace" id="KCc-zM-hxc"/>
+                                    <barButtonItem title="Attachments" id="m05-jC-1wj">
+                                        <connections>
+                                            <action selector="attachments:" destination="YEp-1l-bPc" id="uzO-2b-1nV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="61" style="plain" systemItem="fixedSpace" id="jcw-t7-r1M"/>
                                     <barButtonItem title="Next ▶︎" id="qtC-C1-Ehm">
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
@@ -2696,7 +2678,7 @@ Title</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="attachmentTable" destination="LzO-qm-wBg" id="hqu-0y-JpW"/>
+                        <outlet property="attachmentsButton" destination="m05-jC-1wj" id="hQS-HY-GmG"/>
                         <outlet property="newsContent" destination="I8a-jh-5Jt" id="wGh-PB-hnq"/>
                         <outlet property="newsDate" destination="kGi-SU-3dc" id="v4m-SZ-DLs"/>
                         <outlet property="newsImage" destination="Wl5-Dz-o3N" id="mBj-vw-sAz"/>

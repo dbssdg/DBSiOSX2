@@ -19,7 +19,7 @@ struct newsDetails : Decodable {
 }
 var senderIsNews = false
 
-class newsDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, URLSessionTaskDelegate, URLSessionDataDelegate {
+class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSessionDataDelegate {
 
     var news : newsDetails?
     
@@ -30,8 +30,7 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var newsContent: UITextView!
     @IBOutlet var previousNews: UIBarButtonItem!
     @IBOutlet var nextNews: UIBarButtonItem!
-    
-    @IBOutlet var attachmentTable: UITableView!
+    @IBOutlet var attachmentsButton: UIBarButtonItem!
     
     let sliderView = UIView()
     let slider = UISlider()
@@ -61,6 +60,13 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+        }
+    }
+    @IBAction func attachments(_ sender: Any) {
+        if self.news != nil {
+            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
+            senderIsNews = true
+            performSegue(withIdentifier: "News Attachment", sender: self)
         }
     }
     
@@ -96,43 +102,22 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             nextNews.tintColor = UIColor.black
             nextNews.isEnabled = true
         }
-        
+
         if self.news != nil {
-            attachmentTable.separatorStyle = .none
-        } else if self.news!.attachment[newsIndex].isEmpty {
-            attachmentTable.separatorStyle = .singleLine
-        } else {
-            attachmentTable.separatorStyle = .none
-        }
-        
-        attachmentTable.reloadData()
-        DispatchQueue.main.async {
-            let rowsCount = self.tableView(self.attachmentTable, numberOfRowsInSection: 0)
-            if self.news != nil {
-                
-                if self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0 {
-                
-//                print(rowsCount,
-//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
-
-                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) == 0
-
-//                print(rowsCount,
-//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
-
-                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = self.tableView(self.attachmentTable, numberOfRowsInSection: 0) != 0
-
-//                print(rowsCount,
-//                      self.news == nil, self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive, self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive)
-                
-                } else {
-                    
-//                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 8).isActive = false
-//                    self.attachmentTable.heightAnchor.constraint(equalToConstant: 128).isActive = true
+            
+            attachmentsButton.title = "Attachments"
+            if self.news!.attachment[newsIndex].isEmpty {
+                attachmentsButton.tintColor = UIColor.lightGray
+                attachmentsButton.isEnabled = false
+            } else {
+                if self.news!.attachment[newsIndex].count == 1 {
+                    attachmentsButton.title = "Attachment"
                 }
+                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255÷, alpha: 1)
+                attachmentsButton.isEnabled = true
             }
         }
-
+        
     }
     
     override func viewDidLoad() {
@@ -146,7 +131,6 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         newsDate.text = ""
         newsImage.image = nil
         newsContent.text = ""
-        attachmentTable.separatorStyle = .none
         
         let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
         let url = URL(string: jsonURL)
@@ -208,6 +192,8 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         previousNews.isEnabled = false
         nextNews.tintColor = UIColor.lightGray
         nextNews.isEnabled = false
+        attachmentsButton.tintColor = UIColor.lightGray
+        attachmentsButton.isEnabled = false
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -276,47 +262,6 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         senderIsNews = true
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if news == nil {
-            return 0
-        } else if !news!.attachment[newsIndex].isEmpty {
-            return 1
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Attachments"
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if news != nil {
-            return self.news!.attachment[newsIndex].count
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "attachmentCell")!
-        cell.textLabel?.text = news!.attachment[newsIndex][indexPath.row]
-        cell.textLabel?.numberOfLines = 0
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)!
-        cell.selectionStyle = .none
-        cell.selectionStyle = .default
-        
-        for i in 0..<self.news!.attachment[newsIndex].count {
-            let eachModified = self.news!.attachment[newsIndex][i].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-            self.news!.attachment[newsIndex][i] = "http://docs.google.com/viewer?url=http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(eachModified)"
-        }
-        print(self.news!.attachment[newsIndex])
-        circularViewURL = self.news!.attachment[newsIndex][indexPath.row]
-        performSegue(withIdentifier: "News Attachment", sender: self)
-    }
-    
     func setFontSize(_ sender: UIBarButtonItem) {
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishedSetFontSize(_:)))
@@ -344,7 +289,6 @@ class newsDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     let progressView = UIProgressView()
-    
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         print("ERROR")
     }
