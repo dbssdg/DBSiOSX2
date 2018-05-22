@@ -113,7 +113,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 if self.news!.attachment[newsIndex].count == 1 {
                     attachmentsButton.title = "Attachment"
                 }
-                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255÷, alpha: 1)
+                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
                 attachmentsButton.isEnabled = true
             }
         }
