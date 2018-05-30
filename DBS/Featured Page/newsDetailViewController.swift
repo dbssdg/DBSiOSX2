@@ -64,7 +64,11 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     }
     @IBAction func attachments(_ sender: Any) {
         if self.news != nil {
-            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
+            circularViewURL = "http://www.dbs.edu.hk/"
+            for i in self.news!.attachment[newsIndex] {
+                circularViewURL += "http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
+            }
+//            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
             senderIsNews = true
             performSegue(withIdentifier: "News Attachment", sender: self)
         }
