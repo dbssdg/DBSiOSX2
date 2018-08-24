@@ -10,11 +10,21 @@ import UIKit
 import SystemConfiguration
 import CryptoSwift
 import MessageUI
+import CoreNFC
 
 var loginID = ""
 var loginTextFieldSave = ["", ""]
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
+//@available(iOS 11.0, *)
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UIScrollViewDelegate {
+    
+    // Reference the NFC session
+//    private var nfcSession: NFCNDEFReaderSession!
+    
+    // Reference the found NFC messages
+//    private var nfcMessages: [[NFCNDEFMessage]] = []
+   
+    
     
     @IBOutlet weak var studentImage: UIImageView!
     @IBOutlet weak var userInfo: UITableView!
@@ -26,12 +36,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var userInformation = [String: String?]()
     var profileData = [String]()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Do any additional setup after loading the view.
-        
-        UserInformation.removeAll()
-        spinner.stopAnimating()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        createScrollOptions()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -40,14 +47,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             loginID = x
         }
         userInfo.separatorStyle = .none
-        
-        func reload(action: UIAlertAction) { viewDidAppear(animated) }
-        let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
-        networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
-        let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
-        wrongPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
-        let noPassword = UIAlertController(title: "ERROR", message: "Please fill in your username and password. Thank you.", preferredStyle: .alert)
-        noPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
+        if UIScreen.main.bounds.height < 667 && UIScreen.main.bounds.width < 375 {
+            print(UIScreen.main.bounds.height)
+            studentImage.heightAnchor.constraint(equalToConstant: 160).isActive = false
+            studentImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        }
         
         if loginID != "" {
             let startsWithdbs = loginID
@@ -102,6 +106,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         DispatchQueue.main.async {
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
+                            self.createScrollOptions()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
                         }
                         
@@ -116,7 +121,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.userInfo.reloadData()
                         }
                     }
-                }.resume()
+                    }.resume()
                 
             } else {
                 if let x = UserDefaults.standard.array(forKey: "profileData") {
@@ -131,7 +136,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             
             
-        } else {
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Do any additional setup after loading the view.
+//        self.initializeNFCSession()
+        
+        UserInformation.removeAll()
+        spinner.stopAnimating()
+        
+         if loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Your eClass Account", preferredStyle: .alert)
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "eClass Login (starts with dbs)"
@@ -151,6 +168,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 performSegue(withIdentifier: "TAndC", sender: self)
             }
             loginAlert.addAction(UIAlertAction(title: "Terms and Conditions", style: .default, handler: TAndC))
+            
+            
+            func reload(action: UIAlertAction) { loginID = ""; viewDidAppear(true) }
+            let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
+            networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
+            let wrongPassword = UIAlertController(title: "ERROR", message: "Incorrect username or password. Please try again.", preferredStyle: .alert)
+            wrongPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
+            let noPassword = UIAlertController(title: "ERROR", message: "Please fill in your username and password. Thank you.", preferredStyle: .alert)
+            noPassword.addAction(UIAlertAction(title: "OK", style: .default, handler: reload))
             
             func checkPassword(action: UIAlertAction) {
                 if (loginAlert.textFields![0].text!) == "" || (loginAlert.textFields![1].text!) == "" {
@@ -197,7 +223,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                                 if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG!" {
                                     loginID = first
                                     UserDefaults.standard.set(loginID, forKey: "loginID")
-                                    self.viewDidAppear(animated)
+                                    self.viewDidLoad()
                                     print("SUCCESS")
                                 } else {
                                     loginID = ""
@@ -312,12 +338,113 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         present(actionSheet, animated: true)
     }
     
+    func createScrollOptions() {
+        for subview in self.view.subviews {
+            if subview.tag == 700 || subview.tag == 701 {
+                subview.removeFromSuperview()
+                
+            } else {
+                
+                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+                blurView.frame = self.view.frame
+                blurView.alpha = 0
+                blurView.tag = 700
+                blurView.layer.zPosition = 10000
+                self.view.addSubview(blurView)
+                
+                let scrollForOptions = UIScrollView(frame: self.view.frame)
+                scrollForOptions.isUserInteractionEnabled = true
+                scrollForOptions.contentSize = CGSize(width: self.view.frame.width*2, height: self.view.frame.height)
+                scrollForOptions.delegate = self
+                scrollForOptions.isPagingEnabled = true
+                scrollForOptions.showsHorizontalScrollIndicator = false
+                scrollForOptions.tag = 701
+                scrollForOptions.layer.zPosition = 10001
+                self.view.addSubview(scrollForOptions)
+                
+                struct ButtonInfo {
+                    let title : String
+                    let image : UIImage
+                    let row : Int
+                    let column : Int
+//                    let target : Selector
+                }
+                print(profileData)
+                var buttonInfos = [ButtonInfo]()
+                if self.tableView(userInfo, numberOfRowsInSection: 0) == 5 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
+                        ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
+                        ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
+                        ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
+                        ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                } else if self.tableView(userInfo, numberOfRowsInSection: 0) == 3 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "EARS by Date", image: #imageLiteral(resourceName: "earsByDate"), row: 1, column: 0),
+                        ButtonInfo(title: "EARS by Class", image: #imageLiteral(resourceName: "earsByClass"), row: 1, column: 1),
+                        ButtonInfo(title: "Student Profile by Name", image: #imageLiteral(resourceName: "profileByName"), row: 2, column: 0),
+                        ButtonInfo(title: "Student Profile by Student ID", image: #imageLiteral(resourceName: "profileByID"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                }
+                
+                for buttonInfo in buttonInfos {
+                    let button = UIButton()
+                    button.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
+                    button.frame.size.width = button.frame.height
+                    button.frame.origin.x = self.view.frame.width * (CGFloat(buttonInfo.column) / 2 + 1.25) - button.frame.width/2
+                    button.frame.origin.y = 96 + (button.frame.height+8) * CGFloat(buttonInfo.row)
+                    button.backgroundColor = .white
+                    button.layer.borderWidth = 1
+                    button.layer.borderColor = UIColor.lightGray.cgColor
+                    button.layer.cornerRadius = 15
+                    
+                    let imageView = UIImageView()
+                    imageView.frame.origin.x = 0
+                    imageView.frame.origin.y = 0
+                    imageView.frame.size.height = button.bounds.height*0.7
+                    imageView.frame.size.width = button.bounds.width
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.image = buttonInfo.image
+                    button.addSubview(imageView)
+                    
+                    let title = UILabel()
+                    title.frame.origin.x = 0
+                    title.frame.origin.y = button.bounds.height*0.7
+                    title.frame.size.height = button.bounds.height*0.3
+                    title.frame.size.width = button.frame.width
+                    title.numberOfLines = 2
+                    title.adjustsFontSizeToFitWidth = true
+                    title.textColor = .black
+                    title.text = buttonInfo.title
+                    title.textAlignment = .center
+                    button.addSubview(title)
+                    
+                    scrollForOptions.addSubview(button)
+                }
+                
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.tag == 701 {
+            self.view.viewWithTag(700)?.alpha = scrollView.contentOffset.x / self.view.frame.width
+            scrollView.alpha = scrollView.contentOffset.x / self.view.frame.width
+            print("SCROLLING")
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if loginID != "" {
             if teacherOrStudent() == "" && profileData.count <= 3 {
                 return 3
-            } else if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 {
-                return 4
             } else {
                 return 5
             }
@@ -326,7 +453,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! descriptionsTableViewCell
-        if UIScreen.main.bounds.height < 667 &&  UIScreen.main.bounds.width < 375 && teacherOrStudent() == "s" {
+        if false {
             var arr = profileData
             arr.remove(at: 2)
             cell.descriptionText.text = "\(arr[indexPath.row].capitalized)"
@@ -343,7 +470,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.selectionStyle = .none
         return cell
     }
-
+    
     func teacherOrStudent() -> String {
         if isInternetAvailable(){
         if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
@@ -390,5 +517,36 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         return (isReachable && !needsConnection)
     }
     
+//    func initializeNFCSession() {
+//        // Create the NFC Reader Session when the app starts
+//        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
+//        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
+//    }
+}
+
+@available(iOS 11.0, *)
+extension ProfileViewController : NFCNDEFReaderSessionDelegate {
     
+    // Called when the reader-session expired, you invalidated the dialog or accessed an invalidated session
+    @available(iOS 11.0, *)
+    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
+        print("Error reading NFC: \(error.localizedDescription)")
+    }
+    
+    // Called when a new set of NDEF messages is found
+    @available(iOS 11.0, *)
+    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
+        print("New NFC Tag detected:")
+        
+        for message in messages {
+            for record in message.records {
+                print("Type name format: \(record.typeNameFormat)")
+                print("Payload: \(record.payload)")
+                print("Type: \(record.type)")
+                print("Identifier: \(record.identifier)")
+            }
+        }
+        
+        
+    }
 }

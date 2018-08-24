@@ -686,8 +686,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
                     DayToDisplay = 1
                 }
-                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!){
+                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
                     DayToDisplay = 4
+                }
+                if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                    DayToDisplay = 2
                 }
             
             if indexPath.row == 0{
@@ -705,8 +708,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
                     cell.textLabel?.text = "30/4 Mon Adopts Tue Timetable"
                 }
-                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!){
+                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
                     cell.textLabel?.text = "14/5 Mon Adopts Fri Timetable"
+                }
+                
+                if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                    cell.textLabel?.text = "4/6 Mon Adopts Wed Timetable"
                 }
                 
                 cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)

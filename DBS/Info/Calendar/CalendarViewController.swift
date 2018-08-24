@@ -11,6 +11,7 @@ import JTAppleCalendar
 import CSVImporter
 import SystemConfiguration
 
+
 enum EventTypes{
     case SE,PH,SH
 }
@@ -64,7 +65,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         CalendarView.selectDates([Date()])
         EventsTableView.reloadData()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.5), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.CalendarView.selectDates([Date()])
             self.EventsTableView.reloadData()
         })
@@ -98,7 +99,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var DaysStack: UIStackView!
     
-    func WillAddCalendar(acrion: UIAlertAction){
+    func addingCalendar(){
         let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
         let url = URL(string: StringURL)!
         if isInternetAvailable(){
@@ -108,6 +109,10 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(networkAlert, animated: true)
         }
+    }
+    
+    func WillAddCalendar(acrion: UIAlertAction){
+        addingCalendar()
     }
     
     func ShareCalendar(action: UIAlertAction){
@@ -188,6 +193,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         TodayButton(self)
         
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -203,6 +210,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         CalendarView.selectDates([Date()])
+        
+        addingCalendar()
     }
     
     func ParseCSV (){

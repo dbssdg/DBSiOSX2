@@ -146,8 +146,6 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         ParseJSON()
         
-        setUpSegmentedControl()
-        
         //Refresher
         let refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to Reload")
@@ -169,7 +167,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
+        setUpSegmentedControl()
+        
         tabBarPage = 1
         if segmentChanged{
             viewDidLoad()
@@ -265,7 +266,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         cell.textLabel?.numberOfLines = 0
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
-        cell.detailTextLabel?.textColor = .black
+        cell.detailTextLabel?.textColor = .gray
         
         if cell.detailTextLabel?.text! == "Pinned"{
             cell.detailTextLabel?.textColor = UIColor.orange
@@ -374,15 +375,44 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setUpSegmentedControl() {
-        let titles = ["Circulars", "News"]
-        let frame = CGRect(x: self.view.frame.width / 2 - self.view.frame.width * 0.45 , y: self.view.frame.height * 0.85, width: self.view.frame.width * 0.9, height: 40)
-        let segmentedControl = TwicketSegmentedControl(frame: frame)
-        segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self
-        segmentedControl.tag = 1
-        segmentedControl.move(to: selectedSegment)
-        segmentedControl.tag = 10000
-        view.addSubview(segmentedControl)
+        
+        var hasSegmentedControl = false
+        for subview in self.view.subviews {
+            if (subview as? TwicketSegmentedControl) != nil {
+                hasSegmentedControl = true
+            }
+        }
+        
+        if !hasSegmentedControl {
+            
+            let titles = ["Circulars", "News"]
+            let segmentedControl = TwicketSegmentedControl()
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                segmentedControl.frame = CGRect(x: 0, y: tabBarY - 40, width: self.view.frame.width, height: 40)
+            } else {
+                segmentedControl.frame = CGRect(x: 0, y: self.view.frame.height - 40, width: self.view.frame.width, height: 40)
+            }
+            segmentedControl.setSegmentItems(titles)
+            segmentedControl.delegate = self
+            segmentedControl.tag = 1
+            segmentedControl.move(to: selectedSegment)
+            segmentedControl.tag = 10000
+            view.addSubview(segmentedControl)
+            
+        } else {
+            
+            for subview in self.view.subviews {
+            if let segmentedControl = (subview as? TwicketSegmentedControl) {
+            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                segmentedControl.removeFromSuperview()
+                setUpSegmentedControl()
+            }
+            }
+            }
+            }
+            
+        }
         
     }
     

@@ -15,7 +15,9 @@ struct newsDetails : Decodable {
     let content : [String]
     let id : [String]
     let image : [String?]
+    var attachment: [[String]]
 }
+var senderIsNews = false
 
 class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSessionDataDelegate {
 
@@ -28,6 +30,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     @IBOutlet var newsContent: UITextView!
     @IBOutlet var previousNews: UIBarButtonItem!
     @IBOutlet var nextNews: UIBarButtonItem!
+    @IBOutlet var attachmentsButton: UIBarButtonItem!
     
     let sliderView = UIView()
     let slider = UISlider()
@@ -40,6 +43,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         scrollView.setContentOffset(desiredOffset, animated: false)
         
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
@@ -53,8 +57,20 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         scrollView.setContentOffset(desiredOffset, animated: false)
         
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+        self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
             self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+        }
+    }
+    @IBAction func attachments(_ sender: Any) {
+        if self.news != nil {
+            circularViewURL = "http://www.dbs.edu.hk/"
+            for i in self.news!.attachment[newsIndex] {
+                circularViewURL += "http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
+            }
+//            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
+            senderIsNews = true
+            performSegue(withIdentifier: "News Attachment", sender: self)
         }
     }
     
@@ -90,6 +106,21 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             nextNews.tintColor = UIColor.black
             nextNews.isEnabled = true
         }
+
+        if self.news != nil {
+            
+            attachmentsButton.title = "Attachments"
+            if self.news!.attachment[newsIndex].isEmpty {
+                attachmentsButton.tintColor = UIColor.lightGray
+                attachmentsButton.isEnabled = false
+            } else {
+                if self.news!.attachment[newsIndex].count == 1 {
+                    attachmentsButton.title = "Attachment"
+                }
+                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
+                attachmentsButton.isEnabled = true
+            }
+        }
         
     }
     
@@ -104,7 +135,6 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         newsDate.text = ""
         newsImage.image = nil
         newsContent.text = ""
-        
         
         let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
         let url = URL(string: jsonURL)
@@ -133,22 +163,24 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 
                 session.dataTask(with: url!) { (data, response, error) in
                     do {
-                        self.news = try JSONDecoder().decode(newsDetails.self, from: data!)
-                        DispatchQueue.main.async {
-                            spinner.stopAnimating()
-    //                        if self.news == nil {
-    //                            self.present(networkAlert, animated: true)
-    //                        } else {
-                                self.updateData()
-                                self.newsImage.image = #imageLiteral(resourceName: "newsImage")
-                                if self.news!.image[newsIndex] != nil {
-                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-                                }
-    //                        }
-                        }
+                        if var data = data {
                         
-                    }
-                    catch {
+                            let dataString = String(data: data, encoding: .utf8)
+                            data = dataString!.replacingOccurrences(of: "\"\"", with: "[]").data(using: .utf8)!
+                            
+                            self.news = try JSONDecoder().decode(newsDetails.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                spinner.stopAnimating()
+                                    self.updateData()
+                                    self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+                                    self.newsImage.clipsToBounds = true
+                                    if self.news!.image[newsIndex] != nil {
+                                        self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                    }
+                            }
+                        }
+                    } catch {
                         self.present(networkAlert, animated: true)
                         print(error)
                     }
@@ -164,6 +196,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         previousNews.isEnabled = false
         nextNews.tintColor = UIColor.lightGray
         nextNews.isEnabled = false
+        attachmentsButton.tintColor = UIColor.lightGray
+        attachmentsButton.isEnabled = false
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -225,6 +259,13 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+        senderIsNews = true
+    }
+    
     func setFontSize(_ sender: UIBarButtonItem) {
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishedSetFontSize(_:)))
@@ -252,7 +293,6 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     }
     
     let progressView = UIProgressView()
-    
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         print("ERROR")
     }
@@ -288,6 +328,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 if image != nil {
                     DispatchQueue.main.async(execute: {
                         imageView.image = image
+                        imageView.clipsToBounds = true
                     })
                 }
             }
