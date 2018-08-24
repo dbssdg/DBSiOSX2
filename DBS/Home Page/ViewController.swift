@@ -407,7 +407,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewDidLoad()
         
         
-        ParseTeacherTimetableCSV()
+        
         
         
         if let x = UserDefaults.standard.array(forKey: "profileData") as? [String]{
@@ -784,6 +784,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 DispatchQueue.main.async {
                     if timetable == nil{
                         self.ParseTimetable()
+                        self.ParseTeacherTimetableCSV()
                     }
                 }
                 
