@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4A5B1F212FB9FB00902FBE /* Import Lessons 18-19.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */; };
 		3EEA13741FF3D363004AFC3C /* DetailedEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */; };
 		3EEA13761FF4843C004AFC3C /* AllEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */; };
 		3EEA13781FF489B0004AFC3C /* AllEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Import Lessons 18-19.csv"; sourceTree = "<group>"; };
 		3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventsTableViewController.swift; sourceTree = "<group>"; };
 		3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				3E5C76C1204114FE008EF546 /* Profile */,
 				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
+				3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6AB55F521FC696E9000A2A3D /* Assets.xcassets */,
 				6AA8194E1F71FE8300FCA420 /* LaunchScreen.storyboard */,
@@ -458,6 +461,7 @@
 				6ACBB7481F7CC4290086916E /* hymn.mp3 in Resources */,
 				6AA819501F71FE8300FCA420 /* LaunchScreen.storyboard in Resources */,
 				6AB55F531FC696EB000A2A3D /* Assets.xcassets in Resources */,
+				3E4A5B1F212FB9FB00902FBE /* Import Lessons 18-19.csv in Resources */,
 				6AA8194B1F71FE8300FCA420 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

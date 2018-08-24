@@ -14,6 +14,24 @@ import SystemConfiguration
 struct ScrollViewDataStruct {
     let title : String?
 }
+
+struct TeacherTimetableLesson{
+    var initial : String
+    var day : Int
+    var period : Int
+    var subj1 : String
+    var class1 : String
+    var loc1 : String
+    var subj2 : String
+    var class2 : String
+    var loc2 : String
+}
+
+struct TeacherTimetable{
+    var initial : String
+    var lessons : [TeacherTimetableLesson]
+}
+
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
@@ -113,7 +131,146 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
         }
     }
+        
 }
+    
+    func ParseTeacherTimetableCSV(){
+        var AllLessons = [TeacherTimetableLesson] ()
+        
+        if AllTeacherTimetables.isEmpty{
+            DispatchQueue.main.async {
+                if AllLessons.isEmpty{
+                    let path = Bundle.main.path(forResource: "Import Lessons 18-19", ofType: "csv")!
+                    let importer = CSVImporter<[String: String]>(path: path)
+                    
+                    
+                    importer.startImportingRecords(structure: { (headerValues) -> Void in
+                    }) { $0 }.onFinish { (importedRecords) in
+                        for record in importedRecords {
+                            
+                            /*
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "d/M/yyyy"
+                            let EventStartDate = formatter.date(from: record["Start Date"]!)
+                            let EventEndDate = formatter.date(from: record["End Date"]!)
+                            
+                            let string = record["Title"]!
+                            let input = string
+                            var output = ""
+                            var didColon = false
+                            for i in input{
+                                if didColon{
+                                    output += "\(i)"
+                                }
+                                if i == Character(":"){
+                                    didColon = true
+                                }
+                            }
+                            output.removeFirst()
+                            
+                            
+                            switch record["Type"]! {
+                            case "PH" :
+                                EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .PH)]
+                                
+                                if EventStartDate! <= Date() && EventEndDate! >= Date(){
+                                    TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .PH)]
+                                }
+                            case "SH" :
+                                EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SH)]
+                                
+                                if EventStartDate! <= Date() && EventEndDate! >= Date(){
+                                    TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SH)]
+                                    
+                                }
+                                
+                            case "SE" :
+                                EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SE)]
+                                
+                                if EventStartDate! <= Date() && EventEndDate! >= Date(){
+                                    TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SE)]
+                                }
+                                
+                            default:
+                                print("ERROR")
+                            }
+                        
+ */
+                            let initial = record["initial"]!
+                            
+                            var day = 0
+                            if let IntDay = Int(record["day"]!){
+                                day = IntDay
+                            }
+                            
+                            var period = 0
+                            if let IntPeriod = Int(record["period"]!){
+                                period = IntPeriod
+                            }
+                            
+                            let subj1 = record["subj1"]!
+                            
+                            let class1 = record["class1"]!
+                            
+                            let loc1 = record["loc1"]!
+                            
+                            let subj2 = record["subj2"]!
+                            
+                            let class2 = record["class2"]!
+                            
+                            let loc2 = record["loc2"]!
+                            
+                            let Lesson = TeacherTimetableLesson(initial: initial, day: day, period: period, subj1: subj1, class1: class1, loc1: loc1, subj2: subj2, class2: class2, loc2: loc2)
+                            
+                            AllLessons += [Lesson]
+                            
+                           
+                            
+                            
+                    }
+                        //All lessons not empty here
+                        
+                        
+                        
+                        for Lesson in AllLessons{
+                            
+                            var HasAddedTeacher = false
+                            
+                            for i in AllTeacherTimetables{
+                                
+                                if i.initial == Lesson.initial{
+                                    
+                                    HasAddedTeacher = true
+                                }
+                            }
+                            
+                            if HasAddedTeacher{
+                                
+                                var count = 0
+                                for i in AllTeacherTimetables{
+                                    if i.initial == Lesson.initial{
+                                        AllTeacherTimetables[count].lessons += [Lesson]
+                                    }
+                                    count += 1
+                                }
+                            }else{
+                                AllTeacherTimetables += [TeacherTimetable(initial: Lesson.initial, lessons: [Lesson])]
+                                
+                            }
+                    }
+                        
+                        
+                        
+                    }
+                    
+            }
+                
+    }
+           
+        }
+       
+    }
+    
     
     func ParseNewsCurriculars(){
         let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
@@ -248,6 +405,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        ParseTeacherTimetableCSV()
+        
         
         if let x = UserDefaults.standard.array(forKey: "profileData") as? [String]{
             OldUser = x

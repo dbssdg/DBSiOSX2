@@ -118,7 +118,7 @@ class RealMapsViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         SettingsView.layer.zPosition = 10000
         
         //Settings Label
-        SettingsLabel.frame = C GRect(x: self.SettingsView.center.x - self.SettingsLabel.frame.width / 2, y:  SettingsView.frame.height * 0.15, width: 100, height: 100)
+        SettingsLabel.frame = CGRect(x: self.SettingsView.center.x - self.SettingsLabel.frame.width / 2, y:  SettingsView.frame.height * 0.15, width: 100, height: 100)
         SettingsLabel.text = "Maps Settings"
         SettingsLabel.textColor = UIColor.darkText
         SettingsLabel.font = UIFont.init(name: "Helvetica Light", size: 26)
