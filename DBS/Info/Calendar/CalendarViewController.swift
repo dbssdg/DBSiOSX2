@@ -23,6 +23,8 @@ struct events{
     
 }
 
+
+
 var PassingEvent = ("G7-G11 Mid-year Exam (4-19)", Date(), Date(), EventTypes.SE)
 
 var TodayEvent = [events] ()
