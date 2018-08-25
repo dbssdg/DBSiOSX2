@@ -55,7 +55,7 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
                 }
                 count += 1
             }
-            self.viewDidAppear(true)
+            self.scrollEventsToTop()
         }
         }
         
@@ -99,8 +99,7 @@ class AllEventsTableViewController: UITableViewController, UIViewControllerPrevi
     }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
+    func scrollEventsToTop() {
         
         if !EventsFromNow.isEmpty{
             tableView.scrollToRow(at: NextEventindexPath, at: .top, animated: false)
