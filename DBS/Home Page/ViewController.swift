@@ -64,7 +64,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         //Parse Events
         DispatchQueue.main.async {
             if EventsArray.isEmpty{
-        let path = Bundle.main.path(forResource: "2017 - 2018 School Events New", ofType: "csv")!
+        let path = Bundle.main.path(forResource: "2018-2019 Calendar Events", ofType: "csv")!
         let importer = CSVImporter<[String: String]>(path: path)
         
         

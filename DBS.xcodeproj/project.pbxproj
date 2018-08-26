@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E4A5B1F212FB9FB00902FBE /* Import Lessons 18-19.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */; };
+		3E7E4CE421328D2600AD5076 /* 2018-2019 Calendar Events.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3E7E4CE321328D2600AD5076 /* 2018-2019 Calendar Events.csv */; };
 		3EEA13741FF3D363004AFC3C /* DetailedEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */; };
 		3EEA13761FF4843C004AFC3C /* AllEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */; };
 		3EEA13781FF489B0004AFC3C /* AllEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */; };
@@ -67,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Import Lessons 18-19.csv"; sourceTree = "<group>"; };
+		3E7E4CE321328D2600AD5076 /* 2018-2019 Calendar Events.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2018-2019 Calendar Events.csv"; sourceTree = "<group>"; };
 		3EEA13731FF3D363004AFC3C /* DetailedEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		3EEA13751FF4843C004AFC3C /* AllEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventsTableViewController.swift; sourceTree = "<group>"; };
 		3EEA13771FF489B0004AFC3C /* AllEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				3E5C76C1204114FE008EF546 /* Profile */,
 				F82F00E81FEC9D0E00A19A61 /* descriptionsTableViewCell.swift */,
 				6A39AB611FCE2F8A00E0421F /* 2017 - 2018 School Events New.csv */,
+				3E7E4CE321328D2600AD5076 /* 2018-2019 Calendar Events.csv */,
 				3E4A5B1E212FB9FB00902FBE /* Import Lessons 18-19.csv */,
 				6AA819491F71FE8300FCA420 /* Main.storyboard */,
 				6AB55F521FC696E9000A2A3D /* Assets.xcassets */,
@@ -456,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A39AB621FCE2F8B00E0421F /* 2017 - 2018 School Events New.csv in Resources */,
+				3E7E4CE421328D2600AD5076 /* 2018-2019 Calendar Events.csv in Resources */,
 				6A7B445C1F86F9AD00227545 /* school.wav in Resources */,
 				6ACBB74A1F7DBF820086916E /* school.mid in Resources */,
 				6ACBB7481F7CC4290086916E /* hymn.mp3 in Resources */,
