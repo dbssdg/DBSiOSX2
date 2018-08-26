@@ -25,13 +25,9 @@ class timetableNoticeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        URLSession.shared.dataTask(with: URL(string: "http://www.dbs.edu.hk/index.php?section=calendar&listall=1")!) { (data, response, error) in
-//        if let url = URL(string: "http://www.dbs.edu.hk/index.php?section=calendar&listall=1") {
+        if let url = URL(string: "http://www.dbs.edu.hk/index.php?section=calendar&listall=1") {
             do {
-                var html : String?
-                if let data = data {
-                    html = String(data: data, encoding: .utf8)
-                }
+                let html = try? String(contentsOf: url)
                 DispatchQueue.main.async {
                     
                     self.textView.text = ""
@@ -49,7 +45,7 @@ class timetableNoticeViewController: UIViewController {
                     }
                 }
             }
-        }.resume()
+        }
     }
     
     override func didReceiveMemoryWarning() {

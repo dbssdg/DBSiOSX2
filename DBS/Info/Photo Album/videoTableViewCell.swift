@@ -11,6 +11,7 @@ import UIKit
 class videoTableViewCell: UITableViewCell {
 
     @IBOutlet weak var thumbnail: UIImageView!
+    
     @IBOutlet weak var videoTitle: UILabel!
     
     override func awakeFromNib() {
@@ -20,6 +21,7 @@ class videoTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
         // Configure the view for the selected state
     }
 

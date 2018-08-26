@@ -20,7 +20,7 @@ struct newsDetails : Decodable {
 var senderIsNews = false
 
 class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSessionDataDelegate {
-    
+
     var news : newsDetails?
     
     @IBOutlet var scrollView: UIScrollView!
@@ -68,7 +68,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             for i in self.news!.attachment[newsIndex] {
                 circularViewURL += "http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
             }
-            //            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
+//            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
             senderIsNews = true
             performSegue(withIdentifier: "News Attachment", sender: self)
         }
@@ -106,7 +106,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             nextNews.tintColor = UIColor.black
             nextNews.isEnabled = true
         }
-        
+
         if self.news != nil {
             
             attachmentsButton.title = "Attachments"
@@ -157,14 +157,14 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                 request.addValue("Keep-Alive", forHTTPHeaderField: "Connection")
                 
                 let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-                //            session.setValue("Keep-Alive", forKey: "Connection")
+    //            session.setValue("Keep-Alive", forKey: "Connection")
                 
-                //            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+    //            session.uploadTask(with: <#T##URLRequest#>, fromFile: url!, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
                 
                 session.dataTask(with: url!) { (data, response, error) in
                     do {
                         if var data = data {
-                            
+                        
                             let dataString = String(data: data, encoding: .utf8)
                             data = dataString!.replacingOccurrences(of: "\"\"", with: "[]").data(using: .utf8)!
                             
@@ -172,25 +172,25 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                             
                             DispatchQueue.main.async {
                                 spinner.stopAnimating()
-                                self.updateData()
-                                self.newsImage.image = #imageLiteral(resourceName: "newsImage")
-                                self.newsImage.clipsToBounds = true
-                                if self.news!.image[newsIndex] != nil {
-                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
-                                }
+                                    self.updateData()
+                                    self.newsImage.image = #imageLiteral(resourceName: "newsImage")
+                                    self.newsImage.clipsToBounds = true
+                                    if self.news!.image[newsIndex] != nil {
+                                        self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                    }
                             }
                         }
                     } catch {
                         self.present(networkAlert, animated: true)
                         print(error)
                     }
-                    }.resume()
+                }.resume()
             }
         } else {
             present(networkAlert, animated: true)
-            
-        }
         
+        }
+       
         
         previousNews.tintColor = UIColor.lightGray
         previousNews.isEnabled = false
@@ -246,7 +246,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         sliderView.addSubview(bigA)
         
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if #available(iOS 11.0, *) {
@@ -357,15 +357,15 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     }
     
     /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
 
 extension UIImageView {

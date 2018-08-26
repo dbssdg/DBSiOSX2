@@ -47,7 +47,7 @@ class timetableViewController: UIViewController {
         }
         viewTimetableOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
         viewTimetableOutlet.isEnabled = true
-        
+    
     }
     @IBAction func backspace(_ sender: Any) {
         if (sender as AnyObject).currentTitle == "CLR" {
@@ -113,14 +113,8 @@ class timetableViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func goToTimetable() {
-        timetableChoice = self.navigationItem.rightBarButtonItem!.title!
-        performSegue(withIdentifier: "My Timetable", sender: self)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let teacherButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(goToTimetable))
         
         for i in formButtons {
             i.setTitleColor(.white, for: .normal)
@@ -152,9 +146,6 @@ class timetableViewController: UIViewController {
                 viewTimetableOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
                 viewTimetableOutlet.setTitle("View My Timetable", for: .normal)
                 viewTimetableOutlet.isEnabled = true
-            } else {
-                teacherButton.title = array[0] as? String
-                self.navigationItem.rightBarButtonItem  = teacherButton
             }
         }
         switch classDisplay.text! {
