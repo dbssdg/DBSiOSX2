@@ -1,5 +1,5 @@
 ## Diocesan Boys' School Software Development Group
-### DBS School App (iOS) Version 2.0 (Work in Progress)
+### DBS School App (iOS) Version 4.2(?)
 
 The DBS App, debuted in 2012, is the first student-developed app for a secondary school in Hong Kong. This app targets all students, teachers and old boys of [Diocesan Boys' School](http://www.dbs.edu.hk). The app is developed and maintained by the [DBS Software Development Group](http://cl.dbs.edu.hk).
 
