@@ -18,7 +18,7 @@ var imageArray = [UIImage?]()
 
 class photoCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerPreviewingDelegate {
     
-
+    
     @IBOutlet weak var photoCollection: UICollectionView!
     var photoAlbum : PhotoCollection?
     let titleView = UILabel()
@@ -30,12 +30,12 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         imageArray.removeAll()
         photoSelected = 0
         print(imageArray.isEmpty)
-//        if !imageArray.isEmpty {
-//            imageArray.removeAll()
-//        }
+        //        if !imageArray.isEmpty {
+        //            imageArray.removeAll()
+        //        }
         photoCollection.setContentOffset(CGPoint(x:0, y:0), animated: false)
         if isInternetAvailable() {
-        
+            
             URLSession.shared.dataTask(with: URL(string: "https://graph.facebook.com/\((albumAlbum?.data[albumSelected]["id"])!)/photos?limit=1000&access_token=\(photoToken)")!) { (data, response, error) in
                 do {
                     
@@ -43,10 +43,10 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                     DispatchQueue.main.async {
                         self.photoCollection.reloadData()
-//                        usleep(50000)
-//                        for i in 0..<(self.photoAlbum?.data.count)!-1 {
-//                            self.photoCollection.scrollToItem(at: [0,i], at: .bottom, animated: false)
-//                        }
+                        //                        usleep(50000)
+                        //                        for i in 0..<(self.photoAlbum?.data.count)!-1 {
+                        //                            self.photoCollection.scrollToItem(at: [0,i], at: .bottom, animated: false)
+                        //                        }
                         
                         for i in 0..<self.collectionView(self.photoCollection, numberOfItemsInSection: 0) {
                             let iv = UIImageView()
@@ -54,9 +54,9 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                         }
                         self.photoCollection.scrollToItem(at: [0,0], at: .top, animated: false)
                         
-//                        for i in 0..<(self.photoAlbum?.data)!.count {
-//                            imageArray += [(self.photoCollection.cellForItem(at: [0, i]) as! photoCollectionViewCell).image.image!]
-//                        }
+                        //                        for i in 0..<(self.photoAlbum?.data)!.count {
+                        //                            imageArray += [(self.photoCollection.cellForItem(at: [0, i]) as! photoCollectionViewCell).image.image!]
+                        //                        }
                         for _ in (self.photoAlbum?.data)! {
                             imageArray += [nil]
                         }
@@ -65,7 +65,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                 } catch {
                     print("ERROR")
                 }
-            }.resume()
+                }.resume()
             
         }
         
@@ -89,7 +89,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.registerForPreviewing(with: self, sourceView: photoCollection!)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -116,7 +116,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! photoCollectionViewCell
-//        getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
+        //        getImage("http://graph.facebook.com/\((photoAlbum?.data[indexPath.row]["id"])!)/picture", cell.image, indexPath.row)
         cell.backgroundColor = .gray
         cell.image.image = imageArray[indexPath.row]
         return cell
@@ -133,15 +133,15 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func getImage(_ urlString: String, _ imageView: UIImageView, _ index: Int) {
         
-//        let spinner = UIActivityIndicatorView()
-//        spinner.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.width/3)
-//        spinner.activityIndicatorViewStyle = .white
-//        spinner.center = CGPoint(x: spinner.frame.size.width / 2, y: spinner.frame.size.height / 2)
-//        spinner.backgroundColor = UIColor.gray
-//        spinner.startAnimating()
-//        spinner.hidesWhenStopped = true
-//        spinner.layer.zPosition = 100000
-//        imageView.addSubview(spinner)
+        //        let spinner = UIActivityIndicatorView()
+        //        spinner.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.width/3)
+        //        spinner.activityIndicatorViewStyle = .white
+        //        spinner.center = CGPoint(x: spinner.frame.size.width / 2, y: spinner.frame.size.height / 2)
+        //        spinner.backgroundColor = UIColor.gray
+        //        spinner.startAnimating()
+        //        spinner.hidesWhenStopped = true
+        //        spinner.layer.zPosition = 100000
+        //        imageView.addSubview(spinner)
         
         let url : URL = URL(string: urlString)!
         let session = URLSession.shared
@@ -157,7 +157,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                             imageArray[index] = imageOut
                         }
                         self.photoCollection.reloadData()
-//                        spinner.stopAnimating()
+                        //                        spinner.stopAnimating()
                     })
                 }
             } else {
@@ -173,7 +173,7 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         guard let indexPath = photoCollection.indexPathForItem(at: location) else{
-             return nil
+            return nil
         }
         
         previewingContext.sourceRect = photoCollection.cellForItem(at: indexPath)!.frame
@@ -195,11 +195,11 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
                 }
                 print("scrolled to item")
             }
-
+            
             return destViewController
         }
         
-       return nil
+        return nil
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
@@ -227,13 +227,13 @@ class photoCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

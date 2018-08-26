@@ -43,7 +43,7 @@ var photoToken = String()
 var albumAlbum : AlbumCollection?
 
 class albumViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerPreviewingDelegate, UIWebViewDelegate, TwicketSegmentedControlDelegate {
-
+    
     var selectedSegment = 0
     @IBOutlet weak var videoTable: UITableView!
     @IBOutlet weak var albumCollection: UICollectionView!
@@ -74,10 +74,13 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.addSubview(spinner)
         
         if isInternetAvailable() {
-        
-            if let url = URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt") {
+            
+            URLSession.shared.dataTask(with: URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt")!) { (data, response, error) in
+//            if let url = URL(string: "http://cl.dbs.edu.hk/iphone/links/photo.txt") {
                 do {
-                    self.base = try String(contentsOf: url)
+                    if let data = data {
+                        self.base = String(data: data, encoding: .utf8)
+                    }
                     print(self.base)
                     
                     DispatchQueue.main.async {
@@ -106,24 +109,24 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                                         } catch {
                                             print("ERROR PHOTO")
                                         }
-                                    }.resume()
+                                        }.resume()
                                 }
                                 
                             } catch {
                                 print("ERROR TOKEN")
                             }
-                        }.resume()
+                            }.resume()
                         
                     }
                     
                 } catch {
                     let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
-                    func backToChoosePage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
+                    func backToChoosePage(action: UIAlertAction) { self.navigationController?.popViewController(animated: true) }
                     networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: backToChoosePage))
-                    present(networkAlert, animated: true)
+                    self.present(networkAlert, animated: true)
                     print("ERROR BASE")
                 }
-            }
+            }.resume()
             
             URLSession.shared.dataTask(with: videoURL) { (data, response, error) in
                 do {
@@ -139,8 +142,8 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 } catch {
                     print("ERROR VIDEO")
                 }
-            }.resume()
-        
+                }.resume()
+            
         } else {
             let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
             func backToChoosePage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
@@ -150,7 +153,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
-        layout.itemSize = CGSize(width: (self.view.frame.width-2)/2, height: (self.view.frame.width-2)/2)
+        layout.itemSize = CGSize(width: (self.view.frame.width-2)/2, height: (self.view.frame.width-2)/2*4/3)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         albumCollection!.collectionViewLayout = layout
@@ -163,7 +166,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         didSelect(0)
@@ -172,7 +175,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        imageArray.removeAll()
+        //        imageArray.removeAll()
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
         }
@@ -197,7 +200,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getImage("http://graph.facebook.com/\((albumAlbum?.data[indexPath.row]["id"])!)/picture", cell.image)
         cell.albumDescription.text = albumAlbum?.data[indexPath.row]["name"]
         cell.albumDescription.numberOfLines = 0
-        cell.albumDescription.adjustsFontSizeToFitWidth = true
+//        cell.albumDescription.adjustsFontSizeToFitWidth = true
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -215,7 +218,7 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoCell") as! videoTableViewCell
         getImage((self.videoCollection?.items[indexPath.row].snippet.thumbnails["medium"]?.url)!, cell.thumbnail)
         cell.videoTitle?.text = self.videoCollection?.items[indexPath.row].snippet.title
-        cell.videoTitle?.adjustsFontSizeToFitWidth = true
+//        cell.videoTitle?.adjustsFontSizeToFitWidth = true
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -353,14 +356,14 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             
             for subview in self.view.subviews {
-            if let segmentedControl = (subview as? TwicketSegmentedControl) {
-            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
-            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
-                segmentedControl.removeFromSuperview()
-                setUpSegmentedControl()
-            }
-            }
-            }
+                if let segmentedControl = (subview as? TwicketSegmentedControl) {
+                    if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                        if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                            segmentedControl.removeFromSuperview()
+                            setUpSegmentedControl()
+                        }
+                    }
+                }
             }
             
         }
@@ -388,13 +391,13 @@ class albumViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
 }

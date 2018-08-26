@@ -1,0 +1,7 @@
+Dimensions of Screenshots shown on App Store
+
+iPhone X (5.8" screen):		1125 x 2436
+iPhone 8 Plus (5.5" screen):	1142 x 2208
+
+To see more...
+https://help.apple.com.app-store-connect/#devd274dd925

@@ -1,4 +1,7 @@
 //
+//  Globals.swift
+//  HandySwift
+//
 //  Created by Cihat Gündüz on 07.06.16.
 //  Copyright © 2016 Flinesoft. All rights reserved.
 //

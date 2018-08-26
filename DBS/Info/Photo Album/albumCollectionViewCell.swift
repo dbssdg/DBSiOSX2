@@ -13,4 +13,8 @@ class albumCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var albumDescription: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        image.layer.cornerRadius = image.frame.height/16
+    }
 }

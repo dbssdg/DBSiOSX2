@@ -1,4 +1,7 @@
 //
+//  FrequencyTable.swift
+//  HandySwift
+//
 //  Created by Cihat Gündüz on 03.01.16.
 //  Copyright © 2016 Flinesoft. All rights reserved.
 //
