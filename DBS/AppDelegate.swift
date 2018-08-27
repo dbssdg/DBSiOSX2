@@ -10,8 +10,6 @@ import UIKit
 import AVFoundation
  
 var EventsArray = [events]()
-var AllTeacherTimetables = [TeacherTimetable]()
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

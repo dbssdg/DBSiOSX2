@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SystemConfiguration
-
 
 var functions = ["Links, Contact & Steps", "School Rules", "Photo Album", "Teachers", "Classmates", "School Hymn", "Acknowledgements"]
 var functionIcon = ["worldwide", "SchoolRules", "photos-1", "Teacher", "Student", "piano", "star"]
@@ -96,7 +94,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
 //            performSegue(withIdentifier: "School Rules Segue", sender: self)
 //        }
 //        shortcutItemIdentifier = "false"
-//        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -104,40 +102,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         tabBarPage = 2
     }
     
-    
-    func isInternetAvailable() -> Bool {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        
-        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
-            }
-        }
-        
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            return false
-        }
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
-    }
-    
-
-    
-    func addingCalendar(){
-        let StringURL = "https://calendar.google.com/calendar/ical/g.dbs.edu.hk_tdmjqqq8vlv8keepi7a65f7j7s%40group.calendar.google.com/public/basic.ics"
-        let url = URL(string: StringURL)!
-        if isInternetAvailable(){
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }else{
-            let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
-            networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(networkAlert, animated: true)
-        }
-    }
     
     func UISetup() {
         let selfWidth = self.view.frame.width
@@ -161,8 +125,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         calendar.clipsToBounds = true
         calendar.layer.frame = CGRect(x: ButtonGap  , y: ButtonGap, width: ButtonSize, height: ButtonSize)
         self.registerForPreviewing(with: self, sourceView: calendar)
-        calendar.addTarget(self, action: #selector(addingCalendar), for: .touchUpInside)
-        
         
         about.layer.cornerRadius = Radius
         about.clipsToBounds = true
@@ -230,7 +192,6 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             loginAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: goToLoginPage))
             present(loginAlert, animated: true)
         } else {
-            
             performSegue(withIdentifier: "\(functions[indexPath.row]) Segue", sender: self)
         }
         
@@ -281,12 +242,12 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }else if previewingContext.sourceView == calendar{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Calendar") as! CalendarViewController
-            return nil
+            return destViewController
         }else if previewingContext.sourceView == about{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About DBS") as! aboutDBSViewController
             return destViewController
         }else if previewingContext.sourceView == map{
-            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! RealMapsViewController
+            let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Map") as! MapsViewController
             return destViewController
         }else if previewingContext.sourceView == timetable{
             let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Timetable") as! timetableViewController
