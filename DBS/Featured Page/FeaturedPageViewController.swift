@@ -36,14 +36,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     var isSearching = false
     
     /*
-    var circulars = [String : [String : String]]()
-    var circularTimeArray = [String]()
-    var circularTitleArray = [String]()
-    
-    var news : newsData?
-    var newsTitleArray = [String]()
-    var newsDateArray = [String]()
-    */
+     var circulars = [String : [String : String]]()
+     var circularTimeArray = [String]()
+     var circularTitleArray = [String]()
+     
+     var news : newsData?
+     var newsTitleArray = [String]()
+     var newsDateArray = [String]()
+     */
     
     var filteredCirculars = [String]()
     var filteredNews = [String]()
@@ -78,7 +78,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                 if data != nil {
                     do {
                         circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
-                    
+                        
                         pinnedCircular = 2
                         for i in 1...circulars.values.count {
                             if circulars.count > circularTitleArray.count {
@@ -96,12 +96,12 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         print("ERROR")
                     }
                 }
-            }.resume()
+                }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
                 if data != nil {
                     do {
                         news = try JSONDecoder().decode(newsData.self, from: data!)
-                    
+                        
                         for i in (news?.title)! {
                             if (news?.title)!.count > newsTitleArray.count {
                                 newsTitleArray += [i]
@@ -118,21 +118,21 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                             self.featuredTable.reloadData()
                             print("\(newsTitleArray.count)A")
                         }
-                    
+                        
                     }
                     catch {
                         print("ERROR")
                     }
                 }
-            }.resume()
+                }.resume()
             
         } else {
             //present(networkAlert, animated: true)
-//            if newsDateArray.isEmpty{
-                featuredTable.reloadData()
-                removeSpinner(view: featuredTable)
-                setupSpinner(view: featuredTable)
-//            }
+            //            if newsDateArray.isEmpty{
+            featuredTable.reloadData()
+            removeSpinner(view: featuredTable)
+            setupSpinner(view: featuredTable)
+            //            }
         }
     }
     
@@ -169,13 +169,13 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        setUpSegmentedControl()
         
         tabBarPage = 1
         if segmentChanged{
             viewDidLoad()
             segmentChanged = false
         }
+        setUpSegmentedControl()
         
         for i in 1...20 {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)/10, execute: {
@@ -192,16 +192,16 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             })
         }
         
-//        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
-//            for i in self.view.subviews { if i.tag == 1 {
-//                (i as! TwicketSegmentedControl).isEnabled = false
-//                } }
-//            featuredTable.reloadData()
-//        }
-//
-//        for i in self.view.subviews { if i.tag == 1 {
-//            (i as! TwicketSegmentedControl).isEnabled = true
-//            } }
+        //        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
+        //            for i in self.view.subviews { if i.tag == 1 {
+        //                (i as! TwicketSegmentedControl).isEnabled = false
+        //                } }
+        //            featuredTable.reloadData()
+        //        }
+        //
+        //        for i in self.view.subviews { if i.tag == 1 {
+        //            (i as! TwicketSegmentedControl).isEnabled = true
+        //            } }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -278,7 +278,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         if selectedSegment == 0 {
             
             if isSearching {
-               let indexInNonFiltered = circularTitleArray.index(of: filteredCirculars[indexPath.row])
+                let indexInNonFiltered = circularTitleArray.index(of: filteredCirculars[indexPath.row])
                 circularViewURL = (circulars["\(indexInNonFiltered!+1)"]!["attach_url"]!)
             } else {
                 circularViewURL = (circulars["\(indexPath.row+1)"]!["attach_url"]!)
@@ -304,7 +304,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             searchBarTextDidEndEditing(featuredSearch.searchBar)
             featuredSearch.isActive = false
             performSegue(withIdentifier: "News Segue", sender: self)
-        
+            
         }
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         tableView.cellForRow(at: indexPath)?.selectionStyle = .default
@@ -349,10 +349,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         isSearching = false
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) { filteredCirculars = circularTitleArray.filter({ (text) -> Bool in
-            let tmp = text as NSString
-            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
-            return range.location != NSNotFound
-        })
+        let tmp = text as NSString
+        let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+        return range.location != NSNotFound
+    })
         filteredNews = newsTitleArray.filter({ (text) -> Bool in
             let tmp = text as NSString
             let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
@@ -364,6 +364,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
             isSearching = true
         }
         featuredTable.reloadData()
+        if (selectedSegment == 0 && !filteredCirculars.isEmpty) ||
+            (selectedSegment == 1 && !filteredNews.isEmpty) {
+            featuredTable.scrollToRow(at: [0,0], at: .top, animated: true)
+        }
     }
     
     func didSelect(_ segmentIndex: Int) {
@@ -378,8 +382,9 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         var hasSegmentedControl = false
         for subview in self.view.subviews {
-            if (subview as? TwicketSegmentedControl) != nil {
+            if let existingSC = (subview as? TwicketSegmentedControl) {
                 hasSegmentedControl = true
+                existingSC.move(to: selectedSegment)
             }
         }
         
@@ -402,14 +407,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             
             for subview in self.view.subviews {
-            if let segmentedControl = (subview as? TwicketSegmentedControl) {
-            if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
-            if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
-                segmentedControl.removeFromSuperview()
-                setUpSegmentedControl()
-            }
-            }
-            }
+                if let segmentedControl = (subview as? TwicketSegmentedControl) {
+                    if let tabBarY = self.tabBarController?.tabBar.frame.origin.y {
+                        if segmentedControl.frame.origin.y + segmentedControl.frame.height != tabBarY {
+                            segmentedControl.removeFromSuperview()
+                            setUpSegmentedControl()
+                        }
+                    }
+                }
             }
             
         }
@@ -418,13 +423,16 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func setupSpinner(view: UITableView) {
         
-        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height:40))
+        let spinner = UIActivityIndicatorView()
+        spinner.bounds.size.height = 40
+        spinner.bounds.size.width = 40
         spinner.activityIndicatorViewStyle = .gray
-        spinner.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         spinner.tag = 1000
         featuredTable.addSubview(spinner)
+        spinner.center = self.view.center
+        print("Spinner's frame:", spinner.frame)
         
         let label = UILabel(frame: CGRect(x: 0, y: spinner.frame.origin.y + 20, width: view.frame.width, height: 40))
         
@@ -455,7 +463,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
     
     func reloadTableData(_ refreshControl: UIRefreshControl) {
         ParseJSON()
-//        didSelect(0)
+        //        didSelect(0)
         featuredTable.reloadData()
         refreshControl.endRefreshing()
     }
@@ -479,11 +487,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
     }
-
+    
     
     
     
 }
 
-    
+
 

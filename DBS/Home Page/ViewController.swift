@@ -14,24 +14,6 @@ import SystemConfiguration
 struct ScrollViewDataStruct {
     let title : String?
 }
-
-struct TeacherTimetableLesson{
-    var initial : String
-    var day : Int
-    var period : Int
-    var subj1 : String
-    var class1 : String
-    var loc1 : String
-    var subj2 : String
-    var class2 : String
-    var loc2 : String
-}
-
-struct TeacherTimetable{
-    var initial : String
-    var lessons : [TeacherTimetableLesson]
-}
-
 var LoggedIn = Bool()
 var UserInformation = [String]()
 
@@ -52,7 +34,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     var CurrentTableIndex = 0 // Detect Current Table
- 
+    
     var eventsArray = [events]()
     var array = EventsArray
     var EventsAreLoaded = false
@@ -61,86 +43,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func ParseEvents(){
         if EventsArray.isEmpty{
-        //Parse Events
-        DispatchQueue.main.async {
-            if EventsArray.isEmpty{
-        let path = Bundle.main.path(forResource: "2018-2019 Calendar Events", ofType: "csv")!
-        let importer = CSVImporter<[String: String]>(path: path)
-        
-        
-        importer.startImportingRecords(structure: { (headerValues) -> Void in
-        }) { $0 }.onFinish { (importedRecords) in
-            for record in importedRecords {
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "d/M/yyyy"
-                let EventStartDate = formatter.date(from: record["Start Date"]!)
-                let EventEndDate = formatter.date(from: record["End Date"]!)
-                
-                let string = record["Title"]!
-                let input = string
-                var output = ""
-                var didColon = false
-                for i in input{
-                    if didColon{
-                        output += "\(i)"
-                    }
-                    if i == Character(":"){
-                        didColon = true
-                    }
-                }
-                output.removeFirst()
-                
-                
-                switch record["Type"]! {
-                case "PH" :
-                    EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .PH)]
-                    
-                    if EventStartDate! <= Date() && EventEndDate! >= Date(){
-                        TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .PH)]
-                    }
-                case "SH" :
-                    EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SH)]
-                    
-                    if EventStartDate! <= Date() && EventEndDate! >= Date(){
-                        TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SH)]
-
-                    }
-                    
-                case "SE" :
-                    EventsArray += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SE)]
-                    
-                    if EventStartDate! <= Date() && EventEndDate! >= Date(){
-                        TodayEvent += [events(Title: output, StartDate: EventStartDate!, EndDate: EventEndDate!, EventType: .SE)]
-                    }
-                    
-                default:
-                    print("ERROR")
-                }
-            }
-        }
-    }
-    }
-}
-    //Events From Now
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        self.array = EventsArray
-        for i in EventsArray{
-            if i.EndDate > Date(){
-                EventsFromNow += [i]
-            }
-        }
-    }
-        
-}
-    
-    func ParseTeacherTimetableCSV(){
-        var AllLessons = [TeacherTimetableLesson] ()
-        
-        if AllTeacherTimetables.isEmpty{
+            //Parse Events
             DispatchQueue.main.async {
-                if AllLessons.isEmpty{
-                    let path = Bundle.main.path(forResource: "Import Lessons 18-19", ofType: "csv")!
+                if EventsArray.isEmpty{
+                    let path = Bundle.main.path(forResource: "importCalendar", ofType: "csv")!
                     let importer = CSVImporter<[String: String]>(path: path)
                     
                     
@@ -148,7 +54,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     }) { $0 }.onFinish { (importedRecords) in
                         for record in importedRecords {
                             
-                            /*
                             let formatter = DateFormatter()
                             formatter.dateFormat = "d/M/yyyy"
                             let EventStartDate = formatter.date(from: record["Start Date"]!)
@@ -194,83 +99,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             default:
                                 print("ERROR")
                             }
-                        
- */
-                            let initial = record["initial"]!
-                            
-                            var day = 0
-                            if let IntDay = Int(record["day"]!){
-                                day = IntDay
-                            }
-                            
-                            var period = 0
-                            if let IntPeriod = Int(record["period"]!){
-                                period = IntPeriod
-                            }
-                            
-                            let subj1 = record["subj1"]!
-                            
-                            let class1 = record["class1"]!
-                            
-                            let loc1 = record["loc1"]!
-                            
-                            let subj2 = record["subj2"]!
-                            
-                            let class2 = record["class2"]!
-                            
-                            let loc2 = record["loc2"]!
-                            
-                            let Lesson = TeacherTimetableLesson(initial: initial, day: day, period: period, subj1: subj1, class1: class1, loc1: loc1, subj2: subj2, class2: class2, loc2: loc2)
-                            
-                            AllLessons += [Lesson]
-                            
-                           
-                            
-                            
+                        }
                     }
-                        //All lessons not empty here
-                        
-                        
-                        
-                        for Lesson in AllLessons{
-                            
-                            var HasAddedTeacher = false
-                            
-                            for i in AllTeacherTimetables{
-                                
-                                if i.initial == Lesson.initial{
-                                    
-                                    HasAddedTeacher = true
-                                }
-                            }
-                            
-                            if HasAddedTeacher{
-                                
-                                var count = 0
-                                for i in AllTeacherTimetables{
-                                    if i.initial == Lesson.initial{
-                                        AllTeacherTimetables[count].lessons += [Lesson]
-                                    }
-                                    count += 1
-                                }
-                            }else{
-                                AllTeacherTimetables += [TeacherTimetable(initial: Lesson.initial, lessons: [Lesson])]
-                                
-                            }
-                    }
-                        
-                        
-                        
-                    }
-                    
+                }
             }
-                
-    }
-           
         }
-       
+        //Events From Now
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.array = EventsArray
+            for i in EventsArray{
+                if i.EndDate > Date(){
+                    EventsFromNow += [i]
+                }
+            }
+        }
     }
-    
     
     func ParseNewsCurriculars(){
         let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
@@ -283,46 +126,46 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         if isInternetAvailable(){
             if circulars.isEmpty{
-            URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
-                do {
-                    if data != nil{
-                    circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
-                    for i in 1...circulars.values.count {
-                        if circulars.count > circularTitleArray.count {
-                            circularTimeArray += [(circulars["\(i)"]!["time"]!)]
-                            circularTitleArray += [(circulars["\(i)"]!["title"]!)]
+                URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
+                    do {
+                        if data != nil{
+                            circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
+                            for i in 1...circulars.values.count {
+                                if circulars.count > circularTitleArray.count {
+                                    circularTimeArray += [(circulars["\(i)"]!["time"]!)]
+                                    circularTitleArray += [(circulars["\(i)"]!["title"]!)]
+                                }
+                            }
                         }
+                    } catch {
+                        print("ERROR")
                     }
-                    }
-                } catch {
-                    print("ERROR")
-                }
-                }.resume()
+                    }.resume()
             }
             
             if news == nil || newsTitleArray.isEmpty{
-            URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
-                do {
-                    if data != nil{
-                    news = try JSONDecoder().decode(newsData.self, from: data!)
-                    for i in (news?.title)! {
-                        if (news?.title)!.count > newsTitleArray.count {
-                            newsTitleArray += [i]
+                URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
+                    do {
+                        if data != nil{
+                            news = try JSONDecoder().decode(newsData.self, from: data!)
+                            for i in (news?.title)! {
+                                if (news?.title)!.count > newsTitleArray.count {
+                                    newsTitleArray += [i]
+                                }
+                            }
+                            for i in (news?.date)! {
+                                var newsDate = String(describing: Date(timeIntervalSince1970: Double(i)!))
+                                newsDate.removeLast(15)
+                                let dateArr = newsDate.split(separator: "-")
+                                let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+                                newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
+                            }
                         }
                     }
-                    for i in (news?.date)! {
-                        var newsDate = String(describing: Date(timeIntervalSince1970: Double(i)!))
-                        newsDate.removeLast(15)
-                        let dateArr = newsDate.split(separator: "-")
-                        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-                        newsDateArray += ["\(months[Int(dateArr[1])!-1]) \(Int(dateArr[2])!), \(dateArr[0])"]
+                    catch {
+                        print("ERROR")
                     }
-                }
-                }
-                catch {
-                    print("ERROR")
-                }
-                }.resume()
+                    }.resume()
             }
         }
     }
@@ -339,41 +182,41 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             CurrentClass.removeLast(3)
             
             
-        if timetable == nil || (timetableChoice != CurrentClass) || OldClass != UserInformation[3]{
-        
-        timetableChoice = CurrentClass
-            
-        let input = "\(UserInformation[3])"
-        OldClass = UserInformation[3]
-        
-        var GradeString = "\(input)"
-        GradeString.removeLast(4)
-        GradeString.removeFirst()
-        
-        var ClassString1 = "\(input)"
-        ClassString1.removeLast(3)
-            
-        let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
-        let url = URL(string: jsonURL)
-            DispatchQueue.main.async {
-                if self.isInternetAvailable(){
-                    
-                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                        do {
-                            if data != nil {
-                                timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
-                            }
-                            
-                        } catch {
-                            print("ERROR")
-                        }
-                    }.resume()
-                }
+            if timetable == nil || (timetableChoice != CurrentClass) || OldClass != UserInformation[3]{
                 
+                timetableChoice = CurrentClass
+                
+                let input = "\(UserInformation[3])"
+                OldClass = UserInformation[3]
+                
+                var GradeString = "\(input)"
+                GradeString.removeLast(4)
+                GradeString.removeFirst()
+                
+                var ClassString1 = "\(input)"
+                ClassString1.removeLast(3)
+                
+                let jsonURL = "http://cl.dbs.edu.hk/mobile/common/timetable/timetable\(GradeString).json"
+                let url = URL(string: jsonURL)
+                DispatchQueue.main.async {
+                    if self.isInternetAvailable(){
+                        
+                        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                            do {
+                                if data != nil {
+                                    timetable = try JSONDecoder().decode(TimetableJSON.self, from: data!)
+                                }
+                                
+                            } catch {
+                                print("ERROR")
+                            }
+                            }.resume()
+                    }
+                    
+                }
             }
         }
     }
-}
     
     @objc func GoToTimetable(){
         
@@ -388,9 +231,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     @IBOutlet weak var scrollView: UIScrollView!
     
     var scrollViewLoggedInData = [ScrollViewDataStruct.init(title: "Timetable"),
-                          ScrollViewDataStruct.init(title: "Upcoming"),
-                          ScrollViewDataStruct.init(title: "Circular"),
-                          ScrollViewDataStruct.init(title: "News")]
+                                  ScrollViewDataStruct.init(title: "Upcoming"),
+                                  ScrollViewDataStruct.init(title: "Circular"),
+                                  ScrollViewDataStruct.init(title: "News")]
     
     var scrollViewData = [ScrollViewDataStruct.init(title: "Upcoming"),
                           ScrollViewDataStruct.init(title: "Circular"),
@@ -402,13 +245,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     var ViewTimesLoaded = 0
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
         
         if let x = UserDefaults.standard.array(forKey: "profileData") as? [String]{
             OldUser = x
@@ -428,8 +267,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         scrollView.delegate = self
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-            self.UISetup()   
-    }
+            self.UISetup()
+        }
     }
     
     func ScrollLeft(){
@@ -784,42 +623,41 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 DispatchQueue.main.async {
                     if timetable == nil{
                         self.ParseTimetable()
-                        self.ParseTeacherTimetableCSV()
                     }
                 }
                 
-              
-            //Date
-            var DayToDisplay = 0
-            var calendar = Calendar(identifier: .gregorian)
-            calendar.firstWeekday = -1
-            
-            let CurrentDay = calendar.component(.weekday, from: Date()) - 1
+                
+                //Date
+                var DayToDisplay = 0
+                var calendar = Calendar(identifier: .gregorian)
+                calendar.firstWeekday = -1
+                
+                let CurrentDay = calendar.component(.weekday, from: Date()) - 1
                 let _ : DateFormatter = {
-                let dateFormatter  = DateFormatter()
-                dateFormatter.timeZone = Calendar.current.timeZone
-                dateFormatter.locale = Calendar.current.locale
-                dateFormatter.dateFormat = "HH:mm"
-                return dateFormatter
-            }()
+                    let dateFormatter  = DateFormatter()
+                    dateFormatter.timeZone = Calendar.current.timeZone
+                    dateFormatter.locale = Calendar.current.locale
+                    dateFormatter.dateFormat = "HH:mm"
+                    return dateFormatter
+                }()
                 
-            let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
-            DayToDisplay = CurrentDay
+                let TimeBoundary = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: Date())
+                DayToDisplay = CurrentDay
                 
-            if Date() < TimeBoundary!{
-                
-                DayToDisplay -= 1
-                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
-                    DayToDisplay = 0
+                if Date() < TimeBoundary!{
+                    
+                    DayToDisplay -= 1
+                    if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == -1{
+                        DayToDisplay = 0
+                    }
+                }else{
+                    
+                    if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
+                        DayToDisplay = 0
+                    }
                 }
-            }else{
                 
-                if DayToDisplay == 5 || DayToDisplay == 6 || DayToDisplay == 7{
-                    DayToDisplay = 0
-                }
-            }
-            
-            //Class
+                //Class
                 var Class = "S"
                 
                 let input = "\(UserInformation[3])"
@@ -834,12 +672,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                 Class = ClassString
                 Class = "\(Class.last!)"
- 
                 
-             //Elective
+                
+                //Elective
                 var isElective = false
                 
-            //Adoption
+                //Adoption
                 let CalendarCalendar = Calendar(identifier: .gregorian)
                 
                 let formatter = DateFormatter()
@@ -854,50 +692,50 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
                     DayToDisplay = 2
                 }
-            
-            if indexPath.row == 0{
-                switch DayToDisplay{
+                
+                if indexPath.row == 0{
+                    switch DayToDisplay{
                     case 0: cell.textLabel?.text = "Monday's Timetable"
                     case 1: cell.textLabel?.text = "Tuesday's Timetable"
                     case 2: cell.textLabel?.text = "Wednesday's Timetable"
                     case 3: cell.textLabel?.text = "Thursday's Timetable"
                     case 4: cell.textLabel?.text = "Friday's Timetable"
+                        
+                    default:
+                        cell.textLabel?.text = "Monday's Timetable"
+                    }
                     
-                default:
-                    cell.textLabel?.text = "Monday's Timetable"
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
+                        cell.textLabel?.text = "30/4 Mon Adopts Tue Timetable"
+                    }
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
+                        cell.textLabel?.text = "14/5 Mon Adopts Fri Timetable"
+                    }
+                    
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                        cell.textLabel?.text = "4/6 Mon Adopts Wed Timetable"
+                    }
+                    
+                    cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)
+                    cell.textLabel?.font = UIFont.boldSystemFont(ofSize: BigFont)
+                    cell.textLabel?.textAlignment = .center
+                    return cell
                 }
                 
-                if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
-                    cell.textLabel?.text = "30/4 Mon Adopts Tue Timetable"
-                }
-                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
-                    cell.textLabel?.text = "14/5 Mon Adopts Fri Timetable"
-                }
                 
-                if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
-                    cell.textLabel?.text = "4/6 Mon Adopts Wed Timetable"
-                }
                 
-                cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)
-                cell.textLabel?.font = UIFont.boldSystemFont(ofSize: BigFont)
-                cell.textLabel?.textAlignment = .center
-                return cell
-            }
-            
-            
-                
-            //Subject
-            var out = ""
+                //Subject
+                var out = ""
                 if Grade >= 7 && Grade <= 9 {
                     formSection = classArrayLow
                 } else if Grade >= 10 && Grade <= 12 {
                     formSection = classArrayHigh
                 }
-            
-               
                 
-            if timetable != nil && formSection.contains(Class){
                 
+                
+                if timetable != nil && formSection.contains(Class){
+                    
                     
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
                         out += "\(i.decodeUrl()) | "
@@ -910,18 +748,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         isElective = true
                         out = "Elective"
                     }
-                let UpperCaseArray = ["FIS", "MACO", "MAM1", "MAM2", "BAFS", "D&T", "I&D", "ICT", "SCHD"]
-                
-                if !UpperCaseArray.contains(out){
-                    out = out.capitalized
-                }
-                
-                cell.textLabel?.text = out
-                cell.textLabel?.adjustsFontSizeToFitWidth = true
-                
-                out = ""
-                
-                
+                    let UpperCaseArray = ["FIS", "MACO", "MAM1", "MAM2", "BAFS", "D&T", "I&D", "ICT", "SCHD"]
+                    
+                    if !UpperCaseArray.contains(out){
+                        out = out.capitalized
+                    }
+                    
+                    cell.textLabel?.text = out
+                    cell.textLabel?.adjustsFontSizeToFitWidth = true
+                    
+                    out = ""
+                    
+                    
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].teacher)! {
                         out += "\(i.uppercased()) | "
                     }
@@ -930,22 +768,22 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     if isElective{
                         out = ""
                     }
-                
-                
-                
-                cell.detailTextLabel?.text = out
-                cell.detailTextLabel?.textColor = UIColor.gray
-                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
-                
-            }else{
-                tableView.separatorStyle = .none
-                cell.isUserInteractionEnabled = false
-                cell.textLabel?.text = ""
-                cell.detailTextLabel?.text = ""
-                tableView.reloadData()
-                setupSpinner(view: tableView)
-                ParseTimetable()
-                tableView.reloadData()
+                    
+                    
+                    
+                    cell.detailTextLabel?.text = out
+                    cell.detailTextLabel?.textColor = UIColor.gray
+                    cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
+                    
+                }else{
+                    tableView.separatorStyle = .none
+                    cell.isUserInteractionEnabled = false
+                    cell.textLabel?.text = ""
+                    cell.detailTextLabel?.text = ""
+                    tableView.reloadData()
+                    setupSpinner(view: tableView)
+                    ParseTimetable()
+                    tableView.reloadData()
                 }
                 
             }else{
@@ -958,18 +796,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 setupSpinner(view: tableView)
             }
             
-        //Upcoming
+            //Upcoming
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
             
             if EventsArray.isEmpty{
-            ParseEvents()
+                ParseEvents()
             }
             
             array = EventsFromNow
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-
+                
                 if indexPath.row < 4 {
-                if tableView.tag == 10001 - logInNumber{
+                    if tableView.tag == 10001 - logInNumber{
                         
                         if !array.isEmpty{
                             self.EventsAreLoaded = true
@@ -978,7 +816,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             
                             //Title
                             cell.textLabel!.text = array[indexPath.row].Title
-                            cell.textLabel!.adjustsFontSizeToFitWidth = true
+//                            cell.textLabel!.adjustsFontSizeToFitWidth = true
                             cell.textLabel!.numberOfLines = 2
                             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                             
@@ -1011,16 +849,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             }
                             
                         }else{
-                        tableView.separatorStyle = .none
-                        cell.isUserInteractionEnabled = false
-                        cell.textLabel?.text = ""
-                        cell.detailTextLabel?.text = ""
-                        tableView.reloadData()
-                        self.setupSpinner(view: tableView)
-                        self.ParseTimetable()
-                        tableView.reloadData()
+                            tableView.separatorStyle = .none
+                            cell.isUserInteractionEnabled = false
+                            cell.textLabel?.text = ""
+                            cell.detailTextLabel?.text = ""
+                            tableView.reloadData()
+                            self.setupSpinner(view: tableView)
+                            self.ParseTimetable()
+                            tableView.reloadData()
                         }
-                        }
+                    }
                     
                 }else{
                     
@@ -1029,13 +867,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
             if indexPath.row == 4{
-            scrollViewDidScroll(scrollView)
+                scrollViewDidScroll(scrollView)
             }
             
             
         }
-        
-        //Circular
+            
+            //Circular
         else if tableView.tag == self.scrollView.viewWithTag(10002 - logInNumber)!.tag{
             DispatchQueue.main.async{
                 if circulars.isEmpty{
@@ -1045,31 +883,31 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
-            if indexPath.row < 4{
-                
-                if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
+                if indexPath.row < 4{
                     
-                    //Title
-                    cell.textLabel!.text = circularTitleArray[indexPath.row]
-                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
-                    cell.textLabel?.numberOfLines = 2
-                    //cell.textLabel!.adjustsFontSizeToFitWidth = true
-                    
-                    //Subtitle
-                    let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy"
-                    if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
-                        cell.detailTextLabel?.text = ""
-                    } else {
-                        cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
-                    }
-                    cell.detailTextLabel!.textColor = UIColor.gray
-                    cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
-                    
-                    //Accessory Type
-                    cell.accessoryType = .disclosureIndicator
-                }else{
+                    if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
+                        
+                        //Title
+                        cell.textLabel!.text = circularTitleArray[indexPath.row]
+                        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                        cell.textLabel?.numberOfLines = 2
+                        //cell.textLabel!.adjustsFontSizeToFitWidth = true
+                        
+                        //Subtitle
+                        let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy"
+                        if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
+                            cell.detailTextLabel?.text = ""
+                        } else {
+                            cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
+                        }
+                        cell.detailTextLabel!.textColor = UIColor.gray
+                        cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
+                        
+                        //Accessory Type
+                        cell.accessoryType = .disclosureIndicator
+                    }else{
                         tableView.separatorStyle = .none
                         cell.isUserInteractionEnabled = false
                         cell.textLabel?.text = ""
@@ -1079,13 +917,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         ParseTimetable()
                         tableView.reloadData()
                     }
-                
-                
-            }else{
-                cell.textLabel!.text = "    See More..."
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
-            
-            }
+                    
+                    
+                }else{
+                    cell.textLabel!.text = "    See More..."
+                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                    
+                }
             }else{
                 tableView.separatorStyle = .none
                 cell.isUserInteractionEnabled = false
@@ -1096,8 +934,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
             
-        
-        //News
+            
+            //News
         }else if tableView.tag == self.scrollView.viewWithTag(10003 - logInNumber)!.tag{
             DispatchQueue.main.async{
                 if news == nil{
@@ -1107,26 +945,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             if isInternetAvailable(){
                 removeSpinner(view: tableView)
                 if !newsDateArray.isEmpty && !newsTitleArray.isEmpty{
-                if indexPath.row < 4{
-                   
-                
-                //Title
-                cell.textLabel!.text = newsTitleArray[indexPath.row]
-                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
-                //cell.textLabel!.adjustsFontSizeToFitWidth = true
-                cell.textLabel?.numberOfLines = 2
-                
-                //Subtitle
-                cell.detailTextLabel!.text = newsDateArray[indexPath.row]
-                cell.detailTextLabel!.textColor = UIColor.gray
-                cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
-                
-                //Accessory Type
-                cell.accessoryType = .disclosureIndicator
-                }else{
-                    cell.textLabel!.text = "    See More..."
-                    cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
-                    
+                    if indexPath.row < 4{
+                        
+                        
+                        //Title
+                        cell.textLabel!.text = newsTitleArray[indexPath.row]
+                        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                        //cell.textLabel!.adjustsFontSizeToFitWidth = true
+                        cell.textLabel?.numberOfLines = 2
+                        
+                        //Subtitle
+                        cell.detailTextLabel!.text = newsDateArray[indexPath.row]
+                        cell.detailTextLabel!.textColor = UIColor.gray
+                        cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
+                        
+                        //Accessory Type
+                        cell.accessoryType = .disclosureIndicator
+                    }else{
+                        cell.textLabel!.text = "    See More..."
+                        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
+                        
                     }
                 }else{
                     tableView.separatorStyle = .none
@@ -1137,20 +975,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     setupSpinner(view: tableView)
                     ParseTimetable()
                     tableView.reloadData()
+                }
+                
+                
+            }else{
+                
+                tableView.separatorStyle = .none
+                cell.textLabel?.text = ""
+                cell.detailTextLabel?.text = ""
+                cell.isUserInteractionEnabled = false
+                //tableView.reloadData()
+                setupSpinner(view: tableView)
             }
-            
-            
-        }else{
-            
-            tableView.separatorStyle = .none
-            cell.textLabel?.text = ""
-            cell.detailTextLabel?.text = ""
-            cell.isUserInteractionEnabled = false
-            //tableView.reloadData()
-            setupSpinner(view: tableView)
         }
-        }
- 
+        
         
         return cell
     }
@@ -1224,11 +1062,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     performSegue(withIdentifier: "Home to Circular Detailed", sender: self)
                 }
             }else{
+                destinationFeature = 0
                 if selectedSegment != 0{
                     selectedSegment = 0
                     segmentChanged = true
                 }
-                
+                selectedSegment = 0
                 tabBarController?.selectedIndex = 1
             }
         }
@@ -1329,28 +1168,28 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 DispatchQueue.main.async{
                     self.ParseEvents()
                     if self.scrollView.viewWithTag(10001 - logInNumber) != nil{
-                    (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
+                        (self.scrollView.viewWithTag(10001 - logInNumber)! as! UITableView).reloadData()
                     }
                 }
             }else if circulars.isEmpty{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
                     if self.scrollView.viewWithTag(10002 - logInNumber) != nil{
-                    (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
+                        (self.scrollView.viewWithTag(10002 - logInNumber)! as! UITableView).reloadData()
                     }
                 }
             }else if news == nil{
                 DispatchQueue.main.async{
                     self.ParseNewsCurriculars()
                     if self.scrollView.viewWithTag(10003 - logInNumber) != nil{
-                    (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
+                        (self.scrollView.viewWithTag(10003 - logInNumber)! as! UITableView).reloadData()
                     }
                 }
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             
-        let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
+            let Page = (UserDefaults.standard.integer(forKey: CurrenttableIndexKey))
             var page = CGFloat(Page)
             
             
@@ -1364,7 +1203,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }else if page <= 2{
                 self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
             }
-        
+            
             OldUser = UserInformation
         }
         
@@ -1380,9 +1219,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         print("DidDisappear", UserDefaults.standard.set(CurrentTableIndex, forKey: CurrenttableIndexKey))
     }
     
-        
     
-
+    
+    
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
@@ -1402,28 +1241,28 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         if let x = (self.scrollView.viewWithTag(10000 + CurrentTableIndex)! as! UITableView).indexPathForRow(at: location){
             indexPath = x
         }
-            if indexPath != nil{
-                
-                previewingContext.sourceRect = ((previewingContext.sourceView as! UITableView).cellForRow(at: indexPath!)?.frame)!
-                
-                let RealIndexPath = (indexPath?.row)!
-                
-                
-                if CurrentTableIndex == 0 - logInNumber{
-                    if isInternetAvailable() && timetable != nil{
-                        
+        if indexPath != nil{
+            
+            previewingContext.sourceRect = ((previewingContext.sourceView as! UITableView).cellForRow(at: indexPath!)?.frame)!
+            
+            let RealIndexPath = (indexPath?.row)!
+            
+            
+            if CurrentTableIndex == 0 - logInNumber{
+                if isInternetAvailable() && timetable != nil{
+                    
                     
                     timetableChoice = "\(UserInformation[3])"
                     timetableChoice.removeLast(3)
                     let destViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "My Timetable") as! myTimetableViewController
                     return destViewController
-                    }else{
-                        return nil
-                    }
-                    
-                }else if CurrentTableIndex == 1 - logInNumber{
-                    
-                    if !EventsArray.isEmpty{
+                }else{
+                    return nil
+                }
+                
+            }else if CurrentTableIndex == 1 - logInNumber{
+                
+                if !EventsArray.isEmpty{
                     if RealIndexPath < 4{
                         let event = EventsFromNow[RealIndexPath]
                         PassingEvent = (event.Title, event.StartDate, event.EndDate, event.EventType)
@@ -1432,13 +1271,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     }else{
                         return nil
                     }
-                    }else{
-                        return nil
-                    }
-                    
-                }else if CurrentTableIndex == 2 - logInNumber{
-                    
-                    if isInternetAvailable() && !circulars.isEmpty{
+                }else{
+                    return nil
+                }
+                
+            }else if CurrentTableIndex == 2 - logInNumber{
+                
+                if isInternetAvailable() && !circulars.isEmpty{
                     if RealIndexPath < 4{
                         circularViewURL = (circulars["\(RealIndexPath+1)"]!["attach_url"]!)
                         let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Circular Web") as! circularsWebViewController
@@ -1449,9 +1288,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }else{
                     return nil
                 }
-                }else if CurrentTableIndex == 3 - logInNumber{
-                    
-                    if isInternetAvailable() && !newsTitleArray.isEmpty{
+            }else if CurrentTableIndex == 3 - logInNumber{
+                
+                if isInternetAvailable() && !newsTitleArray.isEmpty{
                     if RealIndexPath < 4{
                         newsIndex = RealIndexPath
                         newsTotal = newsTitleArray.count
@@ -1460,14 +1299,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     }else{
                         return nil
                     }
-                    }else{
-                        return nil
-                    }
+                }else{
+                    return nil
                 }
-                
-            }else{
-                return nil
             }
+            
+        }else{
+            return nil
+        }
         
         return nil
     }
@@ -1479,17 +1318,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     func reloadAllTables(){
         for i in 10001...10003{
             if teacherOrStudent() == "s"{
-            let table = self.scrollView.viewWithTag(i)! as! UITableView
-            
-            var logInNumber = 0
-            if !LoggedIn || self.teacherOrStudent() == ""{
-                logInNumber = 1
-            }else{
-                logInNumber = 0
+                let table = self.scrollView.viewWithTag(i)! as! UITableView
+                
+                var logInNumber = 0
+                if !LoggedIn || self.teacherOrStudent() == ""{
+                    logInNumber = 1
+                }else{
+                    logInNumber = 0
+                }
+                
+                table.reloadData()
             }
-            
-            table.reloadData()
-        }
         }
     }
     
@@ -1499,9 +1338,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.viewDidLoad()
             self.ParseTimetable()
         }
-        }
-        
-        
+    }
+    
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -1556,7 +1395,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             if scrollView.contentOffset.x < self.view.frame.width{
                 HideArrow(tag: 50000)
             }else{
-               ShowArrow(tag: 50000)
+                ShowArrow(tag: 50000)
             }
             
             
@@ -1574,16 +1413,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         /*
-        if CurrentTableIndex == 1{
-            (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
-            (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
-            (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
-            
-            (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
-            (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
-            (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
-        }
- */
+         if CurrentTableIndex == 1{
+         (self.view.viewWithTag(50000)! as! UIButton).isEnabled = true
+         (self.view.viewWithTag(50000)! as! UIButton).isHidden = false
+         (self.view.viewWithTag(50000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+         
+         (self.view.viewWithTag(60000)! as! UIButton).isEnabled = true
+         (self.view.viewWithTag(60000)! as! UIButton).isHidden = false
+         (self.view.viewWithTag(60000)! as! UIButton).imageView?.tintColor.withAlphaComponent(0.6)
+         }
+         */
         
     }
     
