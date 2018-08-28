@@ -237,7 +237,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
                 classes.removeLast(3)
                 location.removeLast(3)
             }
-            let textLabelString = /*period + ".\t" + */String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + "-" + subject.components(separatedBy: " / ").removeDuplicates().joined())
+            let textLabelString = period + ".\t" + String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + " - " + subject.components(separatedBy: " / ").removeDuplicates().joined())
             cell.textLabel?.text = textLabelString
             
             cell.detailTextLabel?.text = location.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ")
