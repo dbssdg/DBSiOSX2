@@ -217,6 +217,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             }.resume()
                     }
                     
+<<<<<<< HEAD
                 }
             }
         }
@@ -311,6 +312,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         case "G9S": output = "562e7f70bd1620e1dff902a3d6c24bfa"
         case "G9T": output = "e49ca78131abb8cfe0822f354d6731ba"
         default: break
+=======
+                }
+            }
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
         }
         
         return URL(string: "http://www2.dbs.edu.hk/qschedule/qqexport.php?type=c&id=\(ofClass)&md5=\(ofClass)&md5=\(output)")!
@@ -722,12 +727,23 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             
             tableView.separatorStyle = .singleLine
+<<<<<<< HEAD
             
             let IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
             
             if /*isInternetAvailable()*/ true{
                 
               
+=======
+            if isInternetAvailable(){
+                
+                DispatchQueue.main.async {
+                    if timetable == nil{
+                        self.ParseTimetable()
+                    }
+                }
+                
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                 
                 //Date
                 var DayToDisplay = 0
@@ -792,7 +808,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     (CalendarCalendar.isDateInToday(formatter.date(from: "21 11 2018")!) && Date() > TimeBoundary!){
                     DayToDisplay = 4
                 }
+<<<<<<< HEAD
                
+=======
+                if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                    DayToDisplay = 2
+                }
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                 
                 if indexPath.row == 0{
                     switch DayToDisplay{
@@ -806,19 +828,37 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         cell.textLabel?.text = "Monday's Timetable"
                     }
                     
+<<<<<<< HEAD
                     if (CalendarCalendar.isDateInToday(formatter.date(from: "22 11 2018")!) && Date() < TimeBoundary!) ||
                         (CalendarCalendar.isDateInToday(formatter.date(from: "21 11 2018")!) && Date() > TimeBoundary!){
                         cell.textLabel?.text = "22/11 Thu Adopts Fri Timetable"
                     }
                    
+=======
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
+                        cell.textLabel?.text = "30/4 Mon Adopts Tue Timetable"
+                    }
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
+                        cell.textLabel?.text = "14/5 Mon Adopts Fri Timetable"
+                    }
+                    
+                    if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
+                        cell.textLabel?.text = "4/6 Mon Adopts Wed Timetable"
+                    }
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                     
                     cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)
                     cell.textLabel?.font = UIFont.boldSystemFont(ofSize: BigFont)
                     cell.textLabel?.textAlignment = .center
                     return cell
                 }
+<<<<<<< HEAD
                 
                
+=======
+                
+                
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                 
                 //Subject
                 var out = ""
@@ -828,6 +868,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     formSection = classArrayHigh
                 }
                 
+<<<<<<< HEAD
                 let period = "\(indexPath.row)"
                 
                 
@@ -935,6 +976,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             
                             }.resume()
                         
+=======
+                
+                
+                if timetable != nil && formSection.contains(Class){
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                     
                     
                 
@@ -971,11 +1017,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         out = ""
                     }
                     
+<<<<<<< HEAD
                     */
                     
                     
                 
             
+=======
+                    
+                    
+                    cell.detailTextLabel?.text = out
+                    cell.detailTextLabel?.textColor = UIColor.gray
+                    cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
+                    
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                 }else{
                     tableView.separatorStyle = .none
                     cell.isUserInteractionEnabled = false
@@ -983,10 +1038,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.detailTextLabel?.text = ""
                     tableView.reloadData()
                     setupSpinner(view: tableView)
+<<<<<<< HEAD
                     //ParseTimetable()
                     tableView.reloadData()
             }
         
+=======
+                    ParseTimetable()
+                    tableView.reloadData()
+                }
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                 
             }else{
                 
@@ -1057,7 +1118,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             cell.detailTextLabel?.text = ""
                             tableView.reloadData()
                             self.setupSpinner(view: tableView)
+<<<<<<< HEAD
                             //self.ParseTimetable()
+=======
+                            self.ParseTimetable()
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
                             tableView.reloadData()
                         }
                     }
@@ -1541,7 +1606,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.viewDidLoad()
+<<<<<<< HEAD
             //self.ParseTimetable()
+=======
+            self.ParseTimetable()
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
         }
     }
     

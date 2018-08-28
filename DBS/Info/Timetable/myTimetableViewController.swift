@@ -225,9 +225,12 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             if output != "" && teacherOutput != "" {
                 output.removeLast(3)
                 teacherOutput.removeLast(3)
+<<<<<<< HEAD
             }else{
                 output = "Activity Period"
                 teacherOutput = ""
+=======
+>>>>>>> 7f2aaf94f4d4ccb51712fac8f26b7690cc69a00c
             }
             cell.textLabel?.text = output
             cell.detailTextLabel?.text = teacherOutput
