@@ -33,6 +33,7 @@ let CurrenttableIndexKey = "CurrenttableIndexKey"
 class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate{
     
     
+    
     var CurrentTableIndex = 0 // Detect Current Table
     
     var eventsArray = [events]()
@@ -40,6 +41,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     var EventsAreLoaded = false
     
     var destinationFeature = 0
+    
+    var lessonArray = [[String]]()
     
     func ParseEvents(){
         if EventsArray.isEmpty{
@@ -172,6 +175,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func ParseTimetable (){
         
+        /*
         if let User = UserDefaults.standard.array(forKey: "profileData"){
             UserInformation = User as! [String]
         }
@@ -216,6 +220,100 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 }
             }
         }
+        */
+        //if Int("\(timetableChoice[timetableChoice.index(timetableChoice.startIndex, offsetBy: 1)])") == nil {
+        /*if teacherOrStudent() == "t" {
+            
+            let url = URL(fileURLWithPath: Bundle.main.path(forResource: "import_lesson", ofType: "csv")!)
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\r\n"))!
+                for row in rows {
+                    let rowInfos = "\(row)".split(separator: ",")
+                    var rowInfosInString = [String]()
+                    for cell in rowInfos {
+                        rowInfosInString += ["\(cell)"]
+                    }
+                    self.lessonArray += [rowInfosInString]
+                }
+                }.resume()
+            
+        } else {
+            
+            URLSession.shared.dataTask(with: timetableLink(ofClass: "G9D")) { (data, response, error) in
+                if let data = data {
+                    let rows = (String(data: data, encoding: .utf8)?.components(separatedBy: "<br />"))!
+                    for row in rows {
+                        let rowInfos = "\(row)".split(separator: "|")
+                        var rowInfosInString = [String]()
+                        for cell in rowInfos {
+                            rowInfosInString += ["\(cell)"]
+                        }
+                        self.lessonArray += [rowInfosInString]
+                    }
+                    self.lessonArray.removeLast()
+                    
+                }
+                
+                
+                
+                }.resume()
+            
+        }
+ */
+    }
+    
+    func timetableLink(ofClass: String) -> URL {
+        var output = ""
+        switch ofClass {
+        case "G10D": output = "f6e8f9da8ce06b07123eb2e992f2f132"
+        case "G10J": output = "3ef0b2151af2f3f20c4ca10026c5a58a"
+        case "G10M": output = "f2b06e8acfeb0dab3b6e2c77126a4f99"
+        case "G10P": output = "ce50124d1dc77859c90777d285a005b9"
+        case "G10S": output = "9af49fee2a011f2b3758d38c34ae4126"
+        case "G10T": output = "20e7d864ee295dc24f37223e031d7590"
+        case "G11D": output = "e2a701071a2a112a9ce83df4f4258b95"
+        case "G11J": output = "fefd62e1ba2278143eee5736c0521069"
+        case "G11M": output = "1dd97788b25fb81c568021aeeaa3eb53"
+        case "G11P": output = "13fc99faae6c2aa00ac888b9ca4fc911"
+        case "G11S": output = "89447e3306a9aacf062611202a271b00"
+        case "G11T": output = "3d6821c9bfb98a1a462bc73f75103db6"
+        case "G12D": output = "b219d793c23d2bba1e23b948e16740b5"
+        case "G12J": output = "f020a06dd1d71ef2fac145c794c471f1"
+        case "G12M": output = "114dbf938efa92e755b22fb8956111c1"
+        case "G12P": output = "8285a77458485836df931b9e09fad634"
+        case "G12S": output = "66145fabc8d52f3064e1dad1b8a6e032"
+        case "G12T": output = "dbc506ccac8c1552c53db355fb4c2345"
+        case "G7A": output = "b7a93faffaa9228efb616c2dbd88d585"
+        case "G7D": output = "5fa130c52cf6678083076eabc1e6e47f"
+        case "G7G": output = "c7f080642ede93bcad1ca7ecb29330fa"
+        case "G7J": output = "24b534a35357001b881ffb81a743dafe"
+        case "G7L": output = "b9cf53f1775212c6ab6ef63cc37e577e"
+        case "G7M": output = "4fe929e27c0065ee6aff6bac5043a470"
+        case "G7P": output = "2e83f4d6a5d6e3df9714e52c6d5bc8e0"
+        case "G7S": output = "b8aaee5992b87b575531563f95e7da92"
+        case "G7T": output = "e4c1504c7e6db84046098d6940f266ae"
+        case "G8A": output = "1bf7e4275fbf0694f0006bdab8ab2419"
+        case "G8D": output = "6a1665c6fe61879987c84e460d7a446a"
+        case "G8G": output = "00893cc50ee8476e84a06f739fb3970d"
+        case "G8J": output = "10500da46f17bd0f61df9718b5cc2a34"
+        case "G8L": output = "596946193bb59613edd1ce5780bdc191"
+        case "G8M": output = "686008acb25746092efe95b4520acc13"
+        case "G8P": output = "0e8b93625e03aa32b8cf813ba82fcf60"
+        case "G8S": output = "9f6115aa11e4aa5a27ff3e4798fa0c84"
+        case "G8T": output = "43ddd220b50b432cc72cc2270d287ff5"
+        case "G9A": output = "85efb619d4a0adc7c93b78bf42204180"
+        case "G9D": output = "2a96b80065e82df8eb58f405ebdd7c51"
+        case "G9G": output = "adde4c4a385ab7243e91449b17b873d5"
+        case "G9J": output = "5330aa5f279e6a0327e51780e811b9b3"
+        case "G9L": output = "cda67da0decb1b97a85d59b2d8d961de"
+        case "G9M": output = "98fdb30587831c7dd52273f030d25161"
+        case "G9P": output = "77ea4abb97e698218923971584367bd6"
+        case "G9S": output = "562e7f70bd1620e1dff902a3d6c24bfa"
+        case "G9T": output = "e49ca78131abb8cfe0822f354d6731ba"
+        default: break
+        }
+        
+        return URL(string: "http://www2.dbs.edu.hk/qschedule/qqexport.php?type=c&id=\(ofClass)&md5=\(ofClass)&md5=\(output)")!
     }
     
     @objc func GoToTimetable(){
@@ -258,6 +356,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         DispatchQueue.main.async {
             self.ParseEvents()
             self.ParseNewsCurriculars()
+            
             if let User = UserDefaults.standard.array(forKey: "profileData"){
                 UserInformation = User as! [String]
             }
@@ -539,7 +638,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             self.ParseNewsCurriculars()
         }
         
-        if timetable == nil{
+        if lessonArray == nil{
             self.ParseTimetable()
             
         }
@@ -617,15 +716,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         //Timetable
         if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+            
+            ParseTimetable()
+            
+            
+            
             tableView.separatorStyle = .singleLine
-            if isInternetAvailable(){
+            
+            let IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
+            
+            if /*isInternetAvailable()*/ true{
                 
-                DispatchQueue.main.async {
-                    if timetable == nil{
-                        self.ParseTimetable()
-                    }
-                }
-                
+              
                 
                 //Date
                 var DayToDisplay = 0
@@ -683,15 +785,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 let formatter = DateFormatter()
                 formatter.dateFormat = "dd MM yyyy"
                 
-                if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
-                    DayToDisplay = 1
-                }
-                if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
+                
+                //DayToDisplay Mon -> 0, Tue -> 1, Fri -> 4
+                
+                if (CalendarCalendar.isDateInToday(formatter.date(from: "22 11 2018")!) && Date() < TimeBoundary!) ||
+                    (CalendarCalendar.isDateInToday(formatter.date(from: "21 11 2018")!) && Date() > TimeBoundary!){
                     DayToDisplay = 4
                 }
-                if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
-                    DayToDisplay = 2
-                }
+               
                 
                 if indexPath.row == 0{
                     switch DayToDisplay{
@@ -705,16 +806,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         cell.textLabel?.text = "Monday's Timetable"
                     }
                     
-                    if CalendarCalendar.isDateInToday(formatter.date(from: "30 04 2018")!){
-                        cell.textLabel?.text = "30/4 Mon Adopts Tue Timetable"
+                    if (CalendarCalendar.isDateInToday(formatter.date(from: "22 11 2018")!) && Date() < TimeBoundary!) ||
+                        (CalendarCalendar.isDateInToday(formatter.date(from: "21 11 2018")!) && Date() > TimeBoundary!){
+                        cell.textLabel?.text = "22/11 Thu Adopts Fri Timetable"
                     }
-                    if CalendarCalendar.isDateInToday(formatter.date(from: "14 05 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "13 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "12 06 2018")!){
-                        cell.textLabel?.text = "14/5 Mon Adopts Fri Timetable"
-                    }
-                    
-                    if CalendarCalendar.isDateInToday(formatter.date(from: "04 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "03 06 2018")!) || CalendarCalendar.isDateInToday(formatter.date(from: "02 06 2018")!){
-                        cell.textLabel?.text = "4/6 Mon Adopts Wed Timetable"
-                    }
+                   
                     
                     cell.textLabel?.font = UIFont(name: "Helvetica", size: BigFont)
                     cell.textLabel?.font = UIFont.boldSystemFont(ofSize: BigFont)
@@ -722,7 +818,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     return cell
                 }
                 
-                
+               
                 
                 //Subject
                 var out = ""
@@ -732,11 +828,117 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     formSection = classArrayHigh
                 }
                 
+                let period = "\(indexPath.row)"
                 
                 
-                if timetable != nil && formSection.contains(Class){
+                cell.detailTextLabel?.textColor = UIColor.gray
+                cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
+                
+                self.lessonArray = [[String]]()
+                
+                    if teacherOrStudent() == "t" {
+                        
+                        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "import_lesson", ofType: "csv")!)
+                        URLSession.shared.dataTask(with: url) { (data, response, error) in
+                            let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\r\n"))!
+                            for row in rows {
+                                let rowInfos = "\(row)".split(separator: ",")
+                                var rowInfosInString = [String]()
+                                for cell in rowInfos {
+                                    rowInfosInString += ["\(cell)"]
+                                }
+                                self.lessonArray += [rowInfosInString]
+                            }
+                            let teacher = timetableChoice
+                            var output = "", locOutput = ""
+                            for row in self.lessonArray {
+                                if row[0] == teacher && row[1] == "\(DayToDisplay)" && row[2] == period {
+                                    output += "\(row[4]) \(row[3]) / "
+                                    locOutput += "\(row[5]) / "
+                                    if row.count > 6 {
+                                        output += "\(row[7]) \(row[6]) / "
+                                        locOutput += "\(row[8]) / "
+                                    }
+                                }
+                            }
+                            if output != "" && locOutput != "" {
+                                output.removeLast(3)
+                                locOutput.removeLast(3)
+                            }
+                            DispatchQueue.main.async {
+                                cell.textLabel?.text = output.replacingOccurrences(of: "CLP C", with: "C")
+                                cell.detailTextLabel?.text = locOutput
+                            }
+                            
+                            }.resume()
+                        
+                    } else if teacherOrStudent() == "s" && isInternetAvailable(){
+                        
+                        let Class = "\(UserInformation[3].split(separator: "-")[0])"
+                        
+                        if IBClass.contains(Class){
+                            tableView.separatorStyle = .none
+                            cell.isUserInteractionEnabled = false
+                            cell.textLabel?.text = ""
+                            cell.detailTextLabel?.text = ""
+                            tableView.reloadData()
+                            setupSpinner(view: tableView)
+                            //ParseTimetable()
+                            tableView.reloadData()
+                            return cell
+                        }
+                        
+                        URLSession.shared.dataTask(with: timetableLink(ofClass: Class)) { (data, response, error) in
+                            if let data = data {
+                                let rows = (String(data: data, encoding: .utf8)?.components(separatedBy: "<br />"))!
+                                for row in rows {
+                                    let rowInfos = "\(row)".split(separator: "|")
+                                    var rowInfosInString = [String]()
+                                    for cell in rowInfos {
+                                        rowInfosInString += ["\(cell)"]
+                                    }
+                                    
+                                    self.lessonArray += [rowInfosInString]
+                                }
+                                self.lessonArray.removeLast()
+                                
+                                self.lessonArray = self.lessonArray.removeDuplicates()
+                                
+                                
+                                var output = "", teacherOutput = ""
+                                
+                                for row in self.lessonArray {
+                                    
+                                    if row[0] == "\(DayToDisplay+1)" && row[1] == period {
+                                        
+                                        output += "\(row[3]) | "
+                                        teacherOutput += "\(row[2]) | "
+                                        
+                                    }
+                                }
+                                if output != "" && teacherOutput != "" {
+                                    output.removeLast(3)
+                                    teacherOutput.removeLast(3)
+                                }else{
+                                    output = "Activity Period"
+                                    teacherOutput = ""
+                                }
+                                DispatchQueue.main.async {
+                                    cell.textLabel?.text = output
+                                    cell.detailTextLabel?.text = teacherOutput
+                                }
+                                
+                                
+                            }
+                            
+                            
+                            
+                            }.resume()
+                        
                     
                     
+                
+                    /*
                     for i in (timetable?.timetable.`class`[formSection.index(of: Class)!].day[DayToDisplay].lesson[indexPath.row - 1].name)! {
                         out += "\(i.decodeUrl()) | "
                     }
@@ -769,12 +971,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         out = ""
                     }
                     
+                    */
                     
                     
-                    cell.detailTextLabel?.text = out
-                    cell.detailTextLabel?.textColor = UIColor.gray
-                    cell.detailTextLabel?.font = UIFont(name: "Helvetica", size: SmallFont)
-                    
+                
+            
                 }else{
                     tableView.separatorStyle = .none
                     cell.isUserInteractionEnabled = false
@@ -782,9 +983,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.detailTextLabel?.text = ""
                     tableView.reloadData()
                     setupSpinner(view: tableView)
-                    ParseTimetable()
+                    //ParseTimetable()
                     tableView.reloadData()
-                }
+            }
+        
                 
             }else{
                 
@@ -855,7 +1057,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             cell.detailTextLabel?.text = ""
                             tableView.reloadData()
                             self.setupSpinner(view: tableView)
-                            self.ParseTimetable()
+                            //self.ParseTimetable()
                             tableView.reloadData()
                         }
                     }
@@ -914,7 +1116,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         cell.detailTextLabel?.text = ""
                         tableView.reloadData()
                         setupSpinner(view: tableView)
-                        ParseTimetable()
+                        //ParseTimetable()
                         tableView.reloadData()
                     }
                     
@@ -973,7 +1175,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     cell.detailTextLabel?.text = ""
                     tableView.reloadData()
                     setupSpinner(view: tableView)
-                    ParseTimetable()
+                    //ParseTimetable()
                     tableView.reloadData()
                 }
                 
@@ -1020,9 +1222,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             logInNumber = 1
         }
         
+        let IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
+        
         if LoggedIn && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
-            self.GoToTimetable()
-            
+            if !IBClass.contains("\(UserInformation[3].split(separator: "-")[0])"){
+                self.GoToTimetable()
+            }
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
             if indexPath.row < 4 {
                 let event = EventsFromNow[indexPath.row]
@@ -1099,7 +1304,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         
-        var IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
+        let IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
         
         if LoggedIn && UserInformation.count > 3{
             var Class = "\(UserInformation[3])"
@@ -1159,7 +1364,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             
             if LoggedIn && timetable == nil{
                 DispatchQueue.main.async{
-                    self.ParseTimetable()
+                    //self.ParseTimetable()
                     if self.scrollView.viewWithTag(10000 - logInNumber) != nil{
                         (self.scrollView.viewWithTag(10000 - logInNumber)! as! UITableView).reloadData()
                     }
@@ -1336,7 +1541,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.viewDidLoad()
-            self.ParseTimetable()
+            //self.ParseTimetable()
         }
     }
     
