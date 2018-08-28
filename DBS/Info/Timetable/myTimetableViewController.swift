@@ -63,7 +63,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             
             let url = URL(fileURLWithPath: Bundle.main.path(forResource: "import_lesson", ofType: "csv")!)
             URLSession.shared.dataTask(with: url) { (data, response, error) in
-                let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\r\n"))!
+                let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\n"))!
                 for row in rows {
                     let rowInfos = "\(row)".split(separator: ",")
                     var rowInfosInString = [String]()
@@ -196,22 +196,51 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             
             let teacher = timetableChoice
             var output = "", locOutput = ""
-            for row in lessonArray {
-                if row[0] == teacher && row[1] == day && row[2] == period {
-                    output += "\(row[4]) \(row[3]) / "
-                    locOutput += "\(row[5]) / "
-                    if row.count > 6 {
-                        output += "\(row[7]) \(row[6]) / "
-                        locOutput += "\(row[8]) / "
+//            for row in lessonArray {
+//                if row[0] == teacher && row[1] == day && row[2] == period {
+//                    output += "\(row[4]) \(row[3]) / "
+//                    locOutput += "\(row[5]) / "
+//                    if row.count > 6 {
+//                        output += "\(row[7]) \(row[6]) / "
+//                        locOutput += "\(row[8]) / "
+//                    }
+//                }
+//            }
+//            if output != "" && locOutput != "" {
+//                output.removeLast(3)
+//                locOutput.removeLast(3)
+//            }
+//            cell.textLabel?.text = output.replacingOccurrences(of: "CLP C", with: "C")
+            
+//            cell.detailTextLabel?.text = locOutput
+            
+            
+            var classes = "", location = "", subject = ""
+            
+            for ROW in lessonArray {
+                
+                if ROW[0] == timetableChoice && ROW[1] == "\(day)" && ROW[2] == period {
+                    
+                    classes += "\(ROW[4]) / "
+                    subject += "\(ROW[3]) / "
+                    location += "\(ROW[5]) / "
+                    if ROW.count > 6 {
+                        classes += "\(ROW[7]) / "
+                        subject += "\(ROW[6]) / "
                     }
                 }
             }
-            if output != "" && locOutput != "" {
-                output.removeLast(3)
-                locOutput.removeLast(3)
+            
+            
+            
+            if classes != "" && location != "" {
+                classes.removeLast(3)
+                location.removeLast(3)
             }
-            cell.textLabel?.text = output.replacingOccurrences(of: "CLP C", with: "C")
-            cell.detailTextLabel?.text = locOutput
+            let textLabelString = /*period + ".\t" + */String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + "-" + subject.components(separatedBy: " / ").removeDuplicates().joined())
+            cell.textLabel?.text = textLabelString
+            
+            cell.detailTextLabel?.text = location.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ")
             
         } else {
             
@@ -265,6 +294,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
 
         cell.textLabel?.numberOfLines = Int((self.view.frame.height-40)/(6+2)/30)
         cell.textLabel?.adjustsFontSizeToFitWidth = true
+        //cell.textLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: 0)
         cell.detailTextLabel?.textColor = .gray
         cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.selectionStyle = .none

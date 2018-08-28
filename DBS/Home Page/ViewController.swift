@@ -317,9 +317,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     @objc func GoToTimetable(){
-        
-        timetableChoice = "\(UserInformation[3])"
-        timetableChoice.removeLast(3)
+        if teacherOrStudent() == "s"{
+            timetableChoice = "\(UserInformation[3])"
+            timetableChoice.removeLast(3)
+        }else if teacherOrStudent() == "t"{
+            timetableChoice = UserInformation[0]
+        }
         
         performSegue(withIdentifier: "Home to My Timetable", sender: self)
         
@@ -392,7 +395,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         var arrayData = scrollViewLoggedInData
         
-        if LoggedIn && teacherOrStudent() == "s"{
+        if LoggedIn && (teacherOrStudent() == "s" || teacherOrStudent() == "t"){
             arrayData = scrollViewLoggedInData
         }else{
             arrayData = scrollViewData
@@ -426,7 +429,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             ClassAndNumber.removeFirst()
             ClassAndNumber = ClassAndNumber.replacingOccurrences(of: "-", with: " ")
             WelcomeLabel.text = " Hi! \(Name) \(ClassAndNumber) "
-        }else if teacherOrStudent() == ""{
+        }else if teacherOrStudent() == "t"{
             let Name = String(UserInformation[1].capitalized)!
             WelcomeLabel.text = " Welcome! \(Name) "
         }
@@ -676,7 +679,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if LoggedIn && teacherOrStudent() == "s"{
+        if LoggedIn && (teacherOrStudent() == "s" || teacherOrStudent() == "t"){
             if tableView.tag == 10000{
                 return 7
             }else{
@@ -715,11 +718,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         }
         
         //Timetable
-        if LoggedIn == true && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+        if LoggedIn == true && (teacherOrStudent() == "s" || teacherOrStudent() == "t") && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
             
             ParseTimetable()
-            
-            
             
             tableView.separatorStyle = .singleLine
             
@@ -759,21 +760,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     }
                 }
                 
-                //Class
-                var Class = "S"
-                
-                let input = "\(UserInformation[3])"
-                
-                var GradeString = "\(input)"
-                GradeString.removeLast(4)
-                GradeString.removeFirst()
-                let Grade = Int(GradeString)!
-                
-                var ClassString = "\(input)"
-                ClassString.removeLast(3)
-                
-                Class = ClassString
-                Class = "\(Class.last!)"
+//                //Class
+//                var Class = "S"
+//
+//                let input = "\(UserInformation[3])"
+//
+//                var GradeString = "\(input)"
+//                GradeString.removeLast(4)
+//                GradeString.removeFirst()
+//                let Grade = Int(GradeString)!
+//
+//                var ClassString = "\(input)"
+//                ClassString.removeLast(3)
+//
+//                Class = ClassString
+//                Class = "\(Class.last!)"
                 
                 
                 //Elective
@@ -820,13 +821,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 
                
                 
-                //Subject
-                var out = ""
-                if Grade >= 7 && Grade <= 9 {
-                    formSection = classArrayLow
-                } else if Grade >= 10 && Grade <= 12 {
-                    formSection = classArrayHigh
-                }
+                
                 
                 let period = "\(indexPath.row)"
                 
@@ -840,39 +835,108 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         
                         let url = URL(fileURLWithPath: Bundle.main.path(forResource: "import_lesson", ofType: "csv")!)
                         URLSession.shared.dataTask(with: url) { (data, response, error) in
-                            let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\r\n"))!
+                            DispatchQueue.main.async {
+                            let rows = (String(data: data!, encoding: .utf8)?.split(separator: "\n"))!
+                            var rowInfosInString = [String]()
+                            
                             for row in rows {
-                                let rowInfos = "\(row)".split(separator: ",")
-                                var rowInfosInString = [String]()
+                                
+                                let rowInfos = String(row).split(separator: ",")
+                                
                                 for cell in rowInfos {
-                                    rowInfosInString += ["\(cell)"]
+                                    let info = String(cell)
+                                    rowInfosInString.append(info)
                                 }
-                                self.lessonArray += [rowInfosInString]
+                                
+                                self.lessonArray.append(rowInfosInString)
+                                rowInfosInString = [String]()
                             }
-                            let teacher = timetableChoice
-                            var output = "", locOutput = ""
-                            for row in self.lessonArray {
-                                if row[0] == teacher && row[1] == "\(DayToDisplay)" && row[2] == period {
-                                    output += "\(row[4]) \(row[3]) / "
-                                    locOutput += "\(row[5]) / "
-                                    if row.count > 6 {
-                                        output += "\(row[7]) \(row[6]) / "
-                                        locOutput += "\(row[8]) / "
+                            
+                            
+                            
+                            let teacher = UserInformation[0]
+                            var classes = "", location = "", subject = ""
+                            
+                            
+                            
+                            
+                            for ROW in self.lessonArray {
+                               
+                                if ROW[0] == teacher && ROW[1] == "\(DayToDisplay+1)" && ROW[2] == period {
+                                    
+                                    classes += "\(ROW[4]) / "
+                                    subject += "\(ROW[3]) / "
+                                    location += "\(ROW[5]) / "
+                                    if ROW.count > 6 {
+                                        classes += "\(ROW[7]) / "
+                                        subject += "\(ROW[6]) / "
                                     }
                                 }
                             }
-                            if output != "" && locOutput != "" {
-                                output.removeLast(3)
-                                locOutput.removeLast(3)
+                            
+                            
+                            
+                            if classes != "" && location != "" {
+                                classes.removeLast(3)
+                                location.removeLast(3)
                             }
-                            DispatchQueue.main.async {
-                                cell.textLabel?.text = output.replacingOccurrences(of: "CLP C", with: "C")
-                                cell.detailTextLabel?.text = locOutput
+                                
+                                let textLabelString = period + ".\t" + String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + " - " + subject.components(separatedBy: " / ").removeDuplicates().joined())
+                                cell.textLabel?.text = textLabelString
+                                //cell.textLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: BigFont, weight: 0)
+                                
+ 
+ /*
+                                let text = /*period + ".\t" + */String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + "\n" + subject.components(separatedBy: " / ").removeDuplicates().joined())!
+                                 
+                                
+                                let at = NSMutableAttributedString(string: text)
+                                let p1 = NSMutableParagraphStyle()
+                                let p2 = NSMutableParagraphStyle()
+                                let classCount = classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C").count
+                                let subjectCount = subject.components(separatedBy: " / ").removeDuplicates().joined().count
+                                p1.alignment = .left
+                                p2.alignment = .right
+                                p2.paragraphSpacingBefore = -(cell.textLabel?.font.lineHeight)!
+                                at.addAttribute(NSFontAttributeName, value: p1, range: NSRange(location: 0, length: classCount))
+                                at.addAttribute(NSFontAttributeName, value: p2, range: NSRange(location: classCount, length: subjectCount))
+                                
+                                 cell.textLabel?.numberOfLines = 0
+                                 cell.textLabel?.attributedText = at
+                                 */
+ 
+ 
+                                cell.detailTextLabel?.text = location.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ")
                             }
                             
                             }.resume()
                         
                     } else if teacherOrStudent() == "s" && isInternetAvailable(){
+                        
+                        
+//                        //Class
+//                        var Class = "S"
+//
+//                        let input = "\(UserInformation[3])"
+//
+//                        var GradeString = "\(input)"
+//                        GradeString.removeLast(4)
+//                        GradeString.removeFirst()
+//                        let Grade = Int(GradeString)!
+//
+//                        var ClassString = "\(input)"
+//                        ClassString.removeLast(3)
+//
+//                        Class = ClassString
+//                        Class = "\(Class.last!)"
+//
+//                        //Subject
+//                        var out = ""
+//                        if Grade >= 7 && Grade <= 9 {
+//                            formSection = classArrayLow
+//                        } else if Grade >= 10 && Grade <= 12 {
+//                            formSection = classArrayHigh
+//                        }
                         
                         let Class = "\(UserInformation[3].split(separator: "-")[0])"
                         
@@ -889,6 +953,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         }
                         
                         URLSession.shared.dataTask(with: timetableLink(ofClass: Class)) { (data, response, error) in
+                            DispatchQueue.main.async {
                             if let data = data {
                                 let rows = (String(data: data, encoding: .utf8)?.components(separatedBy: "<br />"))!
                                 for row in rows {
@@ -923,7 +988,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                     output = "Activity Period"
                                     teacherOutput = ""
                                 }
-                                DispatchQueue.main.async {
+                                
                                     cell.textLabel?.text = output
                                     cell.detailTextLabel?.text = teacherOutput
                                 }
@@ -1197,7 +1262,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if LoggedIn && teacherOrStudent() == "s" && tableView.tag == 10000{
+        if LoggedIn && (teacherOrStudent() == "s" || teacherOrStudent() == "t") && tableView.tag == 10000{
             if indexPath.row == 0{
                 return 30
             }else if indexPath.row == 6{
@@ -1224,8 +1289,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
         
         let IBClass = ["G10G", "G10L", "G11G", "G11L", "G12G", "G12L"]
         
-        if LoggedIn && teacherOrStudent() == "s" && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
-            if !IBClass.contains("\(UserInformation[3].split(separator: "-")[0])"){
+        if LoggedIn && (teacherOrStudent() == "s" || teacherOrStudent() == "t") && tableView.tag == self.scrollView.viewWithTag(10000 - logInNumber)!.tag{
+            
+            if teacherOrStudent() == "t"{
+                self.GoToTimetable()
+            }else if !IBClass.contains("\(UserInformation[3].split(separator: "-")[0])"){
                 self.GoToTimetable()
             }
         }else if tableView.tag == self.scrollView.viewWithTag(10001 - logInNumber)!.tag{
@@ -1336,8 +1404,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func teacherOrStudent() -> String {
         if LoggedIn && loginID != "" {
-            if UserInformation.count >= 5 && UserInformation.count % 3 != 0{
+            if ("\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9") || UserInformation.count == 5{
                 return "s"
+            }else{
+                return "t"
             }
             
         }
@@ -1402,7 +1472,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                 page = 0
             }
             
-            if page > 2 && self.teacherOrStudent() == "s"{
+            if page > 2 && (self.teacherOrStudent() == "s" && self.teacherOrStudent() == "t"){
                 print(page, self.teacherOrStudent())
                 self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width * page, y: 0), animated: false)
             }else if page <= 2{
@@ -1522,7 +1592,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     
     func reloadAllTables(){
         for i in 10001...10003{
-            if teacherOrStudent() == "s"{
+            if teacherOrStudent() == "s" || teacherOrStudent() == "t"{
                 let table = self.scrollView.viewWithTag(i)! as! UITableView
                 
                 var logInNumber = 0
@@ -1604,7 +1674,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             }
             
             
-            if LoggedIn && teacherOrStudent() == "s"{
+            if LoggedIn && (teacherOrStudent() == "s" || teacherOrStudent() == "t"){
                 if CurrentTableIndex == 1 || CurrentTableIndex == 2{
                     ShowArrow(tag: 50000)
                     ShowArrow(tag: 60000)

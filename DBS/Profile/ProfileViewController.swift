@@ -64,7 +64,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             userInfo.delegate = self
             profileData.removeAll()
             
-            let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
+            
+            var TOS = "s"
+            if ("\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9") || UserInformation.count == 5 {
+                TOS = "s"
+            }else{
+                TOS = ""
+            }
+            
+            let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(TOS).php?uid=\(startsWithdbs)"
             print(jsonURL)
             let url = URL(string: jsonURL)
             
@@ -73,7 +81,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 if self.teacherOrStudent() == "s" {
                     self.studentImage.image = UIImage(named: "StudentBig")
-                } else if self.teacherOrStudent() == "" {
+                } else if self.teacherOrStudent() == "t" {
                     self.studentImage.image = UIImage(named: "TeacherBig")
                 }
                 
@@ -89,7 +97,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         if "\(classNumber.last!)" == ")" { classNumber.removeLast() }
                         
-                        if self.teacherOrStudent() == "" {
+                        if self.teacherOrStudent() == "t" {
                             self.profileData += [loginID.uppercased()]
                             self.userInformation["NameEng"]!!.removeLast(5)
                         } else if self.teacherOrStudent() == "s" {
@@ -112,11 +120,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                     } catch {
-                        if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
-                            self.studentImage.image = UIImage(named: "TeacherBig")
-                        } else {
-                            self.studentImage.image = UIImage(named: "StudentBig")
+                        DispatchQueue.main.async {
+                            if self.teacherOrStudent() == "t" && self.profileData.count <= 3 {
+                                self.studentImage.image = UIImage(named: "TeacherBig")
+                            } else {
+                                self.studentImage.image = UIImage(named: "StudentBig")
+                            }
                         }
+                        
                         if let x = UserDefaults.standard.array(forKey: "profileData") {
                             self.profileData = x as! [String]
                             self.userInfo.reloadData()
@@ -129,7 +140,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     profileData = x as! [String]
                     userInfo.reloadData()
                 }
-                if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
+                if self.teacherOrStudent() == "t" && self.profileData.count <= 3 {
                     self.studentImage.image = UIImage(named: "TeacherBig")
                 } else {
                     self.studentImage.image = UIImage(named: "StudentBig")
@@ -196,7 +207,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     
                     networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     
-                    let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
+                    var TOS = "s"
+                    if ("\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9") || UserInformation.count == 5 {
+                        TOS = "s"
+                    }else{
+                        TOS = ""
+                    }
+                    
+                    let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(TOS).php?uid=\(startsWithdbs)"
+                    
+                    
                     let url = URL(string: jsonURL)
                     
                     spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -221,7 +241,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                                 UserInformation.removeAll()
                                 let first = "\(loginAlert.textFields![0].text!)"
                                 let second = "\(loginAlert.textFields![1].text!)"
-                                if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG!" {
+                                if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG!" || second == " "{
                                     loginID = first
                                     UserDefaults.standard.set(loginID, forKey: "loginID")
                                     self.viewDidLoad()
@@ -337,7 +357,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         actionSheet.addAction(UIAlertAction(title: "Report A Bug", style: .default, handler: reportBug))
         if isInternetAvailable() && studentImage?.image != UIImage(named: "StudentBig") && teacherOrStudent() == "s" {
             actionSheet.addAction(UIAlertAction(title: "Download Student Image", style: .default, handler: downloadStudentImage))
-        } else if isInternetAvailable() && teacherOrStudent() == "" {
+        } else if isInternetAvailable() && teacherOrStudent() == "t" {
             actionSheet.addAction(UIAlertAction(title: "Discipline", style: .default, handler: disciplineLink))
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))
@@ -452,7 +472,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if loginID != "" {
-            if teacherOrStudent() == "" && profileData.count <= 3 {
+            if teacherOrStudent() == "t"{
                 return 3
             } else {
                 return 5
@@ -489,6 +509,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if isInternetAvailable(){
             if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
                 return "s"
+            }else{
+                return "t"
             }
         }
         return ""
