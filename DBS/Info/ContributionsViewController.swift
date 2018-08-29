@@ -33,8 +33,8 @@ SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
 Ng Ching Wang Kelvin
 
 APP DEVELOPERS
-Louie Chi To
 Ieung Ho Kwan
+Louie Chi To
 Lau Cheuk Hang
 Chan Yuen Ho
 

@@ -57,6 +57,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         spinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
+        spinner.tag = 12345
         self.view.addSubview(spinner)
         
         if Int("\(timetableChoice[timetableChoice.index(timetableChoice.startIndex, offsetBy: 1)])") == nil {
@@ -194,8 +195,8 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         print(timetableChoice[timetableChoice.index(timetableChoice.startIndex, offsetBy: 1)])
         if Int("\(timetableChoice[timetableChoice.index(timetableChoice.startIndex, offsetBy: 1)])") == nil {
             
-            let teacher = timetableChoice
-            var output = "", locOutput = ""
+//            let teacher = timetableChoice
+//            var output = "", locOutput = ""
 //            for row in lessonArray {
 //                if row[0] == teacher && row[1] == day && row[2] == period {
 //                    output += "\(row[4]) \(row[3]) / "
@@ -237,8 +238,14 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
                 classes.removeLast(3)
                 location.removeLast(3)
             }
-            let textLabelString = period + ".\t" + String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ").replacingOccurrences(of: "CLP C", with: "C") + " - " + subject.components(separatedBy: " / ").removeDuplicates().joined())
-            cell.textLabel?.text = textLabelString
+            let textLabelString = String(classes.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ") + " — " + subject.components(separatedBy: " / ").removeDuplicates().joined()).replacingOccurrences(of: "CLP — C", with: "C")
+            if !(self.view.viewWithTag(12345) as! UIActivityIndicatorView).isHidden {
+                cell.textLabel?.text = ""
+            } else if textLabelString == " — " {
+                cell.textLabel?.text = "--"
+            } else {
+                cell.textLabel?.text = textLabelString
+            }
             
             cell.detailTextLabel?.text = location.components(separatedBy: " / ").removeDuplicates().joined(separator: ", ")
             
