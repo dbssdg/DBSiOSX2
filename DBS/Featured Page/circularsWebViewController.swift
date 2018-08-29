@@ -102,7 +102,7 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
     
     func shareCircular() {
         let activityViewController = UIActivityViewController(
-            activityItems: [URL(string: circularViewURL)!], applicationActivities: nil)
+            activityItems: [URL(string: arr[selectedSegment-1])!], applicationActivities: nil)
         //
         //        // This line is for the popover you need to show in iPad
         //        activityViewController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem

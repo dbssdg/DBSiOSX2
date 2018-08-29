@@ -147,7 +147,7 @@
                                                             <color key="titleColor" red="0.93210541033526861" green="0.78487261596203872" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="KNq-7M-NHv" kind="show" identifier="Timetable Segue" id="1iq-ad-Snf"/>
+                                                            <action selector="timetableButton:" destination="BqN-4a-ssb" eventType="touchUpInside" id="pV7-Gn-kaA"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g29-BI-jID">
@@ -202,6 +202,7 @@
                         <segue destination="2m3-pH-F3Z" kind="show" identifier="Acknowledgements Segue" id="9gC-Ja-56a"/>
                         <segue destination="byZ-wL-izR" kind="show" identifier="Links, Contact &amp; Steps Segue" id="EWp-nx-Ms8"/>
                         <segue destination="4db-rW-aWf" kind="show" identifier="Classmates Segue" id="RFJ-Lb-TEZ"/>
+                        <segue destination="KNq-7M-NHv" kind="show" id="NkZ-FD-zWj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaA-H9-BZP" userLabel="First Responder" sceneMemberID="firstResponder"/>

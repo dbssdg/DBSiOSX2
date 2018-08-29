@@ -19,9 +19,6 @@ class timetableViewController: UIViewController {
     @IBOutlet weak var viewTimetableOutlet: UIButton!
     
     @IBAction func form(_ sender: Any) {
-        classDisplay.textColor = UIColor.black
-        classDisplay.text? = (sender as AnyObject).currentTitle as! String
-        
         for i in formButtons {
             i.backgroundColor = .lightGray
             i.isEnabled = false
@@ -36,15 +33,17 @@ class timetableViewController: UIViewController {
                 i.isEnabled = false
             }
         }
+        classDisplay.textColor = UIColor.black
+        classDisplay.text? = (sender as AnyObject).currentTitle as! String
         backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
         backspaceOutlet.isEnabled = true
     }
     @IBAction func classChoices(_ sender: Any) {
-        classDisplay.text? += (sender as AnyObject).currentTitle as! String
         for i in classButtons {
             i.backgroundColor = .lightGray
             i.isEnabled = false
         }
+                classDisplay.text? += (sender as AnyObject).currentTitle as! String
         viewTimetableOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
         viewTimetableOutlet.isEnabled = true
         

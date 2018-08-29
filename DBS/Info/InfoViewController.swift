@@ -27,6 +27,19 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let buttonGapRatio = 43
     
+    @IBAction func timetableButton(_ sender: Any) {
+        print("tapped!")
+        if loginID == "" {
+            let loginAlert = UIAlertController(title: "Login", message: "Please login before you see your timetable.", preferredStyle: .alert)
+            loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            func goToLoginPage(action: UIAlertAction) { self.tabBarController?.selectedIndex = 3 }
+            loginAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: goToLoginPage))
+            present(loginAlert, animated: true)
+        } else {
+            performSegue(withIdentifier: "Timetable Segue", sender: self)
+        }
+    }
+    
     @IBAction func customizeButton(_ sender: Any) {
         if customizeButton.currentTitle! == "Customize" {
             customizeButton.setTitle("Done", for: .normal)

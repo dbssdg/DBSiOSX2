@@ -265,7 +265,11 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
                 output = "Activity Period"
                 teacherOutput = ""
             }
-            cell.textLabel?.text = output
+            if !(self.view.viewWithTag(12345) as! UIActivityIndicatorView).isHidden || !isInternetAvailable(){
+                cell.textLabel?.text = ""
+            } else {
+                cell.textLabel?.text = output
+            }
             cell.detailTextLabel?.text = teacherOutput
             
         }
@@ -456,25 +460,25 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
         return URL(string: "http://www2.dbs.edu.hk/qschedule/qqexport.php?type=c&id=\(ofClass)&md5=\(output)")!
     }
     
-//    func isInternetAvailable() -> Bool {
-//        var zeroAddress = sockaddr_in()
-//        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-//        zeroAddress.sin_family = sa_family_t(AF_INET)
-//
-//        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-//            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-//                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
-//            }
-//        }
-//
-//        var flags = SCNetworkReachabilityFlags()
-//        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-//            return false
-//        }
-//        let isReachable = flags.contains(.reachable)
-//        let needsConnection = flags.contains(.connectionRequired)
-//        return (isReachable && !needsConnection)
-//    }
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
+    }
     
     /*
      // MARK: - Navigation
