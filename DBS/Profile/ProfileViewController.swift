@@ -19,11 +19,11 @@ var loginTextFieldSave = ["", ""]
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UIScrollViewDelegate {
     
     // Reference the NFC session
-//    private var nfcSession: NFCNDEFReaderSession!
+    //    private var nfcSession: NFCNDEFReaderSession!
     
     // Reference the found NFC messages
-//    private var nfcMessages: [[NFCNDEFMessage]] = []
-   
+    //    private var nfcMessages: [[NFCNDEFMessage]] = []
+    
     
     
     @IBOutlet weak var studentImage: UIImageView!
@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createScrollOptions()
+//        createScrollOptions()
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = false
@@ -57,13 +57,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let startsWithdbs = loginID
             loginID.removeFirst(3)
             let startsWith20 = "20\(loginID)"
-            studentImage.layer.cornerRadius = studentImage.frame.height/6
+//            studentImage.layer.cornerRadius = studentImage.frame.height/2
+            studentImage.sizeToFit()
             
             userInfo.dataSource = self
             userInfo.delegate = self
             profileData.removeAll()
             
-            let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
+            
+            var TOS = "s"
+            if ("\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9") || UserInformation.count == 5 {
+                TOS = "s"
+            }else{
+                TOS = ""
+            }
+            
+            let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(TOS).php?uid=\(startsWithdbs)"
             print(jsonURL)
             let url = URL(string: jsonURL)
             
@@ -72,7 +81,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 if self.teacherOrStudent() == "s" {
                     self.studentImage.image = UIImage(named: "StudentBig")
-                } else if self.teacherOrStudent() == "" {
+                } else if self.teacherOrStudent() == "t" {
                     self.studentImage.image = UIImage(named: "TeacherBig")
                 }
                 
@@ -88,7 +97,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         if "\(classNumber.last!)" == ")" { classNumber.removeLast() }
                         
-                        if self.teacherOrStudent() == "" {
+                        if self.teacherOrStudent() == "t" {
                             self.profileData += [loginID.uppercased()]
                             self.userInformation["NameEng"]!!.removeLast(5)
                         } else if self.teacherOrStudent() == "s" {
@@ -106,15 +115,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         DispatchQueue.main.async {
                             self.getImage("http://ears.dbs.edu.hk/studpics.php?sid=\(startsWith20)", self.studentImage)
                             self.userInfo.reloadData()
+//                            self.createScrollOptions()
                             UserDefaults.standard.set(self.profileData, forKey: "profileData")
                         }
                         
                     } catch {
-                        if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
-                            self.studentImage.image = UIImage(named: "TeacherBig")
-                        } else {
-                            self.studentImage.image = UIImage(named: "StudentBig")
+                        DispatchQueue.main.async {
+                            if self.teacherOrStudent() == "t" && self.profileData.count <= 3 {
+                                self.studentImage.image = UIImage(named: "TeacherBig")
+                            } else {
+                                self.studentImage.image = UIImage(named: "StudentBig")
+                            }
                         }
+                        
                         if let x = UserDefaults.standard.array(forKey: "profileData") {
                             self.profileData = x as! [String]
                             self.userInfo.reloadData()
@@ -127,7 +140,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     profileData = x as! [String]
                     userInfo.reloadData()
                 }
-                if self.teacherOrStudent() == "" && self.profileData.count <= 3 {
+                if self.teacherOrStudent() == "t" && self.profileData.count <= 3 {
                     self.studentImage.image = UIImage(named: "TeacherBig")
                 } else {
                     self.studentImage.image = UIImage(named: "StudentBig")
@@ -142,12 +155,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view.
-//        self.initializeNFCSession()
+        //        self.initializeNFCSession()
         
         UserInformation.removeAll()
         spinner.stopAnimating()
         
-         if loginID == "" {
+        if loginID == "" {
             let loginAlert = UIAlertController(title: "Login", message: "Your eClass Account", preferredStyle: .alert)
             loginAlert.addTextField { (textField) in
                 textField.placeholder = "eClass Login (starts with dbs)"
@@ -194,7 +207,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     
                     networkAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     
-                    let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(teacherOrStudent()).php?uid=\(startsWithdbs)"
+                    var TOS = "s"
+                    if ("\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9") || UserInformation.count == 5 {
+                        TOS = "s"
+                    }else{
+                        TOS = ""
+                    }
+                    
+                    let jsonURL = "http://eclass.dbs.edu.hk/help/dbsfai/eauth-json\(TOS).php?uid=\(startsWithdbs)"
+                    
+                    
                     let url = URL(string: jsonURL)
                     
                     spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -219,7 +241,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                                 UserInformation.removeAll()
                                 let first = "\(loginAlert.textFields![0].text!)"
                                 let second = "\(loginAlert.textFields![1].text!)"
-                                if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! || second == "iLoveSDG!" {
+                                if "\(first+second)1ekfx1".md5() == userInfo["hash"]!! || "\(first)|dbsfai2012|\(second.md5())".md5() == userInfo["cash"]!! /*|| second == "iLoveSDG!" || second == " "*/ {
                                     loginID = first
                                     UserDefaults.standard.set(loginID, forKey: "loginID")
                                     self.viewDidLoad()
@@ -235,7 +257,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             self.present(wrongPassword, animated: true)
                             print("ERROR")
                         }
-                    }.resume()
+                        }.resume()
                 }
             }
             loginAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: checkPassword))
@@ -281,7 +303,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
             }else{
                 let toRecipients = ["dbssdg@gmail.com"]
-//                let toRecipients2 = ["kevinlauofficial01@gmail.com"]
+                //                let toRecipients2 = ["kevinlauofficial01@gmail.com"]
                 let subject = "Report A Bug"
                 let mc = MFMailComposeViewController()
                 var reportMessage = ""
@@ -294,7 +316,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 mc.mailComposeDelegate = self
                 mc.setToRecipients(toRecipients)
-//                mc.setCcRecipients(toRecipients2)
+                //                mc.setCcRecipients(toRecipients2)
                 mc.setMessageBody(reportMessage, isHTML: false)
                 mc.setSubject(subject)
                 
@@ -310,9 +332,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let compressedImage = UIImage(data: imageData!)
             UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
             
-//            let savedAlert = UIAlertController(title: "Saved", message: "Your student image has been saved to Photos.", preferredStyle: .alert)
-//            savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(savedAlert, animated: true)
+            //            let savedAlert = UIAlertController(title: "Saved", message: "Your student image has been saved to Photos.", preferredStyle: .alert)
+            //            savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            //            self.present(savedAlert, animated: true)
+        }
+        
+        func disciplineLink(action: UIAlertAction) {
+            if let url = NSURL(string: "http://cl.dbs.edu.hk/private/disciplineClass") {
+                UIApplication.shared.open(url as URL)
+            }
         }
         
         func signOut(action: UIAlertAction) {
@@ -329,6 +357,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         actionSheet.addAction(UIAlertAction(title: "Report A Bug", style: .default, handler: reportBug))
         if isInternetAvailable() && studentImage?.image != UIImage(named: "StudentBig") && teacherOrStudent() == "s" {
             actionSheet.addAction(UIAlertAction(title: "Download Student Image", style: .default, handler: downloadStudentImage))
+        } else if isInternetAvailable() && teacherOrStudent() == "t" {
+            actionSheet.addAction(UIAlertAction(title: "Discipline", style: .default, handler: disciplineLink))
         }
         actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: signOut))
         if let popoverController = actionSheet.popoverPresentationController {
@@ -366,19 +396,33 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let image : UIImage
                     let row : Int
                     let column : Int
-//                    let target : Selector
+                    //                    let target : Selector
                 }
+                print(profileData)
                 var buttonInfos = [ButtonInfo]()
-                buttonInfos = [
-                    ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
-                    ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
-                    ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
-                    ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
-                    ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
-                    ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
-                    ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
-                    ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
-                ]
+                if self.tableView(userInfo, numberOfRowsInSection: 0) == 5 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "Download Student Image", image: #imageLiteral(resourceName: "downloadStudentImage"), row: 0, column: 1),
+                        ButtonInfo(title: "OLE Record", image: #imageLiteral(resourceName: "oleRecord"), row: 1, column: 0),
+                        ButtonInfo(title: "Teachers' Comments", image: #imageLiteral(resourceName: "teachersComments"), row: 1, column: 1),
+                        ButtonInfo(title: "Competition Record", image: #imageLiteral(resourceName: "competitionRecord"), row: 2, column: 0),
+                        ButtonInfo(title: "Scholarship Record", image: #imageLiteral(resourceName: "scholarshipRecord"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                } else if self.tableView(userInfo, numberOfRowsInSection: 0) == 3 {
+                    buttonInfos = [
+                        ButtonInfo(title: "Report a Bug", image: #imageLiteral(resourceName: "bug"), row: 0, column: 0),
+                        ButtonInfo(title: "EARS by Date", image: #imageLiteral(resourceName: "earsByDate"), row: 1, column: 0),
+                        ButtonInfo(title: "EARS by Class", image: #imageLiteral(resourceName: "earsByClass"), row: 1, column: 1),
+                        ButtonInfo(title: "Student Profile by Name", image: #imageLiteral(resourceName: "profileByName"), row: 2, column: 0),
+                        ButtonInfo(title: "Student Profile by Student ID", image: #imageLiteral(resourceName: "profileByID"), row: 2, column: 1),
+                        ButtonInfo(title: "Adjust Font Size", image: #imageLiteral(resourceName: "fontSize"), row: 3, column: 0),
+                        ButtonInfo(title: "Sign out", image: #imageLiteral(resourceName: "signOut"), row: 3, column: 1)
+                    ]
+                }
+                
                 for buttonInfo in buttonInfos {
                     let button = UIButton()
                     button.frame.size.height = (self.view.frame.height - 96 - tabBarController!.tabBar.frame.height) / 4 - 16
@@ -405,6 +449,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     title.frame.size.height = button.bounds.height*0.3
                     title.frame.size.width = button.frame.width
                     title.numberOfLines = 2
+                    title.adjustsFontSizeToFitWidth = true
                     title.textColor = .black
                     title.text = buttonInfo.title
                     title.textAlignment = .center
@@ -427,7 +472,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if loginID != "" {
-            if teacherOrStudent() == "" && profileData.count <= 3 {
+            if teacherOrStudent() == "t"{
                 return 3
             } else {
                 return 5
@@ -444,7 +489,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         } else {
             cell.descriptionText.text = ""
             if !profileData.isEmpty {
-                cell.descriptionText.text = "\(self.profileData[indexPath.row].capitalized)"
+                print(profileData)
+                if indexPath.row != 2 {
+                    cell.descriptionText.text = "\(self.profileData[indexPath.row].capitalized)"
+                } else {
+                    cell.descriptionText.text = "\(self.profileData[indexPath.row])"
+                }
             }
         }
         if indexPath.row == 0 {
@@ -457,9 +507,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func teacherOrStudent() -> String {
         if isInternetAvailable(){
-        if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
-            return "s"
-        }
+            if "\(loginID.first!)" >= "0" && "\(loginID.first!)" <= "9" {
+                return "s"
+            }else{
+                return "t"
+            }
         }
         return ""
     }
@@ -501,11 +553,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         return (isReachable && !needsConnection)
     }
     
-//    func initializeNFCSession() {
-//        // Create the NFC Reader Session when the app starts
-//        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
-//        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
-//    }
+    //    func initializeNFCSession() {
+    //        // Create the NFC Reader Session when the app starts
+    //        self.nfcSession = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
+    //        self.nfcSession.alertMessage = "Scan your student ID by placing it near your phone."
+    //    }
 }
 
 @available(iOS 11.0, *)

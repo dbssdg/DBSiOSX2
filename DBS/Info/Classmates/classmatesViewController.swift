@@ -19,9 +19,6 @@ class classmatesViewController: UIViewController {
     @IBOutlet weak var viewClassmatesOutlet: UIButton!
     
     @IBAction func form(_ sender: Any) {
-       classDisplay.textColor = UIColor.black
-       classDisplay.text? = (sender as AnyObject).currentTitle as! String
-        
         for i in formButtons {
             i.backgroundColor = .lightGray
             i.isEnabled = false
@@ -36,15 +33,18 @@ class classmatesViewController: UIViewController {
                 i.isEnabled = false
             }
         }
+        
+        classDisplay.textColor = UIColor.black
+        classDisplay.text? = (sender as AnyObject).currentTitle as! String
         backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
         backspaceOutlet.isEnabled = true
     }
     @IBAction func classChoices(_ sender: Any) {
-        classDisplay.text? += (sender as AnyObject).currentTitle as! String
         for i in classButtons {
             i.backgroundColor = .lightGray
             i.isEnabled = false
         }
+        classDisplay.text? += (sender as AnyObject).currentTitle as! String
         viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
         viewClassmatesOutlet.isEnabled = true
     }
@@ -110,7 +110,7 @@ class classmatesViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -128,7 +128,7 @@ class classmatesViewController: UIViewController {
                 classDisplay.text = array[3] as? String
                 classDisplay.text?.removeLast(3)
                 classDisplay.textColor = UIColor.black
-    
+                
                 for i in formButtons {
                     i.backgroundColor = .lightGray
                     i.isEnabled = false
@@ -140,7 +140,7 @@ class classmatesViewController: UIViewController {
                 backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
                 backspaceOutlet.setTitle("CLR", for: .normal)
                 backspaceOutlet.isEnabled = true
-    
+                
                 viewClassmatesOutlet.setTitleColor(UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1), for: .normal)
                 viewClassmatesOutlet.setTitle("View My Classmates", for: .normal)
                 viewClassmatesOutlet.isEnabled = true
@@ -159,7 +159,7 @@ class classmatesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     
-
+    
+    
 }
