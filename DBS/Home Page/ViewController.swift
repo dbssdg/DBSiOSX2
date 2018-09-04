@@ -1169,7 +1169,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
                         
                         //Title
-                        cell.textLabel!.text = circularTitleArray[indexPath.row]
+                        if circularTitleArray[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
+                            cell.textLabel!.text = "New Mobile Phone Policy"
+                        } else {
+                            cell.textLabel!.text = circularTitleArray[indexPath.row]
+                        }
                         cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                         cell.textLabel?.numberOfLines = 2
                         //cell.textLabel!.adjustsFontSizeToFitWidth = true
