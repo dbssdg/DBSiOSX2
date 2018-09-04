@@ -2,7 +2,7 @@
 //  ContributionsViewController.swift
 //  DBS
 //
-//  Created by SDG on 17/1/2018.
+//  Created by SDG on 29/8/2018.
 //  Copyright © 2018 DBSSDG. All rights reserved.
 //
 
@@ -24,19 +24,21 @@ class ContributionsViewController: UIViewController {
         self.navigationItem.titleView = label
         
         let string = """
-Diocesan Boys' School Official School Application Version 4.1
+Diocesan Boys' School Official School Application Version 4.2
 
 TEACHER-IN-CHARGE
-Mr. Chris Lee
-
-SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN
-Ng Ching Wang Kelvin
+Mr. Quintak Lee
 
 APP DEVELOPERS
-Ieung Ho Kwan
-Louie Chi To
-Lau Cheuk Hang
-Chan Yuen Ho
+9S Louie Chi To (Department Head)
+9G Lau Cheuk Hang
+Mr. Chris Lee
+10L Chan Yuen Ho
+
+SOFTWARE DEVELOPMENT GROUP (SDG) 2018-2019
+Chairman: 10L Ng Ching Wang Kelvin
+Vice-Chairman: 9D Ieung Ho Kwan
+Vice-Chairman: 10G Lai Hei Man Herman
 
 ICONS
 https://www.flaticon.com
@@ -49,7 +51,7 @@ https://icons8.com
                 [NSFontAttributeName:UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")+4))])
             boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "fontSize")))]
         }
-        let titles = ["TEACHER-IN-CHARGE", "SOFTWARE DEVELOPMENT GROUP (SDG) CHAIRMAN", "APP DEVELOPERS", "ICONS"]
+        let titles = ["TEACHER-IN-CHARGE", "APP DEVELOPERS", "SOFTWARE DEVELOPMENT GROUP (SDG) 2018-2019", "ICONS"]
         for i in titles {
             attributedString.addAttributes(boldFontAttribute, range: string.range(of: i))
         }

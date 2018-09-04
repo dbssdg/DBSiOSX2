@@ -815,7 +815,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             cell.accessoryType = .disclosureIndicator
                             
                             //Title
-                            cell.textLabel!.text = array[indexPath.row].Title
+                           // cell.textLabel!.text = array[indexPath.row].Title
                             cell.textLabel!.adjustsFontSizeToFitWidth = true
                             cell.textLabel!.numberOfLines = 2
                             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
