@@ -27,16 +27,16 @@ class timetableViewController: UIViewController {
             i.backgroundColor = UIColor(red: 75/255, green: 200/255, blue: 200/255, alpha: 1)
             i.isEnabled = true
         }
+        classDisplay.textColor = UIColor.black
+        classDisplay.text? = (sender as AnyObject).currentTitle as! String
+        backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
+        backspaceOutlet.isEnabled = true
         if classDisplay.text == "G10" || classDisplay.text == "G11" || classDisplay.text == "G12" {
             for i in nonHighClassButtons {
                 i.backgroundColor = .lightGray
                 i.isEnabled = false
             }
         }
-        classDisplay.textColor = UIColor.black
-        classDisplay.text? = (sender as AnyObject).currentTitle as! String
-        backspaceOutlet.backgroundColor = UIColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 1)
-        backspaceOutlet.isEnabled = true
     }
     @IBAction func classChoices(_ sender: Any) {
         for i in classButtons {

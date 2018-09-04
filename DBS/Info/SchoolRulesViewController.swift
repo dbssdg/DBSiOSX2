@@ -231,11 +231,11 @@ class SchoolRulesViewController: UIViewController {
     schoolRulesTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         schoolRulesTextView.text = {"""
         Class teacher / Subject teacher will take roll-call at 8:05 a.m. and p.m. roll-call at 1:50 p.m.
-            a. The late-comer must report himself to the General Office to take roll-call with his student ID.
-            b. Late-comers who fail to take roll-call at General Office will be recorded as “unexcused absence” even when they are late.
-            c. Notice of punishment for lateness will be issued by the Prefects on the following day.
-            d. A late-comer checklist will be provided by the General Office to the Class Teacher before the afternoon roll-call.
-            e. A student who has accumulated “unexcused absence” for 2 times or more per term, his conduct grade may be degraded.
+        a. The late-comer must report himself to the General Office to take roll-call with his student ID.
+        b. Late-comers who fail to take roll-call at General Office will be recorded as “unexcused absence” even when they are late.
+        c. Notice of punishment for lateness will be issued by the Prefects on the following day.
+        d. A late-comer checklist will be provided by the General Office to the Class Teacher before the afternoon roll-call.
+        e. A student who has accumulated “unexcused absence” for 2 times or more per term, his conduct grade may be degraded.
         """}()
     }
     

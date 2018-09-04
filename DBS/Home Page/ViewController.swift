@@ -993,8 +993,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                     teacherOutput = ""
                                 }
                                 
-                                    cell.textLabel?.text = output
-                                    cell.detailTextLabel?.text = teacherOutput
+//                                    cell.textLabel?.text = output
+//                                    cell.detailTextLabel?.text = teacherOutput
+                            
+                                    if indexPath.row == 2 {
+                                        cell.textLabel?.text = "Class timetables will be available after 15th September, 2018."
+                                    } else if indexPath.row == 3 {
+                                        cell.textLabel?.text = ""
+                                    } else if indexPath.row == 4 {
+                                        cell.textLabel?.text = "Please check from Information\n—> Timetable."
+                                    }
+                                    cell.textLabel?.numberOfLines = 0
+                                    cell.isUserInteractionEnabled = false
                                 }
                                 
                                 
@@ -1086,13 +1096,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             cell.accessoryType = .disclosureIndicator
                             
                             //Title
-<<<<<<< HEAD
-                           // cell.textLabel!.text = array[indexPath.row].Title
-                            cell.textLabel!.adjustsFontSizeToFitWidth = true
-=======
                             cell.textLabel!.text = array[indexPath.row].Title
 //                            cell.textLabel!.adjustsFontSizeToFitWidth = true
->>>>>>> b39f50fa78ea4bdbf59059782f0ce64cb109c732
                             cell.textLabel!.numberOfLines = 2
                             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                             
