@@ -45,6 +45,7 @@ class SchoolHymnViewController : UIViewController {
         Restart.setImage(UIImage(named: "previous"), for: .normal)
         
         audioLyrics.isEditable = false
+        audioLyrics.scrollsToTop = true
         
         self.title = "School Hymn"
         if #available(iOS 11.0, *) {
