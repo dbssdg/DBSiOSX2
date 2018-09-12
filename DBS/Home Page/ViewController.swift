@@ -993,16 +993,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                     teacherOutput = ""
                                 }
                                 
-//                                    cell.textLabel?.text = output
-//                                    cell.detailTextLabel?.text = teacherOutput
+                                    cell.textLabel?.text = output
+                                    cell.detailTextLabel?.text = teacherOutput
                             
-                                    if indexPath.row == 2 {
-                                        cell.textLabel?.text = "Class timetables will be available after 15th September, 2018."
-                                    } else if indexPath.row == 3 {
-                                        cell.textLabel?.text = ""
-                                    } else if indexPath.row == 4 {
-                                        cell.textLabel?.text = "Please check from Information\n—> Timetable."
-                                    }
+//                                    if indexPath.row == 2 {
+//                                        cell.textLabel?.text = "Class timetables will be available after 15th September, 2018."
+//                                    } else if indexPath.row == 3 {
+//                                        cell.textLabel?.text = ""
+//                                    } else if indexPath.row == 4 {
+//                                        cell.textLabel?.text = "Please check from Information\n—> Timetable."
+//                                    }
                                     cell.textLabel?.numberOfLines = 0
                                     cell.isUserInteractionEnabled = false
                                 }
