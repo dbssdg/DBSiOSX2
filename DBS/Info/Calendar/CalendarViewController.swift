@@ -430,6 +430,28 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         DayEvents = CurrentDayEventsArray
         
+        
+        
+        let withDupes = DayEvents
+        let indices = withDupes.map { $0.1.Title }.removeDuplicates()
+        var temp = [(Date, events)]()
+        for i in indices{
+            for j in withDupes{
+                if i == j.1.Title{
+                    temp += [j]
+                    break
+                }
+            }
+        }
+        CurrentDayEventsArray = temp
+ 
+        //let withoutDuplicates = CurrentDayEventsArray.removingDuplicates(byKey: { $0.1.Title })
+        
+        //let withoutDupes = Array(Set<(Date, events)>(CurrentDayEventsArray))
+        
+        //CurrentDayEventsArray = indices
+//        CurrentDayEventsArray.remo
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarEventCell")! as UITableViewCell
         
         cell.isUserInteractionEnabled = true
@@ -685,7 +707,20 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
 
 
 
-
+extension Array {
+    func removingDuplicates<T: Equatable>(byKey key: KeyPath<Element, T>)  -> [Element] {
+        var result = [Element]()
+        var seen = [T]()
+        for value in self {
+            let key = value[keyPath: key]
+            if !seen.contains(key) {
+                seen.append(key)
+                result.append(value)
+            }
+        }
+        return result
+    }
+}
 
     
 //}
