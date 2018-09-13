@@ -995,6 +995,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                 
                                     cell.textLabel?.text = output
                                     cell.detailTextLabel?.text = teacherOutput
+                            
+//                                    if indexPath.row == 2 {
+//                                        cell.textLabel?.text = "Class timetables will be available after 15th September, 2018."
+//                                    } else if indexPath.row == 3 {
+//                                        cell.textLabel?.text = ""
+//                                    } else if indexPath.row == 4 {
+//                                        cell.textLabel?.text = "Please check from Information\n—> Timetable."
+//                                    }
+                                    cell.textLabel?.numberOfLines = 0
+                                    cell.isUserInteractionEnabled = false
                                 }
                                 
                                 
@@ -1159,7 +1169,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
                         
                         //Title
-                        cell.textLabel!.text = circularTitleArray[indexPath.row]
+                        if circularTitleArray[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
+                            cell.textLabel!.text = "New Mobile Phone Policy"
+                        } else {
+                            cell.textLabel!.text = circularTitleArray[indexPath.row]
+                        }
                         cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                         cell.textLabel?.numberOfLines = 2
                         //cell.textLabel!.adjustsFontSizeToFitWidth = true

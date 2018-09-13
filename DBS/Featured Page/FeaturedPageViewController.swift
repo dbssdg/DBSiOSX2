@@ -234,7 +234,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         if !circularTimeArray.isEmpty && !newsTitleArray.isEmpty {
             if selectedSegment == 0 {
                 if isSearching {
-                    cell.textLabel?.text = filteredCirculars[indexPath.row]
+                    if filteredCirculars[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
+                        cell.textLabel?.text = "New Mobile Phone Policy"
+                    } else {
+                         cell.textLabel?.text = filteredCirculars[indexPath.row]
+                    }
                     cell.detailTextLabel?.text = ""
                 } else {
                     if circulars.count <= circularTitleArray.count {
@@ -246,7 +250,11 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         } else {
                             cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
                         }
-                        cell.textLabel?.text = circularTitleArray[indexPath.row]
+                        if circularTitleArray[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
+                            cell.textLabel?.text = "New Mobile Phone Policy"
+                        } else {
+                            cell.textLabel?.text = circularTitleArray[indexPath.row]
+                        }
                     }
                     
                 }

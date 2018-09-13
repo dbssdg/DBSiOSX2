@@ -39,9 +39,9 @@ class aboutDBSViewController: UIViewController {
         The vision of our school is to equip our students with the sound knowledge, worthy qualities, dynamic social and technical skills they need to become contributors to society and leaders with integrity in a diverse and ever-changing world.
 
         Mission
-        \u{2022} The mission of the school is to provide a liberal education based on Christian principles.
-        \u{2022} To realize this stated mission, the school has set the following objectives:
-        \u{2022} To offer a well-balanced education for the development of the WHOLE person.
+        The mission of the school is to provide a liberal education based on Christian principles.
+        To realize this stated mission the School has set the following objectives:
+        \u{2022} To offer a well-balanced education for the development of the WHOLE person through effective means and agreeable strategies.
         \u{2022} To maintain well-established school traditions.
         \u{2022} To nurture a unique cultural identity.
         \u{2022} To achieve self-respect and self-esteem so that each student can be a man of integrity, discipline, devotion, industriousness, courage and gratitude.
