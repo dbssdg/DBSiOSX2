@@ -528,7 +528,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
             let view = HomeCustomView(frame: CGRect(x: self.scrollView.frame.width * (CGFloat(i) + 0.05), y: DistanceBetweenTableViewAndBand + BandView.frame.height, width: self.view.frame.width * 0.9, height: (self.scrollView.frame.height - BandView.frame.height - a * 3)))
             
             view.backgroundColor = UIColor.red
-            view.layer.cornerRadius = view.frame.width * 0.1
+            view.layer.cornerRadius = view.frame.width * 0.075
             view.clipsToBounds = true
             
             view.tag = i + self.viewTagValue
@@ -988,8 +988,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                                 if output != "" && teacherOutput != "" {
                                     output.removeLast(3)
                                     teacherOutput.removeLast(3)
-                                }else{
+                                } else if indexPath.row != 5 {
                                     output = "Activity Period"
+                                    teacherOutput = ""
+                                }
+                                if output.count > 25 {
+                                    output = "Elective"
                                     teacherOutput = ""
                                 }
                                 
@@ -1004,7 +1008,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
 //                                        cell.textLabel?.text = "Please check from Information\n—> Timetable."
 //                                    }
                                     cell.textLabel?.numberOfLines = 0
-                                    cell.isUserInteractionEnabled = false
                                 }
                                 
                                 
@@ -1143,7 +1146,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     
                 }else{
                     
-                    cell.textLabel!.text = "    See More..."
+                    cell.textLabel!.text = " See More..."
                     cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                 }
             }
@@ -1169,11 +1172,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     if !circularTitleArray.isEmpty && !circularTimeArray.isEmpty{
                         
                         //Title
-                        if circularTitleArray[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
-                            cell.textLabel!.text = "New Mobile Phone Policy"
-                        } else {
-                            cell.textLabel!.text = circularTitleArray[indexPath.row]
-                        }
+                        cell.textLabel?.text = "\(circularTitleArray[indexPath.row].components(separatedBy: " [<a href=\"")[0])"
+//                        if circularTitleArray[indexPath.row] == "New Mobile Phone Policy [<a href=\"http://cl.dbs.edu.hk/disciplineClass/index.php\">Link</a>]" {
+//                            cell.textLabel!.text = "New Mobile Phone Policy"
+//                        } else {
+//                            cell.textLabel!.text = circularTitleArray[indexPath.row]
+//                        }
                         cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                         cell.textLabel?.numberOfLines = 2
                         //cell.textLabel!.adjustsFontSizeToFitWidth = true
@@ -1182,12 +1186,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         let circularTimes = (circularTimeArray[indexPath.row]).split(separator: " ")
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy"
+                        
+                        cell.detailTextLabel!.textColor = UIColor.gray
                         if Int(circularTimes[2])! > Int(dateFormatter.string(from: Date()))! {
-                            cell.detailTextLabel?.text = ""
+                            cell.detailTextLabel?.text = "Pinned"
+                            cell.detailTextLabel?.textColor = .orange
                         } else {
                             cell.detailTextLabel?.text = (circularTimeArray[indexPath.row])
                         }
-                        cell.detailTextLabel!.textColor = UIColor.gray
                         cell.detailTextLabel!.font = UIFont(name: "Helvetica", size: SmallFont)
                         
                         //Accessory Type
@@ -1205,7 +1211,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                     
                     
                 }else{
-                    cell.textLabel!.text = "    See More..."
+                    cell.textLabel!.text = " See More..."
                     cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                     
                 }
@@ -1247,7 +1253,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         //Accessory Type
                         cell.accessoryType = .disclosureIndicator
                     }else{
-                        cell.textLabel!.text = "    See More..."
+                        cell.textLabel!.text = " See More..."
                         cell.textLabel!.font = UIFont.boldSystemFont(ofSize: BigFont)
                         
                     }
