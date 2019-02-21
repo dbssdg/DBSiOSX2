@@ -36,6 +36,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     let slider = UISlider()
     
     @IBAction func previousNews(_ sender: Any) {
+        if newsIndex+1 <= 1 {return}
+        
         newsIndex -= 1
         updateData()
         
@@ -50,6 +52,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         
     }
     @IBAction func nextNews(_ sender: Any) {
+        
         newsIndex += 1
         updateData()
         
@@ -90,6 +93,21 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsContent.attributedText = attributedString
         self.newsContent.font = UIFont(name: "Helvetica", size: CGFloat(slider.value))
         
+        if self.news != nil {
+            
+            attachmentsButton.title = "Attachments"
+            if self.news!.attachment[newsIndex].isEmpty {
+                attachmentsButton.tintColor = UIColor.lightGray
+                attachmentsButton.isEnabled = false
+            } else {
+                if self.news!.attachment[newsIndex].count == 1 {
+                    attachmentsButton.title = "Attachment"
+                }
+                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
+                attachmentsButton.isEnabled = true
+            }
+        }
+        
         if newsIndex+1 <= 1 {
             previousNews.tintColor = UIColor.lightGray
             previousNews.isEnabled = false
@@ -107,22 +125,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             nextNews.isEnabled = true
         }
         
-        if self.news != nil {
-            
-            attachmentsButton.title = "Attachments"
-            if self.news!.attachment[newsIndex].isEmpty {
-                attachmentsButton.tintColor = UIColor.lightGray
-                attachmentsButton.isEnabled = false
-            } else {
-                if self.news!.attachment[newsIndex].count == 1 {
-                    attachmentsButton.title = "Attachment"
-                }
-                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
-                attachmentsButton.isEnabled = true
-            }
-        }
-        
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,10 +173,6 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
 //                            print("\n\(dataString)\n")
 //                            data = dataString.data(using: .utf8)!
                             
-//                            data = """
-//{"title":["Results of Sports for All Programme","DBS 150 Run","Speech Day Photos","Second Term of Sports for All"],"date":["1550466480","1550199960","1548823927","1547570700"],"content":["<p>Sports have always been an integral part of our school programme and we are still recruiting students to join this programme.&nbsp;&nbsp;Those who are interested please complete and submit the attached reply slip along with a cheque made payable to&nbsp;<i>&ldquo;Diocesan Boys&rsquo; School&rdquo;</i>&nbsp;to the Sports Office immediately.<br />\r\n<br />\r\nWe hope students can take this opportunity to enjoy the fun in playing sports.<br />\r\n<br />\r\nFor enquiries, please contact Sport Office, Ms. Anne Cheng at 2192 0937.</p>","<p>All students, old boys, parents and teachers&nbsp;are invited to&nbsp;join the DBS 150 Run event. For details, please refer to the attachment.</p>","<p>Congratulations to all prize winners and the graduating class of 2019! Official photos are available through the following link.</p>\r\n\r\n<p><a href=\"https://photos.app.goo.gl/1fW7ew6ZyqXjLdCG6\" target=\"_blank\">https://photos.app.goo.gl/1fW7ew6ZyqXjLdCG6</a></p>","<p>Please refer to the attachment.</p>"],"id":["1382","1380","1378","1375"],"ext_content":["","","",""],"sticky":["0","1","1","0"],"attachment":[[],[],[],[]],"image":[null, null, null, null]}
-//""".data(using: .utf8)!
-                            print("\n"+String(data: data, encoding: .utf8)!+"\n")
                             self.news = try JSONDecoder().decode(newsDetails.self, from: data)
                             
                             DispatchQueue.main.async {
