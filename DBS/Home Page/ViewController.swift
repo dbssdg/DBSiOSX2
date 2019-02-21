@@ -119,9 +119,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseNewsCurriculars(){
-        let circularsJSONURL = "https://www.dbs.edu.hk/dbsapp/json.php"
+        let circularsJSONURL = "https://www.dbs.edu.hk/dbsapp/json.txt"
         let circularsURL = URL(string: circularsJSONURL)
-        let newsJSONURL  = "https://www.dbs.edu.hk/dbsapp/newsapp.php"
+        let newsJSONURL  = "https://www.dbs.edu.hk/dbsapp/newsapp.txt"
         let newsURL = URL(string: newsJSONURL)
         
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
