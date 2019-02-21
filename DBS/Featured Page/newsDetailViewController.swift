@@ -36,6 +36,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
     let slider = UISlider()
     
     @IBAction func previousNews(_ sender: Any) {
+        if newsIndex+1 <= 1 {return}
+        
         newsIndex -= 1
         updateData()
         
@@ -45,11 +47,12 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
         self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+            self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
         
     }
     @IBAction func nextNews(_ sender: Any) {
+        
         newsIndex += 1
         updateData()
         
@@ -59,14 +62,14 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
         self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+            self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
     }
     @IBAction func attachments(_ sender: Any) {
         if self.news != nil {
-            circularViewURL = "http://www.dbs.edu.hk/"
+            circularViewURL = "https://www.dbs.edu.hk/"
             for i in self.news!.attachment[newsIndex] {
-                circularViewURL += "http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
+                circularViewURL += "https://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
             }
             //            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
             senderIsNews = true
@@ -90,6 +93,21 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsContent.attributedText = attributedString
         self.newsContent.font = UIFont(name: "Helvetica", size: CGFloat(slider.value))
         
+        if self.news != nil {
+            
+            attachmentsButton.title = "Attachments"
+            if self.news!.attachment[newsIndex].isEmpty {
+                attachmentsButton.tintColor = UIColor.lightGray
+                attachmentsButton.isEnabled = false
+            } else {
+                if self.news!.attachment[newsIndex].count == 1 {
+                    attachmentsButton.title = "Attachment"
+                }
+                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
+                attachmentsButton.isEnabled = true
+            }
+        }
+        
         if newsIndex+1 <= 1 {
             previousNews.tintColor = UIColor.lightGray
             previousNews.isEnabled = false
@@ -107,22 +125,8 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
             nextNews.isEnabled = true
         }
         
-        if self.news != nil {
-            
-            attachmentsButton.title = "Attachments"
-            if self.news!.attachment[newsIndex].isEmpty {
-                attachmentsButton.tintColor = UIColor.lightGray
-                attachmentsButton.isEnabled = false
-            } else {
-                if self.news!.attachment[newsIndex].count == 1 {
-                    attachmentsButton.title = "Attachment"
-                }
-                attachmentsButton.tintColor = UIColor(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
-                attachmentsButton.isEnabled = true
-            }
-        }
-        
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +140,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         newsImage.image = nil
         newsContent.text = ""
         
-        let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
+        let jsonURL = "https://www.dbs.edu.hk/dbsapp/newsapp.txt"
         let url = URL(string: jsonURL)
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
         func backToFeaturedPage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
@@ -165,8 +169,9 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                     do {
                         if var data = data {
                             
-                            let dataString = String(data: data, encoding: .utf8)
-                            data = dataString!.replacingOccurrences(of: "\"\"", with: "[]").data(using: .utf8)!
+//                            let dataString = String(data: data, encoding: .utf8)!.replacingOccurrences(of: "\"\"", with: "[]")
+//                            print("\n\(dataString)\n")
+//                            data = dataString.data(using: .utf8)!
                             
                             self.news = try JSONDecoder().decode(newsDetails.self, from: data)
                             
@@ -176,7 +181,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                                 self.newsImage.image = #imageLiteral(resourceName: "newsImage")
                                 self.newsImage.clipsToBounds = true
                                 if self.news!.image[newsIndex] != nil {
-                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                    self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
                                 }
                             }
                         }
@@ -184,7 +189,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                         self.present(networkAlert, animated: true)
                         print(error)
                     }
-                    }.resume()
+                }.resume()
             }
         } else {
             present(networkAlert, animated: true)

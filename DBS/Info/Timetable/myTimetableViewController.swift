@@ -261,7 +261,7 @@ class myTimetableViewController: UIViewController, UITableViewDelegate, UITableV
             if output != "" && teacherOutput != "" {
                 output.removeLast(3)
                 teacherOutput.removeLast(3)
-            }else{
+            } else if indexPath.row != 5 {
                 output = "Activity Period"
                 teacherOutput = ""
             }
