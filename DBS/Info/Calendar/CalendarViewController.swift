@@ -431,7 +431,6 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         DayEvents = CurrentDayEventsArray
         
         
-        
         let withDupes = DayEvents
         let indices = withDupes.map { $0.1.Title }.removeDuplicates()
         var temp = [(Date, events)]()
