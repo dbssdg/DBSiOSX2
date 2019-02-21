@@ -119,9 +119,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
     }
     
     func ParseNewsCurriculars(){
-        let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
+        let circularsJSONURL = "https://www.dbs.edu.hk/dbsapp/json.php"
         let circularsURL = URL(string: circularsJSONURL)
-        let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
+        let newsJSONURL  = "https://www.dbs.edu.hk/dbsapp/newsapp.php"
         let newsURL = URL(string: newsJSONURL)
         
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -141,9 +141,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                             }
                         }
                     } catch {
-                        print("ERROR")
+                        print("ERROR CIRCULARS")
                     }
-                    }.resume()
+                }.resume()
             }
             
             if news == nil || newsTitleArray.isEmpty{
@@ -166,9 +166,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegat
                         }
                     }
                     catch {
-                        print("ERROR")
+                        print("ERROR NEWS")
                     }
-                    }.resume()
+                }.resume()
             }
         }
     }

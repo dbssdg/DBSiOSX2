@@ -45,7 +45,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
         self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+            self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
         
     }
@@ -59,14 +59,14 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         self.newsImage.image = #imageLiteral(resourceName: "newsImage")
         self.newsImage.clipsToBounds = true
         if self.news!.image[newsIndex] != nil {
-            self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+            self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
         }
     }
     @IBAction func attachments(_ sender: Any) {
         if self.news != nil {
-            circularViewURL = "http://www.dbs.edu.hk/"
+            circularViewURL = "https://www.dbs.edu.hk/"
             for i in self.news!.attachment[newsIndex] {
-                circularViewURL += "http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
+                circularViewURL += "https://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(i)"
             }
             //            circularViewURL = "http://abc/http://www.dbs.edu.hk/datafiles/attachment/\(self.news!.id[newsIndex])/\(self.news!.attachment[newsIndex].joined())"
             senderIsNews = true
@@ -136,7 +136,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
         newsImage.image = nil
         newsContent.text = ""
         
-        let jsonURL = "http://www.dbs.edu.hk/newsapp.php"
+        let jsonURL = "https://www.dbs.edu.hk/dbsapp/newsapp.txt"
         let url = URL(string: jsonURL)
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
         func backToFeaturedPage(action: UIAlertAction) { navigationController?.popViewController(animated: true) }
@@ -176,7 +176,7 @@ class newsDetailViewController: UIViewController, URLSessionTaskDelegate, URLSes
                                 self.newsImage.image = #imageLiteral(resourceName: "newsImage")
                                 self.newsImage.clipsToBounds = true
                                 if self.news!.image[newsIndex] != nil {
-                                    self.getImage("http://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
+                                    self.getImage("https://www.dbs.edu.hk/datafiles/image/\(self.news!.id[newsIndex])/\(self.news!.image[newsIndex]!)", self.newsImage)
                                 }
                             }
                         }

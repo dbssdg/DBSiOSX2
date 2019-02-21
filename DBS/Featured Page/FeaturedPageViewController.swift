@@ -56,10 +56,13 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         viewDidLoad()
     }
     
+    
     func ParseJSON() {
-        let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
+//        let circularsJSONURL = "http://www.dbs.edu.hk/circulars/json.php"
+        let circularsJSONURL = "https://www.dbs.edu.hk/dbsapp/json.txt"
         let circularsURL = URL(string: circularsJSONURL)
-        let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
+//        let newsJSONURL  = "http://www.dbs.edu.hk/newsapp.php"
+        let newsJSONURL  = "https://www.dbs.edu.hk/dbsapp/newsapp.txt"
         let newsURL = URL(string: newsJSONURL)
         
         let networkAlert = UIAlertController(title: "ERROR", message: "Please check your network availability.", preferredStyle: .alert)
@@ -75,9 +78,10 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         
         if isInternetAvailable() {
             URLSession.shared.dataTask(with: circularsURL!) { (data, response, error) in
-                if data != nil {
+                if let data = data {
+                    
                     do {
-                        circulars = try JSONDecoder().decode([String:[String:String]].self, from: data!)
+                        circulars = try JSONDecoder().decode([String: [String: String]].self, from: data)
                         
                         pinnedCircular = 2
                         for i in 1...circulars.values.count {
@@ -93,14 +97,14 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         }
                         
                     } catch {
-                        print("ERROR")
+                        print("error:", error)
                     }
                 }
-                }.resume()
+            }.resume()
             URLSession.shared.dataTask(with: newsURL!) { (data, response, error) in
-                if data != nil {
+                if let data = data {
                     do {
-                        news = try JSONDecoder().decode(newsData.self, from: data!)
+                        news = try JSONDecoder().decode(newsData.self, from: data)
                         
                         for i in (news?.title)! {
                             if (news?.title)!.count > newsTitleArray.count {
@@ -124,7 +128,7 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
                         print("ERROR")
                     }
                 }
-                }.resume()
+            }.resume()
             
         } else {
             //present(networkAlert, animated: true)
@@ -177,20 +181,20 @@ class FeaturedPageViewController: UIViewController, UITableViewDelegate, UITable
         }
         setUpSegmentedControl()
         
-        for i in 1...20 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)/10, execute: {
-                if self.tableView(self.featuredTable, numberOfRowsInSection: 0) <= 0 && self.isInternetAvailable() {
-                    self.featuredTable.reloadData()
-                    print(Double(i)/10)
-                    if i == 20 {
-                        print("BYE")
-                    }
-                } else if self.tableView(self.featuredTable, numberOfRowsInSection: 0) > 0 {
-                    self.removeSpinner(view: self.featuredTable)
-                    self.featuredTable.reloadData()
-                }
-            })
-        }
+//        for i in 1...20 {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)/10, execute: {
+//                if self.tableView(self.featuredTable, numberOfRowsInSection: 0) <= 0 && self.isInternetAvailable() {
+//                    self.featuredTable.reloadData()
+//                    print(Double(i)/10)
+//                    if i == 20 {
+//                        print("BYE")
+//                    }
+//                } else if self.tableView(self.featuredTable, numberOfRowsInSection: 0) > 0 {
+//                    self.removeSpinner(view: self.featuredTable)
+//                    self.featuredTable.reloadData()
+//                }
+//            })
+//        }
         
         //        while tableView(featuredTable, numberOfRowsInSection: 0) <= 0 && isInternetAvailable() {
         //            for i in self.view.subviews { if i.tag == 1 {
