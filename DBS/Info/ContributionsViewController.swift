@@ -24,7 +24,7 @@ class ContributionsViewController: UIViewController {
         self.navigationItem.titleView = label
         
         let string = """
-Diocesan Boys' School Official School Application Version 4.2.3
+Diocesan Boys' School Official School Application Version 4.3.0
 
 TEACHER-IN-CHARGE
 Mr. Quintak Lee
