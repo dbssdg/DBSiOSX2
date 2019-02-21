@@ -127,7 +127,7 @@ class circularsWebViewController: UIViewController, UIWebViewDelegate, TwicketSe
             }
         }
         var frame = CGRect(x: 0 , y: self.view.frame.height - 40, width: self.view.frame.width, height: 40)
-        if UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436 {
+        if UIDevice().userInterfaceIdiom == .phone && (UIScreen.main.nativeBounds.height >= 2436 || UIScreen.main.nativeBounds.height == 1792) {
             frame = CGRect(x: 0 , y: self.view.frame.height - 55, width: self.view.frame.width, height: 40)
         }
         let segmentedControl = TwicketSegmentedControl(frame: frame)
